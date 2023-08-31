@@ -1,0 +1,24 @@
+/* users.component.css */
+.users-container {
+    padding: 20px;
+  }
+  
+  .toolbar-title {
+    flex: 1;
+  }
+  
+  .add-button {
+    margin-left: 20px;
+  }
+  
+  /* Estilos para la tabla */
+  mat-table {
+    width: 100%;
+    margin-top: 20px;
+  }
+  
+  /* Estilos para los botones de acciones */
+  mat-icon-button {
+    margin-right: 8px;
+  }
+  

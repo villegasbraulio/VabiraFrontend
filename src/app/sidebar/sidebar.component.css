@@ -1,0 +1,86 @@
+/* sidebar.component.css */
+.sidebar {
+  height: 100vh;
+  width: 250px;
+  background-color: #1e3a6f; /* Fondo azul oscuro */
+  color: white;
+  padding: 20px;
+  position: fixed;
+}
+
+.sidebar ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.sidebar li {
+  margin-bottom: 20px; /* Espacio entre grupos */
+}
+
+.sidebar a {
+  color: white;
+  text-decoration: none;
+  display: flex; /* Mostrar enlaces en una fila */
+  align-items: center; /* Centrar verticalmente el texto e icono */
+  font-size: 18px; /* Tamaño de fuente */
+  font-weight: 600; /* Grosor de fuente */
+}
+
+/* Estilo para los enlaces dentro de un grupo */
+.sidebar-group div {
+  margin-bottom: 5px; /* Espacio vertical entre enlaces */
+}
+
+/* Estilo para la sección de perfil */
+.profile-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.profile-box {
+  background-color: #333; /* Fondo del recuadro */
+  color: white;
+  padding: 10px;
+  border-radius: 10px; /* Esquinas redondeadas */
+  margin-bottom: 5px;
+}
+
+.profile-box i {
+  font-size: 24px; /* Tamaño del icono de perfil */
+}
+
+.logout-box {
+  cursor: pointer;
+}
+
+.logout-box i {
+  font-size: 24px; /* Tamaño del icono de cierre de sesión */
+}
+/* Agrega estos estilos CSS a tu archivo de estilos o en el lugar apropiado */
+
+.profile-container {
+    display: flex;
+    align-items: center; /* Centra verticalmente los elementos dentro del contenedor */
+  }
+  
+  .profile-box {
+    display: flex;
+    align-items: center; /* Centra verticalmente los elementos dentro de profile-box */
+    margin-right: 16px; /* Espacio entre el ícono de perfil y el texto "Perfil" */
+  }
+  
+  .logout-box {
+    display: flex;
+    align-items: center; /* Centra verticalmente el ícono de logout dentro de logout-box */
+    cursor: pointer;
+  }
+  
+  .material-icons {
+    font-size: 24px; /* Tamaño de fuente deseado para los íconos */
+    margin-right: 8px; /* Espacio entre el ícono y el texto */
+  }
+  
+  /* Puedes ajustar los estilos según tus preferencias visuales */
+  

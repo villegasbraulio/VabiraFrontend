@@ -1,0 +1,38 @@
+<!-- users.component.html -->
+
+<div class="layout">
+    <app-sidebar></app-sidebar> <!-- Barra lateral -->
+  
+    <div class="content">
+
+      <!-- <button mat-button class="create-button" (click)="crearUsuario()">Alta Usuario</button> -->
+  
+      <!-- Tabla de usuarios -->
+      <!-- <mat-table [dataSource]="usuarios" matSort> -->
+  
+        <!-- Columnas con filtros y ordenación -->
+        <ng-container matColumnDef="id">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>ID</mat-header-cell>
+          <mat-cell *matCellDef="let usuario">{{ usuario.id }}</mat-cell>
+        </ng-container>
+  
+        <!-- Agrega las otras columnas (nombre, apellido, email, fecha de alta, perfiles, último inicio de sesión) de manera similar -->
+  
+        <!-- Acciones -->
+        <!-- <ng-container matColumnDef="acciones">
+          <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
+          <mat-cell *matCellDef="let usuario">
+            <button mat-icon-button (click)="verUsuario(usuario)"><mat-icon>visibility</mat-icon></button>
+            <button mat-icon-button (click)="editarUsuario(usuario)"><mat-icon>edit</mat-icon></button>
+            <button mat-icon-button (click)="eliminarUsuario(usuario)"><mat-icon>delete</mat-icon></button>
+          </mat-cell>
+        </ng-container> -->
+  
+        <!-- Configura las columnas de acuerdo a tus datos -->
+  
+        <!-- <mat-header-row *matHeaderRowDef="columnas"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: columnas;"></mat-row>
+      </mat-table> -->
+    </div>
+  </div>
+  

@@ -1,0 +1,71 @@
+<!-- sidebar.component.html -->
+<div class="sidebar">
+    <ul>
+      <!-- Grupo 1 -->
+      <li class="sidebar-group">
+        <div>
+          <a routerLink="/dashboard">
+            <i class="material-icons">dashboard</i> Dashboard
+          </a>
+        </div>
+        <div>
+          <a routerLink="/estadisticas">
+            <i class="material-icons">bar_chart</i> Estadísticas
+          </a>
+        </div>
+      </li>
+      
+      <!-- Grupo 2 -->
+      <li class="sidebar-group">
+        <div>
+          <a routerLink="/usuarios">
+            <i class="material-icons">person</i> Usuarios
+          </a>
+        </div>
+        <div>
+          <a routerLink="/turneros">
+            <i class="material-icons">schedule</i> Turneros
+          </a>
+        </div>
+        <div>
+          <a routerLink="/productos">
+            <i class="material-icons">shopping_cart</i> Productos
+          </a>
+        </div>
+      </li>
+      
+      <!-- Grupo 3 -->
+      <li class="sidebar-group">
+        <div>
+          <a routerLink="/notificaciones">
+            <i class="material-icons">notifications</i> Notificaciones
+          </a>
+        </div>
+        <div>
+          <a routerLink="/ajustes">
+            <i class="material-icons">settings</i> Ajustes
+          </a>
+        </div>
+        <div>
+          <a routerLink="/ayuda">
+            <i class="material-icons">help</i> Ayuda
+          </a>
+        </div>
+      </li>
+  
+     <!-- Grupo 4 -->
+     <li class="sidebar-group">
+      <div class="profile-container">
+        <a routerLink="/perfil" class="profile-link">
+          <div class="profile-box">
+            <i class="material-icons">account_circle</i>
+            <span>Perfil</span>
+          </div>
+        </a>
+        <div class="logout-box" (click)="logout()">
+          <i class="material-icons">exit_to_app</i>
+        </div>
+      </div>
+    </li>    
+    </ul>
+  </div>
