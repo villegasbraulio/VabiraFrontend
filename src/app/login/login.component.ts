@@ -1,20 +1,43 @@
 import { Component } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css'] // Asegúrate de que esta línea apunte al archivo CSS que has creado.
+  styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
   username: string = '';
   password: string = '';
+  email: string = '';
+  errorMessage: string = ''; // Variable para almacenar el mensaje de error
+
+  constructor(private http: HttpClient, private router: Router) {}
 
   onSubmit() {
-    // Aquí puedes agregar la lógica para enviar la información de inicio de sesión al backend (Next.js).
-    // Puedes usar servicios HTTP de Angular para esto.
-    // Por ejemplo:
-    // this.authService.login(this.username, this.password).subscribe(response => {
-    //   // Manejar la respuesta del servidor aquí.
-    // });
+    const loginData = { username: this.username, email: this.email, password: this.password };
+
+    this.http.post('http://localhost:3000/api/auth/login', loginData).subscribe(
+      (response: any) => {
+        // Maneja la respuesta del servidor aquí
+        console.log('Respuesta del servidor:', response);
+
+        // Puedes hacer algo con el token devuelto, como guardar en localStorage
+        const token = response.token;
+        localStorage.setItem('token', token);
+
+        // Limpiar el mensaje de error en caso de éxito
+        this.errorMessage = '';
+        this.router.navigate(['']);
+      },
+      (error) => {
+        // Maneja los errores aquí
+        console.error('Error:', error);
+
+        // Establecer el mensaje de error basado en la respuesta del servidor o personalizado
+        this.errorMessage = 'Credenciales incorrectas. Por favor, verifica tu username, correo electrónico y/o contraseña.';
+      }
+    );
   }
 }

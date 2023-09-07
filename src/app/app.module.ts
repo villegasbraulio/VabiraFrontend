@@ -13,8 +13,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { UsersComponent } from './users/users.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTableModule } from '@angular/material/table';
+import { MatCardModule } from '@angular/material/card';
 import { MatSortModule } from '@angular/material/sort';
 import { MatIconModule } from '@angular/material/icon';
+import { HttpClientModule } from '@angular/common/http';
+import { MatDialogModule } from '@angular/material/dialog';
 
 
 
@@ -31,9 +34,12 @@ import { MatIconModule } from '@angular/material/icon';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    MatCardModule,
     MatToolbarModule,
     MatTableModule,
+    HttpClientModule,
     MatSortModule,
+    MatDialogModule,
     MatIconModule,    
     RouterModule,
     BrowserAnimationsModule // Agrega FormsModule aquí

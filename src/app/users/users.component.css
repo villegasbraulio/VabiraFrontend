@@ -22,3 +22,21 @@
     margin-right: 8px;
   }
   
+  .icono-accion {
+    cursor: pointer; /* Cambia el cursor al hacer hover sobre la imagen */
+  }
+  
+  .tarjeta-usuario {
+    margin-top: 10px; /* Espacio superior para separar la tarjeta de la fila anterior */
+    display: none; /* Oculta la tarjeta inicialmente */
+  }
+  /* users.component.css */
+/* ... Otros estilos ... */
+
+.reducir-imagen {
+  width: 32px; /* Ancho deseado para la imagen */
+  height: 30px; /* Alto deseado para la imagen */
+  cursor: pointer; /* Cambia el cursor al hacer hover sobre la imagen */
+}
+
+/* ... Otros estilos ... */

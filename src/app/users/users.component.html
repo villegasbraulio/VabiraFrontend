@@ -1,38 +1,46 @@
-<!-- users.component.html -->
+<mat-table [dataSource]="usuarios">
+  <ng-container matColumnDef="id">
+    <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
+    <mat-cell *matCellDef="let usuario">{{ usuario.id }}</mat-cell>
+  </ng-container>
 
-<div class="layout">
-    <app-sidebar></app-sidebar> <!-- Barra lateral -->
-  
-    <div class="content">
+  <ng-container matColumnDef="nombre">
+    <mat-header-cell *matHeaderCellDef>Nombre</mat-header-cell>
+    <mat-cell *matCellDef="let usuario">{{ usuario.firstName }}</mat-cell>
+  </ng-container>
 
-      <!-- <button mat-button class="create-button" (click)="crearUsuario()">Alta Usuario</button> -->
+  <ng-container matColumnDef="apellido">
+    <mat-header-cell *matHeaderCellDef>Apellido</mat-header-cell>
+    <mat-cell *matCellDef="let usuario">{{ usuario.lastName }}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="email">
+    <mat-header-cell *matHeaderCellDef>Email</mat-header-cell>
+    <mat-cell *matCellDef="let usuario">{{ usuario.email }}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="acciones">
+    <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
+    <mat-cell *matCellDef="let usuario">
+      <!-- Agrega una imagen que dispare el método verUsuario al hacer clic -->
+      <img src="../../assets/perfil.jpg" (click)="verUsuario(usuario.id)" class="icono-accion" class="icono-accion reducir-imagen">
   
-      <!-- Tabla de usuarios -->
-      <!-- <mat-table [dataSource]="usuarios" matSort> -->
-  
-        <!-- Columnas con filtros y ordenación -->
-        <ng-container matColumnDef="id">
-          <mat-header-cell *matHeaderCellDef mat-sort-header>ID</mat-header-cell>
-          <mat-cell *matCellDef="let usuario">{{ usuario.id }}</mat-cell>
-        </ng-container>
-  
-        <!-- Agrega las otras columnas (nombre, apellido, email, fecha de alta, perfiles, último inicio de sesión) de manera similar -->
-  
-        <!-- Acciones -->
-        <!-- <ng-container matColumnDef="acciones">
-          <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
-          <mat-cell *matCellDef="let usuario">
-            <button mat-icon-button (click)="verUsuario(usuario)"><mat-icon>visibility</mat-icon></button>
-            <button mat-icon-button (click)="editarUsuario(usuario)"><mat-icon>edit</mat-icon></button>
-            <button mat-icon-button (click)="eliminarUsuario(usuario)"><mat-icon>delete</mat-icon></button>
-          </mat-cell>
-        </ng-container> -->
-  
-        <!-- Configura las columnas de acuerdo a tus datos -->
-  
-        <!-- <mat-header-row *matHeaderRowDef="columnas"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: columnas;"></mat-row>
-      </mat-table> -->
-    </div>
-  </div>
-  
+      <!-- Tarjeta (card) oculta inicialmente -->
+      <mat-dialog-content *ngIf="usuarioSeleccionado">
+        <h3>Datos del Usuario</h3>
+        <ul>
+          <li><strong>ID:</strong> {{ usuarioSeleccionado.id }}</li>
+          <li><strong>Nombre:</strong> {{ usuarioSeleccionado.firstName }}</li>
+          <li><strong>Apellido:</strong> {{ usuarioSeleccionado.lastName }}</li>
+          <li><strong>Email:</strong> {{ usuarioSeleccionado.email }}</li>
+          <!-- Agrega más detalles según tus necesidades -->
+        </ul>
+      </mat-dialog-content>
+    </mat-cell>
+  </ng-container>
+
+  <!-- Resto de tus columnas aquí -->
+
+  <mat-header-row *matHeaderRowDef="columnas"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: columnas"></mat-row>
+</mat-table>
