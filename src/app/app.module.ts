@@ -18,6 +18,8 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatIconModule } from '@angular/material/icon';
 import { HttpClientModule } from '@angular/common/http';
 import { MatDialogModule } from '@angular/material/dialog';
+import { RegisterComponent } from './register/register.component';
+import { ErrorDialogComponent } from './error-dialog/error-dialog.component';
 
 
 
@@ -25,10 +27,12 @@ import { MatDialogModule } from '@angular/material/dialog';
   declarations: [
     AppComponent,
     LoginComponent,
+    RegisterComponent,
     ForgotPasswordComponent,
     SidebarComponent,
     PrincipalComponent,
-    UsersComponent
+    UsersComponent,
+    ErrorDialogComponent
   ],
   imports: [
     BrowserModule,

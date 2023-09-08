@@ -40,3 +40,22 @@
 }
 
 /* ... Otros estilos ... */
+.layout {
+  display: flex;
+  flex-direction: row; /* Asegura que los elementos estén en fila */
+  overflow: hidden;
+}
+app-sidebar {
+  flex: 0 0 auto;
+  width: 250px;
+  background-color: #1e3a6f;
+  color: white;
+  padding: 20px;
+}
+
+/* Estilos para el contenido principal */
+.content {
+  flex: 1;
+  padding: 20px;
+  overflow: auto; /* Agrega desplazamiento si es necesario */
+}

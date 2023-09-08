@@ -15,4 +15,5 @@ constructor(private router: Router) {}
     // Luego, redirige a la página de inicio de sesión o la página de inicio de la aplicación.
     this.router.navigate(['/login']); // Reemplaza 'login' con la ruta correcta.
   }
+  
 }

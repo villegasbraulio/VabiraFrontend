@@ -1,0 +1,33 @@
+/* Estilos para la disposición del diseño */
+.layout {
+    display: flex; /* Usar flexbox para disposición de la barra lateral y el contenido */
+  }
+  
+  .content {
+    flex-grow: 1; /* El contenido crecerá para llenar el espacio restante */
+    padding: 20px; /* Añadir un relleno al contenido principal */
+    overflow: auto; /* Agregar scroll si el contenido desborda la pantalla */
+  }
+  
+  /* Estilos para la barra lateral */
+  app-sidebar {
+    width: 250px; /* Ancho deseado de la barra lateral */
+    background-color: #1e3a6f;
+    color: white;
+    padding: 20px;
+    position: fixed;
+    top: 0; /* Alinear la barra lateral en la parte superior */
+    left: 0; /* Alinear la barra lateral en la parte izquierda */
+    bottom: 0; /* Estirar la barra lateral hasta la parte inferior */
+    z-index: 1; /* Colocar la barra lateral por encima del contenido */
+    display: flex;
+    flex-direction: column; /* Alinear elementos de la barra lateral en columna */
+  }
+  
+  .sidebar ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  /* ... (otros estilos para la barra lateral) ... */
+  

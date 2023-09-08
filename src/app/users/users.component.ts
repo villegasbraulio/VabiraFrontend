@@ -4,20 +4,21 @@ import { MatSort } from '@angular/material/sort';
 import { UserService } from './users.service'; // Importa tu servicio de usuario
 import { MatDialog } from '@angular/material/dialog'; // Importa MatDialog para el modal
 import { UserModalComponent } from './users-modal.component'; // Importa el componente del modal
+import { Router } from '@angular/router'; // Importa Router para la recarga de la página
 
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
-  styleUrls: ['./users.component.css']
+  styleUrls: ['./users.component.css', ]
 })
 export class UsersComponent implements OnInit {
   usuarios!: MatTableDataSource<any>;
-  columnas = ['id', 'nombre', 'apellido', 'email', 'acciones'];
+  columnas = ['id', 'username','nombre', 'apellido', 'email', 'dni', 'fecha de nacimiento', 'acciones'];
   usuarioSeleccionado: any;
 
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private userService: UserService, private dialog: MatDialog) { }
+  constructor(private userService: UserService, private dialog: MatDialog, private router: Router) { }
 
   ngOnInit() {
     this.cargarUsuarios();
@@ -42,6 +43,19 @@ export class UsersComponent implements OnInit {
     });
   }
 
+  eliminarUsuario(id: number) {
+    // Llama al método del servicio para eliminar el usuario por su ID
+    this.userService.eliminarUsuario(id).subscribe((data: any) => {
+      // Puedes realizar acciones adicionales después de eliminar el usuario, si es necesario.
+      this.reloadPage(); // Recarga la página después de eliminar el usuario
+    });
+  }
+
+  // Método para recargar la página
+  reloadPage() {
+    // Utiliza la función de JavaScript para recargar la página actual
+    location.reload();
+  }
 
   // Implementa las funciones para crear, editar y eliminar usuarios, etc.
 }

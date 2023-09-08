@@ -4,10 +4,12 @@ import { LoginComponent } from './login/login.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { PrincipalComponent } from './principal/principal.component';
 import { UsersComponent } from './users/users.component';
+import { RegisterComponent } from './register/register.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'forgot-password', component: ForgotPasswordComponent },
+  { path: 'register', component: RegisterComponent },
 
   { path: '', component: PrincipalComponent }, // Ruta principal (página vacía)
   { path: 'dashboard', component: PrincipalComponent }, // Ruta para el Dashboard (mismo componente principal)
