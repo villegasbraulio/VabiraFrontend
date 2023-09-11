@@ -1,0 +1,33 @@
+/* Estilos para el título */
+h1 {
+    font-size: 24px;
+    color: #333; /* Color del texto */
+    text-align: center; /* Centra el texto horizontalmente */
+    margin-bottom: 10px; /* Espacio debajo del título */
+  }
+  
+  /* Estilos para el párrafo de mensaje de error */
+  p {
+    font-size: 16px;
+    color: #555; /* Color del texto */
+    text-align: center; /* Centra el texto horizontalmente */
+    margin-bottom: 20px; /* Espacio debajo del párrafo */
+  }
+  
+  /* Estilos para el botón de cerrar */
+  button {
+    display: block; /* Convierte el botón en un bloque para centrarlo */
+    margin: 0 auto; /* Centra el botón horizontalmente */
+    padding: 10px 20px; /* Espacio alrededor del texto del botón */
+    background-color: #007bff; /* Color de fondo del botón */
+    color: #fff; /* Color del texto del botón */
+    border: none; /* Quita el borde del botón */
+    border-radius: 5px; /* Bordes redondeados */
+    cursor: pointer; /* Cambia el cursor al pasar por encima del botón */
+  }
+  
+  /* Estilos para el botón de cerrar al pasar el cursor */
+  button:hover {
+    background-color: #0056b3; /* Color de fondo al pasar el cursor */
+  }
+  

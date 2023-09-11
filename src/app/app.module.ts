@@ -20,6 +20,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatDialogModule } from '@angular/material/dialog';
 import { RegisterComponent } from './register/register.component';
 import { ErrorDialogComponent } from './error-dialog/error-dialog.component';
+import { EditarUsuarioModalComponent } from './users/editar-usuario-modal.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 
 
@@ -29,6 +31,7 @@ import { ErrorDialogComponent } from './error-dialog/error-dialog.component';
     LoginComponent,
     RegisterComponent,
     ForgotPasswordComponent,
+    EditarUsuarioModalComponent,
     SidebarComponent,
     PrincipalComponent,
     UsersComponent,
@@ -37,6 +40,7 @@ import { ErrorDialogComponent } from './error-dialog/error-dialog.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    MatSnackBarModule,
     FormsModule,
     MatCardModule,
     MatToolbarModule,
@@ -46,7 +50,7 @@ import { ErrorDialogComponent } from './error-dialog/error-dialog.component';
     MatDialogModule,
     MatIconModule,    
     RouterModule,
-    BrowserAnimationsModule // Agrega FormsModule aquí
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

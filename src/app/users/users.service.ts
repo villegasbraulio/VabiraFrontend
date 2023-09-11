@@ -25,5 +25,12 @@ export class UserService {
     return this.http.patch<any>(`${this.baseUrl}/delete`, body);
   }
 
+  editarUsuario(id: number, toUpdate:any): Observable<any> {
+    // Crea un objeto con el ID a eliminar
+    const body = { id: id, ...toUpdate };
+    // Realiza una solicitud POST con el cuerpo (body) que contiene el ID
+    return this.http.patch<any>(`${this.baseUrl}/update`, body);
+  }
+
   // Implementa otros métodos para crear, editar y eliminar usuarios según tus necesidades
 }

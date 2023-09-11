@@ -44,8 +44,19 @@ export class RegisterComponent {
         // Limpiar el mensaje de error en caso de éxito
         this.errorMessage = '';
 
-        // Redirige al usuario a la página principal
-        this.router.navigate(['/']); // Cambia '/main' por la ruta de tu página principal
+        // Verifica si el estado de la respuesta es 200 (éxito)
+        if (response.status === 201) {
+          // Redirige al usuario a la página principal
+          this.router.navigate(['/']); // Cambia '/main' por la ruta de tu página principal
+        } else {
+          // El estado no es 200, muestra el mensaje de error en el cuadro de diálogo
+          if (response.error && response.error.error) {
+            this.openErrorDialog(response.error.error);
+          } else {
+            this.openErrorDialog('Error al cargar los datos en el formulario');
+          }
+        }
+        
       },
       (errorResponse) => {
         console.error('Error:', errorResponse);

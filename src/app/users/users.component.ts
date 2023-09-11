@@ -5,6 +5,7 @@ import { UserService } from './users.service'; // Importa tu servicio de usuario
 import { MatDialog } from '@angular/material/dialog'; // Importa MatDialog para el modal
 import { UserModalComponent } from './users-modal.component'; // Importa el componente del modal
 import { Router } from '@angular/router'; // Importa Router para la recarga de la página
+import { EditarUsuarioModalComponent } from './editar-usuario-modal.component';
 
 @Component({
   selector: 'app-users',
@@ -51,11 +52,32 @@ export class UsersComponent implements OnInit {
     });
   }
 
+  editarUsuario(id: number, toUpdate:any) {
+    // Llama al método del servicio para eliminar el usuario por su ID
+    this.userService.editarUsuario(id, toUpdate).subscribe((data: any) => {
+      // Puedes realizar acciones adicionales después de eliminar el usuario, si es necesario.
+    });
+  }
+  
+
   // Método para recargar la página
   reloadPage() {
     // Utiliza la función de JavaScript para recargar la página actual
     location.reload();
   }
 
-  // Implementa las funciones para crear, editar y eliminar usuarios, etc.
+  abrirModalEdicion(usuario: any) {
+    const dialogRef = this.dialog.open(EditarUsuarioModalComponent, {
+      width: '400px', // Puedes ajustar el ancho según tus necesidades
+      data: { usuario } // Pasa los datos del usuario al modal
+    });
+  
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        // Aquí puedes actualizar los datos del usuario en tu tabla
+        const usuarioEditado = result;
+        // Realiza la lógica para actualizar los datos
+      }
+    });
+  }
 }

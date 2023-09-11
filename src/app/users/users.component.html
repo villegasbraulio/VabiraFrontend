@@ -42,6 +42,7 @@
         <mat-cell *matCellDef="let usuario">
           <!-- Agrega una imagen que dispare el método verUsuario al hacer clic -->
           <img src="../../assets/perfil.jpg" (click)="verUsuario(usuario.id)" class="icono-accion" class="icono-accion reducir-imagen">
+          <img src="../../assets/lapiz.png" (click)="abrirModalEdicion(usuario)" class="icono-accion" class="icono-accion reducir-imagen">
           <img src="../../assets/tacho.jpg" (click)="eliminarUsuario(usuario.id)" class="icono-accion" class="icono-accion reducir-imagen" (click)="reloadPage()">
       
           <!-- Tarjeta (card) oculta inicialmente -->
