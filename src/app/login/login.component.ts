@@ -29,7 +29,7 @@ export class LoginComponent {
 
         // Limpiar el mensaje de error en caso de éxito
         this.errorMessage = '';
-        this.router.navigate(['']);
+        this.router.navigate(['principal']);
       },
       (error) => {
         // Maneja los errores aquí

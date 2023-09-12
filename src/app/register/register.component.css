@@ -42,10 +42,21 @@ body {
   margin-bottom: 20px;
 }
 
-.form-group {
-  margin-bottom: 10px;
+.flex-form {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
 }
 
+.form-group {
+  flex: 0 0 calc(50% - 12px); /* Ancho del 50% con espacio entre los elementos */
+  margin-bottom: 16px;
+}
+
+label {
+  display: block;
+}
 /* ... Otros estilos del formulario ... */
 
 .image-container {

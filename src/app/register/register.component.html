@@ -3,7 +3,7 @@
     <div class="form-container">
       <h1>VABIRA</h1>
       <h2>Iniciar Sesión</h2>
-      <form (ngSubmit)="onSubmit()">
+      <form (ngSubmit)="onSubmit()" class="flex-form">
         <div class="form-group">
           <label for="username">Nombre de usuario:</label>
           <input type="text" id="username" name="username" [(ngModel)]="username" required>
@@ -32,9 +32,8 @@
           <label for="dateOfBirth">Fecha de nacimiento:</label>
           <input type="date" id="dateOfBirth" name="dateOfBirth" [(ngModel)]="dateOfBirth" required>
         </div>
-        <button type="submit">Crear</button>
-
       </form>
+      <button type="submit">Crear</button>
     </div>
     <div class="image-container">
       <!-- Aquí puedes agregar tu imagen -->

@@ -12,6 +12,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
 
   { path: '', component: LoginComponent }, // Ruta principal (página vacía)
+  { path: 'principal', component: PrincipalComponent }, // Ruta para el Dashboard (mismo componente principal)
   { path: 'dashboard', component: PrincipalComponent }, // Ruta para el Dashboard (mismo componente principal)
   { path: 'usuarios', component: UsersComponent }, // Ruta para Usuarios (mismo componente principal)
     // Otras rutas para las diferentes secciones de tu aplicación
