@@ -1,0 +1,16 @@
+<!-- reservar-cita.component.html -->
+<h2>Reservar Cita</h2>
+<p>Día y hora seleccionados: {{ selectedDay }} a las {{ selectedTime }}</p>
+<mat-form-field>
+  <input matInput placeholder="Nombre" [(ngModel)]="nombre">
+</mat-form-field>
+<mat-form-field>
+  <input matInput placeholder="Apellido" [(ngModel)]="apellido">
+</mat-form-field>
+<mat-form-field>
+  <input matInput placeholder="Username" [(ngModel)]="username">
+</mat-form-field>
+<div class="button-container">
+  <button mat-button (click)="reservarCita()">Reservar</button>
+  <button mat-button (click)="cancelar()">Cancelar</button>
+</div>

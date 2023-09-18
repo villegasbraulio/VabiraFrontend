@@ -1,0 +1,76 @@
+<div class="layout">
+  <app-sidebar></app-sidebar> 
+  <div class="content">
+    <mat-table [dataSource]="usuarios">
+      <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
+        <mat-cell *matCellDef="let usuario">{{ usuario.id }}</mat-cell>
+      </ng-container>
+    
+      <ng-container matColumnDef="username">
+        <mat-header-cell *matHeaderCellDef>Username</mat-header-cell>
+        <mat-cell *matCellDef="let usuario">{{ usuario.username }}</mat-cell>
+      </ng-container>
+    
+      <ng-container matColumnDef="nombre">
+        <mat-header-cell *matHeaderCellDef>Nombre</mat-header-cell>
+        <mat-cell *matCellDef="let usuario">{{ usuario.firstName }}</mat-cell>
+      </ng-container>
+    
+      <ng-container matColumnDef="apellido">
+        <mat-header-cell *matHeaderCellDef>Apellido</mat-header-cell>
+        <mat-cell *matCellDef="let usuario">{{ usuario.lastName }}</mat-cell>
+      </ng-container>
+    
+      <ng-container matColumnDef="email">
+        <mat-header-cell *matHeaderCellDef>Email</mat-header-cell>
+        <mat-cell *matCellDef="let usuario">{{ usuario.email }}</mat-cell>
+      </ng-container>
+    
+      <ng-container matColumnDef="dni">
+        <mat-header-cell *matHeaderCellDef>DNI</mat-header-cell>
+        <mat-cell *matCellDef="let usuario">{{ usuario.dni }}</mat-cell>
+      </ng-container>
+    
+      <ng-container matColumnDef="fecha de nacimiento">
+        <mat-header-cell *matHeaderCellDef>Fecha de nacimiento</mat-header-cell>
+        <mat-cell *matCellDef="let usuario">{{ usuario.dateOfBirth }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="roles">
+        <mat-header-cell *matHeaderCellDef>Roles</mat-header-cell>
+        <mat-cell *matCellDef="let usuario">{{ usuario.roles }}</mat-cell>
+      </ng-container>
+    
+      <ng-container matColumnDef="acciones">
+        <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
+        <mat-cell *matCellDef="let usuario">
+          <!-- Agrega una imagen que dispare el método verUsuario al hacer clic -->
+          <img src="../../assets/perfil.jpg" (click)="verUsuario(usuario.id)" class="icono-accion" class="icono-accion reducir-imagen">
+          <img src="../../assets/lapiz.png" (click)="abrirModalEdicion(usuario)" class="icono-accion" class="icono-accion reducir-imagen">
+          <img src="../../assets/tacho.jpg" (click)="eliminarUsuario(usuario.id)" class="icono-accion" class="icono-accion reducir-imagen" (click)="reloadPage()">
+      
+          <!-- Tarjeta (card) oculta inicialmente -->
+          <mat-dialog-content *ngIf="usuarioSeleccionado">
+            <h3>Datos del Usuario</h3>
+            <ul>
+              <li><strong>ID:</strong> {{ usuarioSeleccionado.id }}</li>
+              <li><strong>Username:</strong> {{ usuarioSeleccionado.username }}</li>
+              <li><strong>Nombre:</strong> {{ usuarioSeleccionado.firstName }}</li>
+              <li><strong>Apellido:</strong> {{ usuarioSeleccionado.lastName }}</li>
+              <li><strong>Email:</strong> {{ usuarioSeleccionado.email }}</li>
+              <!-- Agrega más detalles según tus necesidades -->
+            </ul>
+          </mat-dialog-content>
+        </mat-cell>
+      </ng-container>
+    
+      <!-- Resto de tus columnas aquí -->
+    
+      <mat-header-row *matHeaderRowDef="columnas"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: columnas"></mat-row>
+    </mat-table>
+    <router-outlet></router-outlet>
+    
+  </div>
+</div>

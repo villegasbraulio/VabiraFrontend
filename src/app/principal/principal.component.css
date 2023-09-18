@@ -1,0 +1,24 @@
+/* dashboard.component.css */
+
+.layout {
+    display: flex;
+    height: 100%;
+  }
+  
+  .app-sidebar {
+    /* Estilos de la barra lateral, ajusta según sea necesario */
+  }
+  
+  .content {
+    flex-grow: 1;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .agenda-container {
+    flex: 2; /* Ajusta este valor según tus necesidades */
+    background-color: #f0f0f0; /* Cambia el color de fondo de la agenda */
+    overflow-y: auto; /* Agrega desplazamiento vertical si la agenda es larga */
+  }
+  

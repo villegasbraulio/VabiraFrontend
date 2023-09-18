@@ -1,0 +1,31 @@
+/* agenda.component.css */
+
+table {
+  border-collapse: collapse;
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+th, td {
+  text-align: center;
+  padding: 10px;
+  border: 1px solid #ccc;
+  height: 40px;
+  width: 16.67%; /* Establece un ancho fijo para cada columna (100% / 6 columnas) */
+}
+
+button {
+  width: 100%;
+  height: 100%;
+}
+
+/* Estilos para los horarios ocupados */
+div {
+  background-color: #def7d0;
+  padding: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+  /* Ajusta otros estilos según tus necesidades */
+}
+
