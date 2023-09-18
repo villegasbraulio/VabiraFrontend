@@ -50,9 +50,12 @@ app-sidebar {
   width: 250px;
   background-color: #1e3a6f;
   color: white;
-  padding: 20px;
 }
-
+.alta-button {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+}
 /* Estilos para el contenido principal */
 .content {
   flex: 1;

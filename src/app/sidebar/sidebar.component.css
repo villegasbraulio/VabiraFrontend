@@ -1,81 +1,85 @@
 /* sidebar.component.css */
+
 .sidebar {
-  height: 100vh;
-  width: 250px;
-  background-color: #1e3a6f;
-  /* Fondo azul oscuro */
-  color: white;
-  padding: 20px;
+  background-color: #2c3e50; /* Cambia el color de fondo a tu preferencia */
+  width: 250px; /* Ancho de la barra lateral */
+  height: 100%; /* Altura completa */
   position: fixed;
   top: 0;
-  /* Ajusta la posición superior a 0 para eliminar el espacio superior */
   left: 0;
-  /* Ajusta la posición izquierda a 0 para que esté en el borde izquierdo */
-}
-app-sidebar {
-  flex: 0 0 auto;
-  width: 250px;
-  background-color: #1e3a6f;
-  color: white;
-  padding: 20px;
+  overflow-y: auto; /* Agrega desplazamiento vertical si es necesario */
 }
 
 .sidebar ul {
-  list-style-type: none;
+  list-style: none;
   padding: 0;
   margin: 0;
-  /* Elimina el margen para que los elementos comiencen desde la parte superior */
 }
 
-.sidebar li {
-  margin-bottom: 20px;
-  /* Espacio entre grupos */
+.sidebar-group {
+  border-bottom: 1px solid #34495e; /* Línea divisoria entre grupos */
 }
 
-.sidebar a {
-  color: white;
-  text-decoration: none;
-  display: flex;
-  /* Mostrar enlaces en una fila */
-  align-items: center;
-  /* Centrar verticalmente el texto e icono */
-  font-size: 18px;
-  /* Tamaño de fuente */
-  font-weight: 600;
-  /* Grosor de fuente */
+.sidebar-group:last-child {
+  position: absolute; /* Posición absoluta para el último grupo */
+  bottom: 0; /* Alineación al fondo */
+  left: 0;
+  right: 0; /* Ocupar todo el ancho */
+  border-bottom: none; /* Eliminar la línea divisoria inferior */
 }
 
-/* Estilo para los enlaces dentro de un grupo */
 .sidebar-group div {
-  margin-bottom: 5px;
-  /* Espacio vertical entre enlaces */
+  padding: 10px;
+  display: flex;
+  align-items: center;
 }
 
-/* Estilo para la sección de perfil */
-.profile-link {
+.sidebar-group div a {
+  text-decoration: none;
+  color: #ecf0f1; /* Color de texto para los enlaces */
+  font-size: 16px;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  text-align: center;
+  transition: background-color 0.3s;
 }
+
+.sidebar-group div a:hover {
+  background-color: #34495e; /* Cambia el color de fondo al pasar el mouse */
+}
+
+/* Estilo para los íconos */
+.material-icons {
+  margin-right: 10px;
+}
+
+/* Estilo para el perfil y logout en el Grupo 4 */
+.profile-container {
+  display: flex;
+  justify-content: space-between; /* Coloca elementos en el espacio horizontalmente */
+  align-items: center;
+  margin-top: 20px; /* Margen superior entre el último grupo y los grupos anteriores */
+}
+
+.profile-link {
+  text-decoration: none;
+  color: #ecf0f1;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  margin-right: 10px; /* Espacio entre el perfil y el logout */
+}
+
 
 .profile-box {
-  background-color: #333;
-  /* Fondo del recuadro */
-  color: white;
-  padding: 10px;
-  border-radius: 10px;
-  /* Esquinas redondeadas */
-  margin-bottom: 5px;
   display: flex;
   align-items: center;
-  /* Centra verticalmente los elementos dentro de profile-box */
-  margin-right: 16px;
+  padding: 10px;
+  border-radius: 5px;
+  transition: background-color 0.3s;
 }
 
-.profile-box i {
-  font-size: 24px;
-  /* Tamaño del icono de perfil */
+.profile-box:hover {
+  background-color: #34495e;
 }
 
 .logout-box {
@@ -83,19 +87,18 @@ app-sidebar {
   align-items: center;
   /* Centra verticalmente el ícono de logout dentro de logout-box */
   cursor: pointer;
+  font-size: 24px;
+  color: #ecf0f1;
 }
 
-.layout {
+/* .layout {
   display: flex;
-  flex-direction: row; /* Asegura que los elementos estén en fila */
+  flex-direction: row; 
   overflow: hidden;
-}
-/* Agrega estos estilos CSS a tu archivo de estilos o en el lugar apropiado */
+} */
 
-/* Para ajustar el contenido principal al espacio a la derecha de la barra lateral */
-/* Estilos para el contenido principal */
-.content {
+/* .content {
   flex: 1;
   padding: 20px;
-  overflow: auto; /* Agrega desplazamiento si es necesario */
-}
+  overflow: auto; 
+} */

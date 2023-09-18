@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material/dialog'; // Importa MatDialog para 
 import { UserModalComponent } from './users-modal.component'; // Importa el componente del modal
 import { Router } from '@angular/router'; // Importa Router para la recarga de la página
 import { EditarUsuarioModalComponent } from './editar-usuario-modal.component';
+import { RegisterComponent } from '../register/register.component'; // Importa el componente de registro
 
 @Component({
   selector: 'app-users',
@@ -14,12 +15,16 @@ import { EditarUsuarioModalComponent } from './editar-usuario-modal.component';
 })
 export class UsersComponent implements OnInit {
   usuarios!: MatTableDataSource<any>;
-  columnas = ['id', 'username','nombre', 'apellido', 'email', 'dni', 'fecha de nacimiento', 'acciones'];
+  columnas = ['id', 'username','nombre', 'apellido', 'email', 'dni', 'fecha de nacimiento','roles' , 'acciones'];
   usuarioSeleccionado: any;
 
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private userService: UserService, private dialog: MatDialog, private router: Router) { }
+  constructor(private userService: UserService, private dialog: MatDialog, private router: Router) {
+
+
+    
+   }
 
   ngOnInit() {
     this.cargarUsuarios();
@@ -79,5 +84,6 @@ export class UsersComponent implements OnInit {
         // Realiza la lógica para actualizar los datos
       }
     });
+    
   }
 }

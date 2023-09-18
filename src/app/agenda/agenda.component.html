@@ -1,0 +1,25 @@
+<table>
+  <thead>
+    <tr>
+      <th></th>
+      <th *ngFor="let day of days">{{ day }}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let time of horarios">
+      <td>{{ time }}</td>
+      <td *ngFor="let day of days" (click)="handleTimeClick(day, time)">
+        <div *ngIf="!isAppointmentScheduled(day, time)">
+          <!-- Horario libre -->
+          <button mat-button></button>
+        </div>
+        <div *ngIf="isAppointmentScheduled(day, time)">
+          <!-- Horario ocupado -->
+          <button mat-button (click)="openAppointmentDetails(day, time)">
+            {{ getAppointmentUserName(day, time) }}
+          </button>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>

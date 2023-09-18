@@ -22,8 +22,12 @@ import { RegisterComponent } from './register/register.component';
 import { ErrorDialogComponent } from './error-dialog/error-dialog.component';
 import { EditarUsuarioModalComponent } from './users/editar-usuario-modal.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { AgendaComponent } from './agenda/agenda.component';
+import { ReservarCitaComponent } from './reservar-cita/reservar-cita.component';
+import { DetallesCitaComponent } from './detalles-cita/detalles-cita.component';
 
-
+import { MatFormFieldModule } from '@angular/material/form-field'; // Importa MatFormFieldModule
+import { MatInputModule } from '@angular/material/input'; // Importa MatInputModule
 
 @NgModule({
   declarations: [
@@ -35,7 +39,10 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     SidebarComponent,
     PrincipalComponent,
     UsersComponent,
-    ErrorDialogComponent
+    ErrorDialogComponent,
+    AgendaComponent,
+    ReservarCitaComponent,
+    DetallesCitaComponent,
   ],
   imports: [
     BrowserModule,
@@ -50,7 +57,11 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatDialogModule,
     MatIconModule,    
     RouterModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatDialogModule, // Asegúrate de que MatDialogModule esté importado aquí
+    MatFormFieldModule, // Agrega MatFormFieldModule aquí
+    MatInputModule, // Agrega MatInputModule aquí
+    
   ],
   providers: [],
   bootstrap: [AppComponent]
