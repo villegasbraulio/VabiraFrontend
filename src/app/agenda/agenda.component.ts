@@ -1,42 +1,79 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ReservarCitaComponent } from '../reservar-cita/reservar-cita.component';
 import * as moment from 'moment';
+import { AgendaService } from './agenda.service';
 
 @Component({
   selector: 'app-agenda',
   templateUrl: './agenda.component.html',
   styleUrls: ['./agenda.component.css']
 })
-export class AgendaComponent {
-  horarios: string[] = [
-    '9:00 AM', '10:00 AM', '11:00 AM', '12:00 PM',
-    '1:00 PM', '2:00 PM', '3:00 PM', '4:00 PM',
-    '5:00 PM', '6:00 PM', '7:00 PM', '8:00 PM', '9:00 PM'
-  ];
-
-  days: string[] = []; // Actualizaremos esta propiedad con los días de la semana actual
+export class AgendaComponent implements OnInit {
+  days: string[] = [];
   currentDate = moment();
-  weekDays: { day: string; date: string }[] = [];
+  scheduleData: any;
+  timeSlots: { start: string; end: string }[] = [];
 
-  constructor(private dialog: MatDialog) {
-    // Calcula la fecha de inicio de la semana actual (lunes)
-    const startOfWeek = this.currentDate.clone().startOf('week');
+  constructor(private dialog: MatDialog, private agendaService: AgendaService) {}
 
-    // Calcula los días de la semana actual
-    for (let i = 0; i < 5; i++) { // Solo necesitas 5 días laborables
-      const dayDate = startOfWeek.clone().add(i, 'days');
-      this.days.push(dayDate.format('dddd DD/MM'));
+  ngOnInit(): void {
+    this.agendaService.obtenerAgenda(3).subscribe((data) => {
+      this.scheduleData = data;
+      this.days = this.scheduleData.turn
+        .reduce((uniqueDays: string[], turn: any) => {
+          if (!uniqueDays.includes(turn.classDayType.name)) {
+            uniqueDays.push(turn.classDayType.name);
+          }
+          return uniqueDays;
+        }, []);
+      this.generateTimeSlots();
+    });
+  }
+
+  generateTimeSlots() {
+    if (this.scheduleData && this.scheduleData.turn) {
+      this.timeSlots = [];
+  
+      for (const turn of this.scheduleData.turn) {
+        const startTime = moment(turn.dateFrom).format('hh:mm A');
+        const endTime = moment(turn.dateTo).format('hh:mm A');
+        const timeSlot = { start: startTime, end: endTime };
+  
+        // Verifica si el intervalo de tiempo ya existe en la lista antes de agregarlo
+        if (!this.timeSlots.some(ts => ts.start === timeSlot.start && ts.end === timeSlot.end)) {
+          this.timeSlots.push(timeSlot);
+        }
+      }
     }
+  }
+
+  isAppointmentScheduled(dayType: string, start: string, end: string): boolean {
+    if (!this.scheduleData || !this.scheduleData.turn) {
+      return false;
+    }
+
+    return this.scheduleData.turn.some((turn: any) => {
+      return turn.classDayType.name === dayType && this.isTimeWithinRange(start, end, turn.dateFrom, turn.dateTo);
+    });
+  }
+
+  isTimeWithinRange(checkStart: string, checkEnd: string, rangeStart: string, rangeEnd: string): boolean {
+    const momentCheckStart = moment(checkStart, 'hh:mm A');
+    const momentCheckEnd = moment(checkEnd, 'hh:mm A');
+    const momentRangeStart = moment(rangeStart);
+    const momentRangeEnd = moment(rangeEnd);
+
+    return momentCheckStart.isSameOrAfter(momentRangeStart) && momentCheckEnd.isBefore(momentRangeEnd);
   }
 
   updateCurrentDate() {
     this.currentDate = moment();
   }
 
-  handleTimeClick(day: string, time: string) {
+  handleTimeClick(dayType: string, start: string, end: string) {
     const dialogRef = this.dialog.open(ReservarCitaComponent, {
-      data: { day, time }
+      data: { day: dayType, time: `${start} - ${end}` }
     });
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -45,47 +82,17 @@ export class AgendaComponent {
       }
     });
   }
-  isAppointmentScheduled(day: string, time: string): boolean {
-    // Aquí debes implementar la lógica para verificar si hay una cita programada para el día y la hora especificados.
-    // Retorna true si está ocupado, false si está libre.
-    // Por ejemplo, podrías verificar si existe un objeto de cita en tu estructura de datos 'appointments'.
-    return false; // Esto es un ejemplo, debes cambiarlo según tu lógica.
+
+  openAppointmentDetails(dayType: string, start: string, end: string) {
+    // Implementa la lógica para abrir los detalles de la cita según los parámetros proporcionados.
+    // Puedes usar un cuadro de diálogo o ventana emergente para mostrar los detalles de la cita.
+    // Puedes acceder a los detalles de la cita utilizando los parámetros proporcionados.
   }
-  
-  openAppointmentDetails(day: string, time: string) {
-    // Aquí debes implementar la lógica para abrir los detalles de la cita.
-    // Puedes usar un cuadro de diálogo o una ventana emergente para mostrar los detalles de la cita.
-    // Puedes acceder a los detalles de la cita utilizando 'day' y 'time' para buscar en tus datos.
-  }
-  
-  getAppointmentUserName(day: string, time: string): string {
-    // Aquí debes implementar la lógica para obtener el nombre del usuario de la cita programada para el día y la hora especificados.
+
+  getAppointmentUserName(dayType: string, start: string, end: string): string {
+    // Implementa la lógica para obtener el nombre del usuario de la cita programada para los parámetros proporcionados.
     // Retorna el nombre del usuario.
-    // Por ejemplo, podrías buscar en tu estructura de datos 'appointments'.
+    // Puedes buscar en tus datos utilizando los parámetros proporcionados.
     return ''; // Esto es un ejemplo, debes cambiarlo según tu lógica.
   }
-  
 }
-
-
-
-  // abrirVentanaReserva(day: string, time: string) {
-  //   const dialogRef = this.dialog.open(ReservarCitaComponent, {
-  //     data: { day, time }
-  //   });
-
-  //   dialogRef.afterClosed().subscribe((result) => {
-  //     // Manejar el resultado después de la reserva
-  //   });
-  // }
-
-  // abrirVentanaDetallesCita(cita: any) {
-  //   const dialogRef = this.dialog.open(DetallesCitaComponent, {
-  //     data: cita
-  //   });
-
-  //   dialogRef.afterClosed().subscribe(() => {
-  //     // Puedes agregar lógica adicional después de cerrar los detalles de la cita
-  //   });
-  // }
-  // Resto de tu lógica para manejar los turnos
