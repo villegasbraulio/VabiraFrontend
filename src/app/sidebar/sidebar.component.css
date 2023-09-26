@@ -91,6 +91,81 @@
   color: #ecf0f1;
 }
 
+.dropdown {
+  position: relative;
+}
+
+.dropdown-toggle {
+  text-decoration: none;
+  color: #ecf0f1; /* Color de texto para el botón del dropdown */
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.dropdown-toggle:hover {
+  background-color: #34495e; /* Cambia el color de fondo al pasar el mouse */
+}
+
+.dropdown-menu {
+  position: absolute;
+  background-color: #2c3e50; /* Cambia el color de fondo del menú */
+  box-shadow: none; /* Elimina la sombra del menú */
+  border: none; /* Elimina el borde del menú */
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-radius: 0; /* Elimina el borde redondeado */
+  top: 100%; /* Coloca el menú debajo del botón */
+  left: 0;
+  width: 100%; /* Ocupa todo el ancho del contenedor */
+}
+
+.dropdown-item {
+  text-decoration: none;
+  color: #ecf0f1; /* Color de texto para los elementos del menú */
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  transition: background-color 0.3s;
+}
+
+.dropdown-item:hover {
+  background-color: #34495e; /* Cambia el color de fondo al pasar el mouse */
+}
+
+/* sidebar.component.css */
+/* Estilo para el botón "Usuarios" */
+.custom-dropdown-toggle {
+  text-decoration: none;
+  color: #ecf0f1; /* Color de texto para el botón de Usuarios */
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  background-color: #2c3e50; /* Color de fondo igual al del sidebar */
+}
+
+/* Eliminar el cambio de color al hacer hover en el botón "Usuarios" */
+.custom-dropdown-toggle:hover {
+  background-color: #2c3e50; /* Establecer el fondo como el color del sidebar */
+}
+
+/* Agregado para mantener el color de Usuarios igual al de las otras opciones */
+.sidebar-group div .user-menu-button {
+  background-color: #2c3e50;
+}
+
+/* Agregado para mantener el color del enlace de Usuario igual al de las otras opciones */
+.sidebar-group div a.router-link-active {
+  background-color: #34495e;
+  font-weight: bold; /* Agregado para resaltar el enlace activo */
+}
+
 /* .layout {
   display: flex;
   flex-direction: row; 

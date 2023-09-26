@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { ErrorDialogComponent } from '../error-dialog/error-dialog.component';
-import { Router } from '@angular/router'; // Importa el Router de Angular
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -17,7 +17,16 @@ export class RegisterComponent {
   dateOfBirth: string = '';
   password: string = '';
   email: string = '';
-  errorMessage: string = ''; // Variable para almacenar el mensaje de error
+  errorMessage: string = '';
+  isProvider: boolean = false;
+  isClient: boolean = false;
+  legajo: string = '';
+  cuit: string = '';
+  identityNumber: string = '';
+  country: string = '';
+  politicalDivision: string = '';
+  address: string = '';
+  
 
   constructor(private http: HttpClient, private dialog: MatDialog, private router: Router) {}
 
@@ -29,10 +38,25 @@ export class RegisterComponent {
       firstName: this.firstName,
       lastName: this.lastName,
       dni: this.dni,
-      dateOfBirth: this.dateOfBirth
+      dateOfBirth: this.dateOfBirth,
+      legajo: this.legajo,
+      cuit: this.cuit,
+      identityNumber: this.identityNumber,
+      country: this.country,
+      politicalDivision: this.politicalDivision,
+      address: this.address
     };
 
-    this.http.post('http://localhost:3000/api/users/create', userData).subscribe(
+    let apiUrl = 'http://localhost:3000/api/users/create';
+
+    // Ajusta la URL del punto final en función del estado de los interruptores
+    if (this.isProvider) {
+      apiUrl = 'http://localhost:3000/api/users/createSupplier';
+    } else if (this.isClient) {
+      apiUrl = 'http://localhost:3000/api/users/createClient';
+    }
+
+    this.http.post(apiUrl, userData).subscribe(
       (response: any) => {
         // Maneja la respuesta del servidor aquí
         console.log('Respuesta del servidor:', response);
@@ -56,7 +80,6 @@ export class RegisterComponent {
             this.openErrorDialog('Error al cargar los datos en el formulario');
           }
         }
-        
       },
       (errorResponse) => {
         console.error('Error:', errorResponse);
@@ -72,6 +95,21 @@ export class RegisterComponent {
         this.openErrorDialog(this.errorMessage);
       }
     );
+  }
+
+  // Función para manejar cambios en los interruptores
+  onSwitchChange(type: string) {
+    if (type === 'provider') {
+      // Si el switch de Proveedor se activa, desactiva el switch de Cliente
+      if (this.isProvider) {
+        this.isClient = false;
+      }
+    } else if (type === 'client') {
+      // Si el switch de Cliente se activa, desactiva el switch de Proveedor
+      if (this.isClient) {
+        this.isProvider = false;
+      }
+    }
   }
 
   // Función para abrir el cuadro de diálogo de error
