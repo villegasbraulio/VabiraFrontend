@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';  //modulo formularios
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';  //modulo formularios
 import { RouterModule } from '@angular/router';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -61,7 +61,7 @@ import { MatInputModule } from '@angular/material/input'; // Importa MatInputMod
     MatDialogModule, // Asegúrate de que MatDialogModule esté importado aquí
     MatFormFieldModule, // Agrega MatFormFieldModule aquí
     MatInputModule, // Agrega MatInputModule aquí
-    
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

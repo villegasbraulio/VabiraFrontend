@@ -28,19 +28,37 @@
 
         <div class="form-group" *ngIf="isClient">
           <label for="continent">Continente:</label>
-          <input type="text" id="continent" name="continent" [(ngModel)]="continent" required>
+          <select id="continent" name="continent" [formControl]="continentControl" (change)="onContinentChange()">
+            <option value="" disabled selected>Selecciona un continente</option>
+            <option *ngFor="let continent of continents$ | async" [value]="continent.id">{{ continent.name }}</option>
+          </select>
         </div>
+
+        <!-- Region Dropdown -->
         <div class="form-group" *ngIf="isClient">
-          <label for="region">Region:</label>
-          <input type="text" id="region" name="region" [(ngModel)]="region" required>
+          <label for="region">Región:</label>
+          <select id="region" name="region" [formControl]="regionControl" (change)="onRegionChange()">
+            <option value="" disabled selected>Selecciona una región</option>
+            <option *ngFor="let region of regions$ | async" [value]="region.id">{{ region.name }}</option>
+          </select>
         </div>
+
+        <!-- Country Dropdown -->
         <div class="form-group" *ngIf="isClient">
-          <label for="country">Pais:</label>
-          <input type="text" id="country" name="country" [(ngModel)]="country" required>
+          <label for="country">País:</label>
+          <select id="country" name="country" [formControl]="countryControl" (change)="onCountryChange()">
+            <option value="" disabled selected>Selecciona un país</option>
+            <option *ngFor="let country of countries$ | async" [value]="country.id">{{ country.name }}</option>
+          </select>
         </div>
+
+        <!-- Political Division Dropdown -->
         <div class="form-group" *ngIf="isClient">
           <label for="politicalDivision">Provincia:</label>
-          <input type="text" id="politicalDivision" name="politicalDivision" [(ngModel)]="politicalDivision" required>
+          <select id="politicalDivision" name="politicalDivision" [formControl]="politicalDivisionControl">
+            <option value="" disabled selected>Selecciona una provincia</option>
+            <option *ngFor="let politicalDivision of politicalDivisions$ | async" [value]="politicalDivision.id">{{ politicalDivision.name }}</option>
+          </select>
         </div>
         <div class="form-group" *ngIf="isClient">
           <label for="address">Domicilio:</label>

@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
+import { FormControl, FormBuilder, FormGroup } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { ErrorDialogComponent } from '../error-dialog/error-dialog.component';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-register',
@@ -23,14 +25,93 @@ export class RegisterComponent {
   legajo: string = '';
   cuit: string = '';
   identityNumber: string = '';
-  country: string = '';
-  politicalDivision: string = '';
   address: string = '';
-  continent: string = '';
-  region: string = '';
-  
 
-  constructor(private http: HttpClient, private dialog: MatDialog, private router: Router) {}
+  // Define form groups and form controls for dropdowns
+  form: FormGroup;
+  continentControl: FormControl;
+  regionControl: FormControl;
+  countryControl: FormControl;
+  politicalDivisionControl: FormControl;
+
+  // Observable variables to hold dropdown data
+  continents$: Observable<any[]> = new Observable<any[]>();
+  regions$: Observable<any[]> = new Observable<any[]>();
+  countries$: Observable<any[]> = new Observable<any[]>();
+  politicalDivisions$: Observable<any[]> = new Observable<any[]>();
+
+  constructor(
+    private http: HttpClient,
+    private dialog: MatDialog,
+    private router: Router,
+    private formBuilder: FormBuilder
+  ) {
+    // Initialize form controls
+    this.continentControl = new FormControl('');
+    this.regionControl = new FormControl('');
+    this.countryControl = new FormControl('');
+    this.politicalDivisionControl = new FormControl('');
+
+    // Initialize form group
+    this.form = this.formBuilder.group({
+      username: '',
+      firstName: '',
+      lastName: '',
+      dni: '',
+      dateOfBirth: '',
+      password: '',
+      email: '',
+      legajo: '',
+      cuit: '',
+      identityNumber: '',
+      continent: '',
+      region: '',
+      country: '',
+      politicalDivision: '',
+      address: ''
+    });
+
+    // Fetch initial data for dropdowns
+    this.loadContinents();
+  }
+
+  // Function to load continent data
+  loadContinents() {
+    this.continents$ = this.http.get<any[]>('http://localhost:3000/api/continent/all');
+  }
+
+  // Function to load regions based on continent selection
+  loadRegions(continentId: number) {
+    this.regions$ = this.http.get<any[]>(`http://localhost:3000/api/region/all?id=${continentId}`);
+  }
+
+  // Function to load countries based on region selection
+  loadCountries(regionId: number) {
+    this.countries$ = this.http.get<any[]>(`http://localhost:3000/api/country/all?id=${regionId}`);
+  }
+
+  // Function to load political divisions based on country selection
+  loadPoliticalDivisions(countryId: number) {
+    this.politicalDivisions$ = this.http.get<any[]>(`http://localhost:3000/api/politicalDivision/all?id=${countryId}`);
+  }
+
+  // Handle continent selection change
+  onContinentChange() {
+    const continentId = this.continentControl.value;
+    this.loadRegions(continentId);
+  }
+
+  // Handle region selection change
+  onRegionChange() {
+    const regionId = this.regionControl.value;
+    this.loadCountries(regionId);
+  }
+
+  // Handle country selection change
+  onCountryChange() {
+    const countryId = this.countryControl.value;
+    this.loadPoliticalDivisions(countryId);
+  }
 
   onSubmit() {
     const userData = {
@@ -44,11 +125,10 @@ export class RegisterComponent {
       legajo: this.legajo,
       cuit: this.cuit,
       identityNumber: this.identityNumber,
-      country: this.country,
-      politicalDivision: this.politicalDivision,
-      address: this.address,
-      continent: this.address,
-      region: this.address,
+      continent: this.continentControl.value, // Use selected values from dropdowns
+      region: this.regionControl.value,
+      country: this.countryControl.value,
+      politicalDivision: this.politicalDivisionControl.value,
     };
 
     let apiUrl = 'http://localhost:3000/api/users/create';
