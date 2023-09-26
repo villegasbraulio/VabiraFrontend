@@ -26,6 +26,7 @@ export class RegisterComponent {
   cuit: string = '';
   identityNumber: string = '';
   address: string = '';
+  postalCode: string = '';
 
   // Define form groups and form controls for dropdowns
   form: FormGroup;
@@ -68,7 +69,8 @@ export class RegisterComponent {
       region: '',
       country: '',
       politicalDivision: '',
-      address: ''
+      address: '',
+      postalCode: ''
     });
 
     // Fetch initial data for dropdowns
