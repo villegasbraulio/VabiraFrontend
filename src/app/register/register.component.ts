@@ -26,6 +26,8 @@ export class RegisterComponent {
   country: string = '';
   politicalDivision: string = '';
   address: string = '';
+  continent: string = '';
+  region: string = '';
   
 
   constructor(private http: HttpClient, private dialog: MatDialog, private router: Router) {}
@@ -44,7 +46,9 @@ export class RegisterComponent {
       identityNumber: this.identityNumber,
       country: this.country,
       politicalDivision: this.politicalDivision,
-      address: this.address
+      address: this.address,
+      continent: this.address,
+      region: this.address,
     };
 
     let apiUrl = 'http://localhost:3000/api/users/create';

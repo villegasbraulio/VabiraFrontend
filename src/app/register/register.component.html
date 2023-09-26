@@ -27,6 +27,14 @@
         </div>
 
         <div class="form-group" *ngIf="isClient">
+          <label for="continent">Continente:</label>
+          <input type="text" id="continent" name="continent" [(ngModel)]="continent" required>
+        </div>
+        <div class="form-group" *ngIf="isClient">
+          <label for="region">Region:</label>
+          <input type="text" id="region" name="region" [(ngModel)]="region" required>
+        </div>
+        <div class="form-group" *ngIf="isClient">
           <label for="country">Pais:</label>
           <input type="text" id="country" name="country" [(ngModel)]="country" required>
         </div>
