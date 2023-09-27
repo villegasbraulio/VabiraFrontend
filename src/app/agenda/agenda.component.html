@@ -1,29 +1,31 @@
-<table>
-  <thead>
-    <tr>
-      <th></th>
-      <th *ngFor="let day of days">{{ day }}</th>
-    </tr>
-  </thead>
-  <tbody>
-    <ng-container *ngFor="let timeSlot of timeSlots">
+<div class="container">
+  <table>
+    <thead>
       <tr>
-        <td>{{ timeSlot.start }} - {{ timeSlot.end }}</td>
-        <td *ngFor="let dayType of days">
-          <div *ngIf="isAppointmentScheduled(dayType, timeSlot.start, timeSlot.end)">
-            <!-- Horario ocupado -->
-            <button mat-button (click)="openAppointmentDetails(dayType, timeSlot.start, timeSlot.end)">
-              {{ getAppointmentUserName(dayType, timeSlot.start, timeSlot.end) }}
-            </button>
-          </div>
-          <div *ngIf="!isAppointmentScheduled(dayType, timeSlot.start, timeSlot.end)">
-            <!-- Horario libre -->
-            <button mat-button (click)="handleTimeClick(dayType, timeSlot.start, timeSlot.end)">
-              Reservar
-            </button>
-          </div>
-        </td>
+        <th></th>
+        <th *ngFor="let day of days">{{ day }}</th>
       </tr>
-    </ng-container>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let timeSlot of timeSlots">
+        <tr>
+          <td>{{ timeSlot.start }} - {{ timeSlot.end }}</td>
+          <td *ngFor="let dayType of days">
+            <div *ngIf="isAppointmentScheduled(dayType, timeSlot.start, timeSlot.end)">
+              <!-- Horario ocupado -->
+              <button mat-button (click)="openAppointmentDetails(dayType, timeSlot.start, timeSlot.end)">
+                {{ getAppointmentUserName(dayType, timeSlot.start, timeSlot.end) }}
+              </button>
+            </div>
+            <div *ngIf="!isAppointmentScheduled(dayType, timeSlot.start, timeSlot.end)">
+              <!-- Horario libre -->
+              <button mat-button (click)="handleTimeClick(dayType, timeSlot.start, timeSlot.end)">
+                Reservar
+              </button>
+            </div>
+          </td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+</div>

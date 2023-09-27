@@ -1,31 +1,58 @@
 /* agenda.component.css */
 
+/* Asegura que el contenedor ocupe toda la pantalla */
+.container {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  width: 43%; /* Ancho deseado para la tabla */
+  height: 70vh; /* 65% de la altura de la ventana */
+  overflow: auto;
+  
+}
+
+/* Estilos para la tabla */
 table {
   border-collapse: collapse;
-  width: 50%;
   margin-left: auto;
   margin-right: auto;
+  width: 100%;
+  height: 100%; /* Ocupa todo el espacio disponible */
 }
 
 th, td {
   text-align: center;
-  padding: 10px;
+  padding: 5px;
   border: 1px solid #ccc;
-  height: 40px;
-  width: 16.67%; /* Establece un ancho fijo para cada columna (100% / 6 columnas) */
 }
 
 button {
   width: 100%;
   height: 100%;
+  background-color: #def7d0; /* Fondo verde */
 }
 
 /* Estilos para los horarios ocupados */
 div {
-  background-color: #def7d0;
   padding: 5px;
   border-radius: 5px;
   cursor: pointer;
-  /* Ajusta otros estilos según tus necesidades */
 }
 
+/* Ajusta el alto de las filas según la cantidad de datos */
+tr {
+  height: auto;
+}
+
+/* Ajusta el ancho de las columnas según la cantidad de datos */
+th, td {
+  width: auto;
+}
+
+/* Estilos para tbody cuando no hay desbordamiento */
+.flexible-table tbody:empty::before {
+  content: 'No hay datos disponibles';
+  display: block;
+  text-align: center;
+  padding: 16px;
+}
