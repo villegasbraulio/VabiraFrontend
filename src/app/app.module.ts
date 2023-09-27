@@ -27,7 +27,8 @@ import { ReservarCitaComponent } from './reservar-cita/reservar-cita.component';
 import { DetallesCitaComponent } from './detalles-cita/detalles-cita.component';
 
 import { MatFormFieldModule } from '@angular/material/form-field'; // Importa MatFormFieldModule
-import { MatInputModule } from '@angular/material/input'; // Importa MatInputModule
+import { MatInputModule } from '@angular/material/input';
+import { TurneroComponent } from './turnero/turnero.component'; // Importa MatInputModule
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { MatInputModule } from '@angular/material/input'; // Importa MatInputMod
     AgendaComponent,
     ReservarCitaComponent,
     DetallesCitaComponent,
+    TurneroComponent,
   ],
   imports: [
     BrowserModule,

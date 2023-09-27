@@ -6,7 +6,7 @@
   right: 0;
   bottom: 0;
   width: 43%; /* Ancho deseado para la tabla */
-  height: 70vh; /* 65% de la altura de la ventana */
+  height: 75vh; /* 65% de la altura de la ventana */
   overflow: auto;
   
 }

@@ -18,7 +18,7 @@ export class AgendaComponent implements OnInit {
   constructor(private dialog: MatDialog, private agendaService: AgendaService) {}
 
   ngOnInit(): void {
-    this.agendaService.obtenerAgenda(6).subscribe((data) => {
+    this.agendaService.obtenerAgenda(2).subscribe((data) => {
       this.scheduleData = data;
       this.days = this.scheduleData.turn
         .reduce((uniqueDays: string[], turn: any) => {
