@@ -29,6 +29,11 @@ import { DetallesCitaComponent } from './detalles-cita/detalles-cita.component';
 import { MatFormFieldModule } from '@angular/material/form-field'; // Importa MatFormFieldModule
 import { MatInputModule } from '@angular/material/input';
 import { TurneroComponent } from './turnero/turnero.component'; // Importa MatInputModule
+import { ToastrModule } from 'ngx-toastr';
+import { CrearProductoComponent } from './product/crear-producto/crear-producto.component';
+import { ListarProductosComponent } from './product/listar-productos/listar-productos.component';
+import { ProveedorComponent } from './proveedor/proveedor.component';
+import { EditarProveedorModalComponent } from './proveedor/editar-proveedor-modal.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +41,7 @@ import { TurneroComponent } from './turnero/turnero.component'; // Importa MatIn
     LoginComponent,
     RegisterComponent,
     ForgotPasswordComponent,
+    EditarProveedorModalComponent,
     EditarUsuarioModalComponent,
     SidebarComponent,
     PrincipalComponent,
@@ -45,6 +51,9 @@ import { TurneroComponent } from './turnero/turnero.component'; // Importa MatIn
     ReservarCitaComponent,
     DetallesCitaComponent,
     TurneroComponent,
+    CrearProductoComponent,
+    ListarProductosComponent,
+    ProveedorComponent
   ],
   imports: [
     BrowserModule,
@@ -63,7 +72,8 @@ import { TurneroComponent } from './turnero/turnero.component'; // Importa MatIn
     MatDialogModule, // Asegúrate de que MatDialogModule esté importado aquí
     MatFormFieldModule, // Agrega MatFormFieldModule aquí
     MatInputModule, // Agrega MatInputModule aquí
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ToastrModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

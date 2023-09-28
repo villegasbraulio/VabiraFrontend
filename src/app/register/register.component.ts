@@ -24,7 +24,7 @@ export class RegisterComponent {
   isClient: boolean = false;
   legajo: string = '';
   cuit: string = '';
-  identityNumber: string = '';
+  identificationNumber: string = '';
   address: string = '';
   postalCode: string = '';
 
@@ -116,30 +116,51 @@ export class RegisterComponent {
   }
 
   onSubmit() {
-    const userData = {
-      username: this.username,
-      email: this.email,
-      password: this.password,
-      firstName: this.firstName,
-      lastName: this.lastName,
-      dni: this.dni,
-      dateOfBirth: this.dateOfBirth,
-      legajo: this.legajo,
-      cuit: this.cuit,
-      identityNumber: this.identityNumber,
-      continent: this.continentControl.value, // Use selected values from dropdowns
-      region: this.regionControl.value,
-      country: this.countryControl.value,
-      politicalDivision: this.politicalDivisionControl.value,
-    };
+    let userData:any = null;
 
     let apiUrl = 'http://localhost:3000/api/users/create';
+    if(apiUrl = 'http://localhost:3000/api/users/create'){
+      userData = {
+        username: this.username,
+        email: this.email,
+        password: this.password,
+        firstName: this.firstName,
+        lastName: this.lastName,
+        dni: this.dni,
+        dateOfBirth: this.dateOfBirth,
+        roles: ['user']
+      };
+    }
 
     // Ajusta la URL del punto final en función del estado de los interruptores
     if (this.isProvider) {
-      apiUrl = 'http://localhost:3000/api/users/createSupplier';
+      apiUrl = 'http://localhost:3000/api/supplier/create';
+      userData = {
+        username: this.username,
+        email: this.email,
+        password: this.password,
+        firstName: this.firstName,
+        lastName: this.lastName,
+        dni: this.dni,
+        dateOfBirth: this.dateOfBirth,
+        cuit: this.cuit,
+        identificationNumber: this.identificationNumber,
+      };
     } else if (this.isClient) {
-      apiUrl = 'http://localhost:3000/api/users/createClient';
+      apiUrl = 'http://localhost:3000/api/client/create';
+      userData = {
+        username: this.username,
+        email: this.email,
+        password: this.password,
+        firstName: this.firstName,
+        lastName: this.lastName,
+        dni: this.dni,
+        dateOfBirth: this.dateOfBirth,
+        continent: this.continentControl.value,
+        region: this.regionControl.value,
+        country: this.countryControl.value,
+        politicalDivision: this.politicalDivisionControl.value,
+      };
     }
 
     this.http.post(apiUrl, userData).subscribe(

@@ -1,0 +1,78 @@
+<div class="layout">
+    <app-sidebar></app-sidebar>
+    <div class="content">
+        <mat-table [dataSource]="proveedores">
+            <ng-container matColumnDef="id">
+                <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
+                <mat-cell *matCellDef="let proveedor">{{ proveedor.id }}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="nombre">
+                <mat-header-cell *matHeaderCellDef>Nombre</mat-header-cell>
+                <mat-cell *matCellDef="let proveedor">{{ proveedor.user.firstName }}</mat-cell>
+            </ng-container>
+
+
+            <ng-container matColumnDef="apellido">
+                <mat-header-cell *matHeaderCellDef>Apellido</mat-header-cell>
+                <mat-cell *matCellDef="let proveedor">{{ proveedor.user.lastName }}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="cuit">
+                <mat-header-cell *matHeaderCellDef>CUIT</mat-header-cell>
+                <mat-cell *matCellDef="let proveedor">{{ proveedor.cuit }}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="numero identificador">
+                <mat-header-cell *matHeaderCellDef>Numero Identificador</mat-header-cell>
+                <mat-cell *matCellDef="let proveedor">{{ proveedor.identificationNumber }}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="dni">
+                <mat-header-cell *matHeaderCellDef>DNI</mat-header-cell>
+                <mat-cell *matCellDef="let proveedor">{{ proveedor.user.dni }}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="fecha de nacimiento">
+                <mat-header-cell *matHeaderCellDef>Fecha de nacimiento</mat-header-cell>
+                <mat-cell *matCellDef="let proveedor">{{ proveedor.user.dateOfBirth }}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="activo">
+                <mat-header-cell *matHeaderCellDef>Activo</mat-header-cell>
+                <mat-cell *matCellDef="let proveedor">{{ proveedor.user.active }}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="acciones">
+                <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
+                <mat-cell *matCellDef="let proveedor">
+                    <!-- Agrega una imagen que dispare el método verUsuario al hacer clic -->
+                    <img src="../../assets/perfil.jpg" (click)="verProveedor(proveedor.id)" class="icono-accion"
+                        class="icono-accion reducir-imagen">
+                    <img src="../../assets/lapiz.png" (click)="abrirModalEdicion(proveedor)" class="icono-accion"
+                        class="icono-accion reducir-imagen">
+                    <img src="../../assets/tacho.jpg" (click)="eliminarProveedor(proveedor.id)" class="icono-accion"
+                        class="icono-accion reducir-imagen" (click)="reloadPage()">
+
+                    <!-- Tarjeta (card) oculta inicialmente -->
+                    <mat-dialog-content *ngIf="usuarioSeleccionado">
+                        <h3>Datos del Proveedor</h3>
+                        <ul>
+                            <li><strong>ID:</strong> {{ usuarioSeleccionado.id }}</li>
+                            <li><strong>Username:</strong> {{ usuarioSeleccionado.username }}</li>
+                            <li><strong>Nombre:</strong> {{ usuarioSeleccionado.firstName }}</li>
+                            <li><strong>Apellido:</strong> {{ usuarioSeleccionado.lastName }}</li>
+                            <li><strong>Email:</strong> {{ usuarioSeleccionado.email }}</li>
+                            <!-- Agrega más detalles según tus necesidades -->
+                        </ul>
+                    </mat-dialog-content>
+                </mat-cell>
+            </ng-container>
+
+            <!-- Resto de tus columnas aquí -->
+
+            <mat-header-row *matHeaderRowDef="columnas"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: columnas"></mat-row>
+        </mat-table>
+    </div>
+</div>

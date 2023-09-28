@@ -8,6 +8,7 @@
   top: 0;
   left: 0;
   overflow-y: auto; /* Agrega desplazamiento vertical si es necesario */
+  color: white
 }
 
 .sidebar ul {
