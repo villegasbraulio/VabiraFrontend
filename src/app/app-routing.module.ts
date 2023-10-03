@@ -8,6 +8,7 @@ import { RegisterComponent } from './register/register.component';
 import { CrearProductoComponent } from './product/crear-producto/crear-producto.component';
 import { ListarProductosComponent } from './product/listar-productos/listar-productos.component';
 import { ProveedorComponent } from './proveedor/proveedor.component';
+import { TurneroComponent } from './turnero/turnero.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -21,6 +22,7 @@ const routes: Routes = [
   { path: 'cliente', component: UsersComponent }, // Ruta para Usuarios (mismo componente principal)
   { path: 'proveedor', component: ProveedorComponent }, // Ruta para Usuarios (mismo componente principal)
   { path: 'crear-producto', component: CrearProductoComponent },
+  { path: 'turneros', component: TurneroComponent },
   { path: 'editar-producto/:id', component: CrearProductoComponent },
   { path: 'listar-producto', component: ListarProductosComponent },
   // Otras rutas para las diferentes secciones de tu aplicación

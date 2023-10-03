@@ -34,6 +34,8 @@ import { CrearProductoComponent } from './product/crear-producto/crear-producto.
 import { ListarProductosComponent } from './product/listar-productos/listar-productos.component';
 import { ProveedorComponent } from './proveedor/proveedor.component';
 import { EditarProveedorModalComponent } from './proveedor/editar-proveedor-modal.component';
+import { TimeRangeModalComponent } from './time-range-modal/time-range-modal.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -53,13 +55,15 @@ import { EditarProveedorModalComponent } from './proveedor/editar-proveedor-moda
     TurneroComponent,
     CrearProductoComponent,
     ListarProductosComponent,
-    ProveedorComponent
+    ProveedorComponent,
+    TimeRangeModalComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     MatSnackBarModule,
     FormsModule,
+    NgbModule, 
     MatCardModule,
     MatToolbarModule,
     MatTableModule,
