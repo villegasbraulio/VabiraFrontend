@@ -1,0 +1,25 @@
+<div class="profile-container">
+  <app-sidebar></app-sidebar>
+
+  <!-- Encabezado de Página -->
+  <div class="header">
+    <img class="avatar" [src]="userProfileData.avatar" alt="Foto de perfil">
+    <h1>{{ userProfileData.firstName }} {{ userProfileData.lastName }}</h1>
+  </div>
+
+  <!-- Información Personal -->
+  <mat-card class="personal-info">
+    <h2>Información Personal</h2>
+    <p><strong>Nombre de Usuario:</strong> {{ userProfileData.username }}</p>
+    <p><strong>Correo Electrónico:</strong> {{ userProfileData.email }}</p>
+    <p><strong>DNI:</strong> {{ userProfileData.dni }}</p>
+    <p><strong>Fecha de Nacimiento:</strong> {{ userProfileData.dateOfBirth | date: 'dd/MM/yyyy' }}</p>
+  </mat-card>
+
+  <!-- Otros datos del usuario -->
+  <!-- Puedes agregar más secciones para mostrar otros datos del usuario según sea necesario -->
+
+</div>
+
+
+  <!--   muestra los titulos pero no los datos -->

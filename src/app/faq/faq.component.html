@@ -1,0 +1,68 @@
+<div class="faq-container">
+  <div class="sidebar">
+    <app-sidebar></app-sidebar>
+  </div>
+  <div class="content">
+    <div class="search-container">
+      <input type="text" placeholder="Buscar...">
+    </div>
+    <div class="faq-list">
+      <div class="faq-header">
+        <h1>Preguntas Frecuentes</h1>
+        <button (click)="modoEdicion = !modoEdicion">{{ modoEdicion ? 'Cancelar' : 'Administrar FAQ' }}</button>
+      </div>
+      <div class="faq-list">
+        <div *ngFor="let faq of faqs; let i = index" class="question">
+          <div class="question-header">
+            <h3>{{ faq.question }}</h3>
+            <div *ngIf="modoEdicion">
+              <button mat-icon-button (click)="borrarPregunta(i)">
+                <mat-icon>delete</mat-icon>
+              </button>
+              <button mat-icon-button (click)="editarPregunta(i)">
+                <mat-icon>edit</mat-icon>
+              </button>
+            </div>
+          </div>
+          <p>{{ faq.answer }}</p>
+        </div>
+      </div>
+      <div class="question-form" *ngIf="modoEdicion">
+        <h2>{{ preguntaSeleccionada ? 'Editar Pregunta' : 'Agregar Pregunta' }}</h2>
+        <form (submit)="guardarPregunta()">
+          <div class="form-group">
+            <label for="asunto">Asunto:</label>
+            <input type="text" id="asunto" name="asunto" [(ngModel)]="asunto" required>
+          </div>
+          <div class="form-group">
+            <label for="descripcion">Descripción:</label>
+            <textarea id="descripcion" name="descripcion" [(ngModel)]="descripcion" required></textarea>
+          </div>
+          <div class="form-actions">
+            <button type="submit">{{ preguntaSeleccionada ? 'Guardar' : 'Agregar' }}</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="ask-developers">
+  <h2>¿No encuentras la pregunta?</h2>
+  <form>
+    <div class="form-group">
+      <label for="nombre">Nombre:</label>
+      <input type="text" id="nombre" name="nombre" required>
+    </div>
+    <div class="form-group">
+      <label for="correo">Correo electrónico:</label>
+      <input type="email" id="correo" name="correo" required>
+    </div>
+    <div class="form-group">
+      <label for="pregunta">Pregunta:</label>
+      <textarea id="pregunta" name="pregunta" required></textarea>
+    </div>
+    <div class="form-actions">
+      <button type="submit">Enviar</button>
+    </div>
+  </form>
+</div>
+  </div>
+</div>

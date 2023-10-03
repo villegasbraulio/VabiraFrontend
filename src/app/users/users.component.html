@@ -70,6 +70,8 @@
       <mat-header-row *matHeaderRowDef="columnas"></mat-header-row>
       <mat-row *matRowDef="let row; columns: columnas"></mat-row>
     </mat-table>
+    <button class="alta-usuario" (click)="altaUsuario()">ALTA USUARIO</button>
+
     <router-outlet></router-outlet>
   </div>
 </div>

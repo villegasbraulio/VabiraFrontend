@@ -25,9 +25,12 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { AgendaComponent } from './agenda/agenda.component';
 import { ReservarCitaComponent } from './reservar-cita/reservar-cita.component';
 import { DetallesCitaComponent } from './detalles-cita/detalles-cita.component';
+import { MatListModule } from '@angular/material/list'; // Importa MatListModule y otros módulos que puedas necesitar
 
 import { MatFormFieldModule } from '@angular/material/form-field'; // Importa MatFormFieldModule
-import { MatInputModule } from '@angular/material/input'; // Importa MatInputModule
+import { MatInputModule } from '@angular/material/input';
+import { UserProfileComponent } from './user-profile/user-profile.component';
+import { FaqComponent } from './faq/faq.component'; // Importa MatInputModule
 
 @NgModule({
   declarations: [
@@ -43,6 +46,8 @@ import { MatInputModule } from '@angular/material/input'; // Importa MatInputMod
     AgendaComponent,
     ReservarCitaComponent,
     DetallesCitaComponent,
+    UserProfileComponent,
+    FaqComponent,
   ],
   imports: [
     BrowserModule,
@@ -58,6 +63,7 @@ import { MatInputModule } from '@angular/material/input'; // Importa MatInputMod
     MatIconModule,    
     RouterModule,
     BrowserAnimationsModule,
+    MatListModule,
     MatDialogModule, // Asegúrate de que MatDialogModule esté importado aquí
     MatFormFieldModule, // Agrega MatFormFieldModule aquí
     MatInputModule, // Agrega MatInputModule aquí

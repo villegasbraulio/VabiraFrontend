@@ -33,4 +33,11 @@ export class UserService {
   }
 
   // Implementa otros métodos para crear, editar y eliminar usuarios según tus necesidades
+
+  obtenerPerfilUsuario(): Observable<any> {
+    // Realiza una solicitud GET a la ruta de perfil del usuario activo en tu backend.
+    return this.http.get<any>(`${this.baseUrl}/profile`);
+  }
+
+  //agregue esto para obtener los datos del usuario activo
 }

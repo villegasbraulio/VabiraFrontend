@@ -5,6 +5,8 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import { PrincipalComponent } from './principal/principal.component';
 import { UsersComponent } from './users/users.component';
 import { RegisterComponent } from './register/register.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
+import { FaqComponent } from './faq/faq.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -15,6 +17,8 @@ const routes: Routes = [
   { path: 'principal', component: PrincipalComponent }, // Ruta para el Dashboard (mismo componente principal)
   { path: 'dashboard', component: PrincipalComponent }, // Ruta para el Dashboard (mismo componente principal)
   { path: 'usuarios', component: UsersComponent }, // Ruta para Usuarios (mismo componente principal)
+  { path: 'perfil', component: UserProfileComponent },
+  { path: 'ayuda', component: FaqComponent },
     // Otras rutas para las diferentes secciones de tu aplicación
   ];
   

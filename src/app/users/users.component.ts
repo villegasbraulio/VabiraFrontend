@@ -29,6 +29,20 @@ export class UsersComponent implements OnInit {
   ngOnInit() {
     this.cargarUsuarios();
   }
+  altaUsuario() {
+    const dialogRef = this.dialog.open(EditarUsuarioModalComponent, {
+      width: '400px', // Puedes ajustar el ancho según tus necesidades
+      data: { usuario: null } // Pasa los datos del usuario al modal
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        // Aquí puedes agregar los datos del usuario a tu tabla
+        const usuarioNuevo = result;
+        // Realiza la lógica para agregar los datos
+      }
+    });
+  }
 
   cargarUsuarios() {
     this.userService.obtenerUsuarios().subscribe((data: any) => {
@@ -84,6 +98,7 @@ export class UsersComponent implements OnInit {
         // Realiza la lógica para actualizar los datos
       }
     });
+    
     
   }
 }
