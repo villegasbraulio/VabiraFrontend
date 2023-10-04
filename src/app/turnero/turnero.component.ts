@@ -27,14 +27,12 @@ export class TurneroComponent {
   constructor(private turneroService: TurneroService, private modalService: NgbModal) { }
 
   async createSchedule() {
-    try {
-      const selectedTimeRange = await this.openTimeRangeModal();
-  
-      // Actualiza los atributos en scheduleData
-      this.scheduleData.initialTurnDateTime = this.convertTimeStructToString(selectedTimeRange.startTime);
-      this.scheduleData.finalTurnDateTime = this.convertTimeStructToString(selectedTimeRange.endTime);
-      
+    try {      
       // Luego, puedes continuar con la creación de la agenda y enviar los datos al servicio.
+      if(this.scheduleData.initialTurnDateTime == ''){
+        console.error('Error el rango horario no fue seleccionado:');
+        // Maneja el error de acuerdo a tus necesidades
+      }
       this.turneroService.createSchedule(this.scheduleData).subscribe(
         (response) => {
           console.log('Horario creado con éxito:', response);
@@ -77,34 +75,21 @@ export class TurneroComponent {
     });
   }
 
-  // async onOpenTimeRangeModal() {
+  async onOpenTimeRangeModal() {
     
-  //   try {
-  //     const selectedTimeRange = await this.openTimeRangeModal();
+    try {
+      const selectedTimeRange = await this.openTimeRangeModal();
 
-  //     // Actualiza los atributos en scheduleData
-  //     this.scheduleData.initialTurnDateTime = this.convertTimeStructToString(selectedTimeRange.startTime);
-  //     this.scheduleData.finalTurnDateTime = this.convertTimeStructToString(selectedTimeRange.endTime);
-  //     console.log(this.scheduleData.initialTurnDateTime);
-  //     console.log(this.scheduleData.finalTurnDateTime);
-      
+      // Actualiza los atributos en scheduleData
+      this.scheduleData.initialTurnDateTime = this.convertTimeStructToString(selectedTimeRange.startTime);
+      this.scheduleData.finalTurnDateTime = this.convertTimeStructToString(selectedTimeRange.endTime);
 
-  //     // Luego, puedes continuar con la creación de la agenda y enviar los datos al servicio.
-  //     this.turneroService.createSchedule(this.scheduleData).subscribe(
-  //       (response) => {
-  //         console.log('Horario creado con éxito:', response);
-  //         // Realiza acciones adicionales si es necesario
-  //       },
-  //       (error) => {
-  //         console.error('Error al crear el horario:', error);
-  //         // Maneja el error de acuerdo a tus necesidades
-  //       }
-  //     );
-  //   } catch (error) {
-  //     console.error('Error al abrir el modal de rango horario:', error);
-  //     // Maneja el error según tus necesidades
-  //   }
-  // }
+
+    } catch (error) {
+      console.error('Error al abrir el modal de rango horario:', error);
+      // Maneja el error según tus necesidades
+    }
+  }
 
   private convertTimeStructToString(timeStruct: NgbTimeStruct): string {
     // Convierte el objeto NgbTimeStruct en una cadena de tiempo (por ejemplo, "HH:MM:SS")

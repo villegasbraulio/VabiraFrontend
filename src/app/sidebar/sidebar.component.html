@@ -21,11 +21,13 @@
         <li><a class="dropdown-item" routerLink="/cliente">Cliente</a></li>
         <li><a class="dropdown-item" routerLink="/usuarios">Usuario</a></li>
       </ul>
-      <div>
-        <a routerLink="/turneros">
+        <a class="btn custom-dropdown-toggle" data-bs-toggle="collapse" href="#scheduleCollapse" role="button" aria-expanded="false">
           <i class="material-icons">schedule</i> Turneros
         </a>
-      </div>
+        <ul id="scheduleCollapse" class="collapse vertical-collapse">
+          <li><a class="dropdown-item" routerLink="/dashboard">Agenda</a></li>
+          <li><a class="dropdown-item" routerLink="/turneros">Turnero</a></li>
+        </ul>
       <div>
         <a routerLink="/listar-producto">
           <i class="material-icons">shopping_cart</i> Productos
