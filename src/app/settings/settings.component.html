@@ -1,0 +1,41 @@
+<app-sidebar></app-sidebar>
+
+<div class="company-details">
+  <h2>Nombre de la compañía: {{ companyName }}</h2>
+  <p>Email: {{ companyEmail }}</p>
+  <p>Teléfono: {{ companyPhone }}</p>
+  <p>Sitio web: {{ companyWebsite }}</p>
+  <p>Dirección: {{ companyAddress }}</p>
+  <p>Descripción: {{ companyDescription }}</p>
+  <button (click)="openEditDialog()">Editar datos</button>
+</div>
+  <button class="manage-profiles">Administrar perfiles</button>
+  <form *ngIf="editing" (submit)="saveChanges()">
+    <h2>Editar datos de la compañía</h2>
+    <label>
+      Nombre de la compañía:
+      <input type="text" [(ngModel)]="companyName">
+    </label>
+    <label>
+      Email:
+      <input type="email" [(ngModel)]="companyEmail">
+    </label>
+    <label>
+      Teléfono:
+      <input type="tel" [(ngModel)]="companyPhone">
+    </label>
+    <label>
+      Sitio web:
+      <input type="url" [(ngModel)]="companyWebsite">
+    </label>
+    <label>
+      Dirección:
+      <input type="text" [(ngModel)]="companyAddress">
+    </label>
+    <label>
+      Descripción:
+      <textarea [(ngModel)]="companyDescription"></textarea>
+    </label>
+    <button type="submit">Guardar cambios</button>
+    <button type="button" (click)="editing = false">Cancelar</button>
+  </form>

@@ -7,6 +7,7 @@ import { UsersComponent } from './users/users.component';
 import { RegisterComponent } from './register/register.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { FaqComponent } from './faq/faq.component';
+import { SettingsComponent } from './settings/settings.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -19,6 +20,8 @@ const routes: Routes = [
   { path: 'usuarios', component: UsersComponent }, // Ruta para Usuarios (mismo componente principal)
   { path: 'perfil', component: UserProfileComponent },
   { path: 'ayuda', component: FaqComponent },
+  { path: 'ajustes', component: SettingsComponent },
+
     // Otras rutas para las diferentes secciones de tu aplicación
   ];
   

@@ -30,7 +30,9 @@ import { MatListModule } from '@angular/material/list'; // Importa MatListModule
 import { MatFormFieldModule } from '@angular/material/form-field'; // Importa MatFormFieldModule
 import { MatInputModule } from '@angular/material/input';
 import { UserProfileComponent } from './user-profile/user-profile.component';
-import { FaqComponent } from './faq/faq.component'; // Importa MatInputModule
+import { FaqComponent } from './faq/faq.component';
+import { SettingsComponent } from './settings/settings.component';
+import { SettingsModalComponent } from './settings-modal./settings-modal..component'; // Importa MatInputModule
 
 @NgModule({
   declarations: [
@@ -48,6 +50,8 @@ import { FaqComponent } from './faq/faq.component'; // Importa MatInputModule
     DetallesCitaComponent,
     UserProfileComponent,
     FaqComponent,
+    SettingsComponent,
+    SettingsModalComponent,
   ],
   imports: [
     BrowserModule,
@@ -68,6 +72,7 @@ import { FaqComponent } from './faq/faq.component'; // Importa MatInputModule
     MatFormFieldModule, // Agrega MatFormFieldModule aquí
     MatInputModule, // Agrega MatInputModule aquí
     ReactiveFormsModule
+    
   ],
   providers: [],
   bootstrap: [AppComponent]
