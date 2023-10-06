@@ -13,12 +13,21 @@ export class SidebarComponent {
 constructor(private router: Router, private userService: UserService) {
   this.usuario = null;
 }
+profileTypes: string[] = [];// Almacena los datos del usuario en la variable 'usuario'
 
 ngOnInit() {
   // Llama a un método del servicio de autenticación para obtener los datos del usuario
   this.userService.obtenerPerfil().subscribe(
     (data: any) => {
-      this.usuario = data; // Almacena los datos del usuario en la variable 'usuario'
+      this.usuario = data; 
+      const p: string[] = [];
+      const roles = this.usuario.roles.split(',')  
+      if (this.usuario?.roles) {   
+        for (const role of roles) {
+          p.push(role);         
+        }       
+      }         
+      this.profileTypes = p;
     },
     (error) => {
       console.error('Error al obtener los datos del usuario:', error);

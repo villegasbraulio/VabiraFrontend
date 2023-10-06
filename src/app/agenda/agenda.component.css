@@ -54,3 +54,19 @@ th, td {
   text-align: center;
   padding: 16px;
 }
+
+/* Estilo para el botón Reservado */
+.reserved-button {
+  background-color: red; /* Cambia esto al color deseado */
+  color: white; /* Cambia esto al color de texto deseado */
+  /* Otros estilos de botón reservado, como bordes, márgenes, etc. */
+}
+
+/* Estilo para el botón Disponible (Reservar) */
+.available-button {
+  background-color: green; /* Cambia esto al color deseado */
+  color: white; /* Cambia esto al color de texto deseado */
+  /* Otros estilos de botón disponible, como bordes, márgenes, etc. */
+}
+
+

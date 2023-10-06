@@ -12,7 +12,7 @@
         </a>
       </div>
       <!-- Cambiar las clases para controlar la dirección de apertura del collapse -->
-      <a *ngIf="usuario?.roles === 'admin'" class="btn custom-dropdown-toggle" data-bs-toggle="collapse" href="#usuariosCollapse" role="button" aria-expanded="false">
+      <a *ngIf="profileTypes.includes('admin')" class="btn custom-dropdown-toggle" data-bs-toggle="collapse" href="#usuariosCollapse" role="button" aria-expanded="false">
         <i class="material-icons">person</i> Usuarios
       </a>
       <!-- Agregar el ID al elemento que se colapsará -->

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { Observable, of, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -53,7 +53,8 @@ export class UserService {
       headers: this.getHeaders(), // Obtener las cabeceras con el token
     };
     
-    return this.http.get<any>(`${this.baseUrl}/findOneEmail?email=${this.email}`, httpOptions);
+    return this.http.get<any>(`${this.baseUrl}/findOneEmail?email=${this.email}`, httpOptions)
+    .pipe(tap((clientFound)=> {return clientFound}));
   }
 
   eliminarUsuario(id: number): Observable<any> {
