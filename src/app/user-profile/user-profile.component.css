@@ -33,6 +33,38 @@
 
 }
   
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 16px;
+  color: black;
+  margin-left: 300px;
+  margin-top: 200px;
+
+}
+
+.personal-info-container {
+  flex: 1;
+  /* margin-top: 200px; */
+  margin-right: 200px;
+  margin-left: 300px;
+}
+
+.avatar-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-right: 100px;
+
+
+}
+  
   
   .header {
     display: flex;
@@ -56,8 +88,8 @@
   padding: 20px;
   margin-bottom: 16px;
 }
-.personal-info:nth-child(even) {
-  background-color: #ffffffef;
+  .personal-info:nth-child(even) {
+  background-color: #c95f5fc5;
 }
   /* Agregar otros estilos según sea necesario */
   
