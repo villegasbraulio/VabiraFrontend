@@ -27,7 +27,7 @@ export class AgendaComponent implements OnInit {
       }
     }
     );
-    this.agendaService.obtenerAgenda(11).subscribe((data) => {
+    this.agendaService.obtenerAgenda(13).subscribe((data) => {
       this.scheduleData = data;
       this.days = this.scheduleData.turn
         .reduce((uniqueDays: string[], turn: any) => {
@@ -40,6 +40,22 @@ export class AgendaComponent implements OnInit {
       
       // Verifica el almacenamiento local y actualiza los botones
       this.updateButtonStates();
+    });
+  }
+
+  updateButtonStates() {
+    this.timeSlots.forEach((timeSlot) => {
+      this.days.forEach((dayType) => {
+        const buttonElement = document.getElementById(`${dayType}-${timeSlot.start}-${timeSlot.end}`);
+        if (buttonElement) {
+          const reservationStatus = localStorage.getItem(`${dayType}-${timeSlot.start}-${timeSlot.end}`);
+          if (reservationStatus === 'reservado') {
+            // Si está reservado, cambia el botón a "Reservado" y aplica el estilo rojo
+            buttonElement.innerText = 'Reservado';
+            buttonElement.classList.add('reserved-button');
+          }
+        }
+      });
     });
   }
 
@@ -150,42 +166,8 @@ export class AgendaComponent implements OnInit {
     });
   }
 
-  // Método para verificar y actualizar los estados de los botones
-  updateButtonStates() {
-    this.timeSlots.forEach((timeSlot) => {
-      this.days.forEach((dayType) => {
-        const buttonElement = document.getElementById(`${dayType}-${timeSlot.start}-${timeSlot.end}`);
-        if (buttonElement) {
-          const reservationStatus = localStorage.getItem(`${dayType}-${timeSlot.start}-${timeSlot.end}`);
-          if (reservationStatus === 'reservado') {
-            // Si está reservado, cambia el botón a "Reservado" y aplica el estilo rojo
-            buttonElement.innerText = 'Reservado';
-            buttonElement.classList.add('reserved-button');
-          }
-        }
-      });
-    });
-  }
-
-
-
-
   getButtonId(dayType: string, start: string, end: string): string {
     return `${dayType}-${start}-${end}`;
   }
 
-
-
-  // openAppointmentDetails(dayType: string, start: string, end: string) {
-  //   // Implementa la lógica para abrir los detalles de la cita según los parámetros proporcionados.
-  //   // Puedes usar un cuadro de diálogo o ventana emergente para mostrar los detalles de la cita.
-  //   // Puedes acceder a los detalles de la cita utilizando los parámetros proporcionados.
-  // }
-
-  // getAppointmentUserName(dayType: string, start: string, end: string): string {
-  //   // Implementa la lógica para obtener el nombre del usuario de la cita programada para los parámetros proporcionados.
-  //   // Retorna el nombre del usuario.
-  //   // Puedes buscar en tus datos utilizando los parámetros proporcionados.
-  //   return ''; // Esto es un ejemplo, debes cambiarlo según tu lógica.
-  // }
 }
