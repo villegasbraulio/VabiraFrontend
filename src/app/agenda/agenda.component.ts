@@ -27,7 +27,7 @@ export class AgendaComponent implements OnInit {
       }
     }
     );
-    this.agendaService.obtenerAgenda(13).subscribe((data) => {
+    this.agendaService.obtenerAgenda(2).subscribe((data) => {
       this.scheduleData = data;
       this.days = this.scheduleData.turn
         .reduce((uniqueDays: string[], turn: any) => {
@@ -38,24 +38,21 @@ export class AgendaComponent implements OnInit {
         }, []);
       this.generateTimeSlots();
       
-      // Verifica el almacenamiento local y actualiza los botones
-      this.updateButtonStates();
+      this.agendaService.obtenerTurnosReservados().subscribe((reservedTurns) => {
+        this.loadReservedTurns(reservedTurns);
+      });
     });
   }
 
-  updateButtonStates() {
-    this.timeSlots.forEach((timeSlot) => {
-      this.days.forEach((dayType) => {
-        const buttonElement = document.getElementById(`${dayType}-${timeSlot.start}-${timeSlot.end}`);
-        if (buttonElement) {
-          const reservationStatus = localStorage.getItem(`${dayType}-${timeSlot.start}-${timeSlot.end}`);
-          if (reservationStatus === 'reservado') {
-            // Si está reservado, cambia el botón a "Reservado" y aplica el estilo rojo
-            buttonElement.innerText = 'Reservado';
-            buttonElement.classList.add('reserved-button');
-          }
-        }
-      });
+  loadReservedTurns(reservedTurns: any[]) {
+    // Iterar sobre los turnos reservados y actualizar el estado de los botones
+    reservedTurns.forEach((reservedTurn) => {
+      const buttonElement = document.getElementById(`${reservedTurn.dayType}-${reservedTurn.startTime}-${reservedTurn.endTime}`);
+      if (buttonElement) {
+        buttonElement.innerText = 'Reservado';
+        buttonElement.classList.add('reserved-button');
+        this.reservedTimeSlots.add(`${reservedTurn.dayType}-${reservedTurn.startTime}-${reservedTurn.endTime}`);
+      }
     });
   }
 
@@ -127,7 +124,7 @@ export class AgendaComponent implements OnInit {
       // El turno ya está reservado, puedes mostrar un mensaje o realizar acciones adicionales
       return;
     }
-
+  
     // Encuentra el turno correspondiente en base a las fechas y el tipo de día
     const selectedTurn = this.scheduleData.turn.find((turn: any) => {
       return (
@@ -136,33 +133,51 @@ export class AgendaComponent implements OnInit {
         moment(end, 'hh:mm A').isSameOrBefore(moment(turn.dateTo))
       );
     });
-
+  
     if (!selectedTurn) {
       // No se encontró un turno que coincida, puedes mostrar un mensaje de error si es necesario
       console.log('No se encontró un turno que coincida.');
       return;
     }
-
+  
     const id = selectedTurn.id;
     const clienteId = this.clientId; // Cambia esto según la lógica de tu aplicación
     const toUpdate = {
       client: clienteId,
     };
-
+  
     // Llama al método del servicio para agendar el turno
     this.agendaService.agendarTurno(id, toUpdate).subscribe((data: any) => {
       // Si se realiza la reserva con éxito, agrega el turno a la lista de reservados
       this.reservedTimeSlots.add(`${dayType}-${start}-${end}`);
-
+  
       // Actualiza el botón a "Reservado" y aplica un estilo diferente (cambia el fondo a rojo)
       const buttonElement = document.getElementById(`${dayType}-${start}-${end}`);
       if (buttonElement) {
         buttonElement.innerText = 'Reservado';
         buttonElement.classList.add('reserved-button');
       }
-
+  
       // Almacena la reserva en el almacenamiento local
       localStorage.setItem(`${dayType}-${start}-${end}`, 'reservado');
+      this.updateButtonStates();
+    });
+  }
+  
+  // Actualiza el estado de los botones según los valores almacenados en el almacenamiento local
+  updateButtonStates() {
+    this.timeSlots.forEach((timeSlot) => {
+      this.days.forEach((dayType) => {
+        const buttonElement = document.getElementById(`${dayType}-${timeSlot.start}-${timeSlot.end}`);
+        if (buttonElement) {
+          const reservationStatus = localStorage.getItem(`${dayType}-${timeSlot.start}-${timeSlot.end}`);
+          if (reservationStatus === 'reservado') {
+            // Si está reservado, cambia el botón a "Reservado" y aplica el estilo rojo
+            buttonElement.innerText = 'Reservado';
+            buttonElement.classList.add('reserved-button');
+          }
+        }
+      });
     });
   }
 

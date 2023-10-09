@@ -15,11 +15,14 @@ export class AgendaService {
     return this.http.get<any[]>(`${this.baseUrl}/findAll`);
   }
 
+  obtenerTurnosReservados(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl2}/findAssignTurns`);
+  }
+
   obtenerAgenda(id: number): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}/findOne?id=${id}`);
   }
 
-  // Corrige el nombre de la función a agendarTurno y utiliza la URL baseUrl2
   agendarTurno(id: number, toUpdate: any): Observable<any> {
     const body = { id, ...toUpdate };
     return this.http.patch<any>(`${this.baseUrl2}/assignTurn`, body);
