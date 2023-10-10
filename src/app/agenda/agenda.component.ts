@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ReservarCitaComponent } from '../reservar-cita/reservar-cita.component';
 import * as moment from 'moment';
@@ -16,18 +16,22 @@ export class AgendaComponent implements OnInit {
   scheduleData: any;
   timeSlots: { start: string; end: string }[] = [];
   reservedTimeSlots: Set<string> = new Set<string>();
-  
-  constructor(private dialog: MatDialog, private agendaService: AgendaService, private userService: UserService) { }
+  availableTimeSlots: Set<string> = new Set<string>();
   clientId: any
-  
+
+  constructor(private dialog: MatDialog, private agendaService: AgendaService, private userService: UserService) { }
+
+
 
   ngOnInit(): void {
+
     this.userService.obtenerPerfil().subscribe({
-      next: (clientFound) => {this.clientId = clientFound
+      next: (clientFound) => {
+        this.clientId = clientFound;
       }
-    }
-    );
-    this.agendaService.obtenerAgenda(2).subscribe((data) => {
+    });
+
+    this.agendaService.obtenerAgenda(8).subscribe((data) => {
       this.scheduleData = data;
       this.days = this.scheduleData.turn
         .reduce((uniqueDays: string[], turn: any) => {
@@ -37,22 +41,123 @@ export class AgendaComponent implements OnInit {
           return uniqueDays;
         }, []);
       this.generateTimeSlots();
-      
-      this.agendaService.obtenerTurnosReservados().subscribe((reservedTurns) => {
-        this.loadReservedTurns(reservedTurns);
+
+      // Cargar todos los turnos al inicio
+      this.loadReservedAndAvailableTurns();
+      this.loadAllTurns();
+      this.updateButtonStates();
+    });
+  }
+
+  // ...
+  loadReservedAndAvailableTurns() {
+    // Obtener los turnos reservados y disponibles del servicio
+    this.agendaService.obtenerTurnosReservados().subscribe((reservedTurns) => {
+      this.reservedTimeSlots = new Set<string>();
+      reservedTurns.forEach((reservedTurn) => {
+        // Asegúrate de que los datos necesarios estén disponibles en reservedTurn
+        if (
+          reservedTurn.classDayType &&
+          reservedTurn.dateFrom &&
+          reservedTurn.dateTo
+        ) {
+          const buttonId = this.getButtonId(reservedTurn.classDayType.name, reservedTurn.dateFrom, reservedTurn.dateTo);
+
+          this.reservedTimeSlots.add(buttonId);
+        }
+      });
+
+      // Luego de cargar los turnos reservados, obtener los turnos disponibles
+      this.agendaService.obtenerTurnosDisponibles().subscribe((availableTurns) => {
+        this.availableTimeSlots = new Set<string>();
+        availableTurns.forEach((availableTurn) => {
+          // Asegúrate de que los datos necesarios estén disponibles en availableTurn
+          if (
+            availableTurn.classDayType &&
+            availableTurn.dateFrom &&
+            availableTurn.dateTo
+          ) {
+            const buttonId = this.getButtonId(availableTurn.classDayType.name, availableTurn.dateFrom, availableTurn.dateTo);
+            // console.log('button id posta: ', buttonId);
+            this.availableTimeSlots.add(buttonId);
+          }
+        });
+
+        // Ahora, puedes actualizar los estados de los botones según la disponibilidad y reserva
+        this.updateButtonStates();
+      });
+    });
+  }
+  // ...
+
+
+  updateButtonStates() {
+    for (const timeSlot of this.timeSlots) {
+      for (const dayType of this.days) {
+        const buttonId = this.getButtonId(dayType, timeSlot.start, timeSlot.end);
+        console.log('buttonId este?: ', buttonId);
+        const buttonElement = document.getElementById(buttonId) as HTMLButtonElement;
+        if (buttonElement && buttonElement instanceof HTMLButtonElement) {
+          console.log('reservedTimeSlots: ', this.reservedTimeSlots);
+          console.log('availableTimeSlots: ', this.availableTimeSlots);
+  
+          if (this.reservedTimeSlots.has(buttonId)) {
+            console.log('entro?');
+            // El turno está reservado
+            buttonElement.innerText = 'Reservado';
+            buttonElement.classList.add('reserved-button');
+            buttonElement.disabled = true; // Deshabilitar el botón
+          } else if (this.availableTimeSlots.has(buttonId)) {
+            // El turno está disponible
+            buttonElement.innerText = 'Reservar';
+            buttonElement.classList.add('available-button');
+          } else {
+            // El turno no está reservado ni disponible
+            buttonElement.innerText = 'No disponible';
+            buttonElement.classList.add('unavailable-button');
+            buttonElement.disabled = true; // Deshabilitar el botón
+          }
+        }
+      }
+    }
+  }
+  
+  getButtonId(classDayType: any, dateFrom: string, dateTo: string): string {
+    return `${classDayType}-${dateFrom}-${dateTo}`;
+  }
+  
+  
+  loadReservedTurns() {
+    // Obtener los turnos reservados del servicio
+    this.agendaService.obtenerTurnosReservados().subscribe((reservedTurns) => {
+      reservedTurns.forEach((reservedTurn) => {
+        const buttonId = this.getButtonId(reservedTurn.classDayType.name, reservedTurn.startTime, reservedTurn.endTime);
+        const buttonElement = document.getElementById(buttonId) as HTMLButtonElement;
+        if (buttonElement) {
+          buttonElement.innerText = 'Reservado';
+          buttonElement.classList.add('reserved-button');
+          buttonElement.disabled = true; // Deshabilitar el botón
+        }
       });
     });
   }
 
-  loadReservedTurns(reservedTurns: any[]) {
-    // Iterar sobre los turnos reservados y actualizar el estado de los botones
-    reservedTurns.forEach((reservedTurn) => {
-      const buttonElement = document.getElementById(`${reservedTurn.dayType}-${reservedTurn.startTime}-${reservedTurn.endTime}`);
-      if (buttonElement) {
-        buttonElement.innerText = 'Reservado';
-        buttonElement.classList.add('reserved-button');
-        this.reservedTimeSlots.add(`${reservedTurn.dayType}-${reservedTurn.startTime}-${reservedTurn.endTime}`);
-      }
+  loadAllTurns() {
+    this.agendaService.obtenerTurnos().subscribe((allTurns) => {
+      allTurns.forEach((turn) => {
+        const buttonId = this.getButtonId(turn.classDayType.name, turn.startTime, turn.endTime);
+        const buttonElement = document.getElementById(buttonId) as HTMLButtonElement;
+        if (buttonElement) {
+          if (turn.client) {
+            buttonElement.innerText = 'Reservado';
+            buttonElement.classList.add('reserved-button');
+            buttonElement.disabled = true; // Deshabilitar el botón para los turnos reservados
+          } else {
+            buttonElement.innerText = 'Reservar';
+            buttonElement.classList.add('available-button');
+          }
+        }
+      });
     });
   }
 
@@ -77,7 +182,7 @@ export class AgendaComponent implements OnInit {
     if (!this.scheduleData || !this.scheduleData.turn) {
       return false;
     }
-  
+
     const selectedTurn = this.scheduleData.turn.find((turn: any) => {
       return (
         turn.classDayType.name === dayType &&
@@ -85,10 +190,10 @@ export class AgendaComponent implements OnInit {
         moment(end, 'hh:mm A').isSameOrBefore(moment(turn.dateTo))
       );
     });
-  
+
     return selectedTurn && selectedTurn.client !== null;
   }
-  
+
   agendarTurno(id: number, toUpdate: any) {
     // Llama al método del servicio para eliminar el usuario por su ID
     this.agendaService.agendarTurno(id, toUpdate).subscribe((data: any) => {
@@ -124,7 +229,7 @@ export class AgendaComponent implements OnInit {
       // El turno ya está reservado, puedes mostrar un mensaje o realizar acciones adicionales
       return;
     }
-  
+
     // Encuentra el turno correspondiente en base a las fechas y el tipo de día
     const selectedTurn = this.scheduleData.turn.find((turn: any) => {
       return (
@@ -133,56 +238,33 @@ export class AgendaComponent implements OnInit {
         moment(end, 'hh:mm A').isSameOrBefore(moment(turn.dateTo))
       );
     });
-  
+
     if (!selectedTurn) {
       // No se encontró un turno que coincida, puedes mostrar un mensaje de error si es necesario
       console.log('No se encontró un turno que coincida.');
       return;
     }
-  
+
     const id = selectedTurn.id;
     const clienteId = this.clientId; // Cambia esto según la lógica de tu aplicación
     const toUpdate = {
       client: clienteId,
+      classDayType: selectedTurn.classDayType, // Asegúrate de incluir estos datos
+      startTime: start,
+      endTime: end
     };
-  
+
     // Llama al método del servicio para agendar el turno
     this.agendaService.agendarTurno(id, toUpdate).subscribe((data: any) => {
       // Si se realiza la reserva con éxito, agrega el turno a la lista de reservados
       this.reservedTimeSlots.add(`${dayType}-${start}-${end}`);
-  
-      // Actualiza el botón a "Reservado" y aplica un estilo diferente (cambia el fondo a rojo)
-      const buttonElement = document.getElementById(`${dayType}-${start}-${end}`);
-      if (buttonElement) {
-        buttonElement.innerText = 'Reservado';
-        buttonElement.classList.add('reserved-button');
-      }
-  
-      // Almacena la reserva en el almacenamiento local
-      localStorage.setItem(`${dayType}-${start}-${end}`, 'reservado');
-      this.updateButtonStates();
-    });
-  }
-  
-  // Actualiza el estado de los botones según los valores almacenados en el almacenamiento local
-  updateButtonStates() {
-    this.timeSlots.forEach((timeSlot) => {
-      this.days.forEach((dayType) => {
-        const buttonElement = document.getElementById(`${dayType}-${timeSlot.start}-${timeSlot.end}`);
-        if (buttonElement) {
-          const reservationStatus = localStorage.getItem(`${dayType}-${timeSlot.start}-${timeSlot.end}`);
-          if (reservationStatus === 'reservado') {
-            // Si está reservado, cambia el botón a "Reservado" y aplica el estilo rojo
-            buttonElement.innerText = 'Reservado';
-            buttonElement.classList.add('reserved-button');
-          }
-        }
-      });
-    });
-  }
 
-  getButtonId(dayType: string, start: string, end: string): string {
-    return `${dayType}-${start}-${end}`;
+      // Actualiza el botón a "Reservado" y aplica un estilo diferente (cambia el fondo a rojo)
+      this.updateButtonStates(); // Llama a updateButtonStates aquí
+
+      // Almacena el turno reservado en localStorage
+      localStorage.setItem(`${dayType}-${start}-${end}`, 'reservado');
+    });
   }
 
 }

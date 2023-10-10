@@ -57,22 +57,18 @@ th, td {
 
 /* Estilo para el botón Reservado */
 /* Estilo para el botón Disponible (Reservar) */
+/* Estilos para los botones disponibles */
 .available-button {
-  width: 100%;
-  height: 100%;
-  background-color: green; /* Fondo verde */
-  color: white; /* Color de texto blanco */
-  /* Otros estilos de botón disponible, como bordes, márgenes, etc. */
+  background-color: green; /* Color verde para los botones disponibles */
+  color: white;
 }
 
-/* Estilo para el botón Reservado */
+/* Estilos para los botones reservados */
 .reserved-button {
-  width: 100%;
-  height: 100%;
-  background-color: red; /* Fondo rojo */
-  color: white; /* Color de texto blanco */
-  /* Otros estilos de botón reservado, como bordes, márgenes, etc. */
+  background-color: red; /* Color rojo para los botones reservados */
+  color: white;
 }
+
 
 
 

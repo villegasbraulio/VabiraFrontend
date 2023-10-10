@@ -12,12 +12,16 @@
           <td>{{ timeSlot.start }} - {{ timeSlot.end }}</td>
           <td *ngFor="let dayType of days">
             <div>
-              <!-- Horario libre -->
-              <button mat-button class="available-button" [id]="getButtonId(dayType, timeSlot.start, timeSlot.end)" (click)="handleTimeClick(dayType, timeSlot.start, timeSlot.end)">
-                Reservar
+              <button mat-button [id]="getButtonId(dayType, timeSlot.start, timeSlot.end)"
+                (click)="handleTimeClick(dayType, timeSlot.start, timeSlot.end)"
+                [class.available-button]="!isAppointmentScheduled(dayType, timeSlot.start, timeSlot.end)"
+                [class.reserved-button]="isAppointmentScheduled(dayType, timeSlot.start, timeSlot.end)"
+                [disabled]="reservedTimeSlots.has(getButtonId(dayType, timeSlot.start, timeSlot.end))">
+                {{ isAppointmentScheduled(dayType, timeSlot.start, timeSlot.end) ? 'Reservado' : 'Reservar' }}
               </button>
             </div>
           </td>
+          
         </tr>
       </ng-container>
     </tbody>
