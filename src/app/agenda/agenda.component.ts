@@ -4,6 +4,7 @@ import { ReservarCitaComponent } from '../reservar-cita/reservar-cita.component'
 import * as moment from 'moment';
 import { AgendaService } from './agenda.service';
 import { UserService } from '../users/users.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-agenda',
@@ -19,34 +20,39 @@ export class AgendaComponent implements OnInit {
   availableTimeSlots: Set<string> = new Set<string>();
   clientId: any
 
-  constructor(private dialog: MatDialog, private agendaService: AgendaService, private userService: UserService) { }
+  constructor(private dialog: MatDialog, private agendaService: AgendaService, private userService: UserService,  private activatedRoute: ActivatedRoute) { }
 
 
 
   ngOnInit(): void {
 
-    this.userService.obtenerPerfil().subscribe({
-      next: (clientFound) => {
-        this.clientId = clientFound;
-      }
+    
+    this.activatedRoute.params.subscribe(params => {
+      const agendaId = +params['id'];
+      this.userService.obtenerPerfil().subscribe({
+        next: (clientFound) => {
+          this.clientId = clientFound;
+        }
+      });
+      
+      this.agendaService.obtenerAgenda(agendaId).subscribe((data) => {
+        this.scheduleData = data;
+        this.days = this.scheduleData.turn
+          .reduce((uniqueDays: string[], turn: any) => {
+            if (!uniqueDays.includes(turn.classDayType.name)) {
+              uniqueDays.push(turn.classDayType.name);
+            }
+            return uniqueDays;
+          }, []);
+        this.generateTimeSlots();
+  
+        // Cargar todos los turnos al inicio
+        this.loadReservedAndAvailableTurns();
+        this.loadAllTurns();
+        this.updateButtonStates();
+      });
     });
 
-    this.agendaService.obtenerAgenda(8).subscribe((data) => {
-      this.scheduleData = data;
-      this.days = this.scheduleData.turn
-        .reduce((uniqueDays: string[], turn: any) => {
-          if (!uniqueDays.includes(turn.classDayType.name)) {
-            uniqueDays.push(turn.classDayType.name);
-          }
-          return uniqueDays;
-        }, []);
-      this.generateTimeSlots();
-
-      // Cargar todos los turnos al inicio
-      this.loadReservedAndAvailableTurns();
-      this.loadAllTurns();
-      this.updateButtonStates();
-    });
   }
 
   // ...

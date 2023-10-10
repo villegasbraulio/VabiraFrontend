@@ -1,0 +1,44 @@
+<div class="layout">
+    <app-sidebar></app-sidebar> 
+    <div class="content">
+      <mat-table [dataSource]="schedules">
+        <ng-container matColumnDef="id">
+          <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
+          <mat-cell *matCellDef="let schedule">{{ schedule.supplier.id }}</mat-cell>
+        </ng-container>
+      
+        <ng-container matColumnDef="username">
+          <mat-header-cell *matHeaderCellDef>Username</mat-header-cell>
+          <mat-cell *matCellDef="let schedule">{{ schedule.supplier.user.username }}</mat-cell>
+        </ng-container>
+      
+        <ng-container matColumnDef="nombre">
+          <mat-header-cell *matHeaderCellDef>Nombre</mat-header-cell>
+          <mat-cell *matCellDef="let schedule">{{ schedule.supplier.user.firstName }}</mat-cell>
+        </ng-container>
+      
+        <ng-container matColumnDef="apellido">
+          <mat-header-cell *matHeaderCellDef>Apellido</mat-header-cell>
+          <mat-cell *matCellDef="let schedule">{{ schedule.supplier.user.lastName }}</mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="agenda">
+          <mat-header-cell *matHeaderCellDef>Agenda</mat-header-cell>
+          <mat-cell *matCellDef="let schedule">{{ schedule.name }}</mat-cell>
+        </ng-container>
+      
+        <ng-container matColumnDef="acciones">
+          <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
+          <mat-cell *matCellDef="let schedule">
+            <img src="../../assets/agenda.png" class="icono-accion reducir-imagen" (click)="navigateToDashboard(schedule.id)">
+          </mat-cell>
+        </ng-container>
+      
+        <!-- Resto de tus columnas aquí -->
+      
+        <mat-header-row *matHeaderRowDef="columnas"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: columnas"></mat-row>
+      </mat-table>
+    </div>
+  </div>
+  

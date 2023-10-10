@@ -36,6 +36,7 @@ import { ProveedorComponent } from './proveedor/proveedor.component';
 import { EditarProveedorModalComponent } from './proveedor/editar-proveedor-modal.component';
 import { TimeRangeModalComponent } from './time-range-modal/time-range-modal.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ListarTurneroComponent } from './turnero/listar-turnero.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     CrearProductoComponent,
     ListarProductosComponent,
     ProveedorComponent,
-    TimeRangeModalComponent
+    TimeRangeModalComponent,
+    ListarTurneroComponent,
   ],
   imports: [
     BrowserModule,

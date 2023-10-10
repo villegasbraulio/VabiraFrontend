@@ -9,6 +9,8 @@ import { CrearProductoComponent } from './product/crear-producto/crear-producto.
 import { ListarProductosComponent } from './product/listar-productos/listar-productos.component';
 import { ProveedorComponent } from './proveedor/proveedor.component';
 import { TurneroComponent } from './turnero/turnero.component';
+import { ListarTurneroComponent } from './turnero/listar-turnero.component';
+import { AgendaComponent } from './agenda/agenda.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -25,6 +27,8 @@ const routes: Routes = [
   { path: 'turneros', component: TurneroComponent },
   { path: 'editar-producto/:id', component: CrearProductoComponent },
   { path: 'listar-producto', component: ListarProductosComponent },
+  { path: 'lista-turnero', component: ListarTurneroComponent },
+  { path: 'agenda/:id', component: AgendaComponent },
   // Otras rutas para las diferentes secciones de tu aplicación
 ];
 

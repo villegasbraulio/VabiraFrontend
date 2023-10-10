@@ -1,0 +1,64 @@
+/* users.component.css */
+.users-container {
+    padding: 20px;
+  }
+  
+  .toolbar-title {
+    flex: 1;
+  }
+  
+  .add-button {
+    margin-left: 20px;
+  }
+  
+  /* Estilos para la tabla */
+  mat-table {
+    width: 100%;
+    margin-top: 20px;
+  }
+  
+  /* Estilos para los botones de acciones */
+  mat-icon-button {
+    margin-right: 8px;
+  }
+  
+  .icono-accion {
+    cursor: pointer; /* Cambia el cursor al hacer hover sobre la imagen */
+  }
+  
+  .tarjeta-usuario {
+    margin-top: 10px; /* Espacio superior para separar la tarjeta de la fila anterior */
+    display: none; /* Oculta la tarjeta inicialmente */
+  }
+  /* users.component.css */
+/* ... Otros estilos ... */
+
+.reducir-imagen {
+  width: 32px; /* Ancho deseado para la imagen */
+  height: 30px; /* Alto deseado para la imagen */
+  cursor: pointer; /* Cambia el cursor al hacer hover sobre la imagen */
+}
+
+/* ... Otros estilos ... */
+.layout {
+  display: flex;
+  flex-direction: row; /* Asegura que los elementos estén en fila */
+  overflow: hidden;
+}
+app-sidebar {
+  flex: 0 0 auto;
+  width: 250px;
+  background-color: #1e3a6f;
+  color: white;
+}
+.alta-button {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+}
+/* Estilos para el contenido principal */
+.content {
+  flex: 1;
+  padding: 20px;
+  overflow: auto; /* Agrega desplazamiento si es necesario */
+}

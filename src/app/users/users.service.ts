@@ -54,7 +54,8 @@ export class UserService {
     };
     
     return this.http.get<any>(`${this.baseUrl}/findOneEmail?email=${this.email}`, httpOptions)
-    .pipe(tap((clientFound)=> {return clientFound}));
+    .pipe(tap((clientFound)=> {return clientFound}))
+    .pipe(tap((supplierFound)=> {return supplierFound}));
   }
 
   eliminarUsuario(id: number): Observable<any> {

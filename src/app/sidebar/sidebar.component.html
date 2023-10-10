@@ -25,8 +25,8 @@
           <i class="material-icons">schedule</i> Turneros
         </a>
         <ul id="scheduleCollapse" class="collapse vertical-collapse">
-          <li><a class="dropdown-item" routerLink="/dashboard">Agenda</a></li>
-          <li><a class="dropdown-item" routerLink="/turneros">Turnero</a></li>
+          <li><a class="dropdown-item" routerLink="/lista-turnero">Agenda</a></li>
+          <li><a *ngIf="profileTypes.includes('supplier')" class="dropdown-item" routerLink="/turneros">Turnero</a></li>
         </ul>
       <div>
         <a routerLink="/listar-producto">
