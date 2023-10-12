@@ -13,8 +13,8 @@
       <p><strong>Apellido:</strong> {{ userProfileData.lastName }}</p>
       <p><strong>Correo Electrónico:</strong> {{ userProfileData.email }}</p>
       <p><strong>Nombre de Usuario:</strong> {{ userProfileData.username }}</p>
-      <p><strong>Perfiles Activos:</strong> {{ userProfileData.activeProfiles }}</p>
-      <p><strong>Fecha de Registro:</strong> {{ userProfileData.registrationDate | date: 'dd/MM/yyyy' }}</p>
+      <p><strong>Perfiles Activos:</strong> {{ userProfileData.roles }}</p>
+      <p><strong>Fecha de Registro:</strong> {{ userProfileData.createdAt | date: 'dd/MM/yyyy' }}</p>
       <button>Actualizar Información Personal</button>
     </mat-card>
   </div>

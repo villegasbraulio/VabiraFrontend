@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -7,9 +7,12 @@ import { Observable } from 'rxjs';
 })
 export class UserService {
   private baseUrl = 'http://localhost:3000/api/users'; // Reemplaza con la URL de tu backend
+  private profileUrl = 'http://localhost:3000/api/auth'; // Reemplaza con la URL de tu endpoint para el perfil del usuario
+  private token: string; // Obtén el token desde localStorage u otra fuente
 
-  constructor(private http: HttpClient) { }
-
+  constructor(private http: HttpClient) {
+    // Obtén el token desde localStorage u otra fuente y almacénalo en la propiedad token
+    this.token = localStorage.getItem('token') ?? ''  }
   obtenerUsuarios(): Observable<any[]> {
     return this.http.get<any[]>(`${this.baseUrl}/all`);
   }
@@ -34,10 +37,20 @@ export class UserService {
 
   // Implementa otros métodos para crear, editar y eliminar usuarios según tus necesidades
 
-  obtenerPerfilUsuario(): Observable<any> {
-    // Realiza una solicitud GET a la ruta de perfil del usuario activo en tu backend.
-    return this.http.get<any>(`${this.baseUrl}/profile`);
+// Método para obtener el perfil del usuario
+obtenerPerfilUsuario(): Observable<any> {
+  // Asegúrate de tener el token disponible
+  if (this.token) {
+    // Configura los encabezados con el token
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`);
+    // Realiza la solicitud al endpoint con los encabezados configurados
+    return this.http.get<any>(`${this.profileUrl}/check-status`, { headers });
+  } else {
+    // Si no hay token disponible, puedes manejar el error de alguna manera
+    // por ejemplo, redirigiendo al usuario a la página de inicio de sesión.
+    // También puedes devolver un observable que emita un objeto de error.
+    return new Observable(); // Devuelve un observable vacío o maneja el error según tu caso.
   }
-
+}
   //agregue esto para obtener los datos del usuario activo
 }

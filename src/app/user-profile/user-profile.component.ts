@@ -14,10 +14,11 @@ export class UserProfileComponent implements OnInit {
   constructor(private usersService: UserService) {}
 
   ngOnInit(): void {
-    this.usersService.obtenerPerfilUsuario().subscribe((data: any) => {
-      this.userProfileData = data;
-    });
-  }
+  this.usersService.obtenerPerfilUsuario().subscribe((data: any) => {
+    this.userProfileData = data;
+    console.log(this.userProfileData); // Agrega esta línea para verificar los datos
+  });
+}
 }
 
 

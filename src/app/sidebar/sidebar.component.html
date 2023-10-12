@@ -52,19 +52,18 @@
       </div>
     </li>
 
-    <!-- Grupo 4 -->
-    <li class="sidebar-group">
-      <div class="profile-container">
-        <a routerLink="/perfil" class="profile-link">
-          <div class="profile-box">
-            <i class="material-icons">account_circle</i>
-            <span>Perfil</span>
-          </div>
-        </a>
-        <div class="logout-box" (click)="logout()">
-          <i class="material-icons">exit_to_app</i>
-        </div>
+ 
+<!-- Grupo 4 -->
+<li class="sidebar-group">
+  <div class="profile-container">
+    <a routerLink="/perfil" class="profile-link">
+      <div class="profile-box">
+        <i class="material-icons">account_circle</i>
+        <span>{{ userName }} ({{ userRole }})</span> <!-- Muestra el nombre y el rol del usuario -->
       </div>
-    </li>
-  </ul>
-</div>
+    </a>
+    <div class="logout-box" (click)="logout()">
+      <i class="material-icons">exit_to_app</i>
+    </div>
+  </div>
+</li>
