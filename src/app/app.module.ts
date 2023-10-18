@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';  //modulo formularios
+import { FormsModule, FormGroup, FormBuilder, ReactiveFormsModule } from '@angular/forms';  //modulo formularios
 import { RouterModule } from '@angular/router';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -25,6 +25,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { AgendaComponent } from './agenda/agenda.component';
 import { ReservarCitaComponent } from './reservar-cita/reservar-cita.component';
 import { DetallesCitaComponent } from './detalles-cita/detalles-cita.component';
+import { CommonModule } from '@angular/common';
 
 import { MatFormFieldModule } from '@angular/material/form-field'; // Importa MatFormFieldModule
 import { MatInputModule } from '@angular/material/input';
@@ -37,6 +38,11 @@ import { EditarProveedorModalComponent } from './proveedor/editar-proveedor-moda
 import { TimeRangeModalComponent } from './time-range-modal/time-range-modal.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ListarTurneroComponent } from './turnero/listar-turnero.component';
+
+
+import { CrearVentaComponent } from './venta/crear-venta/crear-venta.component';
+import { ListarVentasComponent } from './venta/listar-ventas/listar-ventas.component';
+import { VisualizarVentaComponent } from './venta/visualizar-venta/visualizar-venta.component';
 
 @NgModule({
   declarations: [
@@ -54,11 +60,17 @@ import { ListarTurneroComponent } from './turnero/listar-turnero.component';
     ReservarCitaComponent,
     DetallesCitaComponent,
     TurneroComponent,
-    CrearProductoComponent,
-    ListarProductosComponent,
+
     ProveedorComponent,
     TimeRangeModalComponent,
     ListarTurneroComponent,
+  
+    CrearProductoComponent,
+    ListarProductosComponent,
+
+    CrearVentaComponent,
+    ListarVentasComponent,
+    VisualizarVentaComponent,
   ],
   imports: [
     BrowserModule,
@@ -79,9 +91,11 @@ import { ListarTurneroComponent } from './turnero/listar-turnero.component';
     MatFormFieldModule, // Agrega MatFormFieldModule aquí
     MatInputModule, // Agrega MatInputModule aquí
     ReactiveFormsModule,
+    CommonModule,
     ToastrModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+

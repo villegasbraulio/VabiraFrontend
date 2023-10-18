@@ -1,77 +1,55 @@
 <app-sidebar></app-sidebar>
 <div class="container mt-5">
-    <div class="row">
-        <div class="col-lg-10 offset-lg-3 ">
-            <div class="card">
-                <div class="card-body text-center">
-                    <span class="titulo">LISTADO DE PRODUCTOS</span>
-                    <button class="btn btn-danger float-end" routerLink="/dashboard">VOLVER</button>
-                    <button class="btn btn-success float-end" routerLink="/crear-producto">NUEVO</button>
-                    <table class="table table-striped mt-3 table-responsive">
-                        <thead>
-                          <tr>
-                            <th scope="col">Producto</th>
-                            <th scope="col">Marca</th>
-                            <th scope="col">Descripcion</th>
-                            <th scope="col">Codigo</th>
-                            <th scope="col">Precio</th>
-                            <th scope="col">Cantidad</th>
-                            <th scope="col">Stock Minimo</th>
-                            <th scope="col">Fecha Caducidad</th>
-                            <th scope="col"></th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr>
-                            <td>Crema hidratante</td>
-                            <td>Germaine de Capuccini</td>
-                            <td>Crema hidratante para rostro</td>
-                            <td>1010</td>
-                            <td>3000</td>
-                            <td>5</td>
-                            <td>3</td>
-                            <td>Ago 2025</td>
-                            <td>
-                                <i class="fa-solid fa-pen-to-square text-primary"></i>
-                                <i class="fa-solid fa-trash text-danger"></i>
-                                
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>Acido hialuronico</td>
-                            <td>Prodermic</td>
-                            <td>Superhumectante termal con hialuronico</td>
-                            <td>1030</td>
-                            <td>2500</td>
-                            <td>7</td>
-                            <td>4</td>
-                            <td>Sept 2026</td>
-                            <td>
-                                <i class="fa-solid fa-pen-to-square text-primary"></i>
-                                <i class="fa-solid fa-trash text-danger"></i>
-                               
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>Acido hialuronico</td>
-                            <td>Germaine</td>
-                            <td>Locion termal con hialuronico</td>
-                            <td>1040</td>
-                            <td>4500</td>
-                            <td>7</td>
-                            <td>3</td>
-                            <td>Sept 2025</td>
-                            <td>
-                                <i class="fa-solid fa-pen-to-square text-primary"></i>
-                                <i class="fa-solid fa-trash text-danger"></i>
-                                
-                            </td>
-                          </tr>
-                          
-                        </tbody>
-                      </table>
-                </div>
-            </div>
+  <div class="row">
+    <div class="col-lg-10 offset-lg-3 ">
+      <div class="card">
+        <div class="card-body text-center">
+          <span class="titulo">LISTADO DE PRODUCTOS</span>
+          <button class="btn btn-danger float-end" routerLink="/dashboard">VOLVER</button>
+          <button class="btn btn-success float-end" routerLink="/crear-producto">NUEVO</button>
+          <table class="table table-striped mt-3 table-responsive">
+            <thead>
+              <tr>
+                <th scope="col">Producto</th>
+                <th scope="col">Marca</th>
+                <th scope="col">Descripcion</th>
+                <th scope="col">Codigo</th>
+                <th scope="col">Precio</th>
+                <th scope="col">Cantidad</th>
+                <th scope="col">Stock Minimo</th>
+                <th scope="col">Fecha Caducidad</th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <ng-container *ngIf="listProductos.length > 0; else noProductos">
+                <tr *ngFor="let producto of listProductos">
+                  <td>{{ producto.nombre }}</td>
+                  <td>{{ producto.marca }}</td>
+                  <td>{{ producto.descripcion }}</td>
+                  <td>{{ producto.codigo }}</td>
+                  <td>{{ producto.precio | currency:'USD'}}</td>
+                  <td>{{ producto.cantidad }}</td>
+                  <td>{{ producto.stock_minimo }}</td>
+                  <td>{{ producto.fecha_caducidad }}</td>
+                  <td>
+                    <i [routerLink]="['/editar-producto', producto._id]"
+                      class="fa-solid fa-pen-to-square text-primary"></i>
+                    <i (click)="eliminarProducto(producto._id)" class="fa-solid fa-trash text-danger"></i>
+
+                  </td>
+                </tr>
+              </ng-container>
+            </tbody>
+          </table>
+          <ng-template #noProductos>
+            <tr>
+              <td colspan="6">No hay productos para mostrar</td>
+            </tr>
+          </ng-template>
         </div>
+      </div>
     </div>
+  </div>
 </div>
+

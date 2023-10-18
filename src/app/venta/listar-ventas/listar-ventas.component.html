@@ -1,0 +1,48 @@
+<app-sidebar></app-sidebar>
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-lg-10 offset-lg-3 ">
+      <div class="card">
+        <div class="card-body text-center">
+          <span class="titulo">LISTADO DE VENTAS</span>
+          <button class="btn btn-danger ml-2 float-end" routerLink="/dashboard">VOLVER</button>
+          <button class="btn btn-success float-end" routerLink="/crear-venta">NUEVO</button>
+
+          <table class="table table-striped mt-3 table-responsive">
+            <thead>
+              <tr>
+                <th scope="col">Fecha</th>
+                <th scope="col">Cantidad productos</th>
+                <th scope="col">Monto total</th>
+                <th scope="col">Vendedor</th>
+                <th scope="col">Cliente</th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <ng-container *ngIf="listVentas.length > 0; else noVentas">
+                <tr *ngFor="let venta of listVentas">
+                  <td>{{ venta.fecha }}</td>
+                  <td>{{ venta.cantidad }}</td>
+                  <td>{{ venta.monto_total | currency:'USD' }}</td>
+                  <td>{{ venta.vendedor }}</td>
+                  <td>{{ venta.cliente }}</td>
+                  <td>
+                    <i [routerLink]="['/visualizar-venta', venta._id]" class="fa-solid fa-eye text-primary"></i>
+                    <i [routerLink]="['/editar-venta', venta._id]" class="fa-solid fa-pen-to-square text-primary"></i>
+                    <i (click)="eliminarVenta(venta._id)" class="fa-solid fa-trash text-danger"></i>
+                  </td>
+                </tr>
+              </ng-container>
+            </tbody>
+          </table>
+          <ng-template #noVentas>
+            <tr>
+              <td colspan="6">No hay ventas para mostrar</td>
+            </tr>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

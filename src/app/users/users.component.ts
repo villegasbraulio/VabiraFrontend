@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatTableModule } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { UserService } from './users.service'; // Importa tu servicio de usuario
 import { MatDialog } from '@angular/material/dialog'; // Importa MatDialog para el modal
@@ -11,7 +12,7 @@ import { RegisterComponent } from '../register/register.component'; // Importa e
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
-  styleUrls: ['./users.component.css', ]
+  styleUrls: ['./users.component.css' ],
 })
 export class UsersComponent implements OnInit {
   usuarios!: MatTableDataSource<any>;
@@ -22,10 +23,10 @@ export class UsersComponent implements OnInit {
 
   constructor(private userService: UserService, private dialog: MatDialog, private router: Router) {
 
-
     
    }
-
+  
+ 
   ngOnInit() {
     this.cargarUsuarios();
   }

@@ -5,12 +5,21 @@
             <div class="card">
                 <div class="card-body text-center">
                     <span class="titulo">{{titulo | uppercase }}</span>
-                    <form class="mt-3" [formGroup]="productoForm" (ngSubmit)="agregarProducto()">
+                    <form class="mt-3" [formGroup]="ventaForm" (ngSubmit)="agregarVenta()">
+                        <div class="mb-3">
+                            <input type="text" formControlName="fecha" class="form-control form-control-lg"
+                                placeholder="Fecha">
+                            <div class="text-danger"
+                                *ngIf="ventaForm.get('fecha')?.hasError('required') && ventaForm.get('fecha')?.touched">
+
+                                <span>La fecha <strong>es obligatoria</strong></span>
+                            </div>
+                        </div>
                         <div class="mb-3">
                             <input type="text" formControlName="producto" class="form-control form-control-lg"
                                 placeholder="Producto">
                             <div class="text-danger"
-                                *ngIf="productoForm.get('producto')?.hasError('required') && productoForm.get('producto')?.touched">
+                                *ngIf="ventaForm.get('producto')?.hasError('required') && ventaForm.get('producto')?.touched">
 
                                 <span>El nombre del producto <strong>es obligatorio</strong></span>
                             </div>
@@ -19,25 +28,17 @@
                             <input type="text" formControlName="marca" class="form-control form-control-lg"
                                 placeholder="Marca">
                             <div class="text-danger"
-                                *ngIf="productoForm.get('marca')?.hasError('required') && productoForm.get('marca')?.touched">
+                                *ngIf="ventaForm.get('marca')?.hasError('required') && ventaForm.get('marca')?.touched">
 
                                 <span>La marca <strong>es obligatoria</strong></span>
                             </div>
                         </div>
-                        <div class="mb-3">
-                            <input type="text" formControlName="descripcion" class="form-control form-control-lg"
-                                placeholder="Descripcion">
-                            <div class="text-danger"
-                                *ngIf="productoForm.get('descripcion')?.hasError('required') && productoForm.get('descripcion')?.touched">
-
-                                <span>La descrcipcion <strong>es obligatoria</strong></span>
-                            </div>
-                        </div>
+       
                         <div class="mb-3">
                             <input type="number" formControlName="codigo" class="form-control form-control-lg"
                                 placeholder="Codigo">
                             <div class="text-danger"
-                                *ngIf="productoForm.get('codigo')?.hasError('required') && productoForm.get('codigo')?.touched">
+                                *ngIf="ventaForm.get('codigo')?.hasError('required') && ventaForm.get('codigo')?.touched">
 
                                 <span>El codigo <strong>es obligatorio</strong></span>
                             </div>
@@ -46,7 +47,7 @@
                             <input type="number" formControlName="precio" class="form-control form-control-lg"
                                 placeholder="Precio">
                             <div class="text-danger"
-                                *ngIf="productoForm.get('precio')?.hasError('required') && productoForm.get('precio')?.touched">
+                                *ngIf="ventaForm.get('precio')?.hasError('required') && ventaForm.get('precio')?.touched">
 
                                 <span>El precio <strong>es obligatorio</strong></span>
                             </div>
@@ -55,33 +56,16 @@
                             <input type="number" formControlName="cantidad" class="form-control form-control-lg"
                                 placeholder="Cantidad">
                             <div class="text-danger"
-                                *ngIf="productoForm.get('cantidad')?.hasError('required') && productoForm.get('cantidad')?.touched">
+                                *ngIf="ventaForm.get('cantidad')?.hasError('required') && ventaForm.get('cantidad')?.touched">
 
                                 <span>La cantidad <strong>es obligatoria</strong></span>
                             </div>
                         </div>
+                        
                         <div class="mb-3">
-                            <input type="number" formControlName="stock_minimo" class="form-control form-control-lg"
-                                placeholder="Stock minimo">
-                            <div class="text-danger"
-                                *ngIf="productoForm.get('stock_minimo')?.hasError('required') && productoForm.get('stock_minimo')?.touched">
-
-                                <span>El stock minimo <strong>es obligatorio</strong></span>
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <input type="text" formControlName="fecha_caducidad" class="form-control form-control-lg"
-                                placeholder="Fecha caducidad">
-                            <div class="text-danger"
-                                *ngIf="productoForm.get('fecha_caducidad')?.hasError('required') && productoForm.get('fecha_caducidad')?.touched">
-
-                                <span>La fecha de caducidad <strong>es obligatoria</strong></span>
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <button routerLink="/listar-producto"
+                            <button routerLink="/listar-ventas"
                                 class="btn btn-secondary btn-lg float-start">VOLVER</button>
-                            <button type="submit" [disabled]="productoForm.invalid"
+                            <button type="submit" [disabled]="ventaForm.invalid"
                                 class="btn btn-success btn-lg float-end">ACEPTAR</button>
                         </div>
                     </form>
