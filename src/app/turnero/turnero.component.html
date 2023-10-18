@@ -1,4 +1,5 @@
 <app-sidebar></app-sidebar>
+
 <body id="colorFondo">
     <div class="content-container d-flex justify-content-center align-items-center">
         <div class="card custom-card">
@@ -17,93 +18,14 @@
                     </div>
                     <div class="form-group">
                         <label>Días de la Semana:</label>
-                        <div class="form-check form-check-inline">
-                            <input
-                              type="checkbox"
-                              id="lunes"
-                              name="days"
-                              (change)="toggleDay('Lunes')"
-                              [checked]="isDaySelected('Lunes')"
-                              value="Lunes"
-                              class="form-check-input"
-                            />
-                            <label class="form-check-label" for="lunes">Lunes</label>
-                          </div>
-                          <div class="form-check form-check-inline">
-                            <input
-                              type="checkbox"
-                              id="martes"
-                              name="days"
-                              (change)="toggleDay('Martes')"
-                              [checked]="isDaySelected('Martes')"
-                              value="Martes"
-                              class="form-check-input"
-                            />
-                            <label class="form-check-label" for="martes">Martes</label>
-                          </div>
-                          <div class="form-check form-check-inline">
-                            <input
-                              type="checkbox"
-                              id="miercoles"
-                              name="days"
-                              (change)="toggleDay('Miercoles')"
-                              [checked]="isDaySelected('Miercoles')"
-                              value="Miercoles"
-                              class="form-check-input"
-                            />
-                            <label class="form-check-label" for="miercoles">Miercoles</label>
-                          </div>
-                          <div class="form-check form-check-inline">
-                            <input
-                              type="checkbox"
-                              id="jueves"
-                              name="days"
-                              (change)="toggleDay('Jueves')"
-                              [checked]="isDaySelected('Jueves')"
-                              value="Jueves"
-                              class="form-check-input"
-                            />
-                            <label class="form-check-label" for="jueves">Jueves</label>
-                          </div>
-                          <div class="form-check form-check-inline">
-                            <input
-                              type="checkbox"
-                              id="viernes"
-                              name="days"
-                              (change)="toggleDay('Viernes')"
-                              [checked]="isDaySelected('Viernes')"
-                              value="Viernes"
-                              class="form-check-input"
-                            />
-                            <label class="form-check-label" for="viernes">Viernes</label>
-                          </div>
-                          <div class="form-check form-check-inline">
-                            <input
-                              type="checkbox"
-                              id="sabado"
-                              name="days"
-                              (change)="toggleDay('Sabado')"
-                              [checked]="isDaySelected('Sabado')"
-                              value="Sabado"
-                              class="form-check-input"
-                            />
-                            <label class="form-check-label" for="sabado">Sabado</label>
-                          </div>
-                          <div class="form-check form-check-inline">
-                            <input
-                              type="checkbox"
-                              id="domingo"
-                              name="days"
-                              (change)="toggleDay('Domingo')"
-                              [checked]="isDaySelected('Domingo')"
-                              value="Domingo"
-                              class="form-check-input"
-                            />
-                            <label class="form-check-label" for="domingo">Domingo</label>
-                          </div>
+                    </div>
+                    <div class="card flex justify-content-center">
+                        <p-calendar [(ngModel)]="scheduleData.dates" name="dates" selectionMode="multiple"
+                            dateFormat="dd/mm/yy DD" [readonlyInput]="true" [showIcon]="true" (onSelect)="onSelectDate($event)"></p-calendar>
                     </div>
                     <div class="form-group mt-3">
-                        <button type="button" class="btn btn-primary"(click)="onOpenTimeRangeModal()">Seleccionar Rango Horario</button>
+                        <button type="button" class="btn btn-primary" (click)="onOpenTimeRangeModal()">Seleccionar Rango
+                            Horario</button>
                         <button type="submit" class="btn btn-success">Crear Agenda</button>
                     </div>
                 </form>

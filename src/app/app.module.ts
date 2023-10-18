@@ -37,6 +37,8 @@ import { EditarProveedorModalComponent } from './proveedor/editar-proveedor-moda
 import { TimeRangeModalComponent } from './time-range-modal/time-range-modal.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ListarTurneroComponent } from './turnero/listar-turnero.component';
+import { CalendarModule } from 'primeng/calendar';
+import { DropdownModule } from 'primeng/dropdown';
 
 @NgModule({
   declarations: [
@@ -79,6 +81,8 @@ import { ListarTurneroComponent } from './turnero/listar-turnero.component';
     MatFormFieldModule, // Agrega MatFormFieldModule aquí
     MatInputModule, // Agrega MatInputModule aquí
     ReactiveFormsModule,
+    CalendarModule,
+    DropdownModule,
     ToastrModule.forRoot()
   ],
   providers: [],

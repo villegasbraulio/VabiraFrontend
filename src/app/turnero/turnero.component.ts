@@ -20,8 +20,10 @@ export class TurneroComponent {
     name: '', // Aquí almacenaremos el nombre seleccionado desde el frontend
     supplier: {
     },
+    dates: []
   };
   supplierId: any
+  selectedDates: Date[] = [];
   selectedStartTime: NgbTimeStruct = { hour: 0, minute: 0, second: 0 };
   selectedEndTime: NgbTimeStruct = { hour: 0, minute: 0, second: 0 };
 
@@ -37,14 +39,14 @@ export class TurneroComponent {
       }
     });
     
-    
+
   }
-  
+
   async createSchedule() {
-    
-    try {      
+
+    try {
       // Luego, puedes continuar con la creación de la agenda y enviar los datos al servicio.
-      if(this.scheduleData.initialTurnDateTime == ''){
+      if (this.scheduleData.initialTurnDateTime == '') {
         console.error('Error el rango horario no fue seleccionado:');
         // Maneja el error de acuerdo a tus necesidades
       }
@@ -65,7 +67,7 @@ export class TurneroComponent {
       // Maneja el error según tus necesidades
     }
   }
-  
+
 
   toggleDay(day: string) {
     const index = this.scheduleData.days.indexOf(day);
@@ -85,7 +87,7 @@ export class TurneroComponent {
   openTimeRangeModal(): Promise<{ startTime: NgbTimeStruct; endTime: NgbTimeStruct }> {
     return new Promise((resolve, reject) => {
       const modalRef = this.modalService.open(TimeRangeModalComponent);
-      
+
       modalRef.componentInstance.timeRangeSelected.subscribe((selectedTimeRange: { startTime: NgbTimeStruct; endTime: NgbTimeStruct }) => {
         resolve(selectedTimeRange);
       });
@@ -93,7 +95,7 @@ export class TurneroComponent {
   }
 
   async onOpenTimeRangeModal() {
-    
+
     try {
       const selectedTimeRange = await this.openTimeRangeModal();
 
@@ -112,7 +114,7 @@ export class TurneroComponent {
     // Convierte el objeto NgbTimeStruct en una cadena de tiempo (por ejemplo, "HH:MM:SS")
     return `${timeStruct.hour}:${timeStruct.minute}`;
   }
-  
+
   showSuccessModal() {
     const modalRef = this.modalService.open(SuccessModalComponent, { centered: true }); // Abre el modal de éxito
 
@@ -120,6 +122,44 @@ export class TurneroComponent {
     modalRef.componentInstance.title = 'Éxito'; // Por ejemplo, configurar el título
     modalRef.componentInstance.message = 'La operación se realizó con éxito.'; // Configurar el mensaje de éxito
   }
-}
+
+  onSelectDate(event: any) {
+    // Este evento se activa cuando el usuario selecciona una fecha en el calendario
+    console.log('Fechas seleccionadas:', event);
   
+    if (Array.isArray(event)) {
+      // Si se seleccionaron múltiples fechas, obtén los nombres de los días de las fechas seleccionadas
+      const selectedDays = event.map((date: Date) => this.getWeekdayName(date));
+  
+      // Actualiza el array de "days" con los días seleccionados en el calendario
+      this.scheduleData.days = selectedDays;
+    } else if (event instanceof Date) {
+      // Si se seleccionó una fecha individual, obtén el nombre del día de la semana
+      const selectedDay = this.getWeekdayName(event);
+  
+      // Agrega el día a la lista si aún no está presente
+      if (!this.scheduleData.days.includes(selectedDay)) {
+        this.scheduleData.days.push(selectedDay);
+      }
+    } else {
+      console.error('El evento no es una fecha o un array de fechas:', event);
+      // Maneja el error de acuerdo a tus necesidades
+    }
+  }
+  
+  
+  
+  
+  
+  
+  
+
+  private getWeekdayName(date: Date): string {
+    // Asegúrate de que el formato de fecha coincida con el proporcionado por el calendario
+    const weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+    return weekdays[date.getDay()];
+  }
+  
+}
+
 
