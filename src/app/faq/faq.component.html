@@ -6,63 +6,57 @@
     <div class="search-container">
       <input type="text" placeholder="Buscar...">
     </div>
+    <button class="alta-faq-button" (click)="mostrarFormulario()">Alta FAQ</button>
+
     <div class="faq-list">
-      <div class="faq-header">
-        <h1>Preguntas Frecuentes</h1>
-        <button (click)="modoEdicion = !modoEdicion">{{ modoEdicion ? 'Cancelar' : 'Administrar FAQ' }}</button>
-      </div>
-      <div class="faq-list">
-        <div *ngFor="let faq of faqs; let i = index" class="question">
-          <div class="question-header">
-            <h3>{{ faq.question }}</h3>
-            <div *ngIf="modoEdicion">
-              <button mat-icon-button (click)="borrarPregunta(i)">
-                <mat-icon>delete</mat-icon>
-              </button>
-              <button mat-icon-button (click)="editarPregunta(i)">
-                <mat-icon>edit</mat-icon>
-              </button>
-            </div>
-          </div>
-          <p>{{ faq.answer }}</p>
+      <p-accordion>
+        <p-accordionTab *ngFor="let faq of faqs" [header]="faq.name" [expanded]="faq.expanded">
+          <p>{{ faq.description }}</p>
+          <!-- <button pButton icon="pi pi-pencil" (click)="editarFaq(faq)">Editar</button> -->
+          <button pButton icon="pi pi-trash" (click)="eliminarFaq(faq.id)">Eliminar</button>
+        </p-accordionTab>
+      </p-accordion>
+    </div>
+  <div class="custom-dialog">
+    <p-dialog header="Nueva FAQ" [(visible)]="mostrarForm" [modal]="true" [responsive]="true" [style]="{width: '50vw'}">
+
+      <form (submit)="agregarFaq($event)">
+        <div class="form-group">
+          <label for="nombre">Pregunta:</label>
+          <input type="text" id="nombre" name="nombre" [(ngModel)]="nuevaFaq.name" required>
         </div>
-      </div>
-      <div class="question-form" *ngIf="modoEdicion">
-        <h2>{{ preguntaSeleccionada ? 'Editar Pregunta' : 'Agregar Pregunta' }}</h2>
-        <form (submit)="guardarPregunta()">
-          <div class="form-group">
-            <label for="asunto">Asunto:</label>
-            <input type="text" id="asunto" name="asunto" [(ngModel)]="asunto" required>
-          </div>
-          <div class="form-group">
-            <label for="descripcion">Descripción:</label>
-            <textarea id="descripcion" name="descripcion" [(ngModel)]="descripcion" required></textarea>
-          </div>
-          <div class="form-actions">
-            <button type="submit">{{ preguntaSeleccionada ? 'Guardar' : 'Agregar' }}</button>
-          </div>
-        </form>
-      </div>
-    </div>
+        <div class="form-group">
+          <label for="descripcion">Respuesta:</label>
+          <textarea id="descripcion" name="descripcion" [(ngModel)]="nuevaFaq.description" required></textarea>
+        </div>
+        <div class="form-actions">
+          <button type="submit">Agregar FAQ</button>
+          <button type="button" (click)="mostrarForm = false">Cancelar</button>
+        </div>
+      </form>
+    </p-dialog>
+
+  </div>
+
     <div class="ask-developers">
-  <h2>¿No encuentras la pregunta?</h2>
-  <form>
-    <div class="form-group">
-      <label for="nombre">Nombre:</label>
-      <input type="text" id="nombre" name="nombre" required>
+      <h2>¿No encuentras la pregunta?</h2>
+      <form>
+        <div class="form-group">
+          <label for="nombre">Nombre:</label>
+          <input type="text" id="nombre" name="nombre" required>
+        </div>
+        <div class="form-group">
+          <label for="correo">Correo electrónico:</label>
+          <input type="email" id="correo" name="correo" required>
+        </div>
+        <div class="form-group">
+          <label for="pregunta">Pregunta:</label>
+          <textarea id="pregunta" name="pregunta" required></textarea>
+        </div>
+        <div class="form-actions">
+          <button type="submit">Enviar</button>
+        </div>
+      </form>
     </div>
-    <div class="form-group">
-      <label for="correo">Correo electrónico:</label>
-      <input type="email" id="correo" name="correo" required>
-    </div>
-    <div class="form-group">
-      <label for="pregunta">Pregunta:</label>
-      <textarea id="pregunta" name="pregunta" required></textarea>
-    </div>
-    <div class="form-actions">
-      <button type="submit">Enviar</button>
-    </div>
-  </form>
-</div>
   </div>
 </div>

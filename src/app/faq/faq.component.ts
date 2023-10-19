@@ -1,75 +1,66 @@
 import { Component, OnInit } from '@angular/core';
+import { FaqService } from './faq.service';
+import { UserService } from '../users/users.service'; // Importa tu servicio de usuario
 
 @Component({
   selector: 'app-faq',
   templateUrl: './faq.component.html',
-  styleUrls: ['./faq.component.css'],
+  styleUrls: ['./faq.component.css']
 })
 export class FaqComponent implements OnInit {
-  faqs = [
-    {
-      question: 'Pregunta 1',
-      answer: 'Respuesta 1',
-    },
-    {
-      question: 'Pregunta 2',
-      answer: 'Respuesta 2',
-    },
-    {
-      question: 'Pregunta 3',
-      answer: 'Respuesta 3',
-    },
-    {
-      question: 'Pregunta 4',
-      answer: 'Respuesta 4',
-    },
-    {
-      question: 'Pregunta 5',
-      answer: 'Respuesta 5',
-    }
-  ];
+  faqs: any[] = [];
+  mostrarForm: boolean = false;
+  nuevaFaq: any = {
+    name: '',
+    description: ''
+    
+  };
 
-  asunto: string = '';
-  descripcion: string = '';
-  preguntaSeleccionada: number | null = null;
-  modoEdicion: boolean = false;
+  constructor(private faqService: FaqService, private userService: UserService) {}
 
-  borrarPregunta(index: number): void {
-    this.faqs.splice(index, 1);
+  ngOnInit() {
+    this.cargarFaqs();
   }
-  
-  editarPregunta(index: number): void {
-    const pregunta = this.faqs[index];
-    this.asunto = pregunta.question;
-    this.descripcion = pregunta.answer;
-    this.preguntaSeleccionada = index;
+
+  cargarFaqs() {
+    this.faqService.getFaqs().subscribe((data: any[]) => {
+      this.faqs = data.map(faq => ({ ...faq, expanded: false }));
+      console.log(this.faqs);
+    });
   }
+
+  mostrarFormulario() {
+    this.mostrarForm = true;
+  }
+ 
+
+  agregarFaq(event: Event) {
+    event.preventDefault();
   
-  guardarPregunta(): void {
-    if (this.preguntaSeleccionada !== null) {
-      const pregunta = this.faqs[this.preguntaSeleccionada];
-      pregunta.question = this.asunto;
-      pregunta.answer = this.descripcion;
-      this.preguntaSeleccionada = null;
-    } else {
-      this.faqs.push({
-        question: this.asunto,
-        answer: this.descripcion,
+    // Obtén el userId del usuario activo
+    this.userService.obtenerPerfilUsuario().subscribe((userProfileData: any) => {
+      const userId = userProfileData.id;
+  
+      // Asigna el userId a la nueva FAQ antes de crearla
+      this.nuevaFaq.userId = userId;
+  
+      // Llama al servicio para crear la nueva FAQ
+      this.faqService.crearFaq(this.nuevaFaq).subscribe(() => {
+        // Limpia el formulario y recarga las FAQs después de crear la nueva FAQ
+        this.mostrarForm = false;
+        this.nuevaFaq = {
+          name: '',
+          description: ''
+        };
+        this.cargarFaqs();
       });
-    }
-    this.asunto = '';
-    this.descripcion = '';
+    });
   }
   
-  limpiarFormulario(): void {
-    this.asunto = '';
-    this.descripcion = '';
-    this.preguntaSeleccionada = null;
+
+  eliminarFaq(id: number) {
+    this.faqService.eliminarFaq(id).subscribe(() => {
+      this.cargarFaqs();
+    });
   }
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
 }

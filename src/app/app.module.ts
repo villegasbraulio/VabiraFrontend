@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';  //modulo formularios
 import { RouterModule } from '@angular/router';
@@ -33,6 +33,13 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 import { FaqComponent } from './faq/faq.component';
 import { SettingsComponent } from './settings/settings.component';
 import { SettingsModalComponent } from './settings-modal./settings-modal..component'; // Importa MatInputModule
+import { DialogModule } from 'primeng/dialog';
+import { InputTextModule } from 'primeng/inputtext';
+import { ButtonModule } from 'primeng/button';
+import { MessageModule } from 'primeng/message';
+import { MessagesModule } from 'primeng/messages';
+import { AccordionModule } from 'primeng/accordion';
+
 
 @NgModule({
   declarations: [
@@ -71,10 +78,18 @@ import { SettingsModalComponent } from './settings-modal./settings-modal..compon
     MatDialogModule, // Asegúrate de que MatDialogModule esté importado aquí
     MatFormFieldModule, // Agrega MatFormFieldModule aquí
     MatInputModule, // Agrega MatInputModule aquí
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    DialogModule,
+    InputTextModule,
+    ButtonModule,
+    MessageModule,
+    MessagesModule,
+    AccordionModule,
+    
     
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [], // Asegúrate de proporcionar DialogService aquí
+  bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
 })
 export class AppModule { }
