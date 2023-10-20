@@ -39,6 +39,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ListarTurneroComponent } from './turnero/listar-turnero.component';
 import { CalendarModule } from 'primeng/calendar';
 import { DropdownModule } from 'primeng/dropdown';
+import { TableModule } from 'primeng/table';
+import { MessageService } from 'primeng/api';
 
 @NgModule({
   declarations: [
@@ -62,6 +64,9 @@ import { DropdownModule } from 'primeng/dropdown';
     TimeRangeModalComponent,
     ListarTurneroComponent,
   ],
+  providers: [
+    MessageService, // Agrega MessageService a la lista de proveedores
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -83,9 +88,9 @@ import { DropdownModule } from 'primeng/dropdown';
     ReactiveFormsModule,
     CalendarModule,
     DropdownModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    TableModule,
   ],
-  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

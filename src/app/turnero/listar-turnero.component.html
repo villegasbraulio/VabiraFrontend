@@ -1,44 +1,74 @@
 <div class="layout">
-    <app-sidebar></app-sidebar> 
-    <div class="content">
-      <mat-table [dataSource]="schedules">
-        <ng-container matColumnDef="id">
-          <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
-          <mat-cell *matCellDef="let schedule">{{ schedule.supplier.id }}</mat-cell>
-        </ng-container>
-      
-        <ng-container matColumnDef="username">
-          <mat-header-cell *matHeaderCellDef>Username</mat-header-cell>
-          <mat-cell *matCellDef="let schedule">{{ schedule.supplier.user.username }}</mat-cell>
-        </ng-container>
-      
-        <ng-container matColumnDef="nombre">
-          <mat-header-cell *matHeaderCellDef>Nombre</mat-header-cell>
-          <mat-cell *matCellDef="let schedule">{{ schedule.supplier.user.firstName }}</mat-cell>
-        </ng-container>
-      
-        <ng-container matColumnDef="apellido">
-          <mat-header-cell *matHeaderCellDef>Apellido</mat-header-cell>
-          <mat-cell *matCellDef="let schedule">{{ schedule.supplier.user.lastName }}</mat-cell>
-        </ng-container>
-
-        <ng-container matColumnDef="agenda">
-          <mat-header-cell *matHeaderCellDef>Agenda</mat-header-cell>
-          <mat-cell *matCellDef="let schedule">{{ schedule.name }}</mat-cell>
-        </ng-container>
-      
-        <ng-container matColumnDef="acciones">
-          <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
-          <mat-cell *matCellDef="let schedule">
-            <img src="../../assets/agenda.png" class="icono-accion reducir-imagen" (click)="navigateToDashboard(schedule.id)">
-          </mat-cell>
-        </ng-container>
-      
-        <!-- Resto de tus columnas aquí -->
-      
-        <mat-header-row *matHeaderRowDef="columnas"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: columnas"></mat-row>
-      </mat-table>
+  <app-sidebar></app-sidebar>
+  <div class="content">
+    <div class="card">
+      <p-table
+        #dt1
+        [value]="schedules"
+        [rows]="10"
+        [paginator]="true"
+        [globalFilterFields]="['supplier.user.username', 'supplier.user.firstName', 'supplier.user.lastName', 'name']"
+        [resizableColumns]="true"
+        [reorderableColumns]="true"
+      >
+        <ng-template pTemplate="caption">
+          <div class="flex">
+            <button
+              pButton
+              label="Clear"
+              class="p-button-outlined"
+              icon="pi pi-filter-slash"
+              (click)="clearGlobalFilter()"
+            ></button>
+            <span class="p-input-icon-left ml-auto">
+              <i class="pi pi-search"></i>
+              <input
+                pInputText
+                type="text"
+                (input)="filterGlobal($event)"
+                placeholder="Buscar..."
+              />
+            </span>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th
+              *ngFor="let col of columnas"
+              [pSortableColumn]="col.field"
+              [style.width]="col.field === 'acciones' ? '3rem' : 'auto'"
+            >
+              <div class="flex align-items-center">
+                {{ col.header }}
+                <p-sortIcon [field]="col.field"></p-sortIcon>
+              </div>
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-schedule>
+          <tr>
+            <td>{{ schedule.id }}</td>
+            <td>{{ schedule.supplier.user.username }}</td>
+            <td>{{ schedule.supplier.user.firstName }}</td>
+            <td>{{ schedule.supplier.user.lastName }}</td>
+            <td>{{ schedule.name }}</td>
+            <td>
+              <img
+                src="../../assets/agenda.png"
+                class="icono-accion reducir-imagen"
+                (click)="navigateToDashboard(schedule.id)"
+              />
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td [attr.colspan]="columnas.length">No hay agendas a mostrar.</td>
+          </tr>
+        </ng-template>
+      </p-table>
     </div>
   </div>
-  
+</div>
+
+

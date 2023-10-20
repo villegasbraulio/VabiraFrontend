@@ -1,49 +1,67 @@
+// Componente TypeScript
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatSort } from '@angular/material/sort';
-import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
-import { UserService } from '../users/users.service';
+import { Table } from 'primeng/table';
+import { MessageService } from 'primeng/api';
 import { ProveedorService } from '../proveedor/proveedor.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-listar-turnero',
   templateUrl: './listar-turnero.component.html',
-  styleUrls: ['./listar-turnero.component.css']
+  styleUrls: ['./listar-turnero.component.css'],
 })
-export class ListarTurneroComponent {
-  schedules!: MatTableDataSource<any>;
-  columnas = ['id', 'username', 'nombre', 'apellido', 'agenda', 'acciones'];
-  usuarioSeleccionado: any;
-
-  @ViewChild(MatSort) sort!: MatSort;
+export class ListarTurneroComponent implements OnInit {
+  @ViewChild('dt1') dataTable: Table | null = null;
+  schedules: any[];
+  columnas: any[];
 
   constructor(
     private proveedorService: ProveedorService,
-    private dialog: MatDialog,
     private router: Router,
-    private userService: UserService // Agrega UserService aquí
-  ) {}
+    private messageService: MessageService
+  ) {
+    this.schedules = [];
+    this.columnas = [
+      { field: 'id', header: 'ID' },
+      { field: 'supplier.user.username', header: 'Username' },
+      { field: 'supplier.user.firstName', header: 'Nombre' },
+      { field: 'supplier.user.lastName', header: 'Apellido' },
+      { field: 'name', header: 'Agenda' },
+      { field: 'acciones', header: 'Acciones' },
+    ];
+  }
 
   ngOnInit() {
     this.cargarUsuarios();
   }
 
   navigateToDashboard(scheduleId: number) {
-    // Obtén el ID de la agenda y navega al componente Agenda con ese ID como parámetro
     this.router.navigate(['/agenda', scheduleId]);
   }
 
   cargarUsuarios() {
     this.proveedorService.obtenerProveedores2().subscribe((data: any) => {
-      this.schedules = new MatTableDataSource(data);
-      this.schedules.sort = this.sort;
+      this.schedules = data;
+      if (this.dataTable) {
+        this.dataTable.reset();
+      }
     });
   }
 
+  clearGlobalFilter() {
+    if (this.dataTable) {
+      this.dataTable.filter('', 'globalFilter', 'contains');
+    }
+  }
+
+  filterGlobal(event: any) {
+    if (this.dataTable) {
+      this.dataTable.filter(event.target.value, 'globalFilter', 'contains');
+    }
+  }
+  
   // Método para recargar la página
   reloadPage() {
-    // Utiliza la función de JavaScript para recargar la página actual
     location.reload();
   }
 }
