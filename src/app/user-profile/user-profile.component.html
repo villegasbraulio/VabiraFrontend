@@ -18,32 +18,49 @@
     </mat-card>
 
 
-    <button pButton type="button" label="Actualizar Información Personal" (click)="showEditDialog()"></button>
-
+    <button pButton type="button" label="Actualizar Información Personal" class="edit-button" (click)="showEditDialog()"></button>
     <!-- Diálogo modal para la edición de datos -->
-    <p-dialog header="Editar Información Personal" [(visible)]="displayEditDialog" [modal]="true" [responsive]="true" [style]="{width: '400px'}">
-      <!-- Formulario de edición utilizando componentes de PrimeNG y ngModel -->
-      <form (ngSubmit)="onSave()">
-        <div class="p-grid p-fluid">
-          <div class="p-col-12">
-            <label for="firstName">Nombre</label>
-            <input id="firstName" pInputText [(ngModel)]="editedUserProfileData.firstName" name="firstName" required />
+    <div class="edit-dialog-container" [style.display]="displayEditDialog ? 'block' : 'none'">
+    <p-dialog header="Editar Información Personal" [(visible)]="displayEditDialog" [modal]="true" [responsive]="true" [style]="{width: '400px'}" class="edit-dialog">
+      <div class="dialog-content">
+        <form class="edit-form" (ngSubmit)="onSave()">
+          <div class="p-grid p-fluid">
+            <div class="p-col-12">
+              <label for="firstName">Nombre</label>
+              <input id="firstName" pInputText [(ngModel)]="editedUserProfileData.firstName" name="firstName" required />
+            </div>
+            <div class="p-col-12">
+              <label for="lastName">Apellido</label>
+              <input id="lastName" pInputText [(ngModel)]="editedUserProfileData.lastName" name="lastName" required />
+            </div>
+            <div class="p-col-12">
+              <label for="email">Email</label>
+              <input id="email" pInputText [(ngModel)]="editedUserProfileData.email" name="email" required />
+            </div>
+            <!-- Otros campos del formulario -->
           </div>
-          <div class="p-col-12">
-            <label for="lastName">Apellido</label>
-            <input id="lastName" pInputText [(ngModel)]="editedUserProfileData.lastName" name="lastName" required />
+          <!-- Botones de guardar y cancelar -->
+          <div class="form-buttons">
+            <button pButton type="submit" label="Guardar"></button>
+            <button pButton type="button" label="Cancelar" (click)="cancelEdit()"></button>
           </div>
-          <!-- Otros campos del formulario -->
-        </div>
-    
-        <!-- Botón de guardar y cancelar -->
-        <div class="p-dialog-footer">
-          <button pButton type="submit" label="Guardar"></button>
-          <button pButton type="button" label="Cancelar" (click)="cancelEdit()"></button>
-        </div>
-      </form>
+        </form>
+      </div>
     </p-dialog>
   </div>
+  <p-dialog header="Operación Exitosa" [(visible)]="displayConfirmationDialog" [modal]="true" [responsive]="true" [style]="{ width: '400px' }">
+    <div class="confirmation-dialog-content">
+      <!-- Contenido del formulario -->
+      <form class="edit-form" (ngSubmit)="onSave()">
+        <!-- Contenido del formulario -->
+      </form>
+      <div class="form-buttons">
+        <button pButton type="button" label="Aceptar" (click)="closeConfirmationDialog()"></button>
+      </div>
+    </div>
+  </p-dialog>
+  
+  
 
   <div class="avatar-container">
     <img class="avatar" [src]="userProfileData.avatar" alt="Foto de perfil">

@@ -1,147 +1,57 @@
-/* Estilos para las preguntas */
-.faq-list {
-  background-color: #f2f2f2; /* Cambia el color de fondo de las preguntas */
-  padding: 0px; /* Añade espacio alrededor del contenedor de las preguntas */
-}
-.ui-accordion-tab-content.ui-accordion-tab-active {
-  display: block;
+/* Estilos generales */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
 }
 
-/* Estilos para las pestañas del acordeón */
-.ui-accordion-header {
-  background-color: #ccc;
-  color: #333;
-  padding: 15px;
-  margin-bottom: 10px; /* Añade espacio entre las preguntas */
-  cursor: pointer;
-  display: block;
-}
-
-/* Estilos para el contenido del acordeón (pregunta y descripción) */
-.ui-accordion-content {
-  padding: 15px;
-  display: none; /* Oculta las respuestas por defecto */
-  background-color: #fff; /* Fondo blanco del contenido */
-  border: 1px solid #ccc; /* Borde alrededor del contenido */
-  border-radius: 5px; /* Bordes redondeados del contenido */
-  margin-top: 10px; /* Espacio entre las preguntas y las respuestas */
-}
-
-
-
-/* Estilo para las pestañas del acordeón activas (con respuestas visibles) */
-.ui-accordion-header.ui-state-active + .ui-accordion-content,
-.ui-accordion-header.ui-state-highlight + .ui-accordion-content {
-  display: block; /* Muestra las respuestas cuando la pregunta está activa */
-}
-
-/* Estilo para mostrar el botón cuando la respuesta está visible */
-.ui-accordion-header.ui-state-active + .ui-accordion-content + button,
-.ui-accordion-header.ui-state-highlight + .ui-accordion-content + button {
-  display: block; /* Muestra el botón cuando la respuesta está visible */
-}
-/* Estilos para los botones */
-button {
-  background-color: #4caf50; /* Cambia el color de fondo del botón */
-  color: white; /* Cambia el color del texto del botón */
-  border: none; /* Elimina el borde del botón */
-  padding: 10px 20px; /* Añade espacio alrededor del texto del botón */
-  cursor: pointer; /* Cambia el cursor al pasar el ratón sobre el botón */
-  transition: background-color 0.3s; /* Agrega una transición suave al color de fondo */
-}
-
-/* Estilos para el botón al pasar el ratón sobre él */
-button:hover {
-  background-color: #45a049; /* Cambia el color de fondo del botón al pasar el ratón sobre él */
-}
-
-.faq-header button:hover {
-  background-color: #0069d9;
-}
-
-
-
-
-.content {
-  flex: 0 0 50%;
+.faq-container {
   display: flex;
-  flex-direction: column;
-  padding: 20px;
-}
-
-.search-container {
-  margin-bottom: 20px;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  padding: 5px 10px;
-  cursor: pointer;
-}
-
-.faq-list {
-  flex: 1;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  padding: 20px;
-  overflow-y: auto;
-  margin-bottom: 20px;
-}
-
-.question-form {
-  background-color: #fff;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  padding: 20px;
-  margin-bottom: 20px;
-}
-.faq-list-container {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-}
-.question-form {
-  flex: 0 0 25%;
-  background-color: #fff;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  padding: 20px;
-  margin-left: 20px;
+  height: 100vh;
 }
 
-.form-group {
+/* Estilos para la barra lateral */
+.sidebar {
+  flex: 0 0 20%;
+  background-color: #007bff;
+  color: #fff;
+  padding: 20px;
+}
+
+/* Estilos para el contenido principal */
+.content {
+  flex: 0 0 80%;
+  padding: 20px;
+}
+
+/* Estilos para los elementos de búsqueda */
+.search-container {
   margin-bottom: 20px;
 }
 
-.form-group label {
-  display: block;
-  margin-bottom: 5px;
-}
-
-.form-group input,
-.form-group textarea {
-  width: 100%;
-  padding: 5px;
+.search-container input[type="text"] {
+  padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
+  width: 100%;
 }
 
-.form-actions {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: 20px;
-}
-
-.form-actions button {
-  margin-left: 10px;
-  background-color: #007bff;
-  color: #fff;
+/* Estilos para los botones */
+button {
+  background-color: #4caf50;
+  color: white;
   border: none;
-  border-radius: 5px;
-  padding: 5px 10px;
+  padding: 10px 20px;
   cursor: pointer;
+  transition: background-color 0.3s;
 }
+
+button:hover {
+  background-color: #45a049;
+}
+
 /* Estilos para la lista de preguntas frecuentes */
 .faq-list {
   margin-top: 20px;
@@ -151,7 +61,6 @@ button:hover {
   margin-bottom: 20px;
   border-radius: 5px;
   padding: 10px;
-  background-color: #f5f5f5;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
@@ -166,18 +75,7 @@ button:hover {
 }
 
 .question p {
-  
   margin: 10px 0;
-}
-
-.question button {
-  margin-left: 10px;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  padding: 5px 10px;
-  cursor: pointer;
 }
 
 /* Estilos para el formulario de envío de preguntas */
@@ -185,7 +83,6 @@ button:hover {
   margin-top: 20px;
   border-radius: 5px;
   padding: 10px;
-  background-color: #f5f5f5;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
@@ -210,7 +107,7 @@ button:hover {
 
 .ask-developers input,
 .ask-developers textarea {
-  padding: 5px;
+  padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
 }
@@ -226,104 +123,49 @@ button:hover {
   color: #fff;
   border: none;
   border-radius: 5px;
-  padding: 5px 10px;
+  padding: 10px 20px;
   cursor: pointer;
 }
 
 .ask-developers button[type="submit"]:hover {
   background-color: #0069d9;
 }
+
 /* Estilos para el modal de PrimeNG */
-.ui-dialog-content {
-  padding: 20px; /* Añade espacio interno al contenido del modal */
+.question-form .form-group {
+  margin-bottom: 20px;
 }
 
-.ui-dialog-titlebar {
-  background-color: #007bff; /* Cambia el color de fondo de la barra del título del modal */
-  color: #fff; /* Cambia el color del texto de la barra del título del modal */
-  border: none; /* Elimina el borde de la barra del título del modal */
+.question-form label {
+  display: block;
+  font-weight: bold;
 }
 
-.ui-dialog-footer {
-  margin-top: 20px; /* Añade espacio superior al pie del modal */
-  text-align: right; /* Alinea el contenido del pie del modal a la derecha */
+.question-form input[type="text"],
+.question-form textarea {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }
 
-/* Estilos para los botones del modal */
-.ui-button {
-  margin-left: 10px; /* Añade espacio entre los botones del modal */
-  background-color: #007bff; /* Cambia el color de fondo de los botones del modal */
-  color: #fff; /* Cambia el color del texto de los botones del modal */
-  border: none; /* Elimina el borde de los botones del modal */
-  border-radius: 5px; /* Añade bordes redondeados a los botones del modal */
-  padding: 10px 20px; /* Añade espacio interno a los botones del modal */
-  cursor: pointer; /* Cambia el cursor al pasar el ratón sobre los botones del modal */
-  transition: background-color 0.3s; /* Agrega una transición suave al color de fondo de los botones del modal */
+.question-form .form-actions {
+  margin-top: 20px;
+  text-align: right;
 }
 
-/* Estilos para los botones del modal al pasar el ratón sobre ellos */
-.ui-button:hover {
-  background-color: #0056b3; /* Cambia el color de fondo de los botones del modal al pasar el ratón sobre ellos */
+.question-form .ui-button {
+  margin-left: 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
-/* Estilos para el cuerpo del modal */
-.ui-dialog-content {
-  background-color: #fff; /* Cambia el color de fondo del cuerpo del modal */
-  border: 1px solid #ccc; /* Agrega un borde alrededor del cuerpo del modal */
-  border-radius: 5px; /* Añade bordes redondeados al cuerpo del modal */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Agrega una sombra al cuerpo del modal */
+.question-form .ui-button:hover {
+  background-color: #0056b3;
 }
-
-/* Estilos para el título del modal */
-.ui-dialog-title {
-  font-size: 1.2em; /* Cambia el tamaño del texto del título del modal */
-  font-weight: bold; /* Hace el texto del título del modal negrita */
-}
-
-/* Estilos para el fondo del modal cuando está abierto */
-.ui-widget-overlay {
-  background-color: rgba(0, 0, 0, 0.5); /* Cambia el color de fondo del overlay del modal */
-  z-index: 999; /* Asegura que el overlay del modal esté por encima de otros elementos */
-}
-.ui-dialog {
-  position: fixed; /* Fija la posición del modal en relación con la ventana del navegador */
-  z-index: 1001; /* Asegura que el modal esté por encima de otros elementos en la página */
-}
-
-.ui-widget-overlay {
-  position: fixed; /* Fija la posición del overlay en relación con la ventana del navegador */
-  z-index: 1000; /* Asegura que el overlay esté por debajo del modal pero por encima del resto del contenido */
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background-color: rgba(0, 0, 0, 0.5); /* Cambia el color de fondo del overlay del modal */
-}
-.custom-dialog {
-  position: fixed; /* Fija la posición del modal en relación con la ventana del navegador */
-  top: 50%; /* Coloca el modal en el centro vertical de la ventana */
-  left: 50%; /* Coloca el modal en el centro horizontal de la ventana */
-  transform: translate(-35%, -50%); /* Centra el modal en la ventana */
-  background: rgba(255, 255, 255, 0.8); /* Fondo blanco semitransparente del modal */
-  border-radius: 10px; /* Bordes redondeados */
-  padding: 20px; /* Espaciado interno del modal */
-  z-index: 1001; /* Asegura que el modal esté por encima de otros elementos en la página */
-}
-.custom-dialog .ui-dialog-content {
-  max-height: 80vh; /* Limita la altura máxima del contenido del modal */
-  overflow-y: auto; /* Agrega una barra de desplazamiento vertical si el contenido es demasiado largo */
-}
-.modal-background {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: #fff; /* Fondo blanco del modal */
-  border-radius: 10px; /* Bordes redondeados */
-  z-index: 1001; /* Asegura que el modal esté por encima de otros elementos en la página */  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000; /* Asegura que esté por encima de otros elementos en la página */
-}
-

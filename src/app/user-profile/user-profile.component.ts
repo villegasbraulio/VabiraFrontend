@@ -14,6 +14,7 @@ export class UserProfileComponent implements OnInit {
   userProfileData: any;
   editedUserProfileData: any;
   displayEditDialog: boolean = false;
+  displayConfirmationDialog: boolean = false;
 
   constructor(private userService: UserService, private messageService: MessageService) {}
 
@@ -37,12 +38,17 @@ export class UserProfileComponent implements OnInit {
         // Procesa la respuesta del backend si es necesario
         this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'Datos actualizados correctamente' });
         this.displayEditDialog = false; // Cierra el modal después de guardar
+        this.displayConfirmationDialog = true;
       },
       (error) => {
         // Maneja errores si es necesario
         this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se pudieron guardar los datos' });
       }
     );
+  }
+  closeConfirmationDialog() {
+    this.displayConfirmationDialog = false;
+    // Puedes hacer otras acciones necesarias después de cerrar el diálogo, si es necesario
   }
 
   // Método para cancelar la edición y cerrar el modal

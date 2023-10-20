@@ -23,5 +23,9 @@ export class FaqService {
     const url = `${this.apiUrl}/${id}`;
     return this.http.delete<any>(url);
   }
-  
+
+  editarFaq(id: number, faq: any): Observable<any> {
+    const url = `${this.apiUrl}/${id}`;
+    return this.http.put<any>(url, faq);
+  }
 }

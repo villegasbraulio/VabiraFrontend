@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FaqService } from './faq.service';
 import { UserService } from '../users/users.service'; // Importa tu servicio de usuario
+import { PrimeIcons } from 'primeng/api';
 
 @Component({
   selector: 'app-faq',
@@ -10,6 +11,7 @@ import { UserService } from '../users/users.service'; // Importa tu servicio de 
 export class FaqComponent implements OnInit {
   faqs: any[] = [];
   mostrarForm: boolean = false;
+  faqEdit: any = null; 
   nuevaFaq: any = {
     name: '',
     description: ''
@@ -32,7 +34,6 @@ export class FaqComponent implements OnInit {
   mostrarFormulario() {
     this.mostrarForm = true;
   }
- 
 
   agregarFaq(event: Event) {
     event.preventDefault();
@@ -56,10 +57,29 @@ export class FaqComponent implements OnInit {
       });
     });
   }
-  
 
   eliminarFaq(id: number) {
     this.faqService.eliminarFaq(id).subscribe(() => {
+      this.cargarFaqs();
+    });
+  }
+  editarFaq(faq: any) {
+    this.faqEdit = { ...faq }; // Almacena la FAQ que se va a editar
+    
+  }
+
+  // Método para cancelar la edición (se llama cuando haces clic en "Cancelar")
+  cancelarEdicion() {
+    this.faqEdit = null; // Limpia la FAQ que se estaba editando
+    this.mostrarForm = false; // Oculta el formulario
+  }
+
+  // Método para guardar la edición de la FAQ
+  guardarEdicion() {
+    // Llama al servicio para actualizar la FAQ
+    this.faqService.editarFaq(this.faqEdit.id, this.faqEdit).subscribe(() => {
+      // Limpia el formulario y recarga las FAQs después de actualizar la FAQ
+      this.cancelarEdicion();
       this.cargarFaqs();
     });
   }
