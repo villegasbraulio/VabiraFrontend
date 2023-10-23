@@ -12,26 +12,34 @@ export class AgendaService {
   constructor(private http: HttpClient) { }
 
   obtenerAgendas(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.baseUrl}/findAll`);
+    return this.http.get<any[]>(`${this.baseUrl}/findAll`);//trae todas las agendas
   }
 
   obtenerTurnos(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.baseUrl2}/findAll`);
+    return this.http.get<any[]>(`${this.baseUrl2}/findAll`);//trae todos los turnos
   }
 
   obtenerTurnosReservados(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.baseUrl2}/findAssignTurns`);
+    return this.http.get<any[]>(`${this.baseUrl2}/findAssignTurns`);//trae todos los turnos ya reservados
   }
 
   obtenerTurnosDisponibles(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.baseUrl2}/findNotAssignTurns`);
+    return this.http.get<any[]>(`${this.baseUrl2}/findNotAssignTurns`);//trae todos los turnos no reservados
+  }
+
+  obtenerTurnosReservadosPorAgenda(scheduleId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl2}/findAssignTurnsForSchedule?scheduleId=${scheduleId}`);//trae todos los turnos ya reservados de una agenda
+  }
+
+  obtenerTurnosDisponiblesPorAgenda(scheduleId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl2}/findNotAssignTurnsForSchedule?scheduleId=${scheduleId}`);//trae todos los turnos no reservados de una agenda
   }
 
   obtenerAgenda(id: number): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}/findOne?id=${id}`);
   }
 
-  agendarTurno(id: number, toUpdate: any): Observable<any> {
+  agendarTurno(id: number, toUpdate: any): Observable<any> {//Reservar un turno a un cliente
     const body = { id, ...toUpdate };
     return this.http.patch<any>(`${this.baseUrl2}/assignTurn`, body).pipe(
       tap(() => {

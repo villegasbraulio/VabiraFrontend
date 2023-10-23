@@ -19,6 +19,7 @@ export class AgendaComponent implements OnInit {
   reservedTimeSlots: Set<string> = new Set<string>();
   availableTimeSlots: Set<string> = new Set<string>();
   clientId: any
+  agendaId: any
 
   constructor(private dialog: MatDialog, private agendaService: AgendaService, private userService: UserService,  private activatedRoute: ActivatedRoute) { }
 
@@ -28,14 +29,14 @@ export class AgendaComponent implements OnInit {
 
     
     this.activatedRoute.params.subscribe(params => {
-      const agendaId = +params['id'];
+      this.agendaId = +params['id'];
       this.userService.obtenerPerfil().subscribe({
         next: (clientFound) => {
           this.clientId = clientFound;
         }
       });
       
-      this.agendaService.obtenerAgenda(agendaId).subscribe((data) => {
+      this.agendaService.obtenerAgenda(this.agendaId).subscribe((data) => {
         this.scheduleData = data;
         this.days = this.scheduleData.turn
           .reduce((uniqueDays: string[], turn: any) => {
@@ -58,7 +59,7 @@ export class AgendaComponent implements OnInit {
   // ...
   loadReservedAndAvailableTurns() {
     // Obtener los turnos reservados y disponibles del servicio
-    this.agendaService.obtenerTurnosReservados().subscribe((reservedTurns) => {
+    this.agendaService.obtenerTurnosReservadosPorAgenda(this.agendaId).subscribe((reservedTurns) => {
       this.reservedTimeSlots = new Set<string>();
       reservedTurns.forEach((reservedTurn) => {
         // Asegúrate de que los datos necesarios estén disponibles en reservedTurn
@@ -74,7 +75,7 @@ export class AgendaComponent implements OnInit {
       });
 
       // Luego de cargar los turnos reservados, obtener los turnos disponibles
-      this.agendaService.obtenerTurnosDisponibles().subscribe((availableTurns) => {
+      this.agendaService.obtenerTurnosDisponiblesPorAgenda(this.agendaId).subscribe((availableTurns) => {
         this.availableTimeSlots = new Set<string>();
         availableTurns.forEach((availableTurn) => {
           // Asegúrate de que los datos necesarios estén disponibles en availableTurn
@@ -84,28 +85,22 @@ export class AgendaComponent implements OnInit {
             availableTurn.dateTo
           ) {
             const buttonId = this.getButtonId(availableTurn.classDayType.name, availableTurn.dateFrom, availableTurn.dateTo);
-            // console.log('button id posta: ', buttonId);
+
             this.availableTimeSlots.add(buttonId);
           }
         });
-
-        // Ahora, puedes actualizar los estados de los botones según la disponibilidad y reserva
         this.updateButtonStates();
       });
     });
   }
-  // ...
 
 
   updateButtonStates() {
     for (const timeSlot of this.timeSlots) {
       for (const dayType of this.days) {
         const buttonId = this.getButtonId(dayType, timeSlot.start, timeSlot.end);
-        console.log('buttonId este?: ', buttonId);
         const buttonElement = document.getElementById(buttonId) as HTMLButtonElement;
         if (buttonElement && buttonElement instanceof HTMLButtonElement) {
-          console.log('reservedTimeSlots: ', this.reservedTimeSlots);
-          console.log('availableTimeSlots: ', this.availableTimeSlots);
   
           if (this.reservedTimeSlots.has(buttonId)) {
             console.log('entro?');
@@ -117,12 +112,7 @@ export class AgendaComponent implements OnInit {
             // El turno está disponible
             buttonElement.innerText = 'Reservar';
             buttonElement.classList.add('available-button');
-          } else {
-            // El turno no está reservado ni disponible
-            buttonElement.innerText = 'No disponible';
-            buttonElement.classList.add('unavailable-button');
-            buttonElement.disabled = true; // Deshabilitar el botón
-          }
+          } 
         }
       }
     }
@@ -135,7 +125,7 @@ export class AgendaComponent implements OnInit {
   
   loadReservedTurns() {
     // Obtener los turnos reservados del servicio
-    this.agendaService.obtenerTurnosReservados().subscribe((reservedTurns) => {
+    this.agendaService.obtenerTurnosReservadosPorAgenda(this.agendaId).subscribe((reservedTurns) => {
       reservedTurns.forEach((reservedTurn) => {
         const buttonId = this.getButtonId(reservedTurn.classDayType.name, reservedTurn.startTime, reservedTurn.endTime);
         const buttonElement = document.getElementById(buttonId) as HTMLButtonElement;
