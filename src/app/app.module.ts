@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, FormGroup, FormBuilder, ReactiveFormsModule } from '@angular/forms';  //modulo formularios
 import { RouterModule } from '@angular/router';
@@ -47,6 +47,19 @@ import { MessageService } from 'primeng/api';
 import { CrearVentaComponent } from './venta/crear-venta/crear-venta.component';
 import { ListarVentasComponent } from './venta/listar-ventas/listar-ventas.component';
 import { VisualizarVentaComponent } from './venta/visualizar-venta/visualizar-venta.component';
+import { MatListModule } from '@angular/material/list'; // Importa MatListModule y otros módulos que puedas necesitar
+
+import { UserProfileComponent } from './user-profile/user-profile.component';
+import { FaqComponent } from './faq/faq.component';
+import { SettingsComponent } from './settings/settings.component';
+import { SettingsModalComponent } from './settings-modal/settings-modal..component'; // Importa MatInputModule
+import { DialogModule } from 'primeng/dialog';
+import { InputTextModule } from 'primeng/inputtext';
+import { ButtonModule } from 'primeng/button';
+import { MessageModule } from 'primeng/message';
+import { MessagesModule } from 'primeng/messages';
+import { AccordionModule } from 'primeng/accordion';
+
 
 @NgModule({
   declarations: [
@@ -78,6 +91,10 @@ import { VisualizarVentaComponent } from './venta/visualizar-venta/visualizar-ve
   ],
   providers: [
     MessageService, // Agrega MessageService a la lista de proveedores
+    UserProfileComponent,
+    FaqComponent,
+    SettingsComponent,
+    SettingsModalComponent,
   ],
   imports: [
     BrowserModule,
@@ -94,6 +111,7 @@ import { VisualizarVentaComponent } from './venta/visualizar-venta/visualizar-ve
     MatIconModule,    
     RouterModule,
     BrowserAnimationsModule,
+    MatListModule,
     MatDialogModule, // Asegúrate de que MatDialogModule esté importado aquí
     MatFormFieldModule, // Agrega MatFormFieldModule aquí
     MatInputModule, // Agrega MatInputModule aquí
@@ -103,8 +121,15 @@ import { VisualizarVentaComponent } from './venta/visualizar-venta/visualizar-ve
     ToastrModule.forRoot(),
     TableModule,
     CommonModule,
+    DialogModule,
+    InputTextModule,
+    ButtonModule,
+    MessageModule,
+    MessagesModule,
+    AccordionModule,
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
 })
 export class AppModule { }
 

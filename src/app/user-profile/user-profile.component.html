@@ -1,0 +1,70 @@
+
+<div class="title">
+  <h1>Perfil</h1>
+</div>
+<div class="profile-container">
+ 
+
+
+  <div class="personal-info-container">
+    <mat-card class="personal-info">
+      <h2>Información Personal</h2>
+      <p><strong>Nombre:</strong> {{ userProfileData.firstName }}</p>
+      <p><strong>Apellido:</strong> {{ userProfileData.lastName }}</p>
+      <p><strong>Correo Electrónico:</strong> {{ userProfileData.email }}</p>
+      <p><strong>Nombre de Usuario:</strong> {{ userProfileData.username }}</p>
+      <p><strong>Perfiles Activos:</strong> {{ userProfileData.roles }}</p>
+      <p><strong>Fecha de Registro:</strong> {{ userProfileData.createdAt | date: 'dd/MM/yyyy' }}</p>
+    </mat-card>
+
+
+    <button pButton type="button" label="Actualizar Información Personal" class="edit-button" (click)="showEditDialog()"></button>
+    <!-- Diálogo modal para la edición de datos -->
+    <div class="edit-dialog-container" [style.display]="displayEditDialog ? 'block' : 'none'">
+    <p-dialog header="Editar Información Personal" [(visible)]="displayEditDialog" [modal]="true" [responsive]="true" [style]="{width: '400px'}" class="edit-dialog">
+      <div class="dialog-content">
+        <form class="edit-form" (ngSubmit)="onSave()">
+          <div class="p-grid p-fluid">
+            <div class="p-col-12">
+              <label for="firstName">Nombre</label>
+              <input id="firstName" pInputText [(ngModel)]="editedUserProfileData.firstName" name="firstName" required />
+            </div>
+            <div class="p-col-12">
+              <label for="lastName">Apellido</label>
+              <input id="lastName" pInputText [(ngModel)]="editedUserProfileData.lastName" name="lastName" required />
+            </div>
+            <div class="p-col-12">
+              <label for="email">Email</label>
+              <input id="email" pInputText [(ngModel)]="editedUserProfileData.email" name="email" required />
+            </div>
+            <!-- Otros campos del formulario -->
+          </div>
+          <!-- Botones de guardar y cancelar -->
+          <div class="form-buttons">
+            <button pButton type="submit" label="Guardar"></button>
+            <button pButton type="button" label="Cancelar" (click)="cancelEdit()"></button>
+          </div>
+        </form>
+      </div>
+    </p-dialog>
+  </div>
+  <p-dialog header="Operación Exitosa" [(visible)]="displayConfirmationDialog" [modal]="true" [responsive]="true" [style]="{ width: '400px' }">
+    <div class="confirmation-dialog-content">
+      <!-- Contenido del formulario -->
+      <form class="edit-form" (ngSubmit)="onSave()">
+        <!-- Contenido del formulario -->
+      </form>
+      <div class="form-buttons">
+        <button pButton type="button" label="Aceptar" (click)="closeConfirmationDialog()"></button>
+      </div>
+    </div>
+  </p-dialog>
+  
+  
+
+  <div class="avatar-container">
+    <img class="avatar" [src]="userProfileData.avatar" alt="Foto de perfil">
+  </div>
+
+  <app-sidebar></app-sidebar>
+</div>

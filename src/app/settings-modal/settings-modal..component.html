@@ -1,0 +1,23 @@
+<h2>Editar datos de la compañía</h2>
+<form [formGroup]="editForm" (ngSubmit)="onSubmit()">
+  <mat-form-field>
+    <input matInput placeholder="Nombre de la compañía" formControlName="companyName">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Email" formControlName="companyEmail">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Teléfono" formControlName="companyPhone">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Sitio web" formControlName="companyWebsite">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Dirección" formControlName="companyAddress">
+  </mat-form-field>
+  <mat-form-field>
+    <textarea matInput placeholder="Descripción" formControlName="companyDescription"></textarea>
+  </mat-form-field>
+  <button mat-raised-button color="primary" type="submit">Guardar cambios</button>
+  <button mat-raised-button (click)="onCancel()">Cancelar</button>
+</form>

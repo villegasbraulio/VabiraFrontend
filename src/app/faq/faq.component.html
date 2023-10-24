@@ -1,0 +1,81 @@
+<div class="faq-container">
+  <div class="sidebar">
+    <app-sidebar></app-sidebar>
+  </div>
+  <div class="content">
+    <div class="search-container">
+      <input type="text" placeholder="Buscar...">
+    </div>
+    <button class="alta-faq-button" (click)="mostrarFormulario()">Alta FAQ</button>
+
+    <div class="faq-list">
+      <p-accordion>
+        <p-accordionTab *ngFor="let faq of faqs" [header]="faq.name" [expanded]="faq.expanded">
+          <p>{{ faq.description }}</p>
+          <button pButton icon="pi pi-pencil" (click)="editarFaq(faq)">Editar</button>
+          <button pButton icon="pi pi-trash" (click)="eliminarFaq(faq.id)">Eliminar</button>
+        </p-accordionTab>
+      </p-accordion>
+    </div>
+
+    <div class="custom-dialog">
+      <p-dialog header="Nueva FAQ" [(visible)]="mostrarForm" [modal]="true" [responsive]="true" [style]="{width: '50vw'}">
+
+        <form (submit)="agregarFaq($event)">
+          <div class="form-group">
+            <label for="nombre">Pregunta:</label>
+            <input type="text" id="nombre" name="nombre" [(ngModel)]="nuevaFaq.name" required>
+          </div>
+          <div class="form-group">
+            <label for="descripcion">Respuesta:</label>
+            <textarea id="descripcion" name="descripcion" [(ngModel)]="nuevaFaq.description" required></textarea>
+          </div>
+          <div class="form-actions">
+            <button type="submit">Agregar FAQ</button>
+            <button type="button" (click)="mostrarForm = false">Cancelar</button>
+          </div>
+        </form>
+      </p-dialog>
+
+      <div *ngIf="faqEdit" class="question-form">
+        <form (ngSubmit)="guardarEdicion()">
+          <div class="form-group">
+            <label for="faqName">Pregunta:</label>
+            <input type="text" id="faqName" name="name" pInputText [(ngModel)]="faqEdit.name" required>
+          </div>
+          <div class="form-group">
+            <label for="faqDescription">Respuesta:</label>
+            <textarea id="faqDescription" name="description" pInputTextarea [(ngModel)]="faqEdit.description" required></textarea>
+          </div>
+          <div class="form-actions">
+            <button pButton type="submit" label="Guardar" class="ui-button"></button>
+            <button pButton type="button" (click)="cancelarEdicion()" label="Cancelar" class="ui-button"></button>
+          </div>
+        </form>
+      </div>
+      
+      
+    </div>
+
+      <div class="ask-developers">
+        <h2>¿No encuentras la pregunta?</h2>
+        <form>
+          <div class="form-group">
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" name="nombre" required>
+          </div>
+          <div class="form-group">
+            <label for="correo">Correo electrónico:</label>
+            <input type="email" id="correo" name="correo" required>
+          </div>
+          <div class="form-group">
+            <label for="pregunta">Pregunta:</label>
+            <textarea id="pregunta" name="pregunta" required></textarea>
+          </div>
+          <div class="form-actions">
+            <button type="submit">Enviar</button>
+          </div>
+        </form>
+      </div>
+  </div>
+</div>

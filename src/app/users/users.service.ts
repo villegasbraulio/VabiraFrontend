@@ -96,4 +96,21 @@ export class UserService {
   }
 
   // Implementa otros métodos para crear, editar y eliminar usuarios según tus necesidades
+
+// Método para obtener el perfil del usuario
+obtenerPerfilUsuario(): Observable<any> {
+  // Asegúrate de tener el token disponible
+  if (this.token) {
+    // Configura los encabezados con el token
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`);
+    // Realiza la solicitud al endpoint con los encabezados configurados
+    return this.http.get<any>(`${this.profileUrl}/check-status`, { headers });
+  } else {
+    // Si no hay token disponible, puedes manejar el error de alguna manera
+    // por ejemplo, redirigiendo al usuario a la página de inicio de sesión.
+    // También puedes devolver un observable que emita un objeto de error.
+    return new Observable(); // Devuelve un observable vacío o maneja el error según tu caso.
+  }
+}
+  //agregue esto para obtener los datos del usuario activo
 }

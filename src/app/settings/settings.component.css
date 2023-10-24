@@ -1,0 +1,15 @@
+.company-details {
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    padding: 20px;
+    margin-bottom: 16px;
+    margin-left: 300px;
+}
+.title {
+    margin-left: 300px;
+  }
+.manage-profiles {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}

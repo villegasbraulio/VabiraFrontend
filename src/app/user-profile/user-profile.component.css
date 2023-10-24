@@ -1,0 +1,299 @@
+/* user-profile.component.css */
+
+.profile-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 16px;
+  color: black;
+  margin-left: 300px;
+  margin-top: 200px;
+
+}
+
+.personal-info-container {
+  flex: 1;
+  /* margin-top: 200px; */
+  margin-right: 200px;
+  margin-left: 300px;
+}
+
+.avatar-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-right: 100px;
+
+
+}
+
+.title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 16px;
+  color: black;
+  margin-left: 300px;
+  margin-top: 200px;
+
+}
+
+.personal-info-container {
+  flex: 1;
+  /* margin-top: 200px; */
+  margin-right: 200px;
+  margin-left: 300px;
+}
+
+.avatar-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-right: 100px;
+
+
+}
+  
+  
+  .header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+  
+  .avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    margin-bottom: 8px;
+  }
+  
+  .personal-info,
+  .active-profiles,
+  .registration-date {
+    width: 100%;
+    max-width: 400px;
+    margin-bottom: 16px;
+  }
+  
+  .description {
+    font-size: 14px;
+    color: #555;
+  }
+  /* user-profile.component.css */
+
+/* Estilos para el formulario de carga de avatar */
+.avatar-upload-form {
+  max-width: 400px; /* Ancho máximo del formulario */
+  margin: 0 auto; /* Centrar el formulario en el contenedor */
+  padding: 20px; /* Espaciado interno del formulario */
+  border: 1px solid #ccc; /* Borde del formulario */
+  border-radius: 5px; /* Esquinas redondeadas del formulario */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra suave alrededor del formulario */
+}
+
+/* Estilos para el botón de subir */
+.upload-button {
+  background-color: #007bff; /* Color de fondo del botón de subir */
+  color: #fff; /* Color del texto del botón de subir */
+  border: none; /* Sin borde */
+  padding: 10px 20px; /* Espaciado interno del botón de subir */
+  margin-top: 10px; /* Espaciado superior del botón de subir */
+  cursor: pointer; /* Mostrar el cursor como puntero al pasar el mouse sobre el botón */
+  transition: background-color 0.3s ease; /* Transición suave del color de fondo */
+}
+
+/* Estilos para el botón de subir cuando se pasa el mouse sobre él */
+.upload-button:hover {
+  background-color: #0056b3; /* Nuevo color de fondo al pasar el mouse sobre el botón de subir */
+}
+/* user-profile.component.css */
+
+.upload-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.upload-form .p-fileupload {
+  margin-bottom: 20px; /* Espaciado inferior del componente de carga de archivo */
+}
+
+.upload-form button {
+  background-color: #007bff; /* Color de fondo del botón de subir */
+  color: #fff; /* Color del texto del botón de subir */
+  border: none; /* Sin borde */
+  padding: 10px 20px; /* Espaciado interno del botón de subir */
+  cursor: pointer; /* Mostrar el cursor como puntero al pasar el mouse sobre el botón */
+  transition: background-color 0.3s ease; /* Transición suave del color de fondo */
+}
+
+.upload-form button:hover {
+  background-color: #0056b3; /* Nuevo color de fondo al pasar el mouse sobre el botón de subir */
+}
+
+.edit-form {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Estilos para los campos de entrada en el formulario de edición */
+.edit-form input {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Estilos para los botones de guardar y cancelar en el formulario de edición */
+.edit-form .p-dialog-footer button {
+  margin-top: 10px;
+}
+
+/* Estilos para el fondo oscurecido detrás del diálogo */
+
+/* Estilos para el formulario de edición */
+.edit-dialog {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  z-index: 9999; /* Asegura que el diálogo esté en la parte superior */
+}
+
+.dialog-content {
+  width: 100%;
+}
+
+.edit-form .p-inputtext {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.form-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 16px;
+}
+
+.form-buttons button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.form-buttons button:hover {
+  background-color: #0056b3;
+}
+
+
+/* Estilos para el fondo oscurecido detrás del diálogo */
+.ui-widget-overlay {
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9998; /* Asegura que el fondo oscurecido esté detrás del diálogo */
+}
+
+/* Estilos para evitar que los demás componentes se muevan al abrirse el diálogo */
+.ui-dialog {
+  position: fixed !important;
+}
+
+  /* Agregar otros estilos según sea necesario */
+  /* CSS */
+.edit-dialog-container {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  z-index: 9999;
+}
+
+.edit-dialog .p-inputtext {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.edit-dialog .form-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 16px;
+}
+
+.edit-dialog .form-buttons button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.edit-dialog .form-buttons button:hover {
+  background-color: #0056b3;
+}
+
+.confirmation-dialog-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+  z-index: 9999;
+}
+
+.confirmation-dialog-content .p-dialog-content {
+  width: 100%;
+}
+
+.confirmation-dialog-content .form-buttons {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.confirmation-dialog-content .form-buttons button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.confirmation-dialog-content .form-buttons button:hover {
+  background-color: #0056b3;
+}

@@ -16,6 +16,9 @@ import { AgendaComponent } from './agenda/agenda.component';
 import { ListarVentasComponent } from './venta/listar-ventas/listar-ventas.component';
 import { CrearVentaComponent } from './venta/crear-venta/crear-venta.component';
 import { VisualizarVentaComponent } from './venta/visualizar-venta/visualizar-venta.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
+import { FaqComponent } from './faq/faq.component';
+import { SettingsComponent } from './settings/settings.component';
 
 const routes: Routes = [
 
@@ -29,6 +32,9 @@ const routes: Routes = [
   { path: 'usuarios', component: UsersComponent }, // Ruta para Usuarios (mismo componente principal)
   { path: 'cliente', component: UsersComponent }, // Ruta para Usuarios (mismo componente principal)
   { path: 'proveedor', component: ProveedorComponent }, // Ruta para Usuarios (mismo componente principal)
+  { path: 'perfil', component: UserProfileComponent },
+  { path: 'ayuda', component: FaqComponent },
+  { path: 'ajustes', component: SettingsComponent },
   
   //productos
   { path: 'crear-producto', component: CrearProductoComponent },

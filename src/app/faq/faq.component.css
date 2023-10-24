@@ -1,0 +1,171 @@
+/* Estilos generales */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.faq-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* Estilos para la barra lateral */
+.sidebar {
+  flex: 0 0 20%;
+  background-color: #007bff;
+  color: #fff;
+  padding: 20px;
+}
+
+/* Estilos para el contenido principal */
+.content {
+  flex: 0 0 80%;
+  padding: 20px;
+}
+
+/* Estilos para los elementos de búsqueda */
+.search-container {
+  margin-bottom: 20px;
+}
+
+.search-container input[type="text"] {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 100%;
+}
+
+/* Estilos para los botones */
+button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+/* Estilos para la lista de preguntas frecuentes */
+.faq-list {
+  margin-top: 20px;
+}
+
+.question {
+  margin-bottom: 20px;
+  border-radius: 5px;
+  padding: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.question:nth-child(even) {
+  background-color: #fff;
+}
+
+.question h3 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.question p {
+  margin: 10px 0;
+}
+
+/* Estilos para el formulario de envío de preguntas */
+.ask-developers {
+  margin-top: 20px;
+  border-radius: 5px;
+  padding: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.ask-developers h2 {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.ask-developers form {
+  display: flex;
+  flex-direction: column;
+}
+
+.ask-developers .form-group {
+  margin-bottom: 10px;
+}
+
+.ask-developers label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.ask-developers input,
+.ask-developers textarea {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.ask-developers .form-actions {
+  margin-top: 10px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.ask-developers button[type="submit"] {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.ask-developers button[type="submit"]:hover {
+  background-color: #0069d9;
+}
+
+/* Estilos para el modal de PrimeNG */
+.question-form .form-group {
+  margin-bottom: 20px;
+}
+
+.question-form label {
+  display: block;
+  font-weight: bold;
+}
+
+.question-form input[type="text"],
+.question-form textarea {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.question-form .form-actions {
+  margin-top: 20px;
+  text-align: right;
+}
+
+.question-form .ui-button {
+  margin-left: 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.question-form .ui-button:hover {
+  background-color: #0056b3;
+}
