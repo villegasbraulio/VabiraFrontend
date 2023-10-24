@@ -32,7 +32,7 @@ import { MatInputModule } from '@angular/material/input';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { FaqComponent } from './faq/faq.component';
 import { SettingsComponent } from './settings/settings.component';
-import { SettingsModalComponent } from './settings-modal./settings-modal..component'; // Importa MatInputModule
+import { SettingsModalComponent } from './settings-modal/settings-modal..component'; // Importa MatInputModule
 import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
