@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';  //modulo formularios
+import { FormsModule, FormGroup, FormBuilder, ReactiveFormsModule } from '@angular/forms';  //modulo formularios
 import { RouterModule } from '@angular/router';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -25,6 +25,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { AgendaComponent } from './agenda/agenda.component';
 import { ReservarCitaComponent } from './reservar-cita/reservar-cita.component';
 import { DetallesCitaComponent } from './detalles-cita/detalles-cita.component';
+import { CommonModule } from '@angular/common';
 
 import { MatFormFieldModule } from '@angular/material/form-field'; // Importa MatFormFieldModule
 import { MatInputModule } from '@angular/material/input';
@@ -42,6 +43,11 @@ import { DropdownModule } from 'primeng/dropdown';
 import { TableModule } from 'primeng/table';
 import { MessageService } from 'primeng/api';
 
+
+import { CrearVentaComponent } from './venta/crear-venta/crear-venta.component';
+import { ListarVentasComponent } from './venta/listar-ventas/listar-ventas.component';
+import { VisualizarVentaComponent } from './venta/visualizar-venta/visualizar-venta.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -58,11 +64,17 @@ import { MessageService } from 'primeng/api';
     ReservarCitaComponent,
     DetallesCitaComponent,
     TurneroComponent,
-    CrearProductoComponent,
-    ListarProductosComponent,
+
     ProveedorComponent,
     TimeRangeModalComponent,
     ListarTurneroComponent,
+  
+    CrearProductoComponent,
+    ListarProductosComponent,
+
+    CrearVentaComponent,
+    ListarVentasComponent,
+    VisualizarVentaComponent,
   ],
   providers: [
     MessageService, // Agrega MessageService a la lista de proveedores
@@ -90,7 +102,9 @@ import { MessageService } from 'primeng/api';
     DropdownModule,
     ToastrModule.forRoot(),
     TableModule,
+    CommonModule,
   ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
