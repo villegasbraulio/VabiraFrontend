@@ -19,6 +19,10 @@ export class AgendaService {
     return this.http.get<any[]>(`${this.baseUrl2}/findAll`);//trae todos los turnos
   }
 
+  obtenerTurnosPorAgenda(scheduleId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl2}/findAllForSchedule?idSchedule=${scheduleId}`);//trae todos los turnos
+  }
+
   obtenerTurnosReservados(): Observable<any[]> {
     return this.http.get<any[]>(`${this.baseUrl2}/findAssignTurns`);//trae todos los turnos ya reservados
   }

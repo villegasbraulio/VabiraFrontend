@@ -12,7 +12,7 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./agenda.component.css']
 })
 export class AgendaComponent implements OnInit {
-  days: string[] = [];
+  days: { name: string; monthDay: string }[] = []; 
   currentDate = moment();
   scheduleData: any;
   timeSlots: { start: string; end: string }[] = [];
@@ -42,6 +42,7 @@ export class AgendaComponent implements OnInit {
           .reduce((uniqueDays: string[], turn: any) => {
             if (!uniqueDays.includes(turn.classDayType.name)) {
               uniqueDays.push(turn.classDayType.name);
+              uniqueDays.push(turn.monthDay);
             }
             return uniqueDays;
           }, []);
@@ -98,12 +99,11 @@ export class AgendaComponent implements OnInit {
   updateButtonStates() {
     for (const timeSlot of this.timeSlots) {
       for (const dayType of this.days) {
-        const buttonId = this.getButtonId(dayType, timeSlot.start, timeSlot.end);
+        const buttonId = this.getButtonId(dayType.name, timeSlot.start, timeSlot.end);
         const buttonElement = document.getElementById(buttonId) as HTMLButtonElement;
         if (buttonElement && buttonElement instanceof HTMLButtonElement) {
   
           if (this.reservedTimeSlots.has(buttonId)) {
-            console.log('entro?');
             // El turno está reservado
             buttonElement.innerText = 'Reservado';
             buttonElement.classList.add('reserved-button');
@@ -139,7 +139,7 @@ export class AgendaComponent implements OnInit {
   }
 
   loadAllTurns() {
-    this.agendaService.obtenerTurnos().subscribe((allTurns) => {
+    this.agendaService.obtenerTurnosPorAgenda(this.agendaId).subscribe((allTurns) => {
       allTurns.forEach((turn) => {
         const buttonId = this.getButtonId(turn.classDayType.name, turn.startTime, turn.endTime);
         const buttonElement = document.getElementById(buttonId) as HTMLButtonElement;
@@ -191,9 +191,7 @@ export class AgendaComponent implements OnInit {
   }
 
   agendarTurno(id: number, toUpdate: any) {
-    // Llama al método del servicio para eliminar el usuario por su ID
     this.agendaService.agendarTurno(id, toUpdate).subscribe((data: any) => {
-      // Puedes realizar acciones adicionales después de eliminar el usuario, si es necesario.
     });
   }
 
@@ -222,7 +220,6 @@ export class AgendaComponent implements OnInit {
 
   handleTimeClick(dayType: string, start: string, end: string) {
     if (this.reservedTimeSlots.has(`${dayType}-${start}-${end}`)) {
-      // El turno ya está reservado, puedes mostrar un mensaje o realizar acciones adicionales
       return;
     }
 
@@ -234,18 +231,17 @@ export class AgendaComponent implements OnInit {
         moment(end, 'hh:mm A').isSameOrBefore(moment(turn.dateTo))
       );
     });
-
+    
     if (!selectedTurn) {
-      // No se encontró un turno que coincida, puedes mostrar un mensaje de error si es necesario
       console.log('No se encontró un turno que coincida.');
       return;
     }
 
     const id = selectedTurn.id;
-    const clienteId = this.clientId; // Cambia esto según la lógica de tu aplicación
+    const clienteId = this.clientId; 
     const toUpdate = {
       client: clienteId,
-      classDayType: selectedTurn.classDayType, // Asegúrate de incluir estos datos
+      classDayType: selectedTurn.classDayType, 
       startTime: start,
       endTime: end
     };
@@ -256,7 +252,7 @@ export class AgendaComponent implements OnInit {
       this.reservedTimeSlots.add(`${dayType}-${start}-${end}`);
 
       // Actualiza el botón a "Reservado" y aplica un estilo diferente (cambia el fondo a rojo)
-      this.updateButtonStates(); // Llama a updateButtonStates aquí
+      this.updateButtonStates(); 
 
       // Almacena el turno reservado en localStorage
       localStorage.setItem(`${dayType}-${start}-${end}`, 'reservado');
