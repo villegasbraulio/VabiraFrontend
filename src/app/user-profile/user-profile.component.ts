@@ -1,6 +1,6 @@
-// user-profile.component.ts
-
+import { DialogModule } from 'primeng/dialog';
 import { Component, OnInit } from '@angular/core';
+import { NgModel } from '@angular/forms'; // Importa NgModel para el uso de ngModel
 import { UserService } from 'src/app/users/users.service'; // Importa tu servicio de usuario
 import { MessageService } from 'primeng/api'; // Importa el servicio de mensajes de PrimeNG
 

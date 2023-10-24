@@ -104,7 +104,7 @@ obtenerPerfilUsuario(): Observable<any> {
     // Configura los encabezados con el token
     const headers = new HttpHeaders().set('Authorization', `Bearer ${this.token}`);
     // Realiza la solicitud al endpoint con los encabezados configurados
-    return this.http.get<any>(`${this.profileUrl}/check-status`, { headers });
+    return this.http.get<any>(`${this.baseUrl2}/check-status`, { headers });
   } else {
     // Si no hay token disponible, puedes manejar el error de alguna manera
     // por ejemplo, redirigiendo al usuario a la página de inicio de sesión.

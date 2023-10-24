@@ -84,17 +84,16 @@ import { AccordionModule } from 'primeng/accordion';
   
     CrearProductoComponent,
     ListarProductosComponent,
-
+    FaqComponent,
     CrearVentaComponent,
     ListarVentasComponent,
     VisualizarVentaComponent,
+    UserProfileComponent,
+    SettingsComponent,
+    SettingsModalComponent,
   ],
   providers: [
     MessageService, // Agrega MessageService a la lista de proveedores
-    UserProfileComponent,
-    FaqComponent,
-    SettingsComponent,
-    SettingsModalComponent,
   ],
   imports: [
     BrowserModule,
