@@ -12,7 +12,8 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./agenda.component.css']
 })
 export class AgendaComponent implements OnInit {
-  days: { name: string; monthDay: string }[] = []; 
+  days: { name: string; monthDay: string }[] = [];
+  days2: string[] = [];
   currentDate = moment();
   scheduleData: any;
   timeSlots: { start: string; end: string }[] = [];
@@ -21,13 +22,13 @@ export class AgendaComponent implements OnInit {
   clientId: any
   agendaId: any
 
-  constructor(private dialog: MatDialog, private agendaService: AgendaService, private userService: UserService,  private activatedRoute: ActivatedRoute) { }
+  constructor(private dialog: MatDialog, private agendaService: AgendaService, private userService: UserService, private activatedRoute: ActivatedRoute) { }
 
 
 
   ngOnInit(): void {
 
-    
+
     this.activatedRoute.params.subscribe(params => {
       this.agendaId = +params['id'];
       this.userService.obtenerPerfil().subscribe({
@@ -35,20 +36,22 @@ export class AgendaComponent implements OnInit {
           this.clientId = clientFound;
         }
       });
-      
+
       this.agendaService.obtenerAgenda(this.agendaId).subscribe((data) => {
         this.scheduleData = data;
-        this.days = this.scheduleData.turn
-          .reduce((uniqueDays: string[], turn: any) => {
-            if (!uniqueDays.includes(turn.classDayType.name)) {
-              uniqueDays.push(turn.classDayType.name);
-              uniqueDays.push(turn.monthDay);
-            }
-            return uniqueDays;
-          }, []);
+        if (this.scheduleData && this.scheduleData.turn) {
+          this.days = this.scheduleData.turn
+            .reduce((uniqueDays: string[], turn: any) => {
+              const combinedDay = `${turn.classDayType.name} ${turn.monthDay}`;
+              if (!uniqueDays.includes(combinedDay)) {
+                uniqueDays.push(combinedDay);
+              }
+              return uniqueDays;
+            }, []);
+            
+        }
+
         this.generateTimeSlots();
-  
-        // Cargar todos los turnos al inicio
         this.loadReservedAndAvailableTurns();
         this.loadAllTurns();
         this.updateButtonStates();
@@ -57,7 +60,6 @@ export class AgendaComponent implements OnInit {
 
   }
 
-  // ...
   loadReservedAndAvailableTurns() {
     // Obtener los turnos reservados y disponibles del servicio
     this.agendaService.obtenerTurnosReservadosPorAgenda(this.agendaId).subscribe((reservedTurns) => {
@@ -70,7 +72,6 @@ export class AgendaComponent implements OnInit {
           reservedTurn.dateTo
         ) {
           const buttonId = this.getButtonId(reservedTurn.classDayType.name, reservedTurn.dateFrom, reservedTurn.dateTo);
-
           this.reservedTimeSlots.add(buttonId);
         }
       });
@@ -95,14 +96,13 @@ export class AgendaComponent implements OnInit {
     });
   }
 
-
   updateButtonStates() {
     for (const timeSlot of this.timeSlots) {
       for (const dayType of this.days) {
         const buttonId = this.getButtonId(dayType.name, timeSlot.start, timeSlot.end);
         const buttonElement = document.getElementById(buttonId) as HTMLButtonElement;
         if (buttonElement && buttonElement instanceof HTMLButtonElement) {
-  
+
           if (this.reservedTimeSlots.has(buttonId)) {
             // El turno está reservado
             buttonElement.innerText = 'Reservado';
@@ -112,17 +112,16 @@ export class AgendaComponent implements OnInit {
             // El turno está disponible
             buttonElement.innerText = 'Reservar';
             buttonElement.classList.add('available-button');
-          } 
+          }
         }
       }
     }
   }
-  
+
   getButtonId(classDayType: any, dateFrom: string, dateTo: string): string {
     return `${classDayType}-${dateFrom}-${dateTo}`;
   }
-  
-  
+   
   loadReservedTurns() {
     // Obtener los turnos reservados del servicio
     this.agendaService.obtenerTurnosReservadosPorAgenda(this.agendaId).subscribe((reservedTurns) => {
@@ -174,7 +173,7 @@ export class AgendaComponent implements OnInit {
     }
   }
 
-  isClientAssigned(dayType: string, start: string, end: string): boolean {
+  isClientAssigned(dayType: any, start: string, end: string): boolean {
     if (!this.scheduleData || !this.scheduleData.turn) {
       return false;
     }
@@ -195,7 +194,7 @@ export class AgendaComponent implements OnInit {
     });
   }
 
-  isAppointmentScheduled(dayType: string, start: string, end: string): boolean {
+  isAppointmentScheduled(dayType: any, start: string, end: string): boolean {
     if (!this.scheduleData || !this.scheduleData.turn) {
       return false;
     }
@@ -218,8 +217,10 @@ export class AgendaComponent implements OnInit {
     this.currentDate = moment();
   }
 
-  handleTimeClick(dayType: string, start: string, end: string) {
+  handleTimeClick(dayType: any, start: string, end: string) {
+    
     if (this.reservedTimeSlots.has(`${dayType}-${start}-${end}`)) {
+      // El turno ya está reservado, puedes mostrar un mensaje o realizar acciones adicionales
       return;
     }
 
@@ -231,17 +232,18 @@ export class AgendaComponent implements OnInit {
         moment(end, 'hh:mm A').isSameOrBefore(moment(turn.dateTo))
       );
     });
-    
+
     if (!selectedTurn) {
+      // No se encontró un turno que coincida, puedes mostrar un mensaje de error si es necesario
       console.log('No se encontró un turno que coincida.');
       return;
     }
 
     const id = selectedTurn.id;
-    const clienteId = this.clientId; 
+    const clienteId = this.clientId; // Cambia esto según la lógica de tu aplicación
     const toUpdate = {
       client: clienteId,
-      classDayType: selectedTurn.classDayType, 
+      classDayType: selectedTurn.classDayType, // Asegúrate de incluir estos datos
       startTime: start,
       endTime: end
     };
@@ -252,7 +254,7 @@ export class AgendaComponent implements OnInit {
       this.reservedTimeSlots.add(`${dayType}-${start}-${end}`);
 
       // Actualiza el botón a "Reservado" y aplica un estilo diferente (cambia el fondo a rojo)
-      this.updateButtonStates(); 
+      this.updateButtonStates(); // Llama a updateButtonStates aquí
 
       // Almacena el turno reservado en localStorage
       localStorage.setItem(`${dayType}-${start}-${end}`, 'reservado');

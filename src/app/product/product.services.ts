@@ -7,7 +7,7 @@ import { Producto } from "./producto";
 })
 export class ProductService{
     //url: 'http://localhost: 3000/api/product/';
-    url: string = 'http://localhost: 3000/api/product/';
+    private url = 'http://localhost: 3000/api/product/';
     constructor(private http: HttpClient){
 
     }
@@ -19,9 +19,9 @@ export class ProductService{
          return this.http.delete(this.url + id);
     }
     // Para crear un producto
-    guardarProducto(producto: Producto): Observable<any>{
-        return this.http.post(this.url, producto);
-    }
+    guardarProducto(product: any): Observable<any> {
+        return this.http.post(`${this.url}/create`, product);
+      }
     // Para editar un producto
     obtenerProducto(id: string): Observable <any>{
         return this.http.get(this.url + id);
