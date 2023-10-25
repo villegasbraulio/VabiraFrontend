@@ -28,11 +28,14 @@
           <li><a class="dropdown-item" routerLink="/lista-turnero">Agenda</a></li>
           <li><a *ngIf="profileTypes.includes('supplier')" class="dropdown-item" routerLink="/turneros">Turnero</a></li>
         </ul>
-      <div>
-        <a routerLink="/listar-producto">
+        <a *ngIf="profileTypes.includes('admin')" class="btn custom-dropdown-toggle" data-bs-toggle="collapse" href="#productosCollapse" role="button" aria-expanded="false">
           <i class="material-icons">shopping_cart</i> Productos
         </a>
-      </div>
+        <!-- Agregar el ID al elemento que se colapsará -->
+        <ul id="productosCollapse" class="collapse vertical-collapse">
+          <li><a class="dropdown-item" routerLink="/listar-venta">Ventas</a></li>
+          <li><a class="dropdown-item" routerLink="/listar-producto">Compras</a></li>
+        </ul>
     </li>
     
     <!-- Grupo 3 -->

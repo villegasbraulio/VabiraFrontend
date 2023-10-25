@@ -56,9 +56,12 @@ export class ListarTurneroComponent implements OnInit {
 
   filterGlobal(event: any) {
     if (this.dataTable) {
-      this.dataTable.filter(event.target.value, 'globalFilter', 'contains');
+      const filterValue = event.target.value;
+      console.log('Valor del filtro:', filterValue);
+      this.dataTable.filter(filterValue, 'globalFilter', 'contains');
     }
   }
+  
   
   // Método para recargar la página
   reloadPage() {
