@@ -41,12 +41,20 @@ export class ListarTurneroComponent implements OnInit {
 
   cargarUsuarios() {
     this.proveedorService.obtenerProveedores2().subscribe((data: any) => {
+      // Verificar que data sea una matriz de objetos
+      if (Array.isArray(data) && data.length > 0) {
+        const firstItem = data[0];
+        // Verificar que los nombres de las propiedades coincidan exactamente con los campos en globalFilterFields
+        const objectProperties = Object.keys(firstItem);
+      }
+      // Asignar datos a this.schedules después de las verificaciones
       this.schedules = data;
       if (this.dataTable) {
         this.dataTable.reset();
       }
     });
   }
+  
 
   clearGlobalFilter() {
     if (this.dataTable) {

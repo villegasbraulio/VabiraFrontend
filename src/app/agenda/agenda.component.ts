@@ -48,6 +48,13 @@ export class AgendaComponent implements OnInit {
               }
               return uniqueDays;
             }, []);
+            this.days2 = this.scheduleData.turn
+            .reduce((uniqueDays2: string[], turn: any) => {
+              if (!uniqueDays2.includes(turn.classDayType.name)) {
+                uniqueDays2.push(turn.classDayType.name);
+              }
+              return uniqueDays2;
+            }, []);
             
         }
 
@@ -65,16 +72,17 @@ export class AgendaComponent implements OnInit {
     this.agendaService.obtenerTurnosReservadosPorAgenda(this.agendaId).subscribe((reservedTurns) => {
       this.reservedTimeSlots = new Set<string>();
       reservedTurns.forEach((reservedTurn) => {
-        // Asegúrate de que los datos necesarios estén disponibles en reservedTurn
+        
         if (
           reservedTurn.classDayType &&
           reservedTurn.dateFrom &&
           reservedTurn.dateTo
-        ) {
-          const buttonId = this.getButtonId(reservedTurn.classDayType.name, reservedTurn.dateFrom, reservedTurn.dateTo);
-          this.reservedTimeSlots.add(buttonId);
-        }
-      });
+          ) {
+            const buttonId = this.getButtonId(reservedTurn.classDayType.name, reservedTurn.dateFrom, reservedTurn.dateTo);
+            this.reservedTimeSlots.add(buttonId);
+          }
+        });
+        console.log(this.reservedTimeSlots);
 
       // Luego de cargar los turnos reservados, obtener los turnos disponibles
       this.agendaService.obtenerTurnosDisponiblesPorAgenda(this.agendaId).subscribe((availableTurns) => {
@@ -91,6 +99,7 @@ export class AgendaComponent implements OnInit {
             this.availableTimeSlots.add(buttonId);
           }
         });
+        console.log(this.availableTimeSlots);
         this.updateButtonStates();
       });
     });
@@ -98,11 +107,11 @@ export class AgendaComponent implements OnInit {
 
   updateButtonStates() {
     for (const timeSlot of this.timeSlots) {
-      for (const dayType of this.days) {
-        const buttonId = this.getButtonId(dayType.name, timeSlot.start, timeSlot.end);
+      for (const dayType of this.days2) {
+        const buttonId = this.getButtonId(dayType, timeSlot.start, timeSlot.end);
         const buttonElement = document.getElementById(buttonId) as HTMLButtonElement;
         if (buttonElement && buttonElement instanceof HTMLButtonElement) {
-
+          
           if (this.reservedTimeSlots.has(buttonId)) {
             // El turno está reservado
             buttonElement.innerText = 'Reservado';
@@ -173,22 +182,6 @@ export class AgendaComponent implements OnInit {
     }
   }
 
-  isClientAssigned(dayType: any, start: string, end: string): boolean {
-    if (!this.scheduleData || !this.scheduleData.turn) {
-      return false;
-    }
-
-    const selectedTurn = this.scheduleData.turn.find((turn: any) => {
-      return (
-        turn.classDayType.name === dayType &&
-        moment(start, 'hh:mm A').isSameOrAfter(moment(turn.dateFrom)) &&
-        moment(end, 'hh:mm A').isSameOrBefore(moment(turn.dateTo))
-      );
-    });
-
-    return selectedTurn && selectedTurn.client !== null;
-  }
-
   agendarTurno(id: number, toUpdate: any) {
     this.agendaService.agendarTurno(id, toUpdate).subscribe((data: any) => {
     });
@@ -218,21 +211,18 @@ export class AgendaComponent implements OnInit {
   }
 
   handleTimeClick(dayType: any, start: string, end: string) {
-    
-    if (this.reservedTimeSlots.has(`${dayType}-${start}-${end}`)) {
-      // El turno ya está reservado, puedes mostrar un mensaje o realizar acciones adicionales
-      return;
-    }
-
     // Encuentra el turno correspondiente en base a las fechas y el tipo de día
     const selectedTurn = this.scheduleData.turn.find((turn: any) => {
-      return (
-        turn.classDayType.name === dayType &&
-        moment(start, 'hh:mm A').isSameOrAfter(moment(turn.dateFrom)) &&
-        moment(end, 'hh:mm A').isSameOrBefore(moment(turn.dateTo))
-      );
-    });
+      const turnStartTime = moment(turn.dateFrom).format('hh:mm A');
+      const turnEndTime = moment(turn.dateTo).format('hh:mm A');
+      
+      const isSameDayType = turn.classDayType.name === dayType;
+      const isAfterOrEqualStart = moment(start, 'hh:mm A').isSameOrAfter(moment(turnStartTime, 'hh:mm A'));
+      const isBeforeOrEqualEnd = moment(end, 'hh:mm A').isSameOrBefore(moment(turnEndTime, 'hh:mm A'));
 
+      return isSameDayType && isAfterOrEqualStart && isBeforeOrEqualEnd;
+    });
+    
     if (!selectedTurn) {
       // No se encontró un turno que coincida, puedes mostrar un mensaje de error si es necesario
       console.log('No se encontró un turno que coincida.');
@@ -259,6 +249,7 @@ export class AgendaComponent implements OnInit {
       // Almacena el turno reservado en localStorage
       localStorage.setItem(`${dayType}-${start}-${end}`, 'reservado');
     });
-  }
+}
+
 
 }
