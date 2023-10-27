@@ -2,6 +2,7 @@
   <app-sidebar></app-sidebar>
   <div class="content">
     <div class="card">
+      <h2> Gestion de Clientes</h2>
       <p-table #dt1 [value]="clientes" [rows]="10" [paginator]="true"
         [globalFilterFields]="['client.user.username', 'client.user.firstName', 'client.user.lastName', 'client.user.dni']"
         [resizableColumns]="true" [reorderableColumns]="true" [filterMode]="'lenient'">
@@ -9,10 +10,10 @@
           <div class="flex">
             <button pButton label="Limpiar Filtro" class="p-button-outlined" icon="pi pi-filter-slash"
               (click)="clearGlobalFilter()"></button>
-            <span class="p-input-icon-left ml-auto">
-              <i class="pi pi-search"></i>
-              <input pInputText type="text" (input)="filterGlobal($event)" placeholder="Buscar..." />
-            </span>
+              <span class="p-input-icon-left ml-auto">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" (input)="filterGlobal($event)" placeholder="Buscar..." />
+              </span>
           </div>
         </ng-template>
         <ng-template pTemplate="header" let-columns>
@@ -36,6 +37,10 @@
             <td>{{ clientAddress.address.politicalDivision.name }}</td>
             <td>{{ clientAddress.address.address }}</td>
             <td>{{ client.user.dni }}</td>
+            <td>
+              <img src="../../assets/lapiz.png" (click)="abrirModalEdicion(client)" class="icono-accion reducir-imagen" />
+              <img src="../../assets/tacho.jpg" (click)="eliminarUsuario(client.id)" class="icono-accion reducir-imagen" />
+            </td>
           </tr>
         </ng-template>
         <ng-template pTemplate="emptymessage">

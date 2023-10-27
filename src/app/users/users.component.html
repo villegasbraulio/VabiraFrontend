@@ -1,77 +1,70 @@
 <div class="layout">
-  <app-sidebar></app-sidebar> 
+  <app-sidebar></app-sidebar>
   <div class="content">
-    <mat-table [dataSource]="usuarios">
-      <ng-container matColumnDef="id">
-        <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
-        <mat-cell *matCellDef="let usuario">{{ usuario.id }}</mat-cell>
-      </ng-container>
-    
-      <ng-container matColumnDef="username">
-        <mat-header-cell *matHeaderCellDef>Username</mat-header-cell>
-        <mat-cell *matCellDef="let usuario">{{ usuario.username }}</mat-cell>
-      </ng-container>
-    
-      <ng-container matColumnDef="nombre">
-        <mat-header-cell *matHeaderCellDef>Nombre</mat-header-cell>
-        <mat-cell *matCellDef="let usuario">{{ usuario.firstName }}</mat-cell>
-      </ng-container>
-    
-      <ng-container matColumnDef="apellido">
-        <mat-header-cell *matHeaderCellDef>Apellido</mat-header-cell>
-        <mat-cell *matCellDef="let usuario">{{ usuario.lastName }}</mat-cell>
-      </ng-container>
-    
-      <ng-container matColumnDef="email">
-        <mat-header-cell *matHeaderCellDef>Email</mat-header-cell>
-        <mat-cell *matCellDef="let usuario">{{ usuario.email }}</mat-cell>
-      </ng-container>
-    
-      <ng-container matColumnDef="dni">
-        <mat-header-cell *matHeaderCellDef>DNI</mat-header-cell>
-        <mat-cell *matCellDef="let usuario">{{ usuario.dni }}</mat-cell>
-      </ng-container>
-    
-      <ng-container matColumnDef="fecha de nacimiento">
-        <mat-header-cell *matHeaderCellDef>Fecha de nacimiento</mat-header-cell>
-        <mat-cell *matCellDef="let usuario">{{ usuario.dateOfBirth }}</mat-cell>
-      </ng-container>
-
-      <ng-container matColumnDef="roles">
-        <mat-header-cell *matHeaderCellDef>Roles</mat-header-cell>
-        <mat-cell *matCellDef="let usuario">{{ usuario.roles }}</mat-cell>
-      </ng-container>
-    
-      <ng-container matColumnDef="acciones">
-        <mat-header-cell *matHeaderCellDef>Acciones</mat-header-cell>
-        <mat-cell *matCellDef="let usuario">
-          <!-- Agrega una imagen que dispare el método verUsuario al hacer clic -->
-          <img src="../../assets/perfil.jpg" (click)="verUsuario(usuario.id)" class="icono-accion" class="icono-accion reducir-imagen">
-          <img src="../../assets/lapiz.png" (click)="abrirModalEdicion(usuario)" class="icono-accion" class="icono-accion reducir-imagen">
-          <img src="../../assets/tacho.jpg" (click)="eliminarUsuario(usuario.id)" class="icono-accion" class="icono-accion reducir-imagen" (click)="reloadPage()">
-      
-          <!-- Tarjeta (card) oculta inicialmente -->
-          <mat-dialog-content *ngIf="usuarioSeleccionado">
-            <h3>Datos del Usuario</h3>
-            <ul>
-              <li><strong>ID:</strong> {{ usuarioSeleccionado.id }}</li>
-              <li><strong>Username:</strong> {{ usuarioSeleccionado.username }}</li>
-              <li><strong>Nombre:</strong> {{ usuarioSeleccionado.firstName }}</li>
-              <li><strong>Apellido:</strong> {{ usuarioSeleccionado.lastName }}</li>
-              <li><strong>Email:</strong> {{ usuarioSeleccionado.email }}</li>
-              <!-- Agrega más detalles según tus necesidades -->
-            </ul>
-          </mat-dialog-content>
-        </mat-cell>
-      </ng-container>
-    
-      <!-- Resto de tus columnas aquí -->
-    
-      <mat-header-row *matHeaderRowDef="columnas"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: columnas"></mat-row>
-    </mat-table>
+    <div class="card">
+      <h2>Gestión de Usuarios</h2>
+      <p-table
+        #dt1
+        [value]="usuarios"
+        [rows]="10"
+        [paginator]="true"
+        [globalFilterFields]="['user.username', 'user.firstName', 'user.lastName', 'user.dni', 'user.dateOfBirth']"
+        [resizableColumns]="true"
+        [reorderableColumns]="true"
+        [filterMode]="'lenient'"
+      >
+        <ng-template pTemplate="caption">
+          <div class="flex">
+            <button pButton label="Limpiar Filtro" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clearGlobalFilter()"></button>
+            <span class="p-input-icon-left ml-auto">
+              <i class="pi pi-search"></i>
+              <input pInputText type="text" (input)="filterGlobal($event)" placeholder="Buscar..." />
+            </span>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th *ngFor="let col of columnas" [pSortableColumn]="col.field" [style.width]="col.field === 'acciones' ? '3rem' : 'auto'">
+              <div class="flex align-items-center">
+                {{ col.header }}
+                <p-sortIcon [field]="col.field"></p-sortIcon>
+              </div>
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-user>
+          <tr>
+            <td>{{ user.id }}</td>
+            <td>{{ user.username }}</td>
+            <td>{{ user.firstName }}</td>
+            <td>{{ user.lastName }}</td>
+            <td>{{ user.dni }}</td>
+            <td>{{ user.dateOfBirth | date: 'dd/MM/yyyy' }}</td>
+            <td>{{ user.roles }}</td>
+            <td>
+              <img src="../../assets/perfil.jpg" (click)="verUsuario(user.id)" class="icono-accion reducir-imagen" />
+              <img src="../../assets/lapiz.png" (click)="abrirModalEdicion(user)" class="icono-accion reducir-imagen" />
+              <img src="../../assets/tacho.jpg" (click)="eliminarUsuario(user.id)" class="icono-accion reducir-imagen" />
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td [attr.colspan]="columnas.length">No hay usuarios a mostrar.</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+    <mat-dialog-content *ngIf="usuarioSeleccionado">
+      <h3>Datos del Usuario</h3>
+      <ul>
+        <li><strong>ID:</strong> {{ usuarioSeleccionado.id }}</li>
+        <li><strong>Username:</strong> {{ usuarioSeleccionado.username }}</li>
+        <li><strong>Nombre:</strong> {{ usuarioSeleccionado.firstName }}</li>
+        <li><strong>Apellido:</strong> {{ usuarioSeleccionado.lastName }}</li>
+        <li><strong>Email:</strong> {{ usuarioSeleccionado.email }}</li>
+      </ul>
+    </mat-dialog-content>
     <button class="alta-usuario" (click)="altaUsuario()">ALTA USUARIO</button>
-
-    <router-outlet></router-outlet>
   </div>
 </div>

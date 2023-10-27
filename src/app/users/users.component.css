@@ -57,6 +57,12 @@
   padding: 20px;
   overflow: auto; /* Agrega desplazamiento si es necesario */
 }
+app-sidebar {
+  flex: 0 0 auto;
+  width: 250px;
+  background-color: #1e3a6f;
+  color: white;
+}
 .table-container {
   position: relative;
 }

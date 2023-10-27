@@ -3,6 +3,9 @@ import { Table } from 'primeng/table';
 import { MessageService } from 'primeng/api';
 import { ProveedorService } from '../proveedor/proveedor.service';
 import { Router } from '@angular/router';
+import { UserService } from '../users/users.service';
+import { MatDialog } from '@angular/material/dialog';
+import { EditarProveedorModalComponent } from './editar-proveedor-modal.component';
 
 @Component({
   selector: 'app-proveedor',
@@ -16,8 +19,10 @@ export class ProveedorComponent implements OnInit {
 
   constructor(
     private proveedorService: ProveedorService,
+    private userService: UserService,
     private router: Router,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private dialog: MatDialog
   ) {
     this.proveedores = [];
     this.columnas = [
@@ -28,6 +33,7 @@ export class ProveedorComponent implements OnInit {
       { field: 'client.user.dni', header: 'DNI' },
       { field: 'supplier.cuit', header: 'CUIT' },
       { field: 'supplier.identificationNumber', header: 'Numero Identificador' },
+      { field: 'acciones', header: 'Acciones' },
     ];
   }
 
@@ -52,7 +58,35 @@ export class ProveedorComponent implements OnInit {
     });
   }
   
-
+  eliminarUsuario(id: number) {
+    // Llama al método del servicio para eliminar el usuario por su ID
+    this.userService.eliminarUsuario(id).subscribe((data: any) => {
+      // Puedes realizar acciones adicionales después de eliminar el usuario, si es necesario.
+      this.reloadPage(); // Recarga la página después de eliminar el usuario
+    });
+  }
+  
+  editarUsuario(id: number, toUpdate:any) {
+    // Llama al método del servicio para eliminar el usuario por su ID
+    this.userService.editarUsuario(id, toUpdate).subscribe((data: any) => {
+      // Puedes realizar acciones adicionales después de eliminar el usuario, si es necesario.
+    });
+  }
+  
+  abrirModalEdicion(proveedor: any) {
+    const dialogRef = this.dialog.open(EditarProveedorModalComponent, {
+      width: '400px', // Puedes ajustar el ancho según tus necesidades
+      data: { proveedor } // Pasa los datos del usuario al modal
+    });
+  
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        // Aquí puedes actualizar los datos del usuario en tu tabla
+        const proveedorEditado = result;
+        // Realiza la lógica para actualizar los datos
+      }
+    });
+  }
   clearGlobalFilter() {
     if (this.dataTable) {
       this.dataTable.filter('', 'globalFilter', 'contains');

@@ -3,6 +3,9 @@ import { Table } from 'primeng/table';
 import { MessageService } from 'primeng/api';
 import { ClienteService } from '../cliente/cliente.service';
 import { Router } from '@angular/router';
+import { UserService } from '../users/users.service';
+import { MatDialog } from '@angular/material/dialog';
+import { EditarClienteModalComponent } from './editar-cliente-modal.component';
 
 @Component({
   selector: 'app-cliente',
@@ -16,8 +19,10 @@ export class ClienteComponent implements OnInit {
 
   constructor(
     private clienteService: ClienteService,
+    private userService: UserService,
     private router: Router,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private dialog: MatDialog
   ) {
     this.clientes = [];
     this.columnas = [
@@ -28,7 +33,9 @@ export class ClienteComponent implements OnInit {
       { field: 'client.clientAddress.address.country.name', header: 'Pais de residencia' },
       { field: 'client.clientAddress.address.politicalDivision.name', header: 'Provincia' },
       { field: 'client.clientAddress.address.address', header: 'Direccion' },
+      // { field: 'client.clientAddress.address.postalCode', header: 'Codigo Postal' },
       { field: 'client.user.dni', header: 'DNI' },
+      { field: 'acciones', header: 'Acciones' },
     ];
   }
 
@@ -52,8 +59,40 @@ export class ClienteComponent implements OnInit {
       }
     });
   }
-  
 
+  eliminarUsuario(id: number) {
+    // Llama al método del servicio para eliminar el usuario por su ID
+    this.userService.eliminarUsuario(id).subscribe((data: any) => {
+      // Puedes realizar acciones adicionales después de eliminar el usuario, si es necesario.
+      this.reloadPage(); // Recarga la página después de eliminar el usuario
+    });
+  }
+  
+  editarCliente(id: number, toUpdate:any) {
+    // Llama al método del servicio para eliminar el usuario por su ID
+    this.clienteService.editarCliente(id, toUpdate).subscribe((data: any) => {
+      // Puedes realizar acciones adicionales después de eliminar el usuario, si es necesario.
+    });
+  }
+  
+  abrirModalEdicion(cliente: any) {
+    console.log(cliente);
+    
+    const dialogRef = this.dialog.open(EditarClienteModalComponent, {
+      width: '400px', // Puedes ajustar el ancho según tus necesidades
+      data: { cliente } // Pasa los datos del usuario al modal
+    });
+    
+    console.log(this.clientes);
+    
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        // Aquí puedes actualizar los datos del usuario en tu tabla
+        const clienteEditado = result;
+        // Realiza la lógica para actualizar los datos
+      }
+    });
+  }
   clearGlobalFilter() {
     if (this.dataTable) {
       this.dataTable.filter('', 'globalFilter', 'contains');

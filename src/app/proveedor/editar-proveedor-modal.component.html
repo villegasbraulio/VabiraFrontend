@@ -3,23 +3,17 @@
     <form (ngSubmit)="editarProveedor()">
       <!-- Agrega campos de formulario para editar los datos del usuario -->
       <div class="form-group">
-        <label for="username">Username:</label>
-        <input type="text" id="username" [(ngModel)]="proveedor.username" name="username">
-        <br>
         <label for="firstName">First name:</label>
-        <input type="text" id="firstName" [(ngModel)]="proveedor.firstName" name="firstName">
+        <input type="text" id="firstName" [(ngModel)]="proveedor.user.firstName" name="firstName">
         <br>
         <label for="lastName">Last name:</label>
-        <input type="text" id="lastName" [(ngModel)]="proveedor.lastName" name="lastName">
+        <input type="text" id="lastName" [(ngModel)]="proveedor.user.lastName" name="lastName">
         <br>
-        <label for="dni">DNI:</label>
-        <input type="text" id="dni" [(ngModel)]="proveedor.dni" name="dni">
+        <label for="cuit">CUIT:</label>
+        <input type="text" id="cuit" [(ngModel)]="proveedor.cuit" name="cuit">
         <br>
-        <label for="email">Email:</label>
-        <input type="text" id="email" [(ngModel)]="proveedor.email" name="email">
-        <br>
-        <label for="email">Rol:</label>
-        <input type="text" id="roles" [(ngModel)]="proveedor.roles" name="roles">
+        <label for="identificationNumber">Numero Identificador:</label>
+        <input type="text" id="identificationNumber" [(ngModel)]="proveedor.identificationNumber" name="identificationNumber">
       </div>
       <!-- Agrega más campos según tus necesidades -->
       <button type="submit" class="btn btn-primary">Guardar</button>

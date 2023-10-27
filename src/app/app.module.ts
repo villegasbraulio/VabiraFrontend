@@ -25,7 +25,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { AgendaComponent } from './agenda/agenda.component';
 import { ReservarCitaComponent } from './reservar-cita/reservar-cita.component';
 import { DetallesCitaComponent } from './detalles-cita/detalles-cita.component';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 
 import { MatFormFieldModule } from '@angular/material/form-field'; // Importa MatFormFieldModule
 import { MatInputModule } from '@angular/material/input';
@@ -60,6 +60,7 @@ import { MessageModule } from 'primeng/message';
 import { MessagesModule } from 'primeng/messages';
 import { AccordionModule } from 'primeng/accordion';
 import { ClienteComponent } from './cliente/cliente.component';
+import { EditarClienteModalComponent } from './cliente/editar-cliente-modal.component';
 
 
 @NgModule({
@@ -69,6 +70,7 @@ import { ClienteComponent } from './cliente/cliente.component';
     RegisterComponent,
     ForgotPasswordComponent,
     EditarProveedorModalComponent,
+    EditarClienteModalComponent,
     EditarUsuarioModalComponent,
     SidebarComponent,
     PrincipalComponent,
@@ -95,7 +97,8 @@ import { ClienteComponent } from './cliente/cliente.component';
     ClienteComponent
   ],
   providers: [
-    MessageService, // Agrega MessageService a la lista de proveedores
+    MessageService,
+    DatePipe // Agrega MessageService a la lista de proveedores
   ],
   imports: [
     BrowserModule,
