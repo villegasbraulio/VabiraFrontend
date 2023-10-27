@@ -19,6 +19,7 @@ import { VisualizarVentaComponent } from './venta/visualizar-venta/visualizar-ve
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { FaqComponent } from './faq/faq.component';
 import { SettingsComponent } from './settings/settings.component';
+import { ClienteComponent } from './cliente/cliente.component';
 
 const routes: Routes = [
 
@@ -30,7 +31,7 @@ const routes: Routes = [
   { path: 'principal', component: PrincipalComponent }, // Ruta para el Dashboard (mismo componente principal)
   { path: 'dashboard', component: PrincipalComponent }, // Ruta para el Dashboard (mismo componente principal)
   { path: 'usuarios', component: UsersComponent }, // Ruta para Usuarios (mismo componente principal)
-  { path: 'cliente', component: UsersComponent }, // Ruta para Usuarios (mismo componente principal)
+  { path: 'cliente', component: ClienteComponent }, // Ruta para Usuarios (mismo componente principal)
   { path: 'proveedor', component: ProveedorComponent }, // Ruta para Usuarios (mismo componente principal)
   { path: 'perfil', component: UserProfileComponent },
   { path: 'ayuda', component: FaqComponent },

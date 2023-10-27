@@ -1,0 +1,29 @@
+<div class="modal-container">
+    <h2 class="modal-title">Editar Cliente</h2>
+    <form (ngSubmit)="editarCliente()">
+      <!-- Agrega campos de formulario para editar los datos del usuario -->
+      <div class="form-group">
+        <label for="username">Username:</label>
+        <input type="text" id="username" [(ngModel)]="cliente.username" name="username">
+        <br>
+        <label for="firstName">First name:</label>
+        <input type="text" id="firstName" [(ngModel)]="cliente.firstName" name="firstName">
+        <br>
+        <label for="lastName">Last name:</label>
+        <input type="text" id="lastName" [(ngModel)]="cliente.lastName" name="lastName">
+        <br>
+        <label for="dni">DNI:</label>
+        <input type="text" id="dni" [(ngModel)]="cliente.dni" name="dni">
+        <br>
+        <label for="email">Email:</label>
+        <input type="text" id="email" [(ngModel)]="cliente.email" name="email">
+        <br>
+        <label for="email">Rol:</label>
+        <input type="text" id="roles" [(ngModel)]="cliente.roles" name="roles">
+      </div>
+      <!-- Agrega más campos según tus necesidades -->
+      <button type="submit" class="btn btn-primary">Guardar</button>
+      <button type="button" (click)="cerrarModal()" class="btn btn-secondary">Cancelar</button>
+    </form>
+  </div>
+  

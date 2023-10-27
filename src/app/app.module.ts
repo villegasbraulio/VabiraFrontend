@@ -59,6 +59,7 @@ import { ButtonModule } from 'primeng/button';
 import { MessageModule } from 'primeng/message';
 import { MessagesModule } from 'primeng/messages';
 import { AccordionModule } from 'primeng/accordion';
+import { ClienteComponent } from './cliente/cliente.component';
 
 
 @NgModule({
@@ -91,6 +92,7 @@ import { AccordionModule } from 'primeng/accordion';
     UserProfileComponent,
     SettingsComponent,
     SettingsModalComponent,
+    ClienteComponent
   ],
   providers: [
     MessageService, // Agrega MessageService a la lista de proveedores
