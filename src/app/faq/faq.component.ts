@@ -11,6 +11,7 @@ import { PrimeIcons } from 'primeng/api';
 export class FaqComponent implements OnInit {
   faqs: any[] = [];
   mostrarForm: boolean = false;
+  mostrarFormEditar: boolean = false;
   faqEdit: any = null; 
   nuevaFaq: any = {
     name: '',
@@ -33,6 +34,9 @@ export class FaqComponent implements OnInit {
 
   mostrarFormulario() {
     this.mostrarForm = true;
+  }
+  MostarFormEditar() {
+  this.mostrarFormEditar = true; // Asegúrate de establecer mostrarFormEditar a true
   }
 
   agregarFaq(event: Event) {
@@ -65,13 +69,13 @@ export class FaqComponent implements OnInit {
   }
   editarFaq(faq: any) {
     this.faqEdit = { ...faq }; // Almacena la FAQ que se va a editar
-    
+    this.mostrarFormEditar = true; // Asegúrate de establecer mostrarFormEditar a true
   }
 
   // Método para cancelar la edición (se llama cuando haces clic en "Cancelar")
   cancelarEdicion() {
     this.faqEdit = null; // Limpia la FAQ que se estaba editando
-    this.mostrarForm = false; // Oculta el formulario
+    this.mostrarFormEditar = false; // Oculta el formulario
   }
 
   // Método para guardar la edición de la FAQ

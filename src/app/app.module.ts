@@ -59,9 +59,14 @@ import { ButtonModule } from 'primeng/button';
 import { MessageModule } from 'primeng/message';
 import { MessagesModule } from 'primeng/messages';
 import { AccordionModule } from 'primeng/accordion';
+import { ReportesComponent } from './reportes/reportes.component';
+
+import { ChartModule } from 'primeng/chart';
 
 
 @NgModule({
+
+  
   declarations: [
     AppComponent,
     LoginComponent,
@@ -91,6 +96,7 @@ import { AccordionModule } from 'primeng/accordion';
     UserProfileComponent,
     SettingsComponent,
     SettingsModalComponent,
+    ReportesComponent,
   ],
   providers: [
     MessageService, // Agrega MessageService a la lista de proveedores
@@ -126,6 +132,7 @@ import { AccordionModule } from 'primeng/accordion';
     MessageModule,
     MessagesModule,
     AccordionModule,
+    ChartModule,
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]

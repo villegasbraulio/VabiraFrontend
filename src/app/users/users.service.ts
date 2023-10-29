@@ -113,4 +113,13 @@ obtenerPerfilUsuario(): Observable<any> {
   }
 }
   //agregue esto para obtener los datos del usuario activo
+
+  cambiarContraseña(data: any): Observable<any> {
+    const httpOptions = {
+      headers: this.getHeaders(),
+    };
+
+    // Realiza una solicitud PATCH al endpoint de cambio de contraseña con los datos proporcionados
+    return this.http.patch<any>(`${this.baseUrl}/update`, data, httpOptions);
+  }
 }

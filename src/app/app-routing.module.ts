@@ -19,6 +19,7 @@ import { VisualizarVentaComponent } from './venta/visualizar-venta/visualizar-ve
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { FaqComponent } from './faq/faq.component';
 import { SettingsComponent } from './settings/settings.component';
+import { ReportesComponent } from './reportes/reportes.component';
 
 const routes: Routes = [
 
@@ -50,6 +51,8 @@ const routes: Routes = [
   {path: 'crear-venta', component: CrearVentaComponent},
   {path: 'editar-venta', component: CrearVentaComponent},
   {path: 'visualizar-venta', component: VisualizarVentaComponent},
+
+  { path: 'reportes', component: ReportesComponent }, // Ruta para el componente de reportes
 
   // esta linea va siempre al final, para q cualquier URL invalida siempre direcciona al ppio
   {path: '**', redirectTo: '', pathMatch:'full'},
