@@ -25,7 +25,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { AgendaComponent } from './agenda/agenda.component';
 import { ReservarCitaComponent } from './reservar-cita/reservar-cita.component';
 import { DetallesCitaComponent } from './detalles-cita/detalles-cita.component';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 
 import { MatFormFieldModule } from '@angular/material/form-field'; // Importa MatFormFieldModule
 import { MatInputModule } from '@angular/material/input';
@@ -62,6 +62,9 @@ import { AccordionModule } from 'primeng/accordion';
 import { ReportesComponent } from './reportes/reportes.component';
 
 import { ChartModule } from 'primeng/chart';
+import { ClienteComponent } from './cliente/cliente.component';
+import { EditarClienteModalComponent } from './cliente/editar-cliente-modal.component';
+import { ListarComprasComponent } from './purchase/listar-compras.component';
 
 
 @NgModule({
@@ -73,6 +76,7 @@ import { ChartModule } from 'primeng/chart';
     RegisterComponent,
     ForgotPasswordComponent,
     EditarProveedorModalComponent,
+    EditarClienteModalComponent,
     EditarUsuarioModalComponent,
     SidebarComponent,
     PrincipalComponent,
@@ -86,7 +90,7 @@ import { ChartModule } from 'primeng/chart';
     ProveedorComponent,
     TimeRangeModalComponent,
     ListarTurneroComponent,
-  
+    ListarComprasComponent,
     CrearProductoComponent,
     ListarProductosComponent,
     FaqComponent,
@@ -97,9 +101,11 @@ import { ChartModule } from 'primeng/chart';
     SettingsComponent,
     SettingsModalComponent,
     ReportesComponent,
+    ClienteComponent
   ],
   providers: [
-    MessageService, // Agrega MessageService a la lista de proveedores
+    MessageService,
+    DatePipe // Agrega MessageService a la lista de proveedores
   ],
   imports: [
     BrowserModule,

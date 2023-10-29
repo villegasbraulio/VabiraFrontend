@@ -1,38 +1,40 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Table } from 'primeng/table';
 import { MessageService } from 'primeng/api';
-import { ProveedorService } from '../proveedor/proveedor.service';
+import { ClienteService } from '../cliente/cliente.service';
 import { Router } from '@angular/router';
 import { UserService } from '../users/users.service';
 import { MatDialog } from '@angular/material/dialog';
-import { EditarProveedorModalComponent } from './editar-proveedor-modal.component';
+import { EditarClienteModalComponent } from './editar-cliente-modal.component';
 
 @Component({
-  selector: 'app-proveedor',
-  templateUrl: './proveedor.component.html',
-  styleUrls: ['./proveedor.component.css'],
+  selector: 'app-cliente',
+  templateUrl: './cliente.component.html',
+  styleUrls: ['./cliente.component.css'],
 })
-export class ProveedorComponent implements OnInit {
+export class ClienteComponent implements OnInit {
   @ViewChild('dt1') dataTable: Table | null = null;
-  proveedores: any[];
+  clientes: any[];
   columnas: any[];
 
   constructor(
-    private proveedorService: ProveedorService,
+    private clienteService: ClienteService,
     private userService: UserService,
     private router: Router,
     private messageService: MessageService,
     private dialog: MatDialog
   ) {
-    this.proveedores = [];
+    this.clientes = [];
     this.columnas = [
       { field: 'id', header: 'ID' },
-      { field: 'supplier.user.username', header: 'Username' },
-      { field: 'supplier.user.firstName', header: 'Nombre' },
-      { field: 'supplier.user.lastName', header: 'Apellido' },
+      { field: 'client.user.username', header: 'Username' },
+      { field: 'client.user.firstName', header: 'Nombre' },
+      { field: 'client.user.lastName', header: 'Apellido' },
+      { field: 'client.clientAddress.address.country.name', header: 'Pais de residencia' },
+      { field: 'client.clientAddress.address.politicalDivision.name', header: 'Provincia' },
+      { field: 'client.clientAddress.address.address', header: 'Direccion' },
+      // { field: 'client.clientAddress.address.postalCode', header: 'Codigo Postal' },
       { field: 'client.user.dni', header: 'DNI' },
-      { field: 'supplier.cuit', header: 'CUIT' },
-      { field: 'supplier.identificationNumber', header: 'Numero Identificador' },
       { field: 'acciones', header: 'Acciones' },
     ];
   }
@@ -43,7 +45,7 @@ export class ProveedorComponent implements OnInit {
 
 
   cargarUsuarios() {
-    this.proveedorService.obtenerProveedores().subscribe((data: any) => {
+    this.clienteService.obtenerClientes().subscribe((data: any) => {
       // Verificar que data sea una matriz de objetos
       if (Array.isArray(data) && data.length > 0) {
         const firstItem = data[0];
@@ -51,13 +53,13 @@ export class ProveedorComponent implements OnInit {
         const objectProperties = Object.keys(firstItem);
       }
       // Asignar datos a this.schedules después de las verificaciones
-      this.proveedores = data;
+      this.clientes = data;
       if (this.dataTable) {
         this.dataTable.reset();
       }
     });
   }
-  
+
   eliminarUsuario(id: number) {
     // Llama al método del servicio para eliminar el usuario por su ID
     this.userService.eliminarUsuario(id).subscribe((data: any) => {
@@ -66,23 +68,27 @@ export class ProveedorComponent implements OnInit {
     });
   }
   
-  editarUsuario(id: number, toUpdate:any) {
+  editarCliente(id: number, toUpdate:any) {
     // Llama al método del servicio para eliminar el usuario por su ID
-    this.userService.editarUsuario(id, toUpdate).subscribe((data: any) => {
+    this.clienteService.editarCliente(id, toUpdate).subscribe((data: any) => {
       // Puedes realizar acciones adicionales después de eliminar el usuario, si es necesario.
     });
   }
   
-  abrirModalEdicion(proveedor: any) {
-    const dialogRef = this.dialog.open(EditarProveedorModalComponent, {
+  abrirModalEdicion(cliente: any) {
+    console.log(cliente);
+    
+    const dialogRef = this.dialog.open(EditarClienteModalComponent, {
       width: '400px', // Puedes ajustar el ancho según tus necesidades
-      data: { proveedor } // Pasa los datos del usuario al modal
+      data: { cliente } // Pasa los datos del usuario al modal
     });
-  
+    
+    console.log(this.clientes);
+    
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         // Aquí puedes actualizar los datos del usuario en tu tabla
-        const proveedorEditado = result;
+        const clienteEditado = result;
         // Realiza la lógica para actualizar los datos
       }
     });

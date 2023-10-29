@@ -1,5 +1,5 @@
-.text-danger{
-    text-align: start;
+.fa-solid {
+    cursor: pointer;
     margin-left: 7px;
 }
 /* users.component.css */
@@ -38,6 +38,4 @@
     padding: 20px;
     overflow: auto;
   }
-  
-
   

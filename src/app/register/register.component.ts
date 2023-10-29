@@ -156,13 +156,27 @@ export class RegisterComponent {
         lastName: this.lastName,
         dni: this.dni,
         dateOfBirth: this.dateOfBirth,
-        address: {
-          address: this.address,
-          continent: this.continentControl.value,
-          region: this.regionControl.value,
-          country: this.countryControl.value,
-          politicalDivision: this.politicalDivisionControl.value,
+        clientAddress: [
+          {
+            address: {
+            address: this.address,
+            postalCode: this.postalCode,
+            continent: {
+              id: this.continentControl.value,
+            },
+            region: {
+              id: this.regionControl.value,
+            },
+            country: {
+              id: this.countryControl.value,
+            },
+            politicalDivision: {
+              id: this.politicalDivisionControl.value,
+            },
+          }
         }
+        ]
+        
       };
     }
 

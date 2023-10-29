@@ -1,0 +1,11 @@
+<div class="modal-container">
+  <h2 class="modal-title">Datos del Cliente</h2>
+  <ul class="modal-list">
+    <li><strong>ID:</strong> {{ data.id }}</li>
+    <li><strong>Pais de residencia:</strong> {{ data.clientAddress.address.country.name }}</li>
+    <li><strong>Provincia:</strong> {{ data.clientAddress.address.politicalDivision.name }}</li>
+    <li><strong>Domicilio:</strong> {{ data.clientAddress.address.address }}</li>
+    <li><strong>DNI:</strong> {{ data.user.dni }}</li>
+    <li><strong>Fecha de nacimiento:</strong> {{ data.user.dateOfBirth }}</li>
+  </ul>
+</div>

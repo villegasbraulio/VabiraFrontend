@@ -11,7 +11,7 @@
       <ng-container *ngFor="let timeSlot of timeSlots">
         <tr>
           <td>{{ timeSlot.start }} - {{ timeSlot.end }}</td>
-          <td *ngFor="let dayType of days">
+          <td *ngFor="let dayType of days2">
             <div>
               <button mat-button [id]="getButtonId(dayType, timeSlot.start, timeSlot.end)"
                 (click)="handleTimeClick(dayType, timeSlot.start, timeSlot.end)"

@@ -8,14 +8,18 @@ import { Venta } from "./venta";
     providedIn: 'root'
 })
 export class VentaService{
-    //url: 'http://localhost: 3000/api/venta/';
-    url: string = 'http://localhost: 3000/api/venta/';
+    private url = 'http://localhost:3000/api/saleRecord/';
     constructor(private http: HttpClient){
 
     }
     getVenta(): Observable <any>{
     return this.http.get(this.url);
     }
+
+    obtenerVentas(): Observable<any[]> {
+        return this.http.get<any[]>(`${this.url}/all`);
+    }
+
     //Para eliminar una venta
     eliminarVenta(id: string): Observable <any> {
          return this.http.delete(this.url + id);

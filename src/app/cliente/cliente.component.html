@@ -1,0 +1,54 @@
+<div class="layout">
+  <app-sidebar></app-sidebar>
+  <div class="content">
+    <div class="card">
+      <h1> Gestion de Clientes</h1>
+      <p-table #dt1 [value]="clientes" [rows]="10" [paginator]="true"
+        [globalFilterFields]="['client.user.username', 'client.user.firstName', 'client.user.lastName', 'client.user.dni']"
+        [resizableColumns]="true" [reorderableColumns]="true" [filterMode]="'lenient'">
+        <ng-template pTemplate="caption">
+          <div class="flex">
+            <button pButton label="Limpiar Filtro" class="p-button-outlined" icon="pi pi-filter-slash"
+              (click)="clearGlobalFilter()"></button>
+              <span class="p-input-icon-left ml-auto">
+                <i class="pi pi-search"></i>
+                <input pInputText type="text" (input)="filterGlobal($event)" placeholder="Buscar..." />
+              </span>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th *ngFor="let col of columnas" [pSortableColumn]="col.field"
+              [style.width]="col.field === 'acciones' ? '3rem' : 'auto'">
+              <div class="flex align-items-center">
+                {{ col.header }}
+                <p-sortIcon [field]="col.field"></p-sortIcon>
+              </div>
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-client>
+          <tr *ngFor="let clientAddress of client.clientAddress">
+            <td>{{ client.id }}</td>
+            <td>{{ client.user.username }}</td>
+            <td>{{ client.user.firstName }}</td>
+            <td>{{ client.user.lastName }}</td>
+            <td>{{ clientAddress.address.country.name }}</td>
+            <td>{{ clientAddress.address.politicalDivision.name }}</td>
+            <td>{{ clientAddress.address.address }}</td>
+            <td>{{ client.user.dni }}</td>
+            <td>
+              <img src="../../assets/lapiz.png" (click)="abrirModalEdicion(client)" class="icono-accion reducir-imagen" />
+              <img src="../../assets/tacho.jpg" (click)="eliminarUsuario(client.id)" class="icono-accion reducir-imagen" />
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td [attr.colspan]="columnas.length">No hay clientes a mostrar.</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </div>
+</div>

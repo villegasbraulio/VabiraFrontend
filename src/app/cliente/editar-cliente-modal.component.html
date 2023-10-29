@@ -1,0 +1,40 @@
+<div class="modal-container">
+  <h2 class="modal-title">Editar Cliente</h2>
+  <form (ngSubmit)="editarCliente()">
+    <!-- Agrega campos de formulario para editar los datos del usuario -->
+    <div class="form-group">
+      <label for="firstName">First name:</label>
+      <input type="text" id="firstName" [(ngModel)]="cliente.user.firstName" name="firstName">
+    </div>
+
+    <div class="form-group">
+      <label for="lastName">Last name:</label>
+      <input type="text" id="lastName" [(ngModel)]="cliente.user.lastName" name="lastName">
+    </div>
+
+    <div *ngFor="let address of cliente.clientAddress; let i = index">
+      <div class="form-group">
+        <label for="country{{i}}">Pais de Residencia:</label>
+        <input type="text" id="country{{i}}" [(ngModel)]="address.address.country.name" name="country{{i}}">
+      </div>
+
+      <div class="form-group">
+        <label for="politicalDivision{{i}}">Provincia:</label>
+        <input type="text" id="politicalDivision{{i}}" [(ngModel)]="address.address.politicalDivision.name" name="politicalDivision{{i}}">
+      </div>
+
+      <div class="form-group">
+        <label for="postalCode{{i}}">Codigo postal:</label>
+        <input type="text" id="postalCode{{i}}" [(ngModel)]="address.address.postalCode" name="postalCode{{i}}">
+      </div>
+
+      <div class="form-group">
+        <label for="address{{i}}">Direccion:</label>
+        <input type="text" id="address{{i}}" [(ngModel)]="address.address.address" name="address{{i}}">
+      </div>
+    </div>
+  </form>
+
+  <button type="submit" class="btn btn-primary">Guardar</button>
+  <button type="button" (click)="cerrarModal()" class="btn btn-secondary">Cancelar</button>
+</div>
