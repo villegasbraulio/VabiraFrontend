@@ -1,60 +1,54 @@
 <div class="layout">
   <app-sidebar></app-sidebar>
   <div class="content">
-    <div class="container mt-5">
-      <div class="row">
-        <div class="col-lg-10 offset-lg-1 ">
-          <div class="card">
-            <div class="card-body text-center">
-              <span class="titulo">LISTADO DE PRODUCTOS</span>
-              <button class="btn btn-danger float-end" routerLink="/dashboard">VOLVER</button>
-              <button class="btn btn-success float-end" routerLink="/crear-producto">NUEVO</button>
-              <table class="table table-striped mt-3 table-responsive">
-                <thead>
-                  <tr>
-                    <th scope="col">Producto</th>
-                    <th scope="col">Marca</th>
-                    <th scope="col">Descripcion</th>
-                    <th scope="col">Codigo</th>
-                    <th scope="col">Precio</th>
-                    <th scope="col">Cantidad</th>
-                    <th scope="col">Stock Minimo</th>
-                    <th scope="col">Fecha Caducidad</th>
-                    <th scope="col"></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <ng-container *ngIf="listProductos.length > 0; else noProductos">
-                    <tr *ngFor="let producto of listProductos">
-                      <td>{{ producto.nombre }}</td>
-                      <td>{{ producto.marca }}</td>
-                      <td>{{ producto.descripcion }}</td>
-                      <td>{{ producto.codigo }}</td>
-                      <td>{{ producto.precio | currency:'USD'}}</td>
-                      <td>{{ producto.cantidad }}</td>
-                      <td>{{ producto.stock_minimo }}</td>
-                      <td>{{ producto.fecha_caducidad }}</td>
-                      <td>
-                        <i [routerLink]="['/editar-producto', producto._id]"
-                          class="fa-solid fa-pen-to-square text-primary"></i>
-                        <i (click)="eliminarProducto(producto._id)" class="fa-solid fa-trash text-danger"></i>
-    
-                      </td>
-                    </tr>
-                  </ng-container>
-                </tbody>
-              </table>
-              <ng-template #noProductos>
-                <tr>
-                  <td colspan="9">No hay productos para mostrar</td>
-                </tr>
-              </ng-template>
-            </div>
+    <div class="card">
+      <h1> Gestion de Productos</h1>
+      <p-table #dt1 [value]="productos" [rows]="10" [paginator]="true"
+        [globalFilterFields]="['product.name', 'product.branch']"
+        [resizableColumns]="true" [reorderableColumns]="true" [filterMode]="'lenient'">
+        <ng-template pTemplate="caption">
+          <div class="flex">
+            <button pButton label="Limpiar Filtro" class="p-button-outlined" icon="pi pi-filter-slash"
+              (click)="clearGlobalFilter()"></button>
+            <span class="p-input-icon-left ml-auto">
+              <i class="pi pi-search"></i>
+              <input pInputText type="text" (input)="filterGlobal($event)" placeholder="Buscar..." />
+            </span>
+            <button class="btn btn-danger float-end" routerLink="/dashboard">VOLVER</button>
+            <button class="btn btn-success float-end" routerLink="/crear-producto">NUEVO</button>
           </div>
-        </div>
-      </div>
+        </ng-template>
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th *ngFor="let col of columnas" [pSortableColumn]="col.field"
+              [style.width]="col.field === 'acciones' ? '3rem' : 'auto'">
+              <div class="flex align-items-center">
+                {{ col.header }}
+                <p-sortIcon [field]="col.field"></p-sortIcon>
+              </div>
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-product>
+          <tr>
+            <td>{{ product.name }}</td>
+            <td>{{ product.brand }}</td>
+            <td>{{ product.description }}</td>
+            <td>{{ product.code }}</td>
+            <td>{{ product.prize | currency:'USD'}}</td>
+            <td>{{ product.quantity}}</td>
+            <td>
+              <!-- <i [routerLink]="['/editar-producto', producto._id]" class="fa-solid fa-pen-to-square text-primary"></i>
+              <i (click)="eliminarProducto(producto._id)" class="fa-solid fa-trash text-danger"></i> -->
+            </td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td [attr.colspan]="columnas.length">No hay productos a mostrar.</td>
+          </tr>
+        </ng-template>
+      </p-table>
     </div>
   </div>
 </div>
-
-

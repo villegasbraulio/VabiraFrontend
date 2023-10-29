@@ -20,6 +20,7 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 import { FaqComponent } from './faq/faq.component';
 import { SettingsComponent } from './settings/settings.component';
 import { ClienteComponent } from './cliente/cliente.component';
+import { ListarComprasComponent } from './purchase/listar-compras.component';
 
 const routes: Routes = [
 
@@ -47,6 +48,7 @@ const routes: Routes = [
   { path: 'agenda/:id', component: AgendaComponent },
 
   // Otras rutas para las diferentes secciones de tu aplicación
+  {path: 'listar-compras', component: ListarComprasComponent},
   {path: 'listar-venta', component: ListarVentasComponent},
   {path: 'crear-venta', component: CrearVentaComponent},
   {path: 'editar-venta', component: CrearVentaComponent},

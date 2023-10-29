@@ -2,7 +2,7 @@
   <app-sidebar></app-sidebar>
   <div class="content">
     <div class="card">
-      <h2> Gestion de Proveedores</h2>
+      <h1> Gestion de Proveedores</h1>
       <p-table #dt1 [value]="proveedores" [rows]="10" [paginator]="true"
         [globalFilterFields]="['supplier.user.username', 'supplier.user.firstName', 'supplier.user.lastName', 'supplier.user.dni']"
         [resizableColumns]="true" [reorderableColumns]="true" [filterMode]="'lenient'">

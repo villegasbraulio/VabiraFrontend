@@ -3,44 +3,43 @@ import { Table } from 'primeng/table';
 import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { ProductService } from '../product.services';
+import { PurchaseService } from './purchase.service';
 
 @Component({
-  selector: 'app-listar-productos',
-  templateUrl: './listar-productos.component.html',
-  styleUrls: ['./listar-productos.component.css']
+  selector: 'app-listar-compras',
+  templateUrl: './listar-compras.component.html',
+  styleUrls: ['./listar-compras.component.css']
 })
-export class ListarProductosComponent implements OnInit {
+export class ListarComprasComponent implements OnInit {
   @ViewChild('dt1') dataTable: Table | null = null;
-  productos: any[];
+  purchaseRecord: any[];
   columnas: any[];
 
   constructor(
-    private productService: ProductService,
+    private purchaseService: PurchaseService,
     private router: Router,
     private messageService: MessageService,
     private dialog: MatDialog
   ) {
-    this.productos = [];
+    this.purchaseRecord = [];
     this.columnas = [
       { field: 'id', header: 'ID' },
-      { field: 'product.name', header: 'Nombre' },
-      { field: 'product.brand', header: 'Marca' },
-      { field: 'product.code', header: 'Codigo' },
-      { field: 'product.description', header: 'Descripcion' },
-      { field: 'product.prize', header: 'Precio' },
-      { field: 'product.quantity', header: 'Cantidad' },
+      { field: 'purchaseRecord.product.name', header: 'Nombre' },
+      { field: 'purchaseRecord.product.code', header: 'Codigo' },
+      { field: 'purchaseRecord.purchaseDateTime', header: 'Fecha de compra' },
+      { field: 'purchaseRecord.purchaseAmount', header: 'Monto total' },
+      { field: 'purchaseRecord.supplier.user.firstName', header: 'Proveedor que realizo la venta' },
       { field: 'acciones', header: 'Acciones' },
     ];
   }
 
   ngOnInit() {
-    this.cargarProductos();
+    this.cargarCompras();
   }
 
 
-  cargarProductos() {
-    this.productService.obtenerProductos().subscribe((data: any) => {
+  cargarCompras() {
+    this.purchaseService.obtenerCompras().subscribe((data: any) => {
       // Verificar que data sea una matriz de objetos
       if (Array.isArray(data) && data.length > 0) {
         const firstItem = data[0];
@@ -48,7 +47,7 @@ export class ListarProductosComponent implements OnInit {
         const objectProperties = Object.keys(firstItem);
       }
       // Asignar datos a this.schedules después de las verificaciones
-      this.productos = data;
+      this.purchaseRecord = data;
       if (this.dataTable) {
         this.dataTable.reset();
       }

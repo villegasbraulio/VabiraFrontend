@@ -2,7 +2,7 @@
   <app-sidebar></app-sidebar>
   <div class="content">
     <div class="card">
-      <h2> Gestion de Clientes</h2>
+      <h1> Gestion de Clientes</h1>
       <p-table #dt1 [value]="clientes" [rows]="10" [paginator]="true"
         [globalFilterFields]="['client.user.username', 'client.user.firstName', 'client.user.lastName', 'client.user.dni']"
         [resizableColumns]="true" [reorderableColumns]="true" [filterMode]="'lenient'">

@@ -61,6 +61,7 @@ import { MessagesModule } from 'primeng/messages';
 import { AccordionModule } from 'primeng/accordion';
 import { ClienteComponent } from './cliente/cliente.component';
 import { EditarClienteModalComponent } from './cliente/editar-cliente-modal.component';
+import { ListarComprasComponent } from './purchase/listar-compras.component';
 
 
 @NgModule({
@@ -84,7 +85,7 @@ import { EditarClienteModalComponent } from './cliente/editar-cliente-modal.comp
     ProveedorComponent,
     TimeRangeModalComponent,
     ListarTurneroComponent,
-  
+    ListarComprasComponent,
     CrearProductoComponent,
     ListarProductosComponent,
     FaqComponent,

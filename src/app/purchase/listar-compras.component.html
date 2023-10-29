@@ -2,9 +2,9 @@
   <app-sidebar></app-sidebar>
   <div class="content">
     <div class="card">
-      <h1> Gestion de Ventas</h1>
-      <p-table #dt1 [value]="saleRecord" [rows]="10" [paginator]="true"
-        [globalFilterFields]="['saleRecord.name', 'saleRecord.branch']"
+      <h1> Gestion de Compras</h1>
+      <p-table #dt1 [value]="purchaseRecord" [rows]="10" [paginator]="true"
+        [globalFilterFields]="['product.name', 'product.branch']"
         [resizableColumns]="true" [reorderableColumns]="true" [filterMode]="'lenient'">
         <ng-template pTemplate="caption">
           <div class="flex">
@@ -15,7 +15,7 @@
               <input pInputText type="text" (input)="filterGlobal($event)" placeholder="Buscar..." />
             </span>
             <button class="btn btn-danger float-end" routerLink="/dashboard">VOLVER</button>
-            <button class="btn btn-success float-end" routerLink="/crear-venta">NUEVO</button>
+            <button class="btn btn-success float-end" routerLink="/crear-producto">NUEVO</button>
           </div>
         </ng-template>
         <ng-template pTemplate="header" let-columns>
@@ -29,23 +29,22 @@
             </th>
           </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-saleRecord>
+        <ng-template pTemplate="body" let-purchaseRecord>
           <tr>
-            <td>{{ saleRecord.saleDateTime }}</td>
-            <td>{{ saleRecord.quantity }}</td>
-            <td>{{ saleRecord.saleAmount | currency:'USD' }}</td>
-            <td>{{ saleRecord.supplier }}</td>
-            <td>{{ saleRecord.client }}</td>
-            <!-- <td>
-              <i [routerLink]="['/visualizar-venta', venta._id]" class="fa-solid fa-eye text-primary"></i>
-              <i [routerLink]="['/editar-venta', venta._id]" class="fa-solid fa-pen-to-square text-primary"></i>
-              <i (click)="eliminarVenta(venta._id)" class="fa-solid fa-trash text-danger"></i>
-            </td> -->
+            <td>{{ purchaseRecord.purchaseDateTime }}</td>
+            <td>{{ purchaseRecord.purchaseAmount}}</td>
+            <td>{{ purchaseRecord.supplier.user.firstName}}</td>
+            <td>{{ purchaseRecord.product.name }}</td>
+            <td>{{ purchaseRecord.product.code }}</td>
+            <td>
+              <!-- <i [routerLink]="['/editar-producto', producto._id]" class="fa-solid fa-pen-to-square text-primary"></i>
+              <i (click)="eliminarProducto(producto._id)" class="fa-solid fa-trash text-danger"></i> -->
+            </td>
           </tr>
         </ng-template>
         <ng-template pTemplate="emptymessage">
           <tr>
-            <td [attr.colspan]="columnas.length">No hay ventas a mostrar.</td>
+            <td [attr.colspan]="columnas.length">No hay compras a mostrar.</td>
           </tr>
         </ng-template>
       </p-table>
