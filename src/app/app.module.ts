@@ -42,6 +42,7 @@ import { CalendarModule } from 'primeng/calendar';
 import { DropdownModule } from 'primeng/dropdown';
 import { TableModule } from 'primeng/table';
 import { MessageService } from 'primeng/api';
+import { TabMenuModule } from 'primeng/tabmenu';
 
 
 import { CrearVentaComponent } from './venta/crear-venta/crear-venta.component';
@@ -65,7 +66,7 @@ import { ChartModule } from 'primeng/chart';
 import { ClienteComponent } from './cliente/cliente.component';
 import { EditarClienteModalComponent } from './cliente/editar-cliente-modal.component';
 import { ListarComprasComponent } from './purchase/listar-compras.component';
-
+import { NotificacionesComponent } from './notificaciones/notificaciones.component';
 
 @NgModule({
 
@@ -101,7 +102,8 @@ import { ListarComprasComponent } from './purchase/listar-compras.component';
     SettingsComponent,
     SettingsModalComponent,
     ReportesComponent,
-    ClienteComponent
+    ClienteComponent,
+    NotificacionesComponent,
   ],
   providers: [
     MessageService,
@@ -139,6 +141,7 @@ import { ListarComprasComponent } from './purchase/listar-compras.component';
     MessagesModule,
     AccordionModule,
     ChartModule,
+    TabMenuModule,
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]

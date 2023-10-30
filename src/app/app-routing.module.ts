@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { LoginComponent } from './login/login.component';
@@ -22,6 +22,7 @@ import { SettingsComponent } from './settings/settings.component';
 import { ReportesComponent } from './reportes/reportes.component';
 import { ClienteComponent } from './cliente/cliente.component';
 import { ListarComprasComponent } from './purchase/listar-compras.component';
+import { NotificacionesComponent } from './notificaciones/notificaciones.component';
 
 const routes: Routes = [
 
@@ -56,6 +57,7 @@ const routes: Routes = [
   {path: 'visualizar-venta', component: VisualizarVentaComponent},
 
   { path: 'reportes', component: ReportesComponent }, // Ruta para el componente de reportes
+  { path: 'notificaciones', component: NotificacionesComponent},
 
   // esta linea va siempre al final, para q cualquier URL invalida siempre direcciona al ppio
   {path: '**', redirectTo: '', pathMatch:'full'},

@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ChartModule } from 'primeng/chart';
-import { ChartData } from 'chart.js';
 import { ReportesService } from './reportes.service';
 
 @Component({
@@ -9,11 +7,16 @@ import { ReportesService } from './reportes.service';
   styleUrls: ['./reportes.component.css']
 })
 export class ReportesComponent implements OnInit {
-  basicData: any;
-  basicOptions: any;
-  turnosLibres: number = 0;
-  turnosOcupados: number = 0;
-  public chartData: ChartData | undefined; // Make the chartData property public
+  agendas: any[] = [];
+  data: any;
+  chartOptions: any = {
+    responsive: true,
+    scales: {
+      y: {
+        beginAtZero: true
+      }
+    }
+  };
 
   constructor(private reportesService: ReportesService) { }
 
@@ -21,33 +24,21 @@ export class ReportesComponent implements OnInit {
     this.loadData();
   }
 
-  // const chartData = {
-  //   labels: ['Turnos libres', 'Turnos ocupados'],
-  //   datasets: [{
-  //     data: [this.turnosLibres, this.turnosOcupados],
-  //     backgroundColor: ['#00FF00', '#FF0000'],
-  //     hoverBackgroundColor: ['#00FF00', '#FF0000'],
-  //   }]
-  // };
-
   loadData(): void {
     this.reportesService.getReportes().subscribe(data => {
-      this.turnosLibres = data.filter((turno: { turnStatus: any[] }) => {
-        return turno.turnStatus.some((status: any) => status.turnStatusType.id === 10);
-      }).length;
+      console.log(data); // Verifica los datos en la consola
+      this.agendas = data;
 
-      this.turnosOcupados = data.filter((turno: { turnStatus: any[] }) => {
-        return turno.turnStatus.some((status: any) => status.turnStatusType.id === 11);
-      }).length;
-
-      // Update the chartData property with the new data
-      this.chartData = {
-        labels: ['Turnos libres', 'Turnos ocupados'],
-        datasets: [{
-          data: [this.turnosLibres, this.turnosOcupados],
-          backgroundColor: ['#00FF00', '#FF0000'],
-          hoverBackgroundColor: ['#00FF00', '#FF0000'],
-        }]
+      // Configurar los datos para el gráfico de barras
+      this.data = {
+        labels: this.agendas.map(agenda => agenda.nombre),
+        datasets: [
+          {
+            label: 'Cantidad de Turnos',
+            data: this.agendas.map(agenda => agenda.cantidadTurnos), // Cantidad de turnos reservados por agenda
+            backgroundColor: ['#FF00FF', '#00FFFF']
+          }
+        ]
       };
     });
   }

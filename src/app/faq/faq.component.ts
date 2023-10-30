@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FaqService } from './faq.service';
 import { UserService } from '../users/users.service'; // Importa tu servicio de usuario
 import { PrimeIcons } from 'primeng/api';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-faq',
@@ -19,7 +20,7 @@ export class FaqComponent implements OnInit {
     
   };
 
-  constructor(private faqService: FaqService, private userService: UserService) {}
+  constructor(private faqService: FaqService, private userService: UserService, private messageService: MessageService) {}
 
   ngOnInit() {
     this.cargarFaqs();
@@ -58,6 +59,9 @@ export class FaqComponent implements OnInit {
           description: ''
         };
         this.cargarFaqs();
+  
+        // Muestra un mensaje de éxito
+        this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'FAQ agregada exitosamente' });
       });
     });
   }
@@ -65,12 +69,20 @@ export class FaqComponent implements OnInit {
   eliminarFaq(id: number) {
     this.faqService.eliminarFaq(id).subscribe(() => {
       this.cargarFaqs();
+  
+      // Muestra un mensaje de éxito después de eliminar la FAQ
+      this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'FAQ eliminada exitosamente' });
     });
   }
+
   editarFaq(faq: any) {
     this.faqEdit = { ...faq }; // Almacena la FAQ que se va a editar
     this.mostrarFormEditar = true; // Asegúrate de establecer mostrarFormEditar a true
+  
+    // Muestra un mensaje de éxito
+    this.messageService.add({ severity: 'info', summary: 'Editando FAQ', detail: 'Puedes realizar cambios y guardar' });
   }
+  
 
   // Método para cancelar la edición (se llama cuando haces clic en "Cancelar")
   cancelarEdicion() {
@@ -85,6 +97,8 @@ export class FaqComponent implements OnInit {
       // Limpia el formulario y recarga las FAQs después de actualizar la FAQ
       this.cancelarEdicion();
       this.cargarFaqs();
+      this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'FAQ editada exitosamente' });
+
     });
   }
 }

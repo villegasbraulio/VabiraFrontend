@@ -1,11 +1,15 @@
 <div class="container">
+  <app-sidebar></app-sidebar>
+
     <div class="card">
       <div class="card-header">
         Estadísticas de Turnos
       </div>
       
       <div class="card-body">
-        <p-chart type="bar" [data]="chartData"></p-chart>
-    </div>
+        <p-chart [type]="'bar'" [data]="data" [options]="chartOptions"></p-chart>
+          </div>
+
+          
   </div>
   
