@@ -4,6 +4,7 @@ import { TimeRangeModalComponent } from '../time-range-modal/time-range-modal.co
 import { NgbModal, NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
 import { SuccessModalComponent } from './success-modal.component';
 import { UserService } from '../users/users.service';
+import { ProveedorService } from '../proveedor/proveedor.service';
 
 @Component({
   selector: 'app-turnero',
@@ -22,38 +23,48 @@ export class TurneroComponent {
     },
     dates: []
   };
-  supplierId: any
+  supplierId: any;
   selectedDates: Date[] = [];
   selectedStartTime: NgbTimeStruct = { hour: 0, minute: 0, second: 0 };
   selectedEndTime: NgbTimeStruct = { hour: 0, minute: 0, second: 0 };
 
   days: string[] = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sabado", "Domingo"];
 
-  constructor(private turneroService: TurneroService, private modalService: NgbModal, private userService: UserService) { }
+  constructor(
+    private turneroService: TurneroService,
+    private modalService: NgbModal,
+    private userService: UserService,
+    private proveedorService: ProveedorService) { }
 
   ngOnInit(): void {
 
-    this.userService.obtenerPerfil().subscribe({
-      next: (supplierFound) => {
-        this.supplierId = supplierFound;
+    this.userService.obtenerPerfil().subscribe(
+      (data: any) => {
+        this.supplierId = data;
+        console.log(this.supplierId);
+      },
+      (error) => {
+        console.error('Error al obtener los datos del proveedor:', error);
       }
-    });
+    );
     
-
   }
-
   async createSchedule() {
-
     try {
       // Luego, puedes continuar con la creación de la agenda y enviar los datos al servicio.
       if (this.scheduleData.initialTurnDateTime == '') {
         console.error('Error el rango horario no fue seleccionado:');
         // Maneja el error de acuerdo a tus necesidades
       }
-      
       this.scheduleData.supplier = this.supplierId
+      console.log('scheduleData', this.scheduleData);
+      console.log('scheduleData supplier', this.scheduleData.supplier);
+      
       this.turneroService.createSchedule(this.scheduleData).subscribe(
+        
         (response) => {
+          console.log('entro');
+          console.log('scheduleData', this.scheduleData);
           console.log('Horario creado con éxito:', response);
           this.showSuccessModal();
         },
@@ -126,17 +137,17 @@ export class TurneroComponent {
   onSelectDate(event: any) {
     // Este evento se activa cuando el usuario selecciona una fecha en el calendario
     console.log('Fechas seleccionadas:', event);
-  
+
     if (Array.isArray(event)) {
       // Si se seleccionaron múltiples fechas, obtén los nombres de los días de las fechas seleccionadas
       const selectedDays = event.map((date: Date) => this.getWeekdayName(date));
-  
+
       // Actualiza el array de "days" con los días seleccionados en el calendario
       this.scheduleData.days = selectedDays;
     } else if (event instanceof Date) {
       // Si se seleccionó una fecha individual, obtén el nombre del día de la semana
       const selectedDay = this.getWeekdayName(event);
-  
+
       // Agrega el día a la lista si aún no está presente
       if (!this.scheduleData.days.includes(selectedDay)) {
         this.scheduleData.days.push(selectedDay);
@@ -146,20 +157,13 @@ export class TurneroComponent {
       // Maneja el error de acuerdo a tus necesidades
     }
   }
-  
-  
-  
-  
-  
-  
-  
 
   private getWeekdayName(date: Date): string {
     // Asegúrate de que el formato de fecha coincida con el proporcionado por el calendario
     const weekdays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     return weekdays[date.getDay()];
   }
-  
+
 }
 
 
