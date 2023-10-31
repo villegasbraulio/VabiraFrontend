@@ -1,18 +1,17 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NotificacionesService {
-  private nuevoTurnoSource = new BehaviorSubject<any>(null);
-  nuevoTurno$ = this.nuevoTurnoSource.asObservable();
 
-  constructor() { }
+  private apiUrl = 'http://localhost:3000/api/alerts'; // Reemplaza esto con la URL correcta de tu API
 
-enviarNuevoTurno(turno: any) {
-  console.log('Nuevo turno enviado desde NotificacionesService:', turno);
-  this.nuevoTurnoSource.next(turno);
-}
-  
+  constructor(private http: HttpClient) { }
+
+  getAlerts(): Observable<any[]> {
+    return this.http.get<any[]>(this.apiUrl);
+  }
 }

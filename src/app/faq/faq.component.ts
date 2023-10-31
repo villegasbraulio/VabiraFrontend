@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FaqService } from './faq.service';
-import { UserService } from '../users/users.service'; // Importa tu servicio de usuario
-import { PrimeIcons } from 'primeng/api';
+import { UserService } from '../users/users.service';
 import { MessageService } from 'primeng/api';
 
 @Component({
@@ -17,7 +16,6 @@ export class FaqComponent implements OnInit {
   nuevaFaq: any = {
     name: '',
     description: ''
-    
   };
 
   constructor(private faqService: FaqService, private userService: UserService, private messageService: MessageService) {}
@@ -29,76 +27,64 @@ export class FaqComponent implements OnInit {
   cargarFaqs() {
     this.faqService.getFaqs().subscribe((data: any[]) => {
       this.faqs = data.map(faq => ({ ...faq, expanded: false }));
-      console.log(this.faqs);
     });
   }
 
   mostrarFormulario() {
     this.mostrarForm = true;
-  }
-  MostarFormEditar() {
-  this.mostrarFormEditar = true; // Asegúrate de establecer mostrarFormEditar a true
+    this.mostrarFormEditar = false;
+    this.nuevaFaq = { name: '', description: '' };
   }
 
-  agregarFaq(event: Event) {
+  guardarFaq(event: Event) {
     event.preventDefault();
   
-    // Obtén el userId del usuario activo
-    this.userService.obtenerPerfilUsuario().subscribe((userProfileData: any) => {
-      const userId = userProfileData.id;
-  
-      // Asigna el userId a la nueva FAQ antes de crearla
-      this.nuevaFaq.userId = userId;
-  
-      // Llama al servicio para crear la nueva FAQ
-      this.faqService.crearFaq(this.nuevaFaq).subscribe(() => {
-        // Limpia el formulario y recarga las FAQs después de crear la nueva FAQ
-        this.mostrarForm = false;
-        this.nuevaFaq = {
-          name: '',
-          description: ''
-        };
+    if (this.mostrarFormEditar) {
+      // Editar FAQ existente
+      this.faqService.editarFaq(this.faqEdit.id, this.faqEdit).subscribe(() => {
+        this.mostrarFormEditar = false;
+        this.faqEdit = null;
         this.cargarFaqs();
-  
-        // Muestra un mensaje de éxito
-        this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'FAQ agregada exitosamente' });
+        this.mostrarForm = false;
+        this.mostrarMensaje('success', 'Éxito', 'FAQ editada exitosamente');
       });
-    });
+    } else {
+      // Crear nueva FAQ
+      this.userService.obtenerPerfilUsuario().subscribe((userProfileData: any) => {
+        const userId = userProfileData.id;
+        this.nuevaFaq.userId = userId;
+  
+        this.faqService.crearFaq(this.nuevaFaq).subscribe(() => {
+          this.mostrarForm = false;
+          this.nuevaFaq = { name: '', description: '' };
+          this.cargarFaqs();
+          this.mostrarMensaje('success', 'Éxito', 'FAQ agregada exitosamente');
+        });
+      });
+    }
   }
 
   eliminarFaq(id: number) {
     this.faqService.eliminarFaq(id).subscribe(() => {
       this.cargarFaqs();
-  
-      // Muestra un mensaje de éxito después de eliminar la FAQ
-      this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'FAQ eliminada exitosamente' });
+      this.mostrarMensaje('success', 'Éxito', 'FAQ eliminada exitosamente');
     });
   }
 
   editarFaq(faq: any) {
-    this.faqEdit = { ...faq }; // Almacena la FAQ que se va a editar
-    this.mostrarFormEditar = true; // Asegúrate de establecer mostrarFormEditar a true
-  
-    // Muestra un mensaje de éxito
-    this.messageService.add({ severity: 'info', summary: 'Editando FAQ', detail: 'Puedes realizar cambios y guardar' });
+    this.faqEdit = { ...faq };
+    this.mostrarFormEditar = true;
+    this.mostrarMensaje('info', 'Editando FAQ', 'Puedes realizar cambios y guardar');
   }
-  
 
-  // Método para cancelar la edición (se llama cuando haces clic en "Cancelar")
   cancelarEdicion() {
-    this.faqEdit = null; // Limpia la FAQ que se estaba editando
-    this.mostrarFormEditar = false; // Oculta el formulario
+    this.faqEdit = null;
+    this.mostrarFormEditar = false;
+    this.mostrarForm = false;
+
   }
 
-  // Método para guardar la edición de la FAQ
-  guardarEdicion() {
-    // Llama al servicio para actualizar la FAQ
-    this.faqService.editarFaq(this.faqEdit.id, this.faqEdit).subscribe(() => {
-      // Limpia el formulario y recarga las FAQs después de actualizar la FAQ
-      this.cancelarEdicion();
-      this.cargarFaqs();
-      this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'FAQ editada exitosamente' });
-
-    });
+  mostrarMensaje(severidad: string, resumen: string, detalle: string) {
+    this.messageService.add({ severity: severidad, summary: resumen, detail: detalle });
   }
 }

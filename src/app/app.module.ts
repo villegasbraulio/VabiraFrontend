@@ -43,6 +43,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { TableModule } from 'primeng/table';
 import { MessageService } from 'primeng/api';
 import { TabMenuModule } from 'primeng/tabmenu';
+import { CheckboxModule } from 'primeng/checkbox';
 
 
 import { CrearVentaComponent } from './venta/crear-venta/crear-venta.component';
@@ -142,6 +143,7 @@ import { NotificacionesComponent } from './notificaciones/notificaciones.compone
     AccordionModule,
     ChartModule,
     TabMenuModule,
+    CheckboxModule
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]

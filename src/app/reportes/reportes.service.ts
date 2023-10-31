@@ -12,10 +12,14 @@ export class ReportesService {
 
   constructor(private http: HttpClient) { }
 
-  getReportes(): Observable<any[]> {
+  getReportes(username:string): Observable<any[]> {
     // Hacer el request para obtener la lista de agendas
     return this.http.get<any[]>(this.agendasUrl).pipe(
+      map(agendas => agendas.filter(agenda => agenda.supplier !== null)), // Filtrar agendas con supplier no nulo
       mergeMap(agendas => {
+
+        agendas = agendas.filter(agenda => agenda.supplier.user.username === username);
+
         // Utilizar 'forkJoin' para combinar múltiples solicitudes en un solo observable
         const requests: Observable<any>[] = agendas.map(agenda => {
           const agendaId = agenda.id;
@@ -25,7 +29,8 @@ export class ReportesService {
             map(turnos => ({
               agendaId: agendaId,
               nombre: agenda.name,
-              cantidadTurnos: turnos.length
+              cantidadTurnos: turnos.length,
+              username: agenda.supplier.user.username
             }))
           );
         });

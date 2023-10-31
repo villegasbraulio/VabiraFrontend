@@ -2,7 +2,7 @@
   <app-sidebar></app-sidebar>
   <div class="content">
     <div class="card">
-      <p-table #dt1 [value]="schedules" [rows]="10" [paginator]="true"
+      <p-table [value]="schedules" [rows]="10" [paginator]="true"
         [globalFilterFields]="['supplier.user.username', 'supplier.user.firstName', 'supplier.user.lastName', 'name']"
         [resizableColumns]="true" [reorderableColumns]="true" [filterMode]="'lenient'">
         <ng-template pTemplate="caption">
@@ -17,12 +17,9 @@
         </ng-template>
         <ng-template pTemplate="header" let-columns>
           <tr>
-            <th *ngFor="let col of columnas" [pSortableColumn]="col.field"
-              [style.width]="col.field === 'acciones' ? '3rem' : 'auto'">
-              <div class="flex align-items-center">
-                {{ col.header }}
-                <p-sortIcon [field]="col.field"></p-sortIcon>
-              </div>
+            <th *ngFor="let col of columnas" [pSortableColumn]="col.field">
+              {{ col.header }}
+              <p-sortIcon [field]="col.field"></p-sortIcon>
             </th>
           </tr>
         </ng-template>
@@ -34,14 +31,13 @@
             <td>{{ schedule.supplier.user.lastName }}</td>
             <td>{{ schedule.name }}</td>
             <td>
-              <img src="../../assets/agenda.png" class="icono-accion reducir-imagen"
-                (click)="navigateToDashboard(schedule.id)" />
+              <span class="pi pi-calendar agenda-icon" (click)="navigateToDashboard(schedule.id)"></span>
             </td>
           </tr>
         </ng-template>
         <ng-template pTemplate="emptymessage">
           <tr>
-            <td [attr.colspan]="columnas.length">No hay agendas a mostrar.</td>
+            <td [attr.colspan]="columnas.length + 1">No hay agendas a mostrar.</td>
           </tr>
         </ng-template>
       </p-table>

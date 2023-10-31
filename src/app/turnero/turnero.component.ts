@@ -4,11 +4,17 @@ import { TimeRangeModalComponent } from '../time-range-modal/time-range-modal.co
 import { NgbModal, NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
 import { SuccessModalComponent } from './success-modal.component';
 import { UserService } from '../users/users.service';
+import { MessageService } from 'primeng/api';
+import { DatePipe } from '@angular/common';
+
+
+
 
 @Component({
   selector: 'app-turnero',
   templateUrl: './turnero.component.html',
-  styleUrls: ['./turnero.component.css']
+  styleUrls: ['./turnero.component.css'],
+  providers: [MessageService] // Agrega el MessageService como proveedor
 })
 export class TurneroComponent {
   @ViewChild(TimeRangeModalComponent) timeRangeModal?: TimeRangeModalComponent; // Agrega esta línea
@@ -27,9 +33,14 @@ export class TurneroComponent {
   selectedStartTime: NgbTimeStruct = { hour: 0, minute: 0, second: 0 };
   selectedEndTime: NgbTimeStruct = { hour: 0, minute: 0, second: 0 };
 
+
   days: string[] = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sabado", "Domingo"];
 
-  constructor(private turneroService: TurneroService, private modalService: NgbModal, private userService: UserService) { }
+  constructor(private turneroService: TurneroService, 
+    private modalService: NgbModal, 
+    private userService: UserService, 
+    private messageService: MessageService,
+    private datePipe: DatePipe) { }
 
   ngOnInit(): void {
 
@@ -37,6 +48,7 @@ export class TurneroComponent {
       next: (supplierFound) => {
         this.supplierId = supplierFound;
       }
+
     });
     
 
@@ -49,23 +61,35 @@ export class TurneroComponent {
       if (this.scheduleData.initialTurnDateTime == '') {
         console.error('Error el rango horario no fue seleccionado:');
         // Maneja el error de acuerdo a tus necesidades
+        this.showErrorMessage('Error: el rango horario no fue seleccionado');
+        return;
       }
       
       this.scheduleData.supplier = this.supplierId
       this.turneroService.createSchedule(this.scheduleData).subscribe(
         (response) => {
           console.log('Horario creado con éxito:', response);
-          this.showSuccessModal();
+          // this.showSuccessModal();
+          this.showSuccessMessage('Agenda creada con éxito');
         },
         (error) => {
           console.error('Error al crear el horario:', error);
+          this.showErrorMessage('Error al crear el horario');
           // Maneja el error de acuerdo a tus necesidades
         }
       );
     } catch (error) {
       console.error('Error al abrir el modal de rango horario:', error);
       // Maneja el error según tus necesidades
+      this.showErrorMessage('Error al abrir el modal de rango horario');
     }
+  }
+  private showSuccessMessage(message: string) {
+    this.messageService.add({ severity: 'success', summary: 'Éxito', detail: message });
+  }
+
+  private showErrorMessage(message: string) {
+    this.messageService.add({ severity: 'error', summary: 'Error', detail: message });
   }
 
 
@@ -145,6 +169,7 @@ export class TurneroComponent {
       console.error('El evento no es una fecha o un array de fechas:', event);
       // Maneja el error de acuerdo a tus necesidades
     }
+    
   }
   
   

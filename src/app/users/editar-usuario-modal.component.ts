@@ -25,7 +25,6 @@ export class EditarUsuarioModalComponent {
     this.userService.editarUsuario(this.usuario.id, this.usuario).subscribe((data: any) => {
       if (data.status === 200) {
         // La actualización fue exitosa, recargar la página
-        location.reload();
       } else if (data.status === 400) {
         // Muestra un mensaje de error en un Snackbar
         this.snackBar.open('Error en la actualización', 'Cerrar', {

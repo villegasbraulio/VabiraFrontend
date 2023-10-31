@@ -48,10 +48,7 @@ export class AgendaService {
     const body = { id, ...toUpdate };
     return this.http.patch<any>(`${this.baseUrl2}/assignTurn`, body).pipe(
       tap((response) => {
-        // Enviar mensaje al módulo de notificaciones con la respuesta del servidor
-        console.log(response)
-        this.notificacionesService.enviarNuevoTurno(response);
-        // Actualizar el estado del botón después de realizar la reserva con éxito
+
         const buttonId = `${toUpdate.classDayType}-${toUpdate.startTime}-${toUpdate.endTime}`;
         const buttonElement = document.getElementById(buttonId) as HTMLButtonElement;
         if (buttonElement) {

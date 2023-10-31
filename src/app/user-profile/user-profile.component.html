@@ -6,6 +6,7 @@
  
   <div class="personal-info-container">
     <mat-card class="personal-info">
+      <div class="inforpersonal">
       <h2>Información Personal</h2>
       <p><strong>Nombre:</strong> {{ userProfileData.firstName }}</p>
       <p><strong>Apellido:</strong> {{ userProfileData.lastName }}</p>
@@ -13,12 +14,16 @@
       <p><strong>Nombre de Usuario:</strong> {{ userProfileData.username }}</p>
       <p><strong>Perfiles Activos:</strong> {{ userProfileData.roles }}</p>
       <p><strong>Fecha de Registro:</strong> {{ userProfileData.createdAt | date: 'dd/MM/yyyy' }}</p>
-    </mat-card>
+     </div>
 
+      <div class="avatar-container">
+        <img class="avatar" [src]="userProfileData.avatar" alt="Foto de perfil">
+      </div>
+    </mat-card>
 
     <button pButton type="button" label="Actualizar Información Personal" class="edit-button" (click)="showEditDialog()"></button>
     <button pButton type="button" label="Cambiar Contraseña" class="change-password-button" (click)="showChangePasswordDialog()"></button>
-    
+   
     <!-- Diálogo modal para la edición de datos -->
     <div class="edit-dialog-container" [style.display]="displayEditDialog ? 'block' : 'none'">
     <p-dialog header="Editar Información Personal" [(visible)]="displayEditDialog" [modal]="true" [responsive]="true" [style]="{width: '400px'}" class="edit-dialog">
@@ -93,9 +98,7 @@
     </div>
   </p-dialog>
 
-  <div class="avatar-container">
-    <img class="avatar" [src]="userProfileData.avatar" alt="Foto de perfil">
-  </div>
-  <p-messages></p-messages>
-  <app-sidebar></app-sidebar>
+
+    <p-messages></p-messages>
+    <app-sidebar></app-sidebar>
 </div>

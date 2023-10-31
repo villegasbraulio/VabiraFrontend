@@ -19,6 +19,7 @@
 .personal-info-container {
   flex: 1;
   margin-right: 200px; /* Ajusta el margen derecho según tus necesidades */
+  width: 80%;
 }
 
 .avatar-container {
@@ -37,8 +38,8 @@
 }
 
 .avatar {
-  width: 120px;
-  height: 120px;
+  width: 150px;
+  height: 150px;
   border-radius: 8px; /* Bordes redondeados */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra */
   margin-left: 20px; /* Espaciado entre el profile-container y la foto de perfil */
@@ -46,6 +47,16 @@
 
 .personal-info {
   width: 100%; /* Ajusta el ancho del elemento según tus necesidades */
-  max-width: 700px;
+  max-width: 80%;
   margin-bottom: 16px;
+  padding: 10px;
+  display:flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.edit-button, .change-password-button{
+  margin-right: 10px;
+  border-radius: 5px;
 }
