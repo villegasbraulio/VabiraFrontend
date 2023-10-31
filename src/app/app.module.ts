@@ -99,7 +99,7 @@ import { ListarComprasComponent } from './purchase/listar-compras.component';
   ],
   providers: [
     MessageService,
-    DatePipe // Agrega MessageService a la lista de proveedores
+    DatePipe
   ],
   imports: [
     BrowserModule,

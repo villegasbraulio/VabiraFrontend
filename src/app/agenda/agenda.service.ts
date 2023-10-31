@@ -53,7 +53,22 @@ export class AgendaService {
         if (buttonElement) {
           buttonElement.innerText = 'Reservado';
           buttonElement.classList.add('reserved-button');
-          buttonElement.disabled = true; // Deshabilitar el botón
+          buttonElement.disabled = false; // Deshabilitar el botón
+        }
+      })
+    );
+  }
+  cancelarTurno(id: number, toUpdate: any): Observable<any> {//Reservar un turno a un cliente
+    const body = { id, ...toUpdate };
+    return this.http.patch<any>(`${this.baseUrl2}/unAssignTurn`, body).pipe(
+      tap(() => {
+        // Actualizar el estado del botón después de realizar la reserva con éxito
+        const buttonId = `${toUpdate.classDayType}-${toUpdate.startTime}-${toUpdate.endTime}`;
+        const buttonElement = document.getElementById(buttonId) as HTMLButtonElement;
+        if (buttonElement) {
+          buttonElement.innerText = 'Reservar';
+          buttonElement.classList.add('available-button');
+          buttonElement.disabled = false; 
         }
       })
     );

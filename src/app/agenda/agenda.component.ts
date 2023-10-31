@@ -5,11 +5,13 @@ import * as moment from 'moment';
 import { AgendaService } from './agenda.service';
 import { UserService } from '../users/users.service';
 import { ActivatedRoute } from '@angular/router';
+import { ConfirmationService, Message, MessageService, ConfirmEventType } from 'primeng/api';
 
 @Component({
   selector: 'app-agenda',
   templateUrl: './agenda.component.html',
-  styleUrls: ['./agenda.component.css']
+  styleUrls: ['./agenda.component.css'],
+  providers: [MessageService, ConfirmationService,]
 })
 export class AgendaComponent implements OnInit {
   days: { name: string; monthDay: string }[] = [];
@@ -21,22 +23,74 @@ export class AgendaComponent implements OnInit {
   availableTimeSlots: Set<string> = new Set<string>();
   clientId: any
   agendaId: any
+  messages: Message[] = [];
 
-  constructor(private dialog: MatDialog, private agendaService: AgendaService, private userService: UserService, private activatedRoute: ActivatedRoute) { }
+  constructor(private dialog: MatDialog, private messageService: MessageService,
+    private agendaService: AgendaService, private userService: UserService,
+    private activatedRoute: ActivatedRoute, private confirmationService: ConfirmationService) { }
+
+  handleTimeClick(dayType: any, start: string, end: string) {
+    // Encuentra el turno correspondiente en base a las fechas y el tipo de día
+    const selectedTurn = this.scheduleData.turn.find((turn: any) => {
+      const turnStartTime = moment(turn.dateFrom).format('hh:mm A');
+      const turnEndTime = moment(turn.dateTo).format('hh:mm A');
+
+      const isSameDayType = turn.classDayType.name === dayType;
+      const isAfterOrEqualStart = moment(start, 'hh:mm A').isSameOrAfter(moment(turnStartTime, 'hh:mm A'));
+      const isBeforeOrEqualEnd = moment(end, 'hh:mm A').isSameOrBefore(moment(turnEndTime, 'hh:mm A'));
+
+      return isSameDayType && isAfterOrEqualStart && isBeforeOrEqualEnd;
+    });
+
+    if (!selectedTurn) {
+      // No se encontró un turno que coincida, puedes mostrar un mensaje de error si es necesario
+      console.log('No se encontró un turno que coincida.');
+      return;
+    }
 
 
+    const id = selectedTurn.id;
+    const clienteId = this.clientId; // Cambia esto según la lógica de tu aplicación
+    const toUpdate = {
+      client: clienteId,
+      classDayType: selectedTurn.classDayType, // Asegúrate de incluir estos datos
+      startTime: start,
+      endTime: end
+    };
+
+    if (this.reservedTimeSlots.has(`${dayType}-${start}-${end}`)) {
+      this.agendaService.cancelarTurno(id, toUpdate).subscribe((data: any) => {
+        this.reservedTimeSlots.add(`${dayType}-${start}-${end}`);
+
+        this.updateButtonStates();
+
+        this.messages = [{ severity: 'success', summary: 'Éxito', detail: 'Turno cancelado con éxito' }];
+
+      });
+    } else {
+      this.agendaService.agendarTurno(id, toUpdate).subscribe((data: any) => {
+        this.reservedTimeSlots.add(`${dayType}-${start}-${end}`);
+
+        this.updateButtonStates();
+
+        this.messages = [{ severity: 'success', summary: 'Éxito', detail: 'Turno reservado con éxito' }];
+      });
+    }
+
+  }
 
   ngOnInit(): void {
-
-
     this.activatedRoute.params.subscribe(params => {
       this.agendaId = +params['id'];
-      this.userService.obtenerPerfil().subscribe({
-        next: (clientFound) => {
-          this.clientId = clientFound;
+      this.userService.obtenerPerfilCliente().subscribe(
+        (data: any) => {
+          this.clientId = data;
+          console.log(this.clientId);
+        },
+        (error) => {
+          console.error('Error al obtener los datos del cliente:', error);
         }
-      });
-
+      );
       this.agendaService.obtenerAgenda(this.agendaId).subscribe((data) => {
         this.scheduleData = data;
         if (this.scheduleData && this.scheduleData.turn) {
@@ -48,14 +102,14 @@ export class AgendaComponent implements OnInit {
               }
               return uniqueDays;
             }, []);
-            this.days2 = this.scheduleData.turn
+          this.days2 = this.scheduleData.turn
             .reduce((uniqueDays2: string[], turn: any) => {
               if (!uniqueDays2.includes(turn.classDayType.name)) {
                 uniqueDays2.push(turn.classDayType.name);
               }
               return uniqueDays2;
             }, []);
-            
+
         }
 
         this.generateTimeSlots();
@@ -72,17 +126,17 @@ export class AgendaComponent implements OnInit {
     this.agendaService.obtenerTurnosReservadosPorAgenda(this.agendaId).subscribe((reservedTurns) => {
       this.reservedTimeSlots = new Set<string>();
       reservedTurns.forEach((reservedTurn) => {
-        
+
         if (
           reservedTurn.classDayType &&
           reservedTurn.dateFrom &&
           reservedTurn.dateTo
-          ) {
-            const buttonId = this.getButtonId(reservedTurn.classDayType.name, reservedTurn.dateFrom, reservedTurn.dateTo);
-            this.reservedTimeSlots.add(buttonId);
-          }
-        });
-        console.log(this.reservedTimeSlots);
+        ) {
+          const buttonId = this.getButtonId(reservedTurn.classDayType.name, reservedTurn.dateFrom, reservedTurn.dateTo);
+          this.reservedTimeSlots.add(buttonId);
+        }
+      });
+      console.log(this.reservedTimeSlots);
 
       // Luego de cargar los turnos reservados, obtener los turnos disponibles
       this.agendaService.obtenerTurnosDisponiblesPorAgenda(this.agendaId).subscribe((availableTurns) => {
@@ -111,12 +165,11 @@ export class AgendaComponent implements OnInit {
         const buttonId = this.getButtonId(dayType, timeSlot.start, timeSlot.end);
         const buttonElement = document.getElementById(buttonId) as HTMLButtonElement;
         if (buttonElement && buttonElement instanceof HTMLButtonElement) {
-          
           if (this.reservedTimeSlots.has(buttonId)) {
             // El turno está reservado
             buttonElement.innerText = 'Reservado';
             buttonElement.classList.add('reserved-button');
-            buttonElement.disabled = true; // Deshabilitar el botón
+            buttonElement.disabled = false; // Deshabilitar el botón
           } else if (this.availableTimeSlots.has(buttonId)) {
             // El turno está disponible
             buttonElement.innerText = 'Reservar';
@@ -130,7 +183,7 @@ export class AgendaComponent implements OnInit {
   getButtonId(classDayType: any, dateFrom: string, dateTo: string): string {
     return `${classDayType}-${dateFrom}-${dateTo}`;
   }
-   
+
   loadReservedTurns() {
     // Obtener los turnos reservados del servicio
     this.agendaService.obtenerTurnosReservadosPorAgenda(this.agendaId).subscribe((reservedTurns) => {
@@ -152,10 +205,14 @@ export class AgendaComponent implements OnInit {
         const buttonId = this.getButtonId(turn.classDayType.name, turn.startTime, turn.endTime);
         const buttonElement = document.getElementById(buttonId) as HTMLButtonElement;
         if (buttonElement) {
-          if (turn.client) {
+          if (turn.client != this.clientId) {
             buttonElement.innerText = 'Reservado';
             buttonElement.classList.add('reserved-button');
             buttonElement.disabled = true; // Deshabilitar el botón para los turnos reservados
+          } else if (turn.client === this.clientId) {
+            buttonElement.innerText = 'Reservado';
+            buttonElement.classList.add('reserved-button');
+            buttonElement.disabled = false;
           } else {
             buttonElement.innerText = 'Reservar';
             buttonElement.classList.add('available-button');
@@ -209,47 +266,5 @@ export class AgendaComponent implements OnInit {
   updateCurrentDate() {
     this.currentDate = moment();
   }
-
-  handleTimeClick(dayType: any, start: string, end: string) {
-    // Encuentra el turno correspondiente en base a las fechas y el tipo de día
-    const selectedTurn = this.scheduleData.turn.find((turn: any) => {
-      const turnStartTime = moment(turn.dateFrom).format('hh:mm A');
-      const turnEndTime = moment(turn.dateTo).format('hh:mm A');
-      
-      const isSameDayType = turn.classDayType.name === dayType;
-      const isAfterOrEqualStart = moment(start, 'hh:mm A').isSameOrAfter(moment(turnStartTime, 'hh:mm A'));
-      const isBeforeOrEqualEnd = moment(end, 'hh:mm A').isSameOrBefore(moment(turnEndTime, 'hh:mm A'));
-
-      return isSameDayType && isAfterOrEqualStart && isBeforeOrEqualEnd;
-    });
-    
-    if (!selectedTurn) {
-      // No se encontró un turno que coincida, puedes mostrar un mensaje de error si es necesario
-      console.log('No se encontró un turno que coincida.');
-      return;
-    }
-
-    const id = selectedTurn.id;
-    const clienteId = this.clientId; // Cambia esto según la lógica de tu aplicación
-    const toUpdate = {
-      client: clienteId,
-      classDayType: selectedTurn.classDayType, // Asegúrate de incluir estos datos
-      startTime: start,
-      endTime: end
-    };
-
-    // Llama al método del servicio para agendar el turno
-    this.agendaService.agendarTurno(id, toUpdate).subscribe((data: any) => {
-      // Si se realiza la reserva con éxito, agrega el turno a la lista de reservados
-      this.reservedTimeSlots.add(`${dayType}-${start}-${end}`);
-
-      // Actualiza el botón a "Reservado" y aplica un estilo diferente (cambia el fondo a rojo)
-      this.updateButtonStates(); // Llama a updateButtonStates aquí
-
-      // Almacena el turno reservado en localStorage
-      localStorage.setItem(`${dayType}-${start}-${end}`, 'reservado');
-    });
-}
-
 
 }

@@ -69,6 +69,8 @@ th, td {
   color: white;
 }
 
-
-
-
+.toast-messages {
+  position: fixed;
+  bottom: 20px; /* Controla la distancia desde la parte inferior */
+  right: 20px; /* Controla la distancia desde la derecha */
+}
