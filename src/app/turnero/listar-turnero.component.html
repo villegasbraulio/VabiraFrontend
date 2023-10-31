@@ -32,6 +32,7 @@
             <td>{{ schedule.name }}</td>
             <td>
               <span class="pi pi-calendar agenda-icon" (click)="navigateToDashboard(schedule.id)"></span>
+              <span class="pi pi-trash trash-icon" (click)="eliminarAgenda(schedule.id)"></span>
             </td>
           </tr>
         </ng-template>
@@ -41,6 +42,12 @@
           </tr>
         </ng-template>
       </p-table>
+      <p-messages></p-messages>
+
     </div>
+    <p-messages></p-messages>
+
   </div>
+  <p-messages></p-messages>
+
 </div>

@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
   selector: 'app-listar-turnero',
   templateUrl: './listar-turnero.component.html',
   styleUrls: ['./listar-turnero.component.css'],
+  providers: [MessageService]
 })
 export class ListarTurneroComponent implements OnInit {
   @ViewChild('dt1') dataTable: Table | null = null;
@@ -53,6 +54,11 @@ export class ListarTurneroComponent implements OnInit {
         this.dataTable.reset();
       }
     });
+  }
+
+  eliminarAgenda(id: number) {
+  
+    this.messageService.add({severity:'success', summary:'Éxito', detail:'Agenda eliminada con éxito'});
   }
   
 

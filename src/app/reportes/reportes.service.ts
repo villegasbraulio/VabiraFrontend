@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, forkJoin } from 'rxjs';
 import { map, mergeMap } from 'rxjs/operators';
 
@@ -9,6 +9,9 @@ import { map, mergeMap } from 'rxjs/operators';
 export class ReportesService {
   private agendasUrl = 'http://localhost:3000/api/schedule/findAll';
   private apiUrl = 'http://localhost:3000/api/turn/findAssignTurnsForSchedule?scheduleId=';
+  private userUrl = 'http://localhost:3000/api/users/all'
+  private token = localStorage.getItem('token'); // Variable para almacenar el token
+
 
   constructor(private http: HttpClient) { }
 
@@ -39,4 +42,51 @@ export class ReportesService {
       })
     );
   }
+
+  setToken(token: string | null) {
+    this.token = token;
+  }
+
+  getHeaders(): HttpHeaders {
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.token
+    });
+    return headers;
+  }
+
+
+  getUsersCountByRole(): Observable<any[]> {
+    const httpOptions = {
+      headers: this.getHeaders(), // Obtener las cabeceras con el token
+    };
+    console.log(httpOptions);
+    return this.http.get<any[]>(this.userUrl, httpOptions).pipe(
+      map(users => {
+        // Filtrar usuarios con id no nulo
+        const filteredUsers = users.filter(user => user.id !== null);
+
+        // Contar usuarios por combinación de roles
+        const roleCounts = filteredUsers.reduce((acc, user) => {
+          const roles = user.roles.split(','); // Suponiendo que los roles están separados por coma en la respuesta del servidor
+          roles.forEach((role: string | number) => {
+            acc[role] = (acc[role] || 0) + 1;
+          });
+          return acc;
+        }, {});
+
+        // Convertir el objeto de conteo a un array de objetos
+        const result = Object.keys(roleCounts).map(role => ({
+          role: role,
+          count: roleCounts[role]
+        }));
+
+        return result;
+      }
+      )
+    )
+  }
+    
+
+
 }
