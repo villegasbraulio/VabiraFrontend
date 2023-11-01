@@ -34,3 +34,8 @@ app-sidebar {
   padding: 20px;
   overflow: auto;
 }
+
+.pi pi-trash trash-icon{
+
+  margin-left: 10px;
+}

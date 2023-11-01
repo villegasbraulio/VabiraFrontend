@@ -1,0 +1,15 @@
+/* company-edit.component.css */
+.edit-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 1rem;
+  }
+  
+  .edit-form .p-field {
+    margin-bottom: 1rem;
+  }
+  
+  .form-buttons {
+    margin-top: 1rem;
+  }
+  

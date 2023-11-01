@@ -1,29 +1,32 @@
 <div class="container">
   <app-sidebar></app-sidebar> 
-  <table>
-    <thead>
+  <p-table [value]="timeSlots">
+    <ng-template pTemplate="header">
       <tr>
         <th></th>
         <th *ngFor="let day of days">{{ day }}</th>
       </tr>
-    </thead>
-    <tbody>
-      <ng-container *ngFor="let timeSlot of timeSlots">
-        <tr>
-          <td>{{ timeSlot.start }} - {{ timeSlot.end }}</td>
-          <td *ngFor="let dayType of days2">
-            <div>
-              <button mat-button [id]="getButtonId(dayType, timeSlot.start, timeSlot.end)"
-                (click)="handleTimeClick(dayType, timeSlot.start, timeSlot.end)"
-                [class.available-button]="!isAppointmentScheduled(dayType, timeSlot.start, timeSlot.end)"
-                [class.reserved-button]="isAppointmentScheduled(dayType, timeSlot.start, timeSlot.end)"
-                [disabled]="reservedTimeSlots.has(getButtonId(dayType, timeSlot.start, timeSlot.end))">
-                {{ isAppointmentScheduled(dayType, timeSlot.start, timeSlot.end) ? 'Reservado' : 'Reservar' }}
-              </button>
-            </div>
-          </td>
-        </tr>
-      </ng-container>
-    </tbody>
-  </table>
+    </ng-template>
+    <ng-template pTemplate="body" let-timeSlot>
+      <tr>
+        <td>{{ timeSlot.start }} - {{ timeSlot.end }}</td>
+        <td *ngFor="let dayType of days2">
+          <div>
+            <button pButton [id]="getButtonId(dayType, timeSlot.start, timeSlot.end)"
+              (click)="handleTimeClick(dayType, timeSlot.start, timeSlot.end)"
+              class="p-button-outlined"
+              [ngClass]="{
+                'p-button-success': !isAppointmentScheduled(dayType, timeSlot.start, timeSlot.end),
+                'p-button-warning': isAppointmentScheduled(dayType, timeSlot.start, timeSlot.end)
+              }"
+              [disabled]="reservedTimeSlots.has(getButtonId(dayType, timeSlot.start, timeSlot.end))">
+              {{ isAppointmentScheduled(dayType, timeSlot.start, timeSlot.end) ? 'Reservado' : 'Reservar' }}
+            </button>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+    <p-messages></p-messages>
+  </p-table>
+  <p-messages></p-messages>
 </div>

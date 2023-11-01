@@ -5,6 +5,10 @@ import * as moment from 'moment';
 import { AgendaService } from './agenda.service';
 import { UserService } from '../users/users.service';
 import { ActivatedRoute } from '@angular/router';
+import { TableModule } from 'primeng/table';
+import { ButtonModule } from 'primeng/button';
+import { MessageModule } from 'primeng/message';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-agenda',
@@ -22,7 +26,11 @@ export class AgendaComponent implements OnInit {
   clientId: any
   agendaId: any
 
-  constructor(private dialog: MatDialog, private agendaService: AgendaService, private userService: UserService, private activatedRoute: ActivatedRoute) { }
+  constructor(private dialog: MatDialog, 
+    private agendaService: AgendaService, 
+    private userService: UserService, 
+    private activatedRoute: ActivatedRoute,
+    private messageService: MessageService) { }
 
 
 
@@ -184,6 +192,7 @@ export class AgendaComponent implements OnInit {
 
   agendarTurno(id: number, toUpdate: any) {
     this.agendaService.agendarTurno(id, toUpdate).subscribe((data: any) => {
+    this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'El turno se ha reservado correctamente.' });
     });
   }
 
@@ -240,6 +249,8 @@ export class AgendaComponent implements OnInit {
 
     // Llama al método del servicio para agendar el turno
     this.agendaService.agendarTurno(id, toUpdate).subscribe((data: any) => {
+      this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'El turno se ha reservado correctamente.' });
+
       // Si se realiza la reserva con éxito, agrega el turno a la lista de reservados
       this.reservedTimeSlots.add(`${dayType}-${start}-${end}`);
 

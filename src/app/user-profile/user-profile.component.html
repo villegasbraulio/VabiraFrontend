@@ -1,13 +1,12 @@
 
 <div class="title">
-  <h1>Perfil</h1>
+    <h1>Perfil</h1>
 </div>
 <div class="profile-container">
  
-
-
   <div class="personal-info-container">
     <mat-card class="personal-info">
+      <div class="inforpersonal">
       <h2>Información Personal</h2>
       <p><strong>Nombre:</strong> {{ userProfileData.firstName }}</p>
       <p><strong>Apellido:</strong> {{ userProfileData.lastName }}</p>
@@ -15,10 +14,16 @@
       <p><strong>Nombre de Usuario:</strong> {{ userProfileData.username }}</p>
       <p><strong>Perfiles Activos:</strong> {{ userProfileData.roles }}</p>
       <p><strong>Fecha de Registro:</strong> {{ userProfileData.createdAt | date: 'dd/MM/yyyy' }}</p>
+     </div>
+
+      <div class="avatar-container">
+        <img class="avatar" [src]="userProfileData.avatar" alt="Foto de perfil">
+      </div>
     </mat-card>
 
-
     <button pButton type="button" label="Actualizar Información Personal" class="edit-button" (click)="showEditDialog()"></button>
+    <button pButton type="button" label="Cambiar Contraseña" class="change-password-button" (click)="showChangePasswordDialog()"></button>
+   
     <!-- Diálogo modal para la edición de datos -->
     <div class="edit-dialog-container" [style.display]="displayEditDialog ? 'block' : 'none'">
     <p-dialog header="Editar Información Personal" [(visible)]="displayEditDialog" [modal]="true" [responsive]="true" [style]="{width: '400px'}" class="edit-dialog">
@@ -37,6 +42,10 @@
               <label for="email">Email</label>
               <input id="email" pInputText [(ngModel)]="editedUserProfileData.email" name="email" required />
             </div>
+            <div class="p-col-12">
+              <label for="email">Username</label>
+              <input id="email" pInputText [(ngModel)]="editedUserProfileData.username" name="email" required />
+            </div>
             <!-- Otros campos del formulario -->
           </div>
           <!-- Botones de guardar y cancelar -->
@@ -48,6 +57,35 @@
       </div>
     </p-dialog>
   </div>
+
+  <div class="edit-dialog-container" [style.display]="displayChangePasswordDialog ? 'block' : 'none'">
+    <p-dialog header="Cambiar Contraseña" [(visible)]="displayChangePasswordDialog" [modal]="true" [responsive]="true" [style]="{width: '400px'}" class="edit-dialog">
+      <div class="dialog-content">
+        <form class="edit-form" (ngSubmit)="onChangePasswordSave()">
+          <div class="p-grid p-fluid">
+            <div class="p-col-12">
+              <label for="currentPassword">Contraseña Actual</label>
+              <input id="currentPassword" pInputText type="password" [(ngModel)]="changePasswordData.currentPassword" name="currentPassword" required />
+            </div>
+            <div class="p-col-12">
+              <label for="newPassword">Nueva Contraseña</label>
+              <input id="newPassword" pInputText type="password" [(ngModel)]="changePasswordData.newPassword" name="newPassword" required />
+            </div>
+            <div class="p-col-12">
+              <label for="confirmNewPassword">Repetir Nueva Contraseña</label>
+              <input id="confirmNewPassword" pInputText type="password" [(ngModel)]="changePasswordData.confirmNewPassword" name="confirmNewPassword" required />
+            </div>
+          </div>
+          <div class="form-buttons">
+            <button pButton type="submit" label="Guardar"></button>
+            <button pButton type="button" label="Cancelar" (click)="cancelChangePassword()"></button>
+          </div>
+        </form>
+      </div>
+    </p-dialog>
+  </div>
+
+  
   <p-dialog header="Operación Exitosa" [(visible)]="displayConfirmationDialog" [modal]="true" [responsive]="true" [style]="{ width: '400px' }">
     <div class="confirmation-dialog-content">
       <!-- Contenido del formulario -->
@@ -59,12 +97,8 @@
       </div>
     </div>
   </p-dialog>
-  
-  
 
-  <div class="avatar-container">
-    <img class="avatar" [src]="userProfileData.avatar" alt="Foto de perfil">
-  </div>
 
-  <app-sidebar></app-sidebar>
+    <p-messages></p-messages>
+    <app-sidebar></app-sidebar>
 </div>

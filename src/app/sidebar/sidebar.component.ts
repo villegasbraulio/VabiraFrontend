@@ -32,12 +32,27 @@ ngOnInit() {
       this.profileTypes = p;
       this.userName = data.username; // Asigna el nombre de usuario
       this.userRole = data.roles;
+      this.userRole = this.translateRole(data.roles);
     },
     (error) => {
       console.error('Error al obtener los datos del usuario:', error);
     }
   );
 }
+
+translateRole(role: string): string {
+  switch (role) {
+    case 'user,supplier':
+      return 'Proveedor';
+    case 'user,client':
+      return 'Cliente';
+    case 'user,admin':
+      return 'Administrador';
+    default:
+      return 'Desconocido';
+  }
+}
+
 
   logout() {
     // Agrega aquí la lógica para cerrar sesión, como eliminar tokens de autenticación, etc.

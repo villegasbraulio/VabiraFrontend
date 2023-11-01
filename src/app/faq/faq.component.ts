@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FaqService } from './faq.service';
-import { UserService } from '../users/users.service'; // Importa tu servicio de usuario
-import { PrimeIcons } from 'primeng/api';
+import { UserService } from '../users/users.service';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-faq',
@@ -11,14 +11,14 @@ import { PrimeIcons } from 'primeng/api';
 export class FaqComponent implements OnInit {
   faqs: any[] = [];
   mostrarForm: boolean = false;
+  mostrarFormEditar: boolean = false;
   faqEdit: any = null; 
   nuevaFaq: any = {
     name: '',
     description: ''
-    
   };
 
-  constructor(private faqService: FaqService, private userService: UserService) {}
+  constructor(private faqService: FaqService, private userService: UserService, private messageService: MessageService) {}
 
   ngOnInit() {
     this.cargarFaqs();
@@ -27,60 +27,64 @@ export class FaqComponent implements OnInit {
   cargarFaqs() {
     this.faqService.getFaqs().subscribe((data: any[]) => {
       this.faqs = data.map(faq => ({ ...faq, expanded: false }));
-      console.log(this.faqs);
     });
   }
 
   mostrarFormulario() {
     this.mostrarForm = true;
+    this.mostrarFormEditar = false;
+    this.nuevaFaq = { name: '', description: '' };
   }
 
-  agregarFaq(event: Event) {
+  guardarFaq(event: Event) {
     event.preventDefault();
   
-    // Obtén el userId del usuario activo
-    this.userService.obtenerPerfilUsuario().subscribe((userProfileData: any) => {
-      const userId = userProfileData.id;
-  
-      // Asigna el userId a la nueva FAQ antes de crearla
-      this.nuevaFaq.userId = userId;
-  
-      // Llama al servicio para crear la nueva FAQ
-      this.faqService.crearFaq(this.nuevaFaq).subscribe(() => {
-        // Limpia el formulario y recarga las FAQs después de crear la nueva FAQ
-        this.mostrarForm = false;
-        this.nuevaFaq = {
-          name: '',
-          description: ''
-        };
+    if (this.mostrarFormEditar) {
+      // Editar FAQ existente
+      this.faqService.editarFaq(this.faqEdit.id, this.faqEdit).subscribe(() => {
+        this.mostrarFormEditar = false;
+        this.faqEdit = null;
         this.cargarFaqs();
+        this.mostrarForm = false;
+        this.mostrarMensaje('success', 'Éxito', 'FAQ editada exitosamente');
       });
-    });
+    } else {
+      // Crear nueva FAQ
+      this.userService.obtenerPerfilUsuario().subscribe((userProfileData: any) => {
+        const userId = userProfileData.id;
+        this.nuevaFaq.userId = userId;
+  
+        this.faqService.crearFaq(this.nuevaFaq).subscribe(() => {
+          this.mostrarForm = false;
+          this.nuevaFaq = { name: '', description: '' };
+          this.cargarFaqs();
+          this.mostrarMensaje('success', 'Éxito', 'FAQ agregada exitosamente');
+        });
+      });
+    }
   }
 
   eliminarFaq(id: number) {
     this.faqService.eliminarFaq(id).subscribe(() => {
       this.cargarFaqs();
+      this.mostrarMensaje('success', 'Éxito', 'FAQ eliminada exitosamente');
     });
   }
+
   editarFaq(faq: any) {
-    this.faqEdit = { ...faq }; // Almacena la FAQ que se va a editar
-    
+    this.faqEdit = { ...faq };
+    this.mostrarFormEditar = true;
+    this.mostrarMensaje('info', 'Editando FAQ', 'Puedes realizar cambios y guardar');
   }
 
-  // Método para cancelar la edición (se llama cuando haces clic en "Cancelar")
   cancelarEdicion() {
-    this.faqEdit = null; // Limpia la FAQ que se estaba editando
-    this.mostrarForm = false; // Oculta el formulario
+    this.faqEdit = null;
+    this.mostrarFormEditar = false;
+    this.mostrarForm = false;
+
   }
 
-  // Método para guardar la edición de la FAQ
-  guardarEdicion() {
-    // Llama al servicio para actualizar la FAQ
-    this.faqService.editarFaq(this.faqEdit.id, this.faqEdit).subscribe(() => {
-      // Limpia el formulario y recarga las FAQs después de actualizar la FAQ
-      this.cancelarEdicion();
-      this.cargarFaqs();
-    });
+  mostrarMensaje(severidad: string, resumen: string, detalle: string) {
+    this.messageService.add({ severity: severidad, summary: resumen, detail: detalle });
   }
 }

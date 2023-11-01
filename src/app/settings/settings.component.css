@@ -1,15 +1,44 @@
+/* Estilos para .company-details */
 .company-details {
     border-radius: 10px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
     padding: 20px;
-    margin-bottom: 16px;
+    margin-top: 300px;
     margin-left: 300px;
+    font-size: 18px; /* Tamaño de letra aumentado */
+    background-color: #f9f9f9; /* Fondo de color claro */
 }
+
+/* Estilos para .title */
 .title {
     margin-left: 300px;
-  }
+    font-size: 24px; /* Tamaño de letra aumentado */
+    color: #333; /* Color de texto oscuro */
+    margin-bottom: 20px; /* Espaciado inferior aumentado */
+}
+
+/* Estilos para .manage-profiles */
 .manage-profiles {
     position: absolute;
     top: 20px;
     right: 20px;
+    font-size: 16px; /* Tamaño de letra aumentado */
+}
+
+/* Estilos para los botones */
+button {
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    padding: 14px 24px; /* Aumentar el relleno del botón */
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: 16px; /* Tamaño de letra aumentado */
+    border-radius: 5px; /* Bordes redondeados */
+    margin-right: 10px; /* Margen derecho para separar los botones */
+}
+
+/* Estilos para el hover del botón */
+button:hover {
+    background-color: #45a049; /* Cambia el color de fondo al pasar el mouse */
 }

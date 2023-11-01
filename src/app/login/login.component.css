@@ -3,98 +3,98 @@
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background-color: #f5f5f5; /* Fondo de color claro para el cuerpo de la página */
-  overflow: hidden; /* Evita desbordamiento en la pantalla completa */
+  background-color: #00529e; /* Fondo en tono de azul */
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh; /* Altura de la pantalla completa */
 }
 
+.outer-container {
+  background-color: #8293a3; /* Fondo en tono de azul */
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .login-container {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  width: 100%;
-  height: 100%;
+  padding: 20px;
+  background-color: rgb(255, 255, 255); /* Fondo blanco semitransparente */
+  border-radius: 10px; /* Bordes redondeados */
+  box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.2); /* Sombra */
+  max-width: 600px; /* Ancho máximo del formulario */
+  width: 100%; /* Ajusta el ancho al contenido, pero no supera el máximo */
+  height: 100vh; /* Altura de la pantalla completa */
+
 }
 
-.content {
-  display: flex;
-  max-width: 100%;
-  width: 100%;
-  height: 100%; /* Altura de la pantalla completa */
-  background-color: #ddd; /* Fondo gris claro para el contenedor principal */
-}
-
-.image-container {
-  flex: 7; /* Ocupa el 70% del ancho */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-  height: 100%; /* Ajusta la altura al 100% */
-  background-color: #ddd; /* Fondo gris claro para el contenedor de la imagen */
-}
 
 .image-container img {
   max-width: 100%;
-  height: 100%; /* Llena verticalmente el espacio disponible */
-  object-fit: cover; /* Ajusta la imagen para llenar el espacio sin distorsión */
+  height: auto;
+  margin-bottom: 20px; /* Espacio entre la imagen y el formulario */
 }
 
 .form-container {
-  flex: 3; /* Ocupa el 30% del ancho */
-  background-color: #ddd; /* Fondo gris claro para el formulario */
-  padding: 20px;
-  border-radius: 0 5px 5px 0; /* Redondear solo el lado derecho */
-}
-
-.form-container h1 {
-  font-size: 36px;
-  margin-bottom: 10px;
-}
-
-.form-container h2 {
-  font-size: 24px;
-  margin-bottom: 20px;
+  width: 100%;
+  max-width: 500px; /* Ancho máximo del formulario */
 }
 
 .form-group {
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 }
 
 label {
   display: block;
   font-weight: bold;
-  text-align: left; /* Alinea el texto a la izquierda */
-  font-size: 14px; /* Tamaño de fuente más pequeño */
+  text-align: left;
+  font-size: 18px;
 }
 
 input[type="text"],
 input[type="password"],
 input[type="email"] {
-  width: 80%;
-  padding: 4px;
-  margin-bottom: 10px;
+  width: calc(100% - 20px);
+  padding: 10px;
+  margin-bottom: 1px; /* Reducido el margen inferior a 10px */
   border: 1px solid #ccc;
   border-radius: 4px;
+  font-size: 16px;
 }
 
+
 button {
-  width: 83%;
-  padding: 10px;
-  background-color: #0056b3; /* Fondo azul oscuro */
+  width: 100%;
+  padding: 15px;
+  background-color: #0056b3;
   color: white;
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  font-size: 18px;
 }
 
 button:hover {
-  background-color: #003f80; /* Color más oscuro al pasar el mouse */
+  background-color: #003f80;
 }
 
 .forgot-password {
-  margin-top: 10px;
+  margin-top: 20px;
+  font-size: 16px;
 }
+
+/* Resto de tu CSS */
+
+.custom-messages {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+}
+

@@ -8,12 +8,12 @@ import { SettingsModalComponent } from '../settings-modal/settings-modal..compon
   styleUrls: ['./settings.component.css']
 })
 export class SettingsComponent  {
-  companyName = 'Nombre de la compañía';
-  companyEmail = 'example@example.com';
-  companyPhone = '1234567890';
-  companyWebsite = 'www.example.com';
-  companyAddress = 'Calle Falsa 123';
-  companyDescription = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
+  companyName = 'Trino Spa';
+  companyEmail = 'trinospa@gmail.com';
+  companyPhone = '2613169089';
+  companyWebsite = 'www.trinospa.com';
+  companyAddress = 'Las Heras 123';
+  companyDescription = 'Empresa de estetica y venta de cosmeticos';
   editing = false;
 
   constructor(private dialog: MatDialog) {}

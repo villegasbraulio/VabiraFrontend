@@ -4,21 +4,25 @@ import { MatDialog } from '@angular/material/dialog';
 import { EditarUsuarioModalComponent } from './editar-usuario-modal.component';
 import { UserModalComponent } from './users-modal.component';
 import { UserService } from './users.service';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.css'],
+  providers: [MessageService] // Agrega MessageService como proveedor
 })
 export class UsersComponent implements OnInit {
   @ViewChild('dt1') dataTable: Table | null = null;
   usuarios: any[] = [];
   columnas: any[];
   usuarioSeleccionado: any;
+  globalFilterText: string = ''; // Variable para almacenar el texto de búsqueda global
 
   constructor(
     private userService: UserService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private messageService: MessageService
   ) {
     this.columnas = [
       { field: 'id', header: 'ID' },
@@ -44,28 +48,30 @@ export class UsersComponent implements OnInit {
 
   clearGlobalFilter() {
     if (this.dataTable) {
-      this.dataTable.filter('', 'globalFilter', 'contains');
+      this.dataTable.filter('', 'global', 'contains');
+      this.globalFilterText = ''; // Limpiar el texto de búsqueda global
     }
   }
 
   filterGlobal(event: any) {
     if (this.dataTable) {
-      this.dataTable.filterGlobal(event.target.value, 'contains');
+      this.globalFilterText = event.target.value; // Almacena el texto de búsqueda global
+      this.dataTable.filter(this.globalFilterText, 'global', 'contains');
     }
   }
   
 
   altaUsuario() {
     const dialogRef = this.dialog.open(EditarUsuarioModalComponent, {
-      width: '400px', // Puedes ajustar el ancho según tus necesidades
-      data: { usuario: null } // Pasa los datos del usuario al modal
+      width: '400px',
+      data: { usuario: null },
     });
   
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        // Aquí puedes agregar los datos del usuario a tu tabla
         const usuarioNuevo = result;
-        // Realiza la lógica para agregar los datos
+        this.usuarios.push(usuarioNuevo);
+        this.messageService.add({severity: 'success', summary: 'Éxito', detail: 'Usuario agregado correctamente.'});
       }
     });
   }
@@ -83,12 +89,12 @@ export class UsersComponent implements OnInit {
   }
   
   eliminarUsuario(id: number) {
-    // Llama al método del servicio para eliminar el usuario por su ID
     this.userService.eliminarUsuario(id).subscribe((data: any) => {
-      // Puedes realizar acciones adicionales después de eliminar el usuario, si es necesario.
-      this.reloadPage(); // Recarga la página después de eliminar el usuario
+      this.usuarios = this.usuarios.filter(usuario => usuario.id !== id);
+      this.messageService.add({severity: 'success', summary: 'Éxito', detail: 'Usuario eliminado correctamente.'});
     });
   }
+  
   
   editarUsuario(id: number, toUpdate:any) {
     // Llama al método del servicio para eliminar el usuario por su ID
@@ -102,25 +108,25 @@ export class UsersComponent implements OnInit {
   }
   
   // Método para recargar la página
-  reloadPage() {
-    // Utiliza la función de JavaScript para recargar la página actual
-    location.reload();
-  }
+  // reloadPage() {
+  //   // Utiliza la función de JavaScript para recargar la página actual
+  //   location.reload();
+  // }
   
   abrirModalEdicion(usuario: any) {
     const dialogRef = this.dialog.open(EditarUsuarioModalComponent, {
-      width: '400px', // Puedes ajustar el ancho según tus necesidades
-      data: { usuario } // Pasa los datos del usuario al modal
+      width: '400px',
+      data: { usuario },
     });
   
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        // Aquí puedes actualizar los datos del usuario en tu tabla
-        const usuarioEditado = result;
-        // Realiza la lógica para actualizar los datos
+        this.usuarios = this.usuarios.map(u => (u.id === result.id ? result : u));
+        this.messageService.add({severity: 'success', summary: 'Éxito', detail: 'Usuario actualizado correctamente.'});
       }
     });
   }
+  
   
 }
 

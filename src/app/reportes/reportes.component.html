@@ -1,0 +1,19 @@
+<div class="container">
+  <app-sidebar></app-sidebar>
+
+    <div class="card">
+      <div class="card-header">
+        Estadísticas de Usuarios
+      </div>
+      
+      <div class="card-body">
+        <p-chart type="pie" [data]="chartData" [options]="chartOptions2"></p-chart> 
+      </div>
+
+          <button class="btn btn-primary" (click)="descargarExcel()">Descargar Excel</button>        
+  </div>
+  <div>
+   </div>
+
+  
+  
