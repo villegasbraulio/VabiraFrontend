@@ -108,7 +108,7 @@ import { NotificacionesComponent } from './notificaciones/notificaciones.compone
   ],
   providers: [
     MessageService,
-    DatePipe // Agrega MessageService a la lista de proveedores
+    DatePipe
   ],
   imports: [
     BrowserModule,
