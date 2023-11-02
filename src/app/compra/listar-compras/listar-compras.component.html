@@ -1,0 +1,49 @@
+<app-sidebar></app-sidebar>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-lg-10 offset-lg-3">
+            <div class="card">
+                <div class="card-body">
+                    <span class="titulo">LISTADO DE REGISTROS DE COMPRAS</span>
+                    <button class="btn btn-danger ml-2 float-end" routerLink="/dashboard">VOLVER</button>
+                    <button class="btn btn-success float-end" routerLink="/crear-venta">NUEVO</button>
+                    <table class="table table-striped mt-3 table-responsive">
+                        <thead>
+                          <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Fecha</th>
+                            <th scope="col">Proveedor</th>
+                            <th scope="col">Monto total</th>
+                            <th scope="col">Administrativo</th>
+                            <th scope="col"></th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <ng-container *ngIf="listCompras.length > 0; else noCompras">
+                            <tr *ngFor="let compra of listCompras; let i = index">
+                              <td>{{ i + 1 }}</td>
+                              <td>{{ compra.fecha }}</td>
+                              <td>{{ compra.proveedor }}</td>
+                              <td>{{ compra.monto_total | currency:'USD' }}</td>
+                              <td>{{ compra.administrativo }}</td>
+                              <td>
+                                <i [routerLink]="['/visualizar-compra', compra.pdfId]" class="fa-solid fa-file-pdf text-primary"></i>
+                                <i [routerLink]="['/editar-compra', compra._id]" class="fa-solid fa-pen-to-square text-primary"></i>
+                                <i (click)="eliminarCompra(compra._id)" class="fa-solid fa-trash text-danger"></i>
+                              </td>
+                            </tr>
+                          </ng-container>
+                        </tbody>
+                      </table>
+                      <ng-template #noCompras>
+                        <tr>
+                          <td colspan="6">No hay registros de compras para mostrar</td>
+                        </tr>
+                      </ng-template>
+                      
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

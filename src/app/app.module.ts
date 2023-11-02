@@ -3,6 +3,10 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, FormGroup, FormBuilder, ReactiveFormsModule } from '@angular/forms';  //modulo formularios
 import { RouterModule } from '@angular/router';
 
+
+import { PdfViewerModule } from 'ngx-extended-pdf-viewer';
+import { CarouselResponsiveDemo } from './carousel/carousel.component';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -44,6 +48,14 @@ import { CrearVentaComponent } from './venta/crear-venta/crear-venta.component';
 import { ListarVentasComponent } from './venta/listar-ventas/listar-ventas.component';
 import { VisualizarVentaComponent } from './venta/visualizar-venta/visualizar-venta.component';
 
+import { CrearCompraComponent} from './compra/crear-compra/crear-compra.component';
+import { ListarComprasComponent } from './compra/listar-compras/listar-compras.component';
+import { VisualizarCompraComponent } from './compra/visualizar-compra/visualizar-compra.component';
+
+
+import { CarouselModule } from 'primeng/carousel';
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -71,6 +83,12 @@ import { VisualizarVentaComponent } from './venta/visualizar-venta/visualizar-ve
     CrearVentaComponent,
     ListarVentasComponent,
     VisualizarVentaComponent,
+
+    CrearCompraComponent,
+    ListarComprasComponent,
+    VisualizarCompraComponent,
+
+
   ],
   imports: [
     BrowserModule,
@@ -92,6 +110,9 @@ import { VisualizarVentaComponent } from './venta/visualizar-venta/visualizar-ve
     MatInputModule, // Agrega MatInputModule aquí
     ReactiveFormsModule,
     CommonModule,
+    PdfViewerModule,  // Importa el módulo PdfViewerModule
+    CarouselResponsiveDemo,
+    CarouselModule,
     ToastrModule.forRoot()
   ],
   providers: [],

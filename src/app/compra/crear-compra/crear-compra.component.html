@@ -1,0 +1,63 @@
+<app-sidebar></app-sidebar>
+<div class="comtainer mt-5">
+    <div class="row">
+        <div class="col-lg-6 offset-lg-3">
+            <div class="card">
+                <div class="card-body text-center">
+                    <span class="titulo">{{titulo | uppercase }}</span>
+                    <form class="mt-3" [formGroup]="compraForm" (ngSubmit)="agregarCompra()">
+                        <div class="mb-3">
+                            <input type="text" formControlName="fecha" class="form-control form-control-lg"
+                                placeholder="Compra">
+                            <div class="text-danger"
+                                *ngIf="compraForm.get('fecha')?.hasError('required') && compraForm.get('fecha')?.touched">
+
+                                <span>La fecha del registro <strong>es obligatoria</strong></span>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <input type="text" formControlName="proveedor" class="form-control form-control-lg"
+                                placeholder="Compra">
+                            <div class="text-danger"
+                                *ngIf="compraForm.get('proveedor')?.hasError('required') && compraForm.get('proveedor')?.touched">
+
+                                <span>El nombre del proveedor <strong>es obligatorio</strong></span>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <input type="text" formControlName="monto_total" class="form-control form-control-lg"
+                                placeholder="Compra">
+                            <div class="text-danger"
+                                *ngIf="compraForm.get('monto_total')?.hasError('required') && compraForm.get('monto_total')?.touched">
+
+                                <span> El monto_total <strong>es obligatorio</strong></span>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <input type="text" formControlName="administrativo" class="form-control form-control-lg"
+                                placeholder="Compra">
+                            <div class="text-danger"
+                                *ngIf="compraForm.get('administrativo')?.hasError('required') && compraForm.get('administrativo')?.touched">
+
+                                <span> El madministrativo <strong>es obligatorio</strong></span>
+                            </div>
+                        </div>
+                        <div class="input-group">
+                            <input type="file" class="form-control" id="inputGroupFile04"
+                                aria-describedby="inputGroupFileAddon04" aria-label="Cargar">
+                            <button class="btn btn-outline-secondary" type="button"
+                                id="inputGroupFileAddon04">Button</button>
+                        </div>
+                        <div class="mb-3">
+                            <button routerLink="/listar-compra"
+                                class="btn btn-secondary btn-lg float-start">VOLVER</button>
+                            <button type="submit" [disabled]="compraForm.invalid"
+                                class="btn btn-success btn-lg float-end">ACEPTAR</button>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

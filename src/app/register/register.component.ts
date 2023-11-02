@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormControl, FormBuilder, FormGroup } from '@angular/forms';
+import { FormControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { ErrorDialogComponent } from '../error-dialog/error-dialog.component';
@@ -29,7 +29,7 @@ export class RegisterComponent {
   postalCode: string = '';
 
   // Define form groups and form controls for dropdowns
-  form: FormGroup;
+  userForm: FormGroup;
   continentControl: FormControl;
   regionControl: FormControl;
   countryControl: FormControl;
@@ -54,16 +54,35 @@ export class RegisterComponent {
     this.politicalDivisionControl = new FormControl('');
 
     // Initialize form group
-    this.form = this.formBuilder.group({
-      username: '',
-      firstName: '',
-      lastName: '',
-      dni: '',
-      dateOfBirth: '',
-      password: '',
-      email: '',
-      legajo: '',
-      cuit: '',
+    this.userForm = this.formBuilder.group({
+      username: ['',
+        Validators.compose([
+          Validators.required,  //Requiere que el campo no esté vacío.
+          Validators.minLength(6),//Requiere que el campo tenga al menos 6 caracteres.
+          Validators.pattern(/^[a-zA-Z0-9_]+$/),//caracteres permitidos en el nombre de usuario
+          Validators.pattern(/^[^\s]+$/) //Para evitar espacios en blanco en el nombre de usuario,
+        ]),
+      ],
+      firstName: ['', [Validators.required, Validators.pattern(/^[a-zA-Z]{4,}$/)]],//solo letras y cant > a 3 caracteres
+      lastName: ['', [Validators.required, Validators.pattern(/^[a-zA-Z]{4,}$/)]],
+      dni: ['', [Validators.required, Validators.pattern('^[0-9]{7,8}$'),],],
+      dateOfBirth: ['', [Validators.required,
+      Validators.pattern(/^\d{2}\/\d{2}\/\d{4}$/),
+      this.dateOfBirthValidator,
+      ],
+      ],
+      password: ['', [
+        Validators.required,
+        Validators.minLength(8), // Mínimo 8 caracteres
+        Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/)
+      ]],
+      email: ['', [
+        Validators.required,
+        Validators.email // Verifica que sea una dirección de correo válida
+      ]],
+      legajo:  ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
+      cuit: ['', [Validators.required, Validators.pattern('^[0-9]{11}$'), // Acepta solo 11 números
+        ],],
       identityNumber: '',
       continent: '',
       region: '',
@@ -115,11 +134,38 @@ export class RegisterComponent {
     this.loadPoliticalDivisions(countryId);
   }
 
+  // Validador personalizado para verificar la validez de la fecha de nacimiento
+  dateOfBirthValidator(control: { value: any; }) {
+    const dateOfBirth = control.value;
+    if (dateOfBirth) {
+      const dateParts = dateOfBirth.split('/');
+      const day = parseInt(dateParts[0], 10);
+      const month = parseInt(dateParts[1], 10);
+      const year = parseInt(dateParts[2], 10);
+
+      // Verificar si la fecha es válida (puedes agregar reglas adicionales)
+      if (
+        day < 1 ||
+        day > 31 ||
+        month < 1 ||
+        month > 12 ||
+        year < 1900 || // Ajusta el año mínimo según tus necesidades
+        year > new Date().getFullYear()
+      ) {
+        return { invalidDateOfBirth: true };
+      }
+    }
+
+    return null;
+  }
+
+
+
   onSubmit() {
-    let userData:any = null;
+    let userData: any = null;
 
     let apiUrl = 'http://localhost:3000/api/users/create';
-    if(apiUrl = 'http://localhost:3000/api/users/create'){
+    if (apiUrl = 'http://localhost:3000/api/users/create') {
       userData = {
         username: this.username,
         email: this.email,
@@ -193,7 +239,7 @@ export class RegisterComponent {
       },
       (errorResponse) => {
         console.error('Error:', errorResponse);
-      
+
         // Independientemente del estado del error, muestra el mensaje de error en el cuadro de diálogo
         if (errorResponse.error && errorResponse.error.error) {
           this.errorMessage = errorResponse.error.error;

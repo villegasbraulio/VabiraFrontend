@@ -8,7 +8,7 @@ import { FormBuilder, FormGroup } from '@angular/forms'; // Importa FormBuilder 
 @Component({
   selector: 'app-listar-ventas',
   templateUrl: './visualizar-venta.component.html',
-  styleUrls: ['./visualizar-venta.component.css']
+  styleUrls: ['./visualizar-venta.component.css'],
 })
 export class VisualizarVentaComponent implements OnInit {
   

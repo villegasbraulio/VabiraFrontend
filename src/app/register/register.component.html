@@ -3,30 +3,68 @@
   <div class="content">
     <div class="form-container">
       <h2>Registrarse</h2>
-      <form (ngSubmit)="onSubmit()" class="flex-form">
+      <form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="flex-form">
         <div class="form-group">
           <label for="username">Nombre de usuario:</label>
-          <input type="text" id="username" name="username" [(ngModel)]="username" required>
+          <input type="text" id="username" formControlName="username">
+          <div *ngIf="userForm.get('username').hasError('required')">
+            No ingreso un nombre de usuario o es incorrecto.
+          </div>
         </div>
         <div class="form-group">
           <label for="firstName">Nombre:</label>
-          <input type="text" id="firstName" name="firstName" [(ngModel)]="firstName" required>
+          <input type="text" id="firstName" formControlName="firstName">
+          <div *ngIf="userForm.get('firstName').hasError('required')">
+            El nombre es obligatorio.
+          </div>
+          <div *ngIf="userForm.get('firstName').hasError('pattern')">
+            El nombre debe contener solo letras y tener al menos 4 caracteres.
+          </div>
         </div>
         <div class="form-group">
           <label for="lastName">Apellido:</label>
-          <input type="text" id="lastName" name="lastName" [(ngModel)]="lastName" required>
+          <input type="text" id="lastName" formControlName="lastName">
+          <div *ngIf="userForm.get('lastName').hasError('required')">
+            El apellido es obligatorio.
+          </div>
+          <div *ngIf="userForm.get('lastName').hasError('pattern')">
+            El apellido debe contener solo letras y tener al menos 4 caracteres.
+          </div>
         </div>
         <div class="form-group">
-          <label for="email">Email:</label>
-          <input type="email" id="email" name="email" [(ngModel)]="email" required>
+          <label for="email">Correo Electrónico:</label>
+          <input type="email" id="email" formControlName="email">
+          <div *ngIf="userForm.get('email').hasError('required')">
+            El correo electrónico es obligatorio.
+          </div>
+          <div *ngIf="userForm.get('email').hasError('email')">
+            El correo electrónico no tiene un formato válido.
+          </div>
         </div>
+
         <div class="form-group">
           <label for="password">Contraseña:</label>
-          <input type="password" id="password" name="password" [(ngModel)]="password" required>
+          <input type="password" id="password" formControlName="password">
+          <div *ngIf="userForm.get('password').hasError('required')">
+            La contraseña es obligatoria.
+          </div>
+          <div *ngIf="userForm.get('password').hasError('minlength')">
+            La contraseña debe tener al menos {{ userForm.get('password').errors.minlength.requiredLength }} caracteres.
+          </div>
+          <div *ngIf="userForm.get('password').hasError('pattern')">
+            La contraseña debe contener al menos una letra mayúscula, una letra minúscula, un número y un carácter
+            especial.
+          </div>
         </div>
         <div class="form-group">
           <label for="dni">DNI:</label>
-          <input type="text" id="dni" name="dni" [(ngModel)]="dni" required>
+          <input type="text" id="dni" formControlName="dni">
+          <div *ngIf="userForm.get('dni').hasError('required')">
+            El DNI es obligatorio.
+          </div>
+          <div *ngIf="userForm.get('dni').hasError('pattern')">
+            El DNI debe contener entre 7 y 8 dígitos numéricos.
+          </div>
         </div>
 
         <!-- Client-specific fields -->
@@ -62,7 +100,8 @@
             <label for="politicalDivision">Provincia:</label>
             <select id="politicalDivision" name="politicalDivision" [formControl]="politicalDivisionControl">
               <option value="" disabled selected>Selecciona una provincia</option>
-              <option *ngFor="let politicalDivision of politicalDivisions$ | async" [value]="politicalDivision.id">{{ politicalDivision.name }}</option>
+              <option *ngFor="let politicalDivision of politicalDivisions$ | async" [value]="politicalDivision.id">{{
+                politicalDivision.name }}</option>
             </select>
           </div>
           <div class="form-group">
@@ -83,7 +122,8 @@
           </div>
           <div class="form-group">
             <label for="identificationNumber">Numero Identificador:</label>
-            <input type="text" id="identificationNumber" name="identificationNumber" [(ngModel)]="identificationNumber" required>
+            <input type="text" id="identificationNumber" name="identificationNumber" [(ngModel)]="identificationNumber"
+              required>
           </div>
         </ng-container>
 
@@ -94,13 +134,15 @@
 
         <!-- Switch para Proveedor -->
         <div class="form-check form-switch">
-          <input class="form-check-input" type="checkbox" id="providerSwitch" [(ngModel)]="isProvider" name="isProvider" (change)="onSwitchChange('provider')">
+          <input class="form-check-input" type="checkbox" id="providerSwitch" [(ngModel)]="isProvider" name="isProvider"
+            (change)="onSwitchChange('provider')">
           <label class="form-check-label" for="providerSwitch">Proveedor</label>
         </div>
 
         <!-- Switch para Cliente -->
         <div class="form-check form-switch">
-          <input class="form-check-input" type="checkbox" id="clientSwitch" [(ngModel)]="isClient" name="isClient" (change)="onSwitchChange('client')">
+          <input class="form-check-input" type="checkbox" id="clientSwitch" [(ngModel)]="isClient" name="isClient"
+            (change)="onSwitchChange('client')">
           <label class="form-check-label" for="clientSwitch">Cliente</label>
         </div>
 

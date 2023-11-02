@@ -17,6 +17,12 @@ import { ListarVentasComponent } from './venta/listar-ventas/listar-ventas.compo
 import { CrearVentaComponent } from './venta/crear-venta/crear-venta.component';
 import { VisualizarVentaComponent } from './venta/visualizar-venta/visualizar-venta.component';
 
+// compras
+import { ListarComprasComponent } from './compra/listar-compras/listar-compras.component';
+import { CrearCompraComponent } from './compra/crear-compra/crear-compra.component';
+import { VisualizarCompraComponent } from './compra/visualizar-compra/visualizar-compra.component';
+
+
 const routes: Routes = [
 
   { path: 'login', component: LoginComponent },
@@ -44,6 +50,14 @@ const routes: Routes = [
   {path: 'crear-venta', component: CrearVentaComponent},
   {path: 'editar-venta', component: CrearVentaComponent},
   {path: 'visualizar-venta', component: VisualizarVentaComponent},
+  
+  // compras
+  {path: 'listar-compra', component: ListarComprasComponent},
+  {path: 'crear-compra', component: CrearCompraComponent},
+  {path: 'visualizar-compra/:pdfId', component: VisualizarCompraComponent},
+
+    
+
 
   // esta linea va siempre al final, para q cualquier URL invalida siempre direcciona al ppio
   {path: '**', redirectTo: '', pathMatch:'full'},
