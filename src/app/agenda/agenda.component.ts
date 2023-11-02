@@ -1,6 +1,5 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ReservarCitaComponent } from '../reservar-cita/reservar-cita.component';
 import * as moment from 'moment';
 import { AgendaService } from './agenda.service';
 import { UserService } from '../users/users.service';
