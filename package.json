@@ -27,9 +27,12 @@
     "localize": "^0.4.7",
     "material": "^0.5.3",
     "moment": "^2.29.4",
+    "ng2-pdf-viewer": "^10.0.0",
     "ngx-extended-pdf-viewer": "^18.1.4",
     "ngx-toastr": "^17.0.2",
     "postcss": "^8.4.31",
+    "primeicons": "^6.0.1",
+    "primeng": "^16.7.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.13.0"

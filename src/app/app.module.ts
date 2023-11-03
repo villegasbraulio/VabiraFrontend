@@ -4,8 +4,11 @@ import { FormsModule, FormGroup, FormBuilder, ReactiveFormsModule } from '@angul
 import { RouterModule } from '@angular/router';
 
 
-import { PdfViewerModule } from 'ngx-extended-pdf-viewer';
+//import { PdfViewerModule } from 'NgxExtendedPdfViewerModule';
+//import { PdfViewerComponent } from 'ng2-pdf-viewer';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { CarouselResponsiveDemo } from './carousel/carousel.component';
+import { CarouselModule } from 'primeng/carousel';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -53,7 +56,7 @@ import { ListarComprasComponent } from './compra/listar-compras/listar-compras.c
 import { VisualizarCompraComponent } from './compra/visualizar-compra/visualizar-compra.component';
 
 
-import { CarouselModule } from 'primeng/carousel';
+
 
 
 @NgModule({
@@ -87,6 +90,7 @@ import { CarouselModule } from 'primeng/carousel';
     CrearCompraComponent,
     ListarComprasComponent,
     VisualizarCompraComponent,
+    CarouselResponsiveDemo,
 
 
   ],
@@ -111,7 +115,7 @@ import { CarouselModule } from 'primeng/carousel';
     ReactiveFormsModule,
     CommonModule,
     PdfViewerModule,  // Importa el módulo PdfViewerModule
-    CarouselResponsiveDemo,
+   // CarouselResponsiveDemo,
     CarouselModule,
     ToastrModule.forRoot()
   ],

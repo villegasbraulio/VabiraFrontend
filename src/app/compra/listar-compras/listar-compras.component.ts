@@ -10,7 +10,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class ListarComprasComponent implements OnInit {
   
-  listProductos: Compra[] = [];
+  listCompras: Compra[] = [];
   constructor(private _compraService: CompraService,
               private toastr: ToastrService){}
   ngOnInit(): void {

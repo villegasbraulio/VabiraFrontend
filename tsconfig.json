@@ -33,5 +33,9 @@
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
     "strictTemplates": true
-  }
+  },
+  "include": [
+    "src/**/*.ts",
+    "node_modules/ng2-pdf-viewer/**/*.ts" // Añade esta línea para incluir las declaraciones de tipos de la biblioteca ng2-pdf-viewer
+  ]
 }

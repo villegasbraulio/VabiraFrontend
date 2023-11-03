@@ -2,7 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'carousel-responsive-demo',
+  selector: 'app-carousel-responsive-demo',
   templateUrl: './carousel.component.html',  // Ruta relativa desde la ubicación del archivo TypeScript
   styleUrls: ['./carousel.component.scss']   // Ruta relativa para los estilos si los tienes
 })
