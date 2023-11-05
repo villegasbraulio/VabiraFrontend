@@ -55,35 +55,36 @@ export class ListarProductosComponent implements OnInit {
     });
   }
   
-  // eliminarUsuario(id: number) {
-  //   // Llama al método del servicio para eliminar el usuario por su ID
-  //   this.userService.eliminarUsuario(id).subscribe((data: any) => {
-  //     // Puedes realizar acciones adicionales después de eliminar el usuario, si es necesario.
-  //     this.reloadPage(); // Recarga la página después de eliminar el usuario
-  //   });
-  // }
+  eliminarProducto(id: number) {
+    // Llama al método del servicio para eliminar el usuario por su ID
+    this.productService.eliminarProducto(id).subscribe((data: any) => {
+      // Puedes realizar acciones adicionales después de eliminar el usuario, si es necesario.
+      this.reloadPage(); // Recarga la página después de eliminar el usuario
+    });
+  }
   
-  // editarUsuario(id: number, toUpdate:any) {
-  //   // Llama al método del servicio para eliminar el usuario por su ID
-  //   this.userService.editarUsuario(id, toUpdate).subscribe((data: any) => {
-  //     // Puedes realizar acciones adicionales después de eliminar el usuario, si es necesario.
-  //   });
-  // }
+  editarProducto(id: number, toUpdate:any) {
+    // Llama al método del servicio para eliminar el usuario por su ID
+    this.productService.editarProducto(id, toUpdate).subscribe((data: any) => {
+      // Puedes realizar acciones adicionales después de eliminar el usuario, si es necesario.
+    });
+  }
   
-  // abrirModalEdicion(proveedor: any) {
-  //   const dialogRef = this.dialog.open(EditarProveedorModalComponent, {
+  // abrirModalEdicion(producto: any) {
+  //   const dialogRef = this.dialog.open(EditarProductoModalComponent, {
   //     width: '400px', // Puedes ajustar el ancho según tus necesidades
-  //     data: { proveedor } // Pasa los datos del usuario al modal
+  //     data: { producto } // Pasa los datos del usuario al modal
   //   });
   
   //   dialogRef.afterClosed().subscribe((result) => {
   //     if (result) {
   //       // Aquí puedes actualizar los datos del usuario en tu tabla
-  //       const proveedorEditado = result;
+  //       const productoEditado = result;
   //       // Realiza la lógica para actualizar los datos
   //     }
   //   });
   // }
+  
   clearGlobalFilter() {
     if (this.dataTable) {
       this.dataTable.filter('', 'globalFilter', 'contains');
