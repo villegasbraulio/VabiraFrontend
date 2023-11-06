@@ -40,7 +40,7 @@
         </ng-template>
         <ng-template pTemplate="body" let-turn>
           <tr>
-            <td>{{ turn.dateFrom }}</td>
+            <td>{{ turn.dateFormatted }}</td>
             <td>{{ turn?.client?.user?.firstName }}</td>
             <td>{{ turn.turnStatus[0].turnStatusType.name }}</td>
             <td>
