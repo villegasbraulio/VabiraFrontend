@@ -11,16 +11,16 @@
 
 /* Estilos para la tabla de "Hora, Nombre, Estado y Acciones" */
 .card {
-  width: 36%; /* Ajusta el ancho a tu preferencia */
-  float: left; /* Sitúa la tabla de "Hora, Nombre, Estado y Acciones" a la izquierda */
-  padding: 10px;
+  width: 40%; /* Configura el ancho a la mitad del espacio disponible */
+  float: left;
+  margin-right: 1px; 
   height: 100%;
 }
 
 /* Estilos para la tabla de días y horarios */
 table {
-  width: 63%; /* Ajusta el ancho a tu preferencia */
-  float: right; /* Sitúa la tabla de días y horarios a la derecha */
+  width: 59%; /* Configura el ancho a la mitad del espacio disponible */
+  float: right;
   border-collapse: collapse;
   height: 100%;
 }
