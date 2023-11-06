@@ -3,27 +3,27 @@
   position: fixed;
   right: 0;
   bottom: 0;
-  width: 100%;
+  width: calc(100% - 15%); /* Resta el ancho de la barra lateral al 100% */
   height: 75vh;
   overflow: auto;
+  max-width: none; /* Puedes eliminar esta línea ya que max-width no es necesario */
 }
 
-
-/* Estilos para la tabla de "Hora, Nombre, Estado y Acciones" */
 .card {
-  width: 40%; /* Configura el ancho a la mitad del espacio disponible */
+  width: 42%;
   float: left;
-  margin-right: 1px; 
+  margin-right: 1px;
   height: 100%;
 }
 
-/* Estilos para la tabla de días y horarios */
 table {
-  width: 59%; /* Configura el ancho a la mitad del espacio disponible */
+  width: 57%;
   float: right;
   border-collapse: collapse;
   height: 100%;
+  margin: 0;
 }
+
 
 /* Estilos específicos para la tabla de días y horarios */
 table p-table {
