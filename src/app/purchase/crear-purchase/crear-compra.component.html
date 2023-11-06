@@ -6,7 +6,7 @@
                 <div class="col-lg-6 offset-lg-3">
                     <div class="card">
                         <div class="card-body text-center">
-                            <span class="titulo">CREAR PRODUCTO</span>
+                            <span class="titulo">CARGAR PRODUCTOS</span>
                             <form class="mt-3" [formGroup]="productoForm" (ngSubmit)="agregarProducto()">
                                 <div class="mb-3">
                                     <input type="text" formControlName="name" class="form-control form-control-lg"
@@ -32,7 +32,7 @@
                                     <div class="text-danger"
                                         *ngIf="productoForm.get('description')?.hasError('required') && productoForm.get('description')?.touched">
         
-                                        <span>La descrcipcion <strong>es obligatoria</strong></span>
+                                        <span>La descripcion <strong>es obligatoria</strong></span>
                                     </div>
                                 </div>
                                 <div class="mb-3">
@@ -63,14 +63,12 @@
                                     </div>
                                 </div>
                                 <div class="mb-3">
-                                    <input type="number" formControlName="stock" class="form-control form-control-lg"
-                                        placeholder="Stock ">
+                                    <p-multiSelect [options]="products" formControlName="selectedProducts" optionLabel="name"></p-multiSelect>
                                     <div class="text-danger"
-                                        *ngIf="productoForm.get('stock')?.hasError('required') && productoForm.get('stock')?.touched">
-        
-                                        <span>El stock minimo <strong>es obligatorio</strong></span>
+                                        *ngIf="productoForm.get('selectedProducts')?.hasError('required') && productoForm.get('selectedProducts')?.touched">
+                                        <span>El producto <strong>es obligatorio</strong></span>
                                     </div>
-                                </div>
+                                </div>                                
                                 <div class="mb-3">
                                     <input type="date" formControlName="caducityDatetime" class="form-control form-control-lg"
                                         placeholder="Fecha caducidad">
@@ -93,4 +91,4 @@
             </div>
         </div>
     </div>
-  </div>
+</div>

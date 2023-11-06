@@ -1,53 +1,70 @@
-/* agenda.component.css */
-
 /* Asegura que el contenedor ocupe toda la pantalla */
 .container {
-  position: fixed;
+  display: flex;
+  flex-direction: row;
   right: 0;
   bottom: 0;
-  width: 43%; /* Ancho deseado para la tabla */
-  height: 75vh; /* 65% de la altura de la ventana */
+  width: 100%;
+  height: 75vh;
   overflow: auto;
-  
 }
 
-/* Estilos para la tabla */
-table {
-  border-collapse: collapse;
-  width: 100%;
-  height: 100%; /* Ocupa todo el espacio disponible */
+
+/* app-sidebar {
+  width: 25%; 
+  float: left;
+} */
+
+/* Estilos para la tabla de "Hora, Nombre, Estado y Acciones" */
+.card {
+  width: 100%; /* Ajusta el ancho a tu preferencia */
+  float: left; /* Sitúa la tabla de "Hora, Nombre, Estado y Acciones" a la izquierda */
+  padding: 10px;
+  height: 100%;
+  bottom: 0;
+  right: 0;
 }
+
+/* Estilos para la tabla de días y horarios */
+table {
+  width: 63%; /* Ajusta el ancho a tu preferencia */
+  float: right; /* Sitúa la tabla de días y horarios a la derecha */
+  border-collapse: collapse;
+  height: 100%;
+  bottom: 0; 
+  right: 0;
+}
+
+/* Estilos específicos para la tabla de días y horarios */
+table p-table {
+  width: 100%; 
+  height: 100%;
+}
+
 
 th, td {
   text-align: center;
   padding: 5px;
   border: 1px solid #ccc;
+  width: auto;
 }
 
 button {
   width: 100%;
   height: 100%;
-  background-color: #def7d0; /* Fondo verde */
+  background-color: #def7d0;
 }
 
-/* Estilos para los horarios ocupados */
 div {
   padding: 5px;
   border-radius: 5px;
   cursor: pointer;
 }
 
-/* Ajusta el alto de las filas según la cantidad de datos */
 tr {
   height: auto;
 }
 
-/* Ajusta el ancho de las columnas según la cantidad de datos */
-th, td {
-  width: auto;
-}
-
-/* Estilos para tbody cuando no hay desbordamiento */
 .flexible-table tbody:empty::before {
   content: 'No hay datos disponibles';
   display: block;
@@ -55,22 +72,18 @@ th, td {
   padding: 16px;
 }
 
-/* Estilo para el botón Reservado */
-/* Estilo para el botón Disponible (Reservar) */
-/* Estilos para los botones disponibles */
 .available-button {
-  background-color: green; /* Color verde para los botones disponibles */
+  background-color: green;
   color: white;
 }
 
-/* Estilos para los botones reservados */
 .reserved-button {
-  background-color: red; /* Color rojo para los botones reservados */
+  background-color: red;
   color: white;
 }
 
 .toast-messages {
   position: fixed;
-  bottom: 20px; /* Controla la distancia desde la parte inferior */
-  right: 20px; /* Controla la distancia desde la derecha */
+  bottom: 20px;
+  right: 20px;
 }

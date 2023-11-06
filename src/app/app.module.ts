@@ -68,6 +68,7 @@ import { ClienteComponent } from './cliente/cliente.component';
 import { EditarClienteModalComponent } from './cliente/editar-cliente-modal.component';
 import { ListarComprasComponent } from './purchase/listar-compras.component';
 import { NotificacionesComponent } from './notificaciones/notificaciones.component';
+import { CrearCompraComponent } from './purchase/crear-purchase/crear-compra.component';
 
 @NgModule({
 
@@ -94,6 +95,7 @@ import { NotificacionesComponent } from './notificaciones/notificaciones.compone
     ListarTurneroComponent,
     ListarComprasComponent,
     CrearProductoComponent,
+    CrearCompraComponent,
     ListarProductosComponent,
     FaqComponent,
     CrearVentaComponent,

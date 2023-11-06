@@ -14,7 +14,7 @@ export class ProductService {
         return this.http.get(this.url);
     }
 
-    obtenerProductos(): Observable<any[]> {
+    getProducts(): Observable<any[]> {
         return this.http.get<any[]>(`${this.url}/all`);
     }
 

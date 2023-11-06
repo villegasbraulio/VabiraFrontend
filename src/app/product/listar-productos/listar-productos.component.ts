@@ -40,7 +40,7 @@ export class ListarProductosComponent implements OnInit {
 
 
   cargarProductos() {
-    this.productService.obtenerProductos().subscribe((data: any) => {
+    this.productService.getProducts().subscribe((data: any) => {
       // Verificar que data sea una matriz de objetos
       if (Array.isArray(data) && data.length > 0) {
         const firstItem = data[0];

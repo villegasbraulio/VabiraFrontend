@@ -54,7 +54,6 @@ export class AgendaService {
         if (buttonElement) {
           buttonElement.innerText = 'Reservado';
           buttonElement.classList.add('reserved-button');
-          buttonElement.disabled = false; // Deshabilitar el botón
         }
       })
     );
@@ -69,7 +68,6 @@ export class AgendaService {
         if (buttonElement) {
           buttonElement.innerText = 'Reservar';
           buttonElement.classList.add('available-button');
-          buttonElement.disabled = false; 
         }
       })
     );

@@ -2,7 +2,7 @@
 
 .sidebar {
   background-color: #2c3e50; /* Cambia el color de fondo a tu preferencia */
-  width: 250px; /* Ancho de la barra lateral */
+  width: 250px; 
   height: 100%; /* Altura completa */
   position: fixed;
   top: 0;

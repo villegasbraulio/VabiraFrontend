@@ -3,13 +3,13 @@ export class Producto{
     name: string;
     brand: string;
     description: string;
-    code: number;
+    code: string;
     prize: number;
     quantity: number;
     stock: number;
     caducityDatetime: string;
 
-    constructor(name: string, brand: string, description: string, code: number, prize: number, quantity: number, stock: number, caducityDatetime: string){
+    constructor(name: string, brand: string, description: string, code: string, prize: number, quantity: number, stock: number, caducityDatetime: string){
         this.name = name;
         this.brand = brand;
         this.description = description;

@@ -23,6 +23,7 @@ import { ReportesComponent } from './reportes/reportes.component';
 import { ClienteComponent } from './cliente/cliente.component';
 import { ListarComprasComponent } from './purchase/listar-compras.component';
 import { NotificacionesComponent } from './notificaciones/notificaciones.component';
+import { CrearCompraComponent } from './purchase/crear-purchase/crear-compra.component';
 
 const routes: Routes = [
 
@@ -53,6 +54,7 @@ const routes: Routes = [
   {path: 'listar-compras', component: ListarComprasComponent},
   {path: 'listar-venta', component: ListarVentasComponent},
   {path: 'crear-venta', component: CrearVentaComponent},
+  { path: 'crear-compra', component: CrearCompraComponent },
   {path: 'editar-venta', component: CrearVentaComponent},
   {path: 'visualizar-venta', component: VisualizarVentaComponent},
 

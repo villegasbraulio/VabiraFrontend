@@ -44,7 +44,7 @@ export class LoginComponent {
           if (isAuthenticated) {
             // Limpiar el mensaje de error en caso de éxito
             this.messageService.clear(); // Limpia los mensajes existentes
-            this.router.navigate(['principal']);
+            this.router.navigate(['/reportes']);
           } else {
             // Manejar la autenticación fallida (token inválido)
             this.messageService.add({ severity: 'error', summary: 'Error', detail: 'La autenticación falló debido a un token inválido.' });

@@ -5,7 +5,6 @@
   
   .content {
     flex-grow: 1; /* El contenido crecerá para llenar el espacio restante */
-    padding: 20px; /* Añadir un relleno al contenido principal */
     overflow: auto; /* Agregar scroll si el contenido desborda la pantalla */
   }
   
