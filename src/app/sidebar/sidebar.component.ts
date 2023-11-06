@@ -30,7 +30,7 @@ export class SidebarComponent {
           for (const role of roles) {
             p.push(role);
           }
-        }
+        }       
         this.profileTypes = p;
         this.userName = data.username; // Asigna el nombre de usuario
         this.userRole = data.roles;
@@ -40,6 +40,9 @@ export class SidebarComponent {
         console.error('Error al obtener los datos del usuario:', error);
       }
     );
+    console.log('this.usuario', this.usuario);
+    console.log();
+    
   }
 
   translateRole(role: string): string {

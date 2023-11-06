@@ -31,10 +31,11 @@ export class LoginComponent {
     this.http.post('http://localhost:3000/api/auth/login', loginData).subscribe(
       (response: any) => {
         // ...
-  
+        console.log(response);
+        
         // Puedes hacer algo con el token devuelto, como guardar en localStorage
         const token = response.token;
-        const email = response.email;
+        const email = response.user.email;
         this.userService.setToken(token);
         this.userService.setEmail(email);
         localStorage.setItem('token', token);

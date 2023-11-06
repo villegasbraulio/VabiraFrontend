@@ -1,7 +1,6 @@
 /* Asegura que el contenedor ocupe toda la pantalla */
 .container {
-  display: flex;
-  flex-direction: row;
+  position: fixed;
   right: 0;
   bottom: 0;
   width: 100%;
@@ -10,19 +9,12 @@
 }
 
 
-/* app-sidebar {
-  width: 25%; 
-  float: left;
-} */
-
 /* Estilos para la tabla de "Hora, Nombre, Estado y Acciones" */
 .card {
-  width: 100%; /* Ajusta el ancho a tu preferencia */
+  width: 36%; /* Ajusta el ancho a tu preferencia */
   float: left; /* Sitúa la tabla de "Hora, Nombre, Estado y Acciones" a la izquierda */
   padding: 10px;
   height: 100%;
-  bottom: 0;
-  right: 0;
 }
 
 /* Estilos para la tabla de días y horarios */
@@ -31,8 +23,6 @@ table {
   float: right; /* Sitúa la tabla de días y horarios a la derecha */
   border-collapse: collapse;
   height: 100%;
-  bottom: 0; 
-  right: 0;
 }
 
 /* Estilos específicos para la tabla de días y horarios */
