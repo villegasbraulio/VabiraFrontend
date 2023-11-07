@@ -1,6 +1,6 @@
 <!-- sidebar.component.html -->
 <div class="sidebar">
-  <div class="sidebar-header text-center"> 
+  <div class="sidebar-header text-center">
     <h1>VABIRA</h1>
   </div>
   <ul class="list-unstyled">
@@ -11,34 +11,35 @@
           <i class="material-icons">dashboard</i> Dashboard
         </a>
       </div>
-      <!-- Cambiar las clases para controlar la dirección de apertura del collapse -->
-      <a *ngIf="profileTypes.includes('admin')" class="btn custom-dropdown-toggle" data-bs-toggle="collapse" href="#usuariosCollapse" role="button" aria-expanded="false">
-        <i class="material-icons">person</i> Usuarios
-      </a>
-      <!-- Agregar el ID al elemento que se colapsará -->
-      <ul id="usuariosCollapse" class="collapse vertical-collapse">
-        <li><a class="dropdown-item" routerLink="/proveedor">Proveedor</a></li>
-        <li><a class="dropdown-item" routerLink="/cliente">Cliente</a></li>
-        <li><a class="dropdown-item" routerLink="/usuarios">Usuario</a></li>
-      </ul>
-        <a class="btn custom-dropdown-toggle" data-bs-toggle="collapse" href="#scheduleCollapse" role="button" aria-expanded="false">
+        <a *ngIf="profileTypes.includes('admin')" (click)="toggleCollapse('usuariosCollapse')" class="custom-dropdown-toggle">
+          <i class="material-icons">person</i> Usuarios
+        </a>
+        <!-- Agregar el ID al elemento que se colapsará -->
+        <ul id="usuariosCollapse" [ngClass]="{'collapse': !isCollapseOpen('usuariosCollapse')}">
+          <li><a class="dropdown-item" routerLink="/proveedor">Proveedor</a></li>
+          <li><a class="dropdown-item" routerLink="/cliente">Cliente</a></li>
+          <li><a class="dropdown-item" routerLink="/usuarios">Usuario</a></li>
+        </ul>
+        <a (click)="toggleCollapse('scheduleCollapse')" class="custom-dropdown-toggle">
           <i class="material-icons">schedule</i> Turneros
         </a>
-        <ul id="scheduleCollapse" class="collapse vertical-collapse">
+        <ul id="scheduleCollapse" [ngClass]="{'collapse': !isCollapseOpen('scheduleCollapse')}">
           <li><a class="dropdown-item" routerLink="/lista-turnero">Agenda</a></li>
-          <li><a *ngIf="profileTypes.includes('supplier') || profileTypes.includes('admin')" class="dropdown-item" routerLink="/turneros">Turnero</a></li>
+          <li *ngIf="profileTypes.includes('supplier') || profileTypes.includes('admin')">
+            <a class="dropdown-item" routerLink="/turneros">Turnero</a>
+          </li>
         </ul>
-        <a *ngIf="profileTypes.includes('admin')" class="btn custom-dropdown-toggle" data-bs-toggle="collapse" href="#productosCollapse" role="button" aria-expanded="false">
+        <a *ngIf="profileTypes.includes('admin')" (click)="toggleCollapse('productosCollapse')" class="custom-dropdown-toggle">
           <i class="material-icons">shopping_cart</i> Productos
         </a>
         <!-- Agregar el ID al elemento que se colapsará -->
-        <ul id="productosCollapse" class="collapse vertical-collapse">
+        <ul id="productosCollapse" class="collapse vertical-collapse" [ngClass]="{'collapse': !isCollapseOpen('productosCollapse')}">
           <li><a class="dropdown-item" routerLink="/listar-venta">Ventas</a></li>
           <li><a class="dropdown-item" routerLink="/listar-compras">Compras</a></li>
           <li><a class="dropdown-item" routerLink="/listar-producto">Productos</a></li>
         </ul>
     </li>
-    
+
     <!-- Grupo 3 -->
     <li class="sidebar-group">
       <div>
@@ -58,18 +59,20 @@
       </div>
     </li>
 
- 
-<!-- Grupo 4 -->
-<li class="sidebar-group">
-  <div class="profile-container">
-    <a routerLink="/perfil" class="profile-link">
-      <div class="profile-box">
-        <i class="material-icons">account_circle</i>
-        <span>{{ userName }} ({{ userRole }})</span> <!-- Muestra el nombre y el rol del usuario -->
+    <!-- Grupo 4 -->
+    <li class="sidebar-group">
+      <div class="profile-container">
+        <a routerLink="/perfil" class="profile-link">
+          <div class="profile-box">
+            <i class="material-icons">account_circle</i>
+            <span>{{ userName }} ({{ userRole }})</span>
+            <!-- Muestra el nombre y el rol del usuario -->
+          </div>
+        </a>
+        <div class="logout-box" (click)="logout()">
+          <i class="material-icons">exit_to_app</i>
+        </div>
       </div>
-    </a>
-    <div class="logout-box" (click)="logout()">
-      <i class="material-icons">exit_to_app</i>
-    </div>
-  </div>
-</li>
+    </li>
+  </ul>
+</div>
