@@ -62,7 +62,8 @@
             <label for="politicalDivision">Provincia:</label>
             <select id="politicalDivision" name="politicalDivision" [formControl]="politicalDivisionControl">
               <option value="" disabled selected>Selecciona una provincia</option>
-              <option *ngFor="let politicalDivision of politicalDivisions$ | async" [value]="politicalDivision.id">{{ politicalDivision.name }}</option>
+              <option *ngFor="let politicalDivision of politicalDivisions$ | async" [value]="politicalDivision.id">{{
+                politicalDivision.name }}</option>
             </select>
           </div>
           <div class="form-group">
@@ -83,7 +84,8 @@
           </div>
           <div class="form-group">
             <label for="identificationNumber">Numero Identificador:</label>
-            <input type="text" id="identificationNumber" name="identificationNumber" [(ngModel)]="identificationNumber" required>
+            <input type="text" id="identificationNumber" name="identificationNumber" [(ngModel)]="identificationNumber"
+              required>
           </div>
         </ng-container>
 
@@ -94,19 +96,35 @@
 
         <!-- Switch para Proveedor -->
         <div class="form-check form-switch">
-          <input class="form-check-input" type="checkbox" id="providerSwitch" [(ngModel)]="isProvider" name="isProvider" (change)="onSwitchChange('provider')">
+          <input class="form-check-input" type="checkbox" id="providerSwitch" [(ngModel)]="isProvider" name="isProvider"
+            (change)="onSwitchChange('provider')">
           <label class="form-check-label" for="providerSwitch">Proveedor</label>
         </div>
 
         <!-- Switch para Cliente -->
         <div class="form-check form-switch">
-          <input class="form-check-input" type="checkbox" id="clientSwitch" [(ngModel)]="isClient" name="isClient" (change)="onSwitchChange('client')">
+          <input class="form-check-input" type="checkbox" id="clientSwitch" [(ngModel)]="isClient" name="isClient"
+            (change)="onSwitchChange('client')">
           <label class="form-check-label" for="clientSwitch">Cliente</label>
         </div>
 
-        <!-- Botón de envío del formulario -->
+        <div class="flex flex-row justify-content-center align-items-end mt-3 mb-2 gap-3">
+          <div class="flex flex-column mt-3 mb-2">
+            <label class="font-bold mt-3 mb-2" for="code">Codigo de verificacion*</label>
+            <input class="w-full" pInputText type="text" id="code" placeholder="Codigo de verificacion*"
+              formControlName="code" />
+          </div>
+          <div *ngIf="!requestCode" class="flex flex-column mt-2 mb-2">
+            <button pButton class="p-button-success p-button-sm mr-2" style="flex: 1" label="Solicitar codigo"
+              (click)="onRequestCode()" type="button"></button>
+          </div>
+          <div *ngIf="requestCode" class="flex flex-column mt-2 mb-2">
+            <button pButton class="p-button-success p-button-sm mr-2" style="flex: 1" label="Verificar codigo"
+              type="button" (click)="onVerifyCode()"></button>
+          </div>
+        </div>
         <div class="button-container">
-          <button type="submit" class="submit-button">Crear</button>
+          <button type="submit" class="submit-button" [disabled]="!isCodeValid">Crear</button>
           <button routerLink="/" class="back-button">Volver</button>
         </div>
       </form>

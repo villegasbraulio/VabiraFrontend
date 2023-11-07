@@ -5,6 +5,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { ErrorDialogComponent } from '../error-dialog/error-dialog.component';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { Message, MessageService } from 'primeng/api';
+import { IRequestCode } from '../interfaces/requestCode.interface';
+import { AuthService } from './register.service';
 
 @Component({
   selector: 'app-register',
@@ -27,6 +30,8 @@ export class RegisterComponent {
   identificationNumber: string = '';
   address: string = '';
   postalCode: string = '';
+  isCodeValid: boolean = false;
+  requestCode = false;
 
   // Define form groups and form controls for dropdowns
   form: FormGroup;
@@ -45,7 +50,9 @@ export class RegisterComponent {
     private http: HttpClient,
     private dialog: MatDialog,
     private router: Router,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private messageService: MessageService,
+    private registerService: AuthService
   ) {
     // Initialize form controls
     this.continentControl = new FormControl('');
@@ -114,6 +121,7 @@ export class RegisterComponent {
     const countryId = this.countryControl.value;
     this.loadPoliticalDivisions(countryId);
   }
+  
 
   onSubmit() {
     let userData:any = null;
@@ -219,6 +227,7 @@ export class RegisterComponent {
         this.openErrorDialog(this.errorMessage);
       }
     );
+    
   }
 
   // Función para manejar cambios en los interruptores
@@ -233,6 +242,41 @@ export class RegisterComponent {
       if (this.isClient) {
         this.isProvider = false;
       }
+    }
+  }
+
+  onCancel() {
+    this.form.reset();
+      this.router.navigate(['/register']);
+  }
+
+  onRequestCode() {
+    if (this.form.invalid) return;
+    this.registerService.requestCode(this.email).subscribe({
+      next: (resData: IRequestCode) => {
+        localStorage.setItem('verificationCode', '' + resData.code);
+        this.requestCode = true;
+      },
+      error: (errorMessage: Message) => {
+        this.messageService.add(errorMessage);
+      },
+    });
+  }
+
+  onVerifyCode() {
+    if (this.form.invalid) return;
+    const strToken = localStorage.getItem('verificationCode');
+    const registerFormValue: any = this.form.get('code')?.value;
+    if (strToken == registerFormValue) {
+      this.isCodeValid = true;
+    } else {
+      let errorMessage: Message = {
+        severity: 'error',
+        summary: 'Error',
+        detail: 'El codigo de verificacion es invalido.',
+      };
+      this.messageService.add(errorMessage);
+
     }
   }
 
