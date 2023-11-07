@@ -16,8 +16,8 @@ import { Observable } from 'rxjs';
   }
 
 
-  obtenerCliente(id: number): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}/findOne?id=${id}`);
+  obtenerClienteUserId(id: number): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/findOneUserId?id=${id}`);
   }
 
   eliminarCliente(id: number): Observable<any> {

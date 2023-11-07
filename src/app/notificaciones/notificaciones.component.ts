@@ -29,17 +29,42 @@ export class NotificacionesComponent implements OnInit {
       this.userClientId = profile.id;
       console.log(this.userClientId)
 
-      this.clienteService.obtenerCliente(this.userClientId).subscribe(// aca tendria que buscar el cliente con id de la alerta 
+      this.clienteService.obtenerClienteUserId(this.userClientId).subscribe(// aca tendria que buscar el cliente con id de la alerta 
         (cliente: any) => {
           this.cliente = cliente;
-          console.log(this.cliente)
+          console.log('cleinteid:'+this.cliente.id)
         }
       );
 
     this.notificacionesService.getAlerts().subscribe(alerts => {
       // Filtra las alertas para encontrar aquellas que corresponden al usuario logueado
       console.log(alerts)
-      this.alerts = alerts.filter(alert => alert.turn.clientId === this.userClientId);
+      console.log(this.cliente.id)
+      
+
+      this.notificacionesService.getAlerts().subscribe(alerts => {
+        for (const alert of alerts) {
+          // Verificar si el cliente de la alerta coincide con el cliente del usuario
+          if (alert.turn.client.id === this.cliente.id) {
+            console.log('ID del cliente de la alerta:', alert.turn.client.id);
+            console.log('ID de la alerta:', alert.id);
+            console.log('Nombre de la alerta:', alert.name);
+            console.log('Descripción de la alerta:', alert.description);
+            console.log('Fecha de inicio del turno:', alert.turn.dateFrom);
+            console.log('Fecha de fin del turno:', alert.turn.dateTo);
+            // ... Mostrar otras propiedades según la estructura de tu objeto alerta ...
+
+            const mensaje = `Tienes un turno próximo el ${this.datePipe.transform(alert.turn.dateFrom, 'dd/MM/yyyy HH:mm')}.`;
+          
+            // Agregar mensaje utilizando el servicio MessageService de PrimeNG
+            this.messageService.add({
+              severity: 'info',
+              summary: 'Turno Próximo',
+              detail: mensaje
+            });
+          }
+        }
+      })
 
       // Verifica si el usuario tiene un turno próximo y muestra un mensaje en consecuencia
       const tieneTurnoProximo = this.alerts.some(alert => this.esTurnoProximo(alert));
@@ -73,7 +98,7 @@ esTurnoProximo(alert: any): boolean {
 
   // Verifica si la diferencia de horas es menor que 48
  
-  if (diferenciaHoras < 48) {
+  // if (diferenciaHoras < 48) {
 
     console.log('`Tienes un turno próximo el')
     // Muestra un mensaje de notificación utilizando PrimeNG MessageService
@@ -84,7 +109,7 @@ esTurnoProximo(alert: any): boolean {
     });
 
     return true;
-  }
+  // }
 
   return false;
 }

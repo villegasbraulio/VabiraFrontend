@@ -15,6 +15,7 @@ export class ReportesComponent implements OnInit {
   username: string = '';  // Propiedad para almacenar el nombre del usuario actual
   userid: string = '';
   role: string = '';
+  userRoles: string = ''
   chartData: any; // Declaración de la propiedad chartData
   chartOptions: any = {
     responsive: true,
@@ -33,8 +34,10 @@ export class ReportesComponent implements OnInit {
     this.userService.obtenerPerfil().subscribe(profile => {
       this.username = profile.username;
       this.userid = profile.id
+      this.userRoles = profile.roles
       console.log(this.username)
       console.log(this.userid)
+      console.log(this.userRoles)
       // Cargar los datos después de obtener el nombre del usuario
       this.loadData();
       this.reportesService.getUsersCountByRole().subscribe(data => {
@@ -86,8 +89,8 @@ export class ReportesComponent implements OnInit {
       },
       maintainAspectRatio: false, // Desactiva el mantenimiento del aspect ratio
       aspectRatio: 0.5, // Ajusta el aspect ratio según tus necesidades (ancho / alto)
-      // width: 800, // Establece el ancho del gráfico
-      // height: 800 // Establece el alto del gráfico
+      width: 800, // Establece el ancho del gráfico
+      height: 800 // Establece el alto del gráfico
     };
   
     // Preparar los datos para el gráfico de pie
