@@ -111,4 +111,11 @@ export class ReportesComponent implements OnInit {
     XLSX.utils.book_append_sheet(wb, ws, 'Agendas');
     XLSX.writeFile(wb, 'agendas.xlsx');
   }
+
+  descargarExceladmin(): void {
+    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.rolesData);
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Usuarios');
+    XLSX.writeFile(wb, 'usuarios.xlsx');
+  }
 }
