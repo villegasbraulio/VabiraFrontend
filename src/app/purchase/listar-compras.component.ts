@@ -29,7 +29,6 @@ export class ListarComprasComponent implements OnInit {
       { field: 'purchaseRecord.purchaseDateTime', header: 'Fecha de compra' },
       { field: 'purchaseRecord.purchaseAmount', header: 'Monto total' },
       { field: 'purchaseRecord.supplier.user.firstName', header: 'Proveedor que realizo la venta' },
-      { field: 'acciones', header: 'Acciones' },
     ];
   }
 

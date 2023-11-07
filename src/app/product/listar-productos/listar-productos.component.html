@@ -14,8 +14,7 @@
               <i class="pi pi-search"></i>
               <input pInputText type="text" (input)="filterGlobal($event)" placeholder="Buscar..." />
             </span>
-            <button class="btn btn-danger float-end" routerLink="/dashboard">VOLVER</button>
-            <button class="btn btn-success float-end" routerLink="/crear-producto">NUEVO</button>
+            <button class="btn btn-danger float-end" routerLink="/principal">VOLVER</button>
           </div>
         </ng-template>
         <ng-template pTemplate="header" let-columns>
@@ -39,8 +38,7 @@
             <td>{{ product.prize | currency:'USD'}}</td>
             <td>{{ product.quantity}}</td>
             <td>
-              <i [routerLink]="['/editar-producto', product._id]" class="fa-solid fa-pen-to-square text-primary"></i>
-              <button pButton icon="pi pi-trash" (click)="eliminarProducto(product.id)" class="p-button-rounded p-button-danger"></button>
+              <span class="pi pi-trash trash-icon" (click)="eliminarProducto(product.id)"></span>
             </td>
           </tr>
         </ng-template>

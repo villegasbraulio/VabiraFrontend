@@ -23,16 +23,11 @@ export class CrearVentaComponent implements OnInit {
     this.ventaForm = this.fb.group({
 
       // Define tus controles de formulario aquí con sus validadores
-      fecha: ['', Validators.required],
-      producto: ['', Validators.required],
-      marca: ['', Validators.required],
-      codigo: ['', Validators.required],
-      precio: ['', Validators.required],
-      cantidad: ['', Validators.required],
-      monto_total: ['', Validators.required],
-      vendedor:  ['', Validators.required],
-      cliente:  ['', Validators.required],
-      
+      saleDatetime: ['', Validators.required],
+      quantity: ['', Validators.required],
+      saleAmount: ['', Validators.required],
+      supplier:  ['', Validators.required],
+      client:  ['', Validators.required],
     })
     this.id = this.aRouter.snapshot.paramMap.get('id');
   }
@@ -45,15 +40,11 @@ export class CrearVentaComponent implements OnInit {
     
     const VENTA: Venta ={
 
-      fecha: this.ventaForm.get('fecha')?.value,
-      producto: this.ventaForm.get('producto')?.value,
-      marca: this.ventaForm.get('marca')?.value,      
-      codigo: this.ventaForm.get('codigo')?.value,
-      precio: this.ventaForm.get('precio')?.value,
-      cantidad: this.ventaForm.get('cantidad')?.value,
-      monto_total: this.ventaForm.get('monto_total')?.value,
-      vendedor: this.ventaForm.get('vendedor')?.value,
-      cliente: this.ventaForm.get('cliente')?.value,
+      saleDatetime: this.ventaForm.get('fecha')?.value,
+      quantity: this.ventaForm.get('cantidad')?.value,
+      saleAmount: this.ventaForm.get('precio')?.value,
+      supplier: this.ventaForm.get('vendedor')?.value,
+      client: this.ventaForm.get('cliente')?.value,
       
     }
 

@@ -27,7 +27,6 @@ export class CrearProductoComponent {
       code: ['', Validators.required],
       prize: ['', Validators.required],
       quantity: ['', Validators.required],
-      stock: ['', Validators.required],
       caducityDatetime: ['', Validators.required],
     })
   }
@@ -43,7 +42,6 @@ export class CrearProductoComponent {
       code: this.productoForm.get('code')?.value,
       prize: this.productoForm.get('prize')?.value,
       quantity: this.productoForm.get('quantity')?.value,
-      stock: this.productoForm.get('stock')?.value,
       caducityDatetime: this.productoForm.get('caducityDatetime')?.value,
     }
     this._productoService.guardarProducto(PRODUCTO).subscribe(data => {

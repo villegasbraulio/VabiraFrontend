@@ -29,7 +29,7 @@
             <a class="dropdown-item" routerLink="/turneros">Turnero</a>
           </li>
         </ul>
-        <a *ngIf="profileTypes.includes('admin')" (click)="toggleCollapse('productosCollapse')" class="custom-dropdown-toggle">
+        <a *ngIf="profileTypes.includes('admin') || profileTypes.includes('supplier')" (click)="toggleCollapse('productosCollapse')" class="custom-dropdown-toggle">
           <i class="material-icons">shopping_cart</i> Productos
         </a>
         <!-- Agregar el ID al elemento que se colapsará -->

@@ -29,7 +29,6 @@ export class CrearCompraComponent implements OnInit {
       code: ['', Validators.required],
       prize: ['', Validators.required],
       quantity: ['', Validators.required],
-      stock: ['', Validators.required],
       caducityDatetime: ['', Validators.required],
       selectedProducts: [[]], // Inicializa como un arreglo vacío
     });
@@ -57,7 +56,6 @@ export class CrearCompraComponent implements OnInit {
       code: this.productoForm.get('code')?.value,
       prize: this.productoForm.get('prize')?.value,
       quantity: this.productoForm.get('quantity')?.value,
-      stock: this.productoForm.get('stock')?.value,
       caducityDatetime: this.productoForm.get('caducityDatetime')?.value,
     };
 

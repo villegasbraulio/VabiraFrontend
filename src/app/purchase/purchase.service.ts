@@ -5,7 +5,7 @@ import { Observable } from "rxjs";
     providedIn: 'root'
 })
 export class PurchaseService {
-    private url = 'http://localhost:3000/api/purchase/';
+    private url = 'http://localhost:3000/api/purchase';
     constructor(private http: HttpClient) {
 
     }
