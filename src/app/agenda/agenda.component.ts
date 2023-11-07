@@ -20,6 +20,8 @@ export class AgendaComponent implements OnInit {
   @ViewChild('dt1') dataTable: Table | null = null;
   turns: any[];
   columnas: any[];
+  turns2: any[];
+  columnas2: any[];
   days: { name: string; monthDay: string }[] = [];
   days2: string[] = [];
   currentDate = moment();
@@ -42,16 +44,25 @@ export class AgendaComponent implements OnInit {
       { field: 'turn.turnStatus.turnStatusType.name', header: 'Estado' },
       { field: 'acciones', header: 'Acciones' },
     ];
+
+    this.turns2 = [];
+    this.columnas2 = [
+      { field: 'currentDate', header: 'Fecha y Hora Actual' },
+      { field: 'turn2.totalTurns', header: 'Turnos de la agenda' },
+      { field: 'turn2.reservedTurns', header: 'Turnos reservados' },
+      { field: 'turn2.availableTurns', header: 'Turnos disponibles' },
+      { field: 'proximoCliente', header: 'Proximo cliente' },
+    ];
   }
 
   ngOnInit(): void {
-    
+
     this.activatedRoute.params.subscribe(params => {
       this.agendaId = +params['id'];
       this.userService.obtenerPerfilCliente().subscribe(
         (data: any) => {
           this.clientId = data;
-          
+
         },
         (error) => {
           console.error('Error al obtener los datos del cliente:', error);
@@ -78,19 +89,27 @@ export class AgendaComponent implements OnInit {
 
         }
 
+        setInterval(() => {
+          this.updateCurrentDate2();
+        }, 1000);
+
         this.generateTimeSlots();
         this.loadReservedAndAvailableTurns();
         this.loadAllTurns();
         this.updateButtonStates();
         this.cargarTurnos();
+        this.cargarTurnos2();
       });
     });
   }
 
+  updateCurrentDate2() {
+    this.currentDate = moment();
+  }
+
   cargarTurnos() {
     this.agendaService.obtenerTurnosPorAgenda(this.agendaId).subscribe((data: any) => {
-      console.log(data);
-      
+
       // Verificar que data sea una matriz de objetos
       if (Array.isArray(data) && data.length > 0) {
         const firstItem = data[0];
@@ -107,9 +126,51 @@ export class AgendaComponent implements OnInit {
       if (this.dataTable) {
         this.dataTable.reset();
       }
-      
+
     });
-     
+
+  }
+
+  cargarTurnos2() {
+    this.agendaService.obtenerTurnosLlenarTabla(this.agendaId).subscribe((data: any) => {
+      if (data) {
+        // Asegurémonos de que data tenga la estructura esperada
+        if (data.totalTurns !== undefined && data.reservedTurns !== undefined && data.availableTurns !== undefined) {
+          this.turns2 = [{
+            totalTurns: data.totalTurns,
+            reservedTurns: data.reservedTurns,
+            availableTurns: data.availableTurns,
+          }];
+
+          // Encuentra el próximo cliente
+          const currentMoment = moment();
+          let proximoCliente = '';
+
+          if (Array.isArray(data.reservedTurns2) && data.reservedTurns2.length > 0) {
+
+            let minDiff = Number.MAX_VALUE;
+
+            for (const reservedTurn of data.reservedTurns2) {
+              if (reservedTurn.dateFrom) {
+                const turnoMoment = moment(reservedTurn.dateFrom);
+
+                const diff = turnoMoment.diff(currentMoment);
+                if (diff > 0 && diff < minDiff) {
+                  minDiff = diff;
+                  const nombre = reservedTurn.client?.user?.firstName || '';
+                  const apellido = reservedTurn.client?.user?.lastName || ''; // Agrega el apellido
+                  proximoCliente = `${nombre} ${apellido}`;
+                }
+              }
+            }
+          }
+
+          this.turns2[0].proximoCliente = proximoCliente;
+        } else {
+          console.error('Estructura de datos inesperada:', data);
+        }
+      }
+    });
   }
 
   formatDate(date: string): string {
@@ -122,7 +183,7 @@ export class AgendaComponent implements OnInit {
     }
     return words.join(' ');
   }
-  
+
 
   handleTimeClick(dayType: any, start: string, end: string) {
     // Encuentra el turno correspondiente en base a las fechas y el tipo de día
@@ -191,7 +252,7 @@ export class AgendaComponent implements OnInit {
           this.reservedTimeSlots.add(buttonId);
         }
       });
-      
+
 
       // Luego de cargar los turnos reservados, obtener los turnos disponibles
       this.agendaService.obtenerTurnosDisponiblesPorAgenda(this.agendaId).subscribe((availableTurns) => {

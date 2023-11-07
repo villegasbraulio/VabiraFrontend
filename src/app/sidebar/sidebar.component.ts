@@ -40,9 +40,6 @@ export class SidebarComponent {
         console.error('Error al obtener los datos del usuario:', error);
       }
     );
-    console.log('this.usuario', this.usuario);
-    console.log();
-    
   }
 
   translateRole(role: string): string {

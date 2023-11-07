@@ -1,8 +1,34 @@
+<div class="card2">
+  <p-table [value]="turns2"  [rows]="1" [resizableColumns]="true" [reorderableColumns]="true"
+  [filterMode]="'lenient'">
+  <ng-template pTemplate="header" let-columns>
+    <tr>
+      <th *ngFor="let col of columnas2" [pSortableColumn]="col.field">
+        {{ col.header }}
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-turn2>
+    <tr>
+      <td>{{ currentDate.format('HH:mm:ss DD-MM-yyyy') }}</td>
+      <td>{{ turn2.totalTurns }}</td>
+      <td>{{ turn2.reservedTurns }}</td>
+      <td>{{ turn2.availableTurns }}</td>
+      <td>{{ turn2.proximoCliente }}</td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="emptymessage">
+    <tr>
+      <td [attr.colspan]="columnas.length + 1">No hay turnos a mostrar.</td>
+    </tr>
+  </ng-template>
+</p-table>
+</div>
 <div class="container">
   <app-sidebar></app-sidebar>
   <div class="card">
-    <p-table [value]="turns" [rows]="15" [paginator]="true"
-      [resizableColumns]="true" [reorderableColumns]="true" [filterMode]="'lenient'">
+    <p-table [value]="turns" [rows]="15" [paginator]="true" [resizableColumns]="true" [reorderableColumns]="true"
+      [filterMode]="'lenient'">
       <ng-template pTemplate="header" let-columns>
         <tr>
           <th *ngFor="let col of columnas" [pSortableColumn]="col.field">
@@ -17,8 +43,8 @@
           <td>{{ turn?.client?.user?.firstName }} {{ turn?.client?.user?.lastName }}</td>
           <td>{{ turn.turnStatus[0].turnStatusType.name }}</td>
           <td>
-            <span class="pi pi-calendar agenda-icon" ></span>
-            <span class="pi pi-trash trash-icon" ></span>
+            <span class="pi pi-calendar agenda-icon"></span>
+            <span class="pi pi-trash trash-icon"></span>
           </td>
         </tr>
       </ng-template>

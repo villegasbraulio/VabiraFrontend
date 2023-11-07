@@ -15,6 +15,14 @@
   margin-right: 1px;
   height: 100%;
 }
+.card2 {
+  width: 85%;
+  float: right;
+  margin-right: 1px;
+  height: 100%;
+  right: 0;
+  top: 0;
+}
 
 table {
   width: 57%;
