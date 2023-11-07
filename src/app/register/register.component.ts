@@ -32,6 +32,7 @@ export class RegisterComponent {
   postalCode: string = '';
   isCodeValid: boolean = false;
   requestCode = false;
+  code = '';
 
   // Define form groups and form controls for dropdowns
   form: FormGroup;
@@ -77,7 +78,8 @@ export class RegisterComponent {
       country: '',
       politicalDivision: '',
       address: '',
-      postalCode: ''
+      postalCode: '',
+      code: ''
     });
 
     // Fetch initial data for dropdowns
@@ -123,7 +125,7 @@ export class RegisterComponent {
   }
   
 
-  onSubmit() {
+  onSubmit() {   
     let userData:any = null;
 
     let apiUrl = 'http://localhost:3000/api/users/create';
@@ -251,7 +253,7 @@ export class RegisterComponent {
   }
 
   onRequestCode() {
-    if (this.form.invalid) return;
+    // if (this.form.invalid) return;
     this.registerService.requestCode(this.email).subscribe({
       next: (resData: IRequestCode) => {
         localStorage.setItem('verificationCode', '' + resData.code);
@@ -264,21 +266,21 @@ export class RegisterComponent {
   }
 
   onVerifyCode() {
-    if (this.form.invalid) return;
     const strToken = localStorage.getItem('verificationCode');
-    const registerFormValue: any = this.form.get('code')?.value;
+    const registerFormValue: string = this.code; // Obtener el valor del código de verificación
+  
     if (strToken == registerFormValue) {
       this.isCodeValid = true;
     } else {
       let errorMessage: Message = {
         severity: 'error',
         summary: 'Error',
-        detail: 'El codigo de verificacion es invalido.',
+        detail: 'El código de verificación no es válido.',
       };
       this.messageService.add(errorMessage);
-
     }
   }
+  
 
   // Función para abrir el cuadro de diálogo de error
   openErrorDialog(errorMessage: string): void {

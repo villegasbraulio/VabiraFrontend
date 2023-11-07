@@ -32,6 +32,9 @@ table {
   margin: 0;
 }
 
+.bkcl{
+  background-color: white;
+}
 
 /* Estilos específicos para la tabla de días y horarios */
 table p-table {

@@ -110,23 +110,24 @@
 
         <div class="flex flex-row justify-content-center align-items-end mt-3 mb-2 gap-3">
           <div class="flex flex-column mt-3 mb-2">
-            <label class="font-bold mt-3 mb-2" for="code">Codigo de verificacion*</label>
-            <input class="w-full" pInputText type="text" id="code" placeholder="Codigo de verificacion*"
-              formControlName="code" />
+            <label class="font-bold mt-3 mb-2" for="code">Codigo de verificacion</label>
+            <input class="w-full" name="code" pInputText type="text" id="code" placeholder="Codigo de verificacion"
+              [(ngModel)]="code" [ngModelOptions]="{standalone: true}" />
           </div>
           <div *ngIf="!requestCode" class="flex flex-column mt-2 mb-2">
-            <button pButton class="p-button-success p-button-sm mr-2" style="flex: 1" label="Solicitar codigo"
-              (click)="onRequestCode()" type="button"></button>
+            <button pButton class="code-button" style="flex: 1" label="Solicitar codigo" (click)="onRequestCode()"
+              type="button"></button>
           </div>
           <div *ngIf="requestCode" class="flex flex-column mt-2 mb-2">
-            <button pButton class="p-button-success p-button-sm mr-2" style="flex: 1" label="Verificar codigo"
+            <button pButton class="p-button-primary p-button-sm mr-2" style="flex: 1" label="Verificar codigo"
               type="button" (click)="onVerifyCode()"></button>
           </div>
         </div>
         <div class="button-container">
-          <button type="submit" class="submit-button" [disabled]="!isCodeValid">Crear</button>
+          <button pButton class="p-button-primary" label="Crear" type="submit" id="submit-button" [disabled]="!isCodeValid"></button>
           <button routerLink="/" class="back-button">Volver</button>
         </div>
+        <p-messages></p-messages>
       </form>
     </div>
     <div class="image-container">

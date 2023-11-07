@@ -62,6 +62,11 @@ export class AgendaService {
       })
     );
   }
+
+  aprobarTurno(id: number): Observable<any> {
+    const body = { id };
+    return this.http.patch<any>(`${this.baseUrl2}/aproveTurn`, body).pipe();
+  }
   cancelarTurno(id: number, toUpdate: any): Observable<any> {//Reservar un turno a un cliente
     const body = { id, ...toUpdate };
     return this.http.patch<any>(`${this.baseUrl2}/unAssignTurn`, body).pipe(

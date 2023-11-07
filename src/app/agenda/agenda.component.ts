@@ -356,6 +356,12 @@ export class AgendaComponent implements OnInit {
     });
   }
 
+  aprobarTurno(id: number) {
+    this.agendaService.aprobarTurno(id).subscribe((data: any) => {
+      this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'El turno se ha aprobado correctamente.' });
+    });
+  }
+
   isAppointmentScheduled(dayType: any, start: string, end: string): boolean {
     if (!this.scheduleData || !this.scheduleData.turn) {
       return false;

@@ -1,27 +1,30 @@
 <div class="layout">
   <app-sidebar></app-sidebar>
-
-  <div *ngIf="userRoles === 'user,admin'" class="card">
-    <div class="card-header">
-      Estadísticas de Usuarios
+  <div class="content">
+    <div *ngIf="userRoles === 'user,admin'" class="card">
+      <div class="card-header">
+        Estadísticas de Usuarios
+      </div>
+  
+      <div class="card-body">
+        <p-chart [type]="'pie'" [data]="chartData" [options]="chartOptions2"></p-chart>
+      </div>
+  
+      <button class="btn btn-primary" (click)="descargarExcel()">Descargar Datos</button>
     </div>
-
-    <div class="card-body">
-      <p-chart [type]="'pie'" [data]="chartData" [options]="chartOptions2"></p-chart>
+  
+    <div *ngIf="userRoles === 'user,supplier'" class="card">
+      <div class="card-header">
+        Estadísticas de Turnos
+      </div>
+  
+      <div class="card-body">
+        <p-chart [type]="'bar'" [data]="data" [options]="chartOptions"></p-chart>
+      </div>
+  
+      <button class="btn btn-primary" (click)="descargarExcel()">Descargar Datos</button>
     </div>
-
-    <button class="btn btn-primary" (click)="descargarExcel()">Descargar Datos</button>
+    <p-messages></p-messages>
   </div>
-
-  <div *ngIf="userRoles === 'user,supplier'" class="card">
-    <div class="card-header">
-      Estadísticas de Turnos
-    </div>
-
-    <div class="card-body">
-      <p-chart [type]="'bar'" [data]="data" [options]="chartOptions"></p-chart>
-    </div>
-
-    <button class="btn btn-primary" (click)="descargarExcel()">Descargar Datos</button>
-  </div>
+  <p-messages></p-messages>
 </div>
