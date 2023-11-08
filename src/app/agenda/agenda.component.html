@@ -1,28 +1,27 @@
 <div class="card2">
-  <p-table [value]="turns2"  [rows]="1" [resizableColumns]="true" [reorderableColumns]="true"
-  [filterMode]="'lenient'">
-  <ng-template pTemplate="header" let-columns>
-    <tr>
-      <th *ngFor="let col of columnas2" [pSortableColumn]="col.field">
-        {{ col.header }}
-      </th>
-    </tr>
-  </ng-template>
-  <ng-template pTemplate="body" let-turn2>
-    <tr>
-      <td>{{ currentDate.format('HH:mm:ss DD-MM-yyyy') }}</td>
-      <td>{{ turn2.totalTurns }}</td>
-      <td>{{ turn2.reservedTurns }}</td>
-      <td>{{ turn2.availableTurns }}</td>
-      <td>{{ turn2.proximoCliente }}</td>
-    </tr>
-  </ng-template>
-  <ng-template pTemplate="emptymessage">
-    <tr>
-      <td [attr.colspan]="columnas.length + 1">No hay turnos a mostrar.</td>
-    </tr>
-  </ng-template>
-</p-table>
+  <p-table [value]="turns2" [rows]="1" [resizableColumns]="true" [reorderableColumns]="true" [filterMode]="'lenient'">
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th *ngFor="let col of columnas2" [pSortableColumn]="col.field">
+          {{ col.header }}
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-turn2>
+      <tr>
+        <td>{{ currentDate.format('HH:mm:ss DD-MM-yyyy') }}</td>
+        <td>{{ turn2.totalTurns }}</td>
+        <td>{{ turn2.reservedTurns }}</td>
+        <td>{{ turn2.availableTurns }}</td>
+        <td>{{ turn2.proximoCliente }}</td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td [attr.colspan]="columnas.length + 1">No hay turnos a mostrar.</td>
+      </tr>
+    </ng-template>
+  </p-table>
 </div>
 <div class="container">
   <app-sidebar></app-sidebar>
@@ -71,9 +70,10 @@
             <div>
               <button mat-button [id]="getButtonId(dayType, timeSlot.start, timeSlot.end)"
                 (click)="handleTimeClick(dayType, timeSlot.start, timeSlot.end)"
-                [class.available-button]="!isAppointmentScheduled(dayType, timeSlot.start, timeSlot.end)"
-                [class.reserved-button]="isAppointmentScheduled(dayType, timeSlot.start, timeSlot.end)">
-                {{ isAppointmentScheduled(dayType, timeSlot.start, timeSlot.end) ? 'Reservado' : 'Reservar' }}
+                [class.available-button]="buttonStates[getButtonId(dayType, timeSlot.start, timeSlot.end)] === 'Reservar'"
+                [class.reserved-button]="buttonStates[getButtonId(dayType, timeSlot.start, timeSlot.end)] === 'Reservado'"
+                [ngClass]="{'red-button': buttonStates[getButtonId(dayType, timeSlot.start, timeSlot.end)] === 'Reservado'}">
+                {{ buttonStates[getButtonId(dayType, timeSlot.start, timeSlot.end)] }}
               </button>
             </div>
           </td>
