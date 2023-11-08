@@ -198,12 +198,18 @@ export class AgendaComponent implements OnInit {
         this.availableTimeSlots.add(`${dayType}-${start}-${end}`);
         this.messages = [{ severity: 'success', summary: 'Éxito', detail: 'Turno cancelado con éxito' }];
         this.buttonStates[this.getButtonId(dayType, start, end)] = 'Reservar';
+        this.cargarTurnos(); // Agregar para actualizar las tablas
+        this.cargarTurnos2(); // Agregar para actualizar las tablas
+        this.loadReservedAndAvailableTurns();
       });
     } else {
       this.agendaService.agendarTurno(id, toUpdate).subscribe((data: any) => {
         this.reservedTimeSlots.add(`${dayType}-${start}-${end}`);
         this.messages = [{ severity: 'success', summary: 'Éxito', detail: 'Turno reservado con éxito' }];
         this.buttonStates[this.getButtonId(dayType, start, end)] = 'Reservado';
+        this.cargarTurnos(); // Agregar para actualizar las tablas
+        this.cargarTurnos2(); // Agregar para actualizar las tablas
+        this.loadReservedAndAvailableTurns();
       });
     }
   }
@@ -281,7 +287,10 @@ export class AgendaComponent implements OnInit {
   aprobarTurno(id: number) {
     this.agendaService.aprobarTurno(id).subscribe((data: any) => {
       this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'El turno se ha aprobado correctamente.' });
+      this.cargarTurnos(); // Agregar para actualizar las tablas
+      this.cargarTurnos2(); // Agregar para actualizar las tablas
     });
+    
   }
 
   isAppointmentScheduled(dayType: any, start: string, end: string): boolean {
