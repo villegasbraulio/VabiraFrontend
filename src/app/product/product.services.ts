@@ -18,6 +18,10 @@ export class ProductService {
         return this.http.get<any[]>(`${this.url}/all`);
     }
 
+    getProducts2(): Observable<any[]> {
+        return this.http.get<any[]>(`${this.url}/all2`);
+    }
+
     //Para eliminar un producto
     eliminarProducto(id: number): Observable<any> {
         // Crea un objeto con el ID a eliminar

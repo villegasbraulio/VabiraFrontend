@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { Producto } from '../producto';
 import { ProductService } from '../product.services';
+import { Message } from 'primeng/api';
 
 @Component({
   selector: 'app-crear-producto',
@@ -12,6 +13,7 @@ import { ProductService } from '../product.services';
 })
 export class CrearProductoComponent {
   productoForm: FormGroup;
+  messages: Message[] = [];
   titulo = 'Crear producto';
   constructor(private fb: FormBuilder,
     private router: Router,
@@ -45,7 +47,7 @@ export class CrearProductoComponent {
       caducityDatetime: this.productoForm.get('caducityDatetime')?.value,
     }
     this._productoService.guardarProducto(PRODUCTO).subscribe(data => {
-      this.toastr.success('El producto fue registrado con exito!', 'Producto Registrado!');
+      this.messages = [{ severity: 'success', summary: 'Éxito', detail: 'Productos registrados con éxito' }];
       this.router.navigate(['/listar-producto']);
     }, error => {
       console.log(error);

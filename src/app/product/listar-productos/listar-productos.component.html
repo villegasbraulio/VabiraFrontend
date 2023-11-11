@@ -1,53 +1,94 @@
 <div class="layout">
   <app-sidebar></app-sidebar>
   <div class="content">
+    <h1>Gestion de Productos</h1>
     <div class="card">
-      <h1> Gestion de Productos</h1>
-      <p-table #dt1 [value]="productos" [rows]="10" [paginator]="true"
-        [globalFilterFields]="['product.name', 'product.branch']"
-        [resizableColumns]="true" [reorderableColumns]="true" [filterMode]="'lenient'">
-        <ng-template pTemplate="caption">
-          <div class="flex">
-            <button pButton label="Limpiar Filtro" class="p-button-outlined" icon="pi pi-filter-slash"
-              (click)="clearGlobalFilter()"></button>
-            <span class="p-input-icon-left ml-auto">
-              <i class="pi pi-search"></i>
-              <input pInputText type="text" (input)="filterGlobal($event)" placeholder="Buscar..." />
-            </span>
-            <button class="btn btn-danger float-end" routerLink="/principal">VOLVER</button>
-          </div>
-        </ng-template>
-        <ng-template pTemplate="header" let-columns>
+      <button class="btn btn-danger float-end" routerLink="/dashboard">VOLVER</button>
+      <p-table [value]="productosAgrupados" dataKey="id" [tableStyle]="{ 'min-width': '60rem' }">
+        <ng-template pTemplate="header">
           <tr>
-            <th *ngFor="let col of columnas" [pSortableColumn]="col.field"
-              [style.width]="col.field === 'acciones' ? '3rem' : 'auto'">
-              <div class="flex align-items-center">
-                {{ col.header }}
-                <p-sortIcon [field]="col.field"></p-sortIcon>
-              </div>
-            </th>
+            <th style="width: 5rem"></th>
+            <th pSortableColumn="id">Id <p-sortIcon field="id"></p-sortIcon></th>
+            <th pSortableColumn="name">Nombre <p-sortIcon field="name"></p-sortIcon></th>
+            <th pSortableColumn="brand">Marca <p-sortIcon field="brand"></p-sortIcon></th>
+            <th pSortableColumn="code">Codigo <p-sortIcon field="code"></p-sortIcon></th>
+            <th pSortableColumn="description">Descripcion <p-sortIcon field="description"></p-sortIcon></th>
+            <th pSortableColumn="prize">Precio <p-sortIcon field="prize"></p-sortIcon></th>
+            <th pSortableColumn="quantity">Cantidad <p-sortIcon field="quantity"></p-sortIcon></th>
+            <th pSortableColumn="actions">Acciones <p-sortIcon field="actions"></p-sortIcon></th>
           </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-product>
+        <ng-template pTemplate="body" let-product let-expanded="expanded">
           <tr>
+            <td>
+              <button type="button" pButton pRipple [pRowToggler]="product"
+                class="p-button-text p-button-rounded p-button-plain"
+                [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"
+                (click)="toggleExpand(product)"></button>
+            </td>
             <td>{{ product.id }}</td>
             <td>{{ product.name }}</td>
             <td>{{ product.brand }}</td>
             <td>{{ product.code }}</td>
             <td>{{ product.description }}</td>
-            <td>{{ product.prize | currency:'USD'}}</td>
-            <td>{{ product.quantity}}</td>
+            <td>{{ product.prize | currency: 'USD' }}</td>
+            <td>{{ product.quantity }}</td>
             <td>
-              <span class="pi pi-trash trash-icon" (click)="eliminarProducto(product.id)"></span>
+              <button pButton icon="pi pi-trash" (click)="eliminarProducto(product.id)"
+                class="p-button-rounded p-button-primary"></button>
             </td>
           </tr>
+          <p-messages></p-messages>
         </ng-template>
-        <ng-template pTemplate="emptymessage">
-          <tr>
-            <td [attr.colspan]="columnas.length">No hay productos a mostrar.</td>
-          </tr>
+        <p-messages></p-messages>
+        <ng-template pTemplate="rowexpansion" let-product>
+          <td colspan="8">
+            <div class="p-3">
+              <p-table [value]="productosAgrupados2[product.codeForBatch]" dataKey="Product_Id">
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th pSortableColumn="id">Id <p-sortIcon field="id"></p-sortIcon></th>
+                    <th pSortableColumn="name">Nombre <p-sortIcon field="name"></p-sortIcon></th>
+                    <th pSortableColumn="brand">Marca <p-sortIcon field="brand"></p-sortIcon></th>
+                    <th pSortableColumn="code">Codigo <p-sortIcon field="code"></p-sortIcon></th>
+                    <th pSortableColumn="description">Descripcion <p-sortIcon field="description"></p-sortIcon></th>
+                    <th pSortableColumn="prize">Precio <p-sortIcon field="prize"></p-sortIcon></th>
+                    <th pSortableColumn="actions">Acciones <p-sortIcon field="actions"></p-sortIcon></th>
+                    <th style="width: 4rem"></th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-relatedProduct>
+                  <tr>
+                    <td>{{ relatedProduct.Product_Id }}</td>
+                    <td>{{ relatedProduct.Product_Name }}</td>
+                    <td>{{ relatedProduct.Product_Brand }}</td>
+                    <td>{{ relatedProduct.Product_Code }}</td>
+                    <td>{{ relatedProduct.Product_Description }}</td>
+                    <td>{{ relatedProduct.Product_Prize | currency: 'USD' }}</td>
+                    <td>
+                      <button pButton icon="pi pi-trash" (click)="eliminarProducto(relatedProduct.Product_Id)"
+                        class="p-button-rounded p-button-primary"></button>
+                    </td>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                  <tr>
+                    <td [attr.colspan]="8">No hay productos relacionados.</td>
+                  </tr>
+                </ng-template>
+              </p-table>
+              <p-messages></p-messages>
+            </div>
+            <p-messages></p-messages>
+          </td>
         </ng-template>
       </p-table>
+      <p-messages></p-messages>
     </div>
+    <p-messages></p-messages>
   </div>
+  <p-messages></p-messages>
 </div>
+
+
+

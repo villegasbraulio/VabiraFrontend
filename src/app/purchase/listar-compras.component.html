@@ -30,14 +30,20 @@
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-purchaseRecord>
-          <tr>
-            <td>{{ purchaseRecord.purchaseDateTime }}</td>
-            <td>{{ purchaseRecord.purchaseAmount}}</td>
-            <td>{{ purchaseRecord.supplier.user.firstName}}</td>
-            <td>{{ purchaseRecord.product.name }}</td>
-            <td>{{ purchaseRecord.product.code }}</td>
+          <tr *ngFor="let product of purchaseRecord.product; let firstProduct = first">
+            <td *ngIf="firstProduct">{{ purchaseRecord.id }}</td>
+            <td *ngIf="firstProduct">{{ product.name }}</td>
+            <td *ngIf="firstProduct">{{ purchaseRecord.purchaseDateTime | date: 'dd/MM/yyyy' }}</td>
+            <td *ngIf="firstProduct">{{ purchaseRecord.purchaseAmount }}</td>
+            <td *ngIf="firstProduct">{{ purchaseRecord?.supplier?.user?.firstName }}</td>
+            <td *ngIf="firstProduct">
+              <span class="pi pi-calendar agenda-icon" (click)="downloadPDF(purchaseRecord.id)"></span>
+            </td>
           </tr>
         </ng-template>
+        
+        
+        
         <ng-template pTemplate="emptymessage">
           <tr>
             <td [attr.colspan]="columnas.length">No hay compras a mostrar.</td>

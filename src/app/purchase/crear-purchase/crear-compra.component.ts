@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { Message, MessageService } from 'primeng/api';
 import { ProductService } from 'src/app/product/product.services';
 import { Producto } from 'src/app/product/producto';
 
@@ -11,12 +12,15 @@ import { Producto } from 'src/app/product/producto';
   styleUrls: ['./crear-compra.component.css']
 })
 export class CrearCompraComponent implements OnInit {
+  @ViewChild('myMessages') myMessages: any;
   products: Producto[] = [];
+  messages: Message[] = [];
   productoForm: FormGroup;
   selectedProducts: Producto[] = [];
   titulo = 'Cargar productos';
 
   constructor(private fb: FormBuilder,
+    private messageService: MessageService,
     private router: Router,
     private toastr: ToastrService,
     private _productoService: ProductService,
@@ -60,21 +64,26 @@ export class CrearCompraComponent implements OnInit {
     };
 
     this._productoService.guardarProducto(PRODUCTO).subscribe(data => {
-      this.toastr.success('El producto fue registrado con éxito!', 'Producto Registrado!');
-      this.router.navigate(['/listar-compras']);
+      // this.messages = [{ severity: 'success', summary: 'Éxito', detail: 'Productos registrados con éxito' }];
+      this.messageService.add({ severity: 'success', summary: 'Operacion exitosa!', detail: 'La accion se realizo correctamente.', });
+      this.router.navigate(['/listar-producto']);
     }, error => {
       console.log(error);
       this.productoForm.reset();
     });
   }
 
+  redirectToProductList() {
+    this.router.navigate(['/listar-producto']);
+  }
+
   agregarProductos() {
     // Obtén los productos seleccionados desde el formulario
     const selectedProductIds = this.productoForm.get('selectedProducts')?.value;
-    
+
     // Busca los productos correspondientes en la lista de productos
     this.selectedProducts = this.products.filter(product => selectedProductIds.includes(product._id));
-    
+
     // Resto del código para guardar PRODUCTO y realizar otras acciones
     // ...
   }
