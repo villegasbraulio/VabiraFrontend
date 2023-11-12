@@ -62,14 +62,6 @@
                                         <span>La cantidad <strong>es obligatoria</strong></span>
                                     </div>
                                 </div>
-                                <div class="mb-3">
-                                    <p-multiSelect [options]="products" formControlName="selectedProducts"
-                                        optionLabel="name"></p-multiSelect>
-                                    <div class="text-danger"
-                                        *ngIf="productoForm.get('selectedProducts')?.hasError('required') && productoForm.get('selectedProducts')?.touched">
-                                        <span>El producto <strong>es obligatorio</strong></span>
-                                    </div>
-                                </div>
                                 <div class="mb-3" >
                                     <input type="date" formControlName="caducityDatetime"
                                         class="form-control form-control-lg" placeholder="Fecha caducidad" pattern="\d{4}-\d{2}-\d{2}">

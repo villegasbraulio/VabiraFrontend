@@ -13,6 +13,8 @@
         <td>{{ turn2.totalTurns }}</td>
         <td>{{ turn2.reservedTurns }}</td>
         <td>{{ turn2.availableTurns }}</td>
+        <td>{{ turn2.aproveTurns }}</td>
+        <td>{{ turn2.desaproveTurns }}</td>
         <td>{{ turn2.proximoCliente }}</td>
       </tr>
     </ng-template>
@@ -72,6 +74,8 @@
                 (click)="handleTimeClick(dayType, timeSlot.start, timeSlot.end)"
                 [class.available-button]="buttonStates[getButtonId(dayType, timeSlot.start, timeSlot.end)] === 'Reservar'"
                 [class.reserved-button]="buttonStates[getButtonId(dayType, timeSlot.start, timeSlot.end)] === 'Reservado'"
+                [class.present-button]="buttonStates[getButtonId(dayType, timeSlot.start, timeSlot.end)] === 'Presente'"
+                [class.ausent-button]="buttonStates[getButtonId(dayType, timeSlot.start, timeSlot.end)] === 'Ausente'"
                 [ngClass]="{'red-button': buttonStates[getButtonId(dayType, timeSlot.start, timeSlot.end)] === 'Reservado'}">
                 {{ buttonStates[getButtonId(dayType, timeSlot.start, timeSlot.end)] }}
               </button>

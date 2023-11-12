@@ -1,42 +1,41 @@
 .text-danger{
-    text-align: start;
-    margin-left: 7px;
+  text-align: start;
+  margin-left: 7px;
 }
 /* users.component.css */
 /* ... Otros estilos ... */
 
 .reducir-imagen {
-    width: 32px;
-    height: 30px;
-    cursor: pointer;
-  }
-  
-  /* ... Otros estilos ... */
-  
-  .layout {
-    display: flex;
-    flex-direction: row;
-    overflow: hidden;
-  }
-  
-  app-sidebar {
-    flex: 0 0 auto;
-    width: 250px;
-    color: white;
-  }
-  
-  .alta-button {
-    position: absolute;
-    bottom: 20px;
-    right: 20px;
-  }
-  
-  /* Estilos para el contenido principal */
-  .content {
-    flex: 1;
-    padding: 20px;
-    overflow: auto;
-  }
-  
+  width: 32px;
+  height: 30px;
+  cursor: pointer;
+}
 
-  
+/* ... Otros estilos ... */
+
+.layout {
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+}
+
+app-sidebar {
+  flex: 0 0 auto;
+  width: 250px;
+  color: white;
+}
+
+.alta-button {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+}
+
+/* Estilos para el contenido principal */
+.content {
+  flex: 1;
+  padding: 20px;
+  overflow: auto;
+}
+
+

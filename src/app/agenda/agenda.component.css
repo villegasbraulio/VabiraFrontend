@@ -84,6 +84,16 @@ tr {
   color: white;
 }
 
+.present-button {
+  background-color: blue;
+  color: white;
+}
+
+.ausent-button {
+  background-color: yellow;
+  color: black;
+}
+
 .reserved-button {
   background-color: red;
   color: white;

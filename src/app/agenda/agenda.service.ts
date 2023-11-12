@@ -44,6 +44,13 @@ export class AgendaService {
     return this.http.get<any[]>(`${this.baseUrl2}/findNotAssignTurnsForSchedule?scheduleId=${scheduleId}`);//trae todos los turnos no reservados de una agenda
   }
 
+  obtenerTurnosAprobadosPorAgenda(scheduleId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl2}/findAproveTurnsForSchedule?scheduleId=${scheduleId}`);//trae todos los turnos no reservados de una agenda
+  }
+  obtenerTurnosDesaprobadosPorAgenda(scheduleId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl2}/findDesaproveTurnsForSchedule?scheduleId=${scheduleId}`);//trae todos los turnos no reservados de una agenda
+  }
+
   obtenerAgenda(id: number): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}/findOne?id=${id}`);
   }

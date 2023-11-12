@@ -53,6 +53,26 @@ export class ListarVentasComponent implements OnInit {
       }
     });
   }
+
+  downloadPDF(id: number) {
+    // Llamar al servicio para descargar el PDF
+    this.ventaService.descargarPDF(id).subscribe(
+      (data: any) => {
+        const blob = new Blob([data], { type: 'application/pdf' });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        document.body.appendChild(a);
+        a.style.display = 'none';
+        a.href = url;
+        a.download = `orden_venta_${id}.pdf`;
+        a.click();
+        window.URL.revokeObjectURL(url);
+      },
+      (error) => {
+        console.error('Error al descargar el PDF:', error);
+      }
+    );
+  }
   
   eliminarVenta(id: number) {
     // Llama al método del servicio para eliminar el usuario por su ID
