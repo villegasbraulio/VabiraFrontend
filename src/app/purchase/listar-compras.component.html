@@ -32,7 +32,7 @@
         <ng-template pTemplate="body" let-purchaseRecord>
           <tr *ngFor="let product of purchaseRecord.product; let firstProduct = first">
             <td *ngIf="firstProduct">{{ purchaseRecord.id }}</td>
-            <td *ngIf="firstProduct">{{ product.name }}</td>
+            <td *ngIf="firstProduct">{{ product.description }}</td>
             <td *ngIf="firstProduct">{{ purchaseRecord.purchaseDateTime | date: 'dd/MM/yyyy' }}</td>
             <td *ngIf="firstProduct">{{ purchaseRecord.purchaseAmount }}</td>
             <td *ngIf="firstProduct">{{ purchaseRecord?.supplier?.user?.firstName }} {{ purchaseRecord?.supplier?.user?.lastName }}</td>

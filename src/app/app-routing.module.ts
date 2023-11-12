@@ -23,6 +23,7 @@ import { ClienteComponent } from './cliente/cliente.component';
 import { ListarComprasComponent } from './purchase/listar-compras.component';
 import { NotificacionesComponent } from './notificaciones/notificaciones.component';
 import { CrearCompraComponent } from './purchase/crear-purchase/crear-compra.component';
+import { BackupComponent } from './backup/backup.component';
 
 const routes: Routes = [
 
@@ -58,6 +59,7 @@ const routes: Routes = [
 
   { path: 'reportes', component: ReportesComponent }, // Ruta para el componente de reportes
   { path: 'notificaciones', component: NotificacionesComponent},
+  { path: 'backup', component: BackupComponent},
 
   // esta linea va siempre al final, para q cualquier URL invalida siempre direcciona al ppio
   {path: '**', redirectTo: '', pathMatch:'full'},

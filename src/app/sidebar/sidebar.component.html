@@ -52,6 +52,11 @@
           <i class="material-icons">settings</i> Ajustes
         </a>
       </div>
+      <div *ngIf="profileTypes.includes('admin')">
+        <a routerLink="/backup">
+          <i class="material-icons">backup</i> Backup
+        </a>
+      </div>
       <div>
         <a routerLink="/ayuda">
           <i class="material-icons">help</i> Ayuda

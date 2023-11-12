@@ -1,0 +1,64 @@
+/* users.component.css */
+/* ... Otros estilos ... */
+
+.card {
+  margin: 20px; /* Agrega margen alrededor de la tarjeta */
+}
+
+.card-content {
+  font-size: 18px; /* Ajusta el tamaño de la letra según tus preferencias */
+  padding: 20px; /* Añade relleno al contenido de la tarjeta */
+}
+
+.advantages, .disadvantages, .documentation-link {
+  margin-top: 15px; /* Agrega espacio entre secciones */
+}
+
+.reducir-imagen {
+  width: 32px;
+  height: 30px;
+  cursor: pointer;
+}
+
+.edit {
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold; /* Hace que el texto sea negrita */
+  text-decoration: underline; /* Subraya el texto */
+}
+
+h5 {
+  font-size: 18px;
+  font-weight: bold; /* Hace que el texto sea negrita */
+  text-decoration: underline; /* Subraya el texto */
+}
+/* ... Otros estilos ... */
+
+.layout {
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+}
+
+app-sidebar {
+  flex: 0 0 auto;
+  width: 250px;
+  color: white;
+}
+
+.alta-button {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+}
+
+/* Estilos para el contenido principal */
+.content {
+  flex: 1;
+  padding: 20px;
+  overflow: auto;
+}
+
+.pi pi-trash trash-icon {
+  margin-left: 10px;
+}
