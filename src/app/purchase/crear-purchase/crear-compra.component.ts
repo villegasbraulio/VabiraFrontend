@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Message, MessageService } from 'primeng/api';
 import { ProductService } from 'src/app/product/product.services';
 import { Producto } from 'src/app/product/producto';
+import { UserService } from 'src/app/users/users.service';
 
 @Component({
   selector: 'app-crear-compra',
@@ -15,6 +16,7 @@ export class CrearCompraComponent implements OnInit {
   @ViewChild('myMessages') myMessages: any;
   products: Producto[] = [];
   messages: Message[] = [];
+  supplierId: any;
   productoForm: FormGroup;
   selectedProducts: Producto[] = [];
   titulo = 'Cargar productos';
@@ -24,6 +26,7 @@ export class CrearCompraComponent implements OnInit {
     private router: Router,
     private toastr: ToastrService,
     private _productoService: ProductService,
+    private userService: UserService,
     private aRouter: ActivatedRoute) {
     // Inicializa el formulario en el constructor
     this.productoForm = this.fb.group({
@@ -41,6 +44,15 @@ export class CrearCompraComponent implements OnInit {
   ngOnInit(): void {
     // Aquí, puedes llamar a una función que obtiene los datos del backend
     this.loadDataFromBackend();
+    this.userService.obtenerPerfilSupplier().subscribe(
+      (data: any) => {
+        this.supplierId = data;
+      },
+      (error) => {
+        console.error('Error al obtener los datos del proveedor:', error);
+      }
+    );
+    
   }
 
   // Función para cargar datos desde el backend
@@ -61,6 +73,7 @@ export class CrearCompraComponent implements OnInit {
       prize: this.productoForm.get('prize')?.value,
       quantity: this.productoForm.get('quantity')?.value,
       caducityDatetime: this.productoForm.get('caducityDatetime')?.value,
+      supplierId: this.supplierId,
     };
 
     this._productoService.guardarProducto(PRODUCTO).subscribe(data => {

@@ -35,7 +35,7 @@
             <td *ngIf="firstProduct">{{ product.name }}</td>
             <td *ngIf="firstProduct">{{ purchaseRecord.purchaseDateTime | date: 'dd/MM/yyyy' }}</td>
             <td *ngIf="firstProduct">{{ purchaseRecord.purchaseAmount }}</td>
-            <td *ngIf="firstProduct">{{ purchaseRecord?.supplier?.user?.firstName }}</td>
+            <td *ngIf="firstProduct">{{ purchaseRecord?.supplier?.user?.firstName }} {{ purchaseRecord?.supplier?.user?.lastName }}</td>
             <td *ngIf="firstProduct">
               <span class="pi pi-calendar agenda-icon" (click)="downloadPDF(purchaseRecord.id)"></span>
             </td>

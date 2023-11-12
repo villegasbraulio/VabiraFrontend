@@ -50,6 +50,8 @@ export class SidebarComponent {
         return 'Cliente';
       case 'user,admin':
         return 'Administrador';
+      case 'user,client,admin':
+        return 'Administrador, Cliente';
       default:
         return 'Desconocido';
     }

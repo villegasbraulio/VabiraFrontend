@@ -7,8 +7,9 @@ export class Producto{
     prize: number;
     quantity: number;
     caducityDatetime: string;
+    supplierId: number;
 
-    constructor(name: string, brand: string, description: string, code: string, prize: number, quantity: number, caducityDatetime: string){
+    constructor(name: string, brand: string, description: string, code: string, prize: number, quantity: number, caducityDatetime: string, supplierId: number){
         this.name = name;
         this.brand = brand;
         this.description = description;
@@ -16,6 +17,7 @@ export class Producto{
         this.prize = prize;
         this.quantity = quantity;
         this.caducityDatetime = caducityDatetime;
+        this.supplierId = supplierId
         
     }
 }

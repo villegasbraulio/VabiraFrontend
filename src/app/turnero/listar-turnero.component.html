@@ -2,7 +2,7 @@
   <app-sidebar></app-sidebar>
   <div class="content">
     <div class="card">
-      <p-table [value]="schedules" [rows]="10" [paginator]="true"
+      <p-table [value]="schedules" [rows]="13" [paginator]="true"
         [globalFilterFields]="['supplier.user.username', 'supplier.user.firstName', 'supplier.user.lastName', 'name']"
         [resizableColumns]="true" [reorderableColumns]="true" [filterMode]="'lenient'">
         <ng-template pTemplate="caption">
