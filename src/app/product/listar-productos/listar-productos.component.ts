@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Table } from 'primeng/table';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { ProductService } from '../product.services';
@@ -8,12 +8,14 @@ import { ProductService } from '../product.services';
 @Component({
   selector: 'app-listar-productos',
   templateUrl: './listar-productos.component.html',
-  styleUrls: ['./listar-productos.component.css']
+  styleUrls: ['./listar-productos.component.css'],
+  providers: [ConfirmationService, MessageService],
 })
 export class ListarProductosComponent implements OnInit {
   @ViewChild('dt1') dataTable: Table | null = null;
   productos: any[];
-  columnas: any[];
+  productosAgrupados: any[]; 
+  productosAgrupados2: any[]; 
 
   constructor(
     private productService: ProductService,
@@ -22,69 +24,75 @@ export class ListarProductosComponent implements OnInit {
     private dialog: MatDialog
   ) {
     this.productos = [];
-    this.columnas = [
-      { field: 'id', header: 'ID' },
-      { field: 'product.name', header: 'Nombre' },
-      { field: 'product.brand', header: 'Marca' },
-      { field: 'product.code', header: 'Codigo' },
-      { field: 'product.description', header: 'Descripcion' },
-      { field: 'product.prize', header: 'Precio' },
-      { field: 'product.quantity', header: 'Cantidad' },
-      { field: 'acciones', header: 'Acciones' },
-    ];
+    this.productosAgrupados = [];
+    this.productosAgrupados2 = [];
   }
 
   ngOnInit() {
     this.cargarProductos();
+    this.cargarProductos2();
   }
-
 
   cargarProductos() {
     this.productService.getProducts().subscribe((data: any) => {
-      // Verificar que data sea una matriz de objetos
-      if (Array.isArray(data) && data.length > 0) {
-        const firstItem = data[0];
-        // Verificar que los nombres de las propiedades coincidan exactamente con los campos en globalFilterFields
-        const objectProperties = Object.keys(firstItem);
-      }
-      // Asignar datos a this.schedules después de las verificaciones
-      this.productos = data;
-      if (this.dataTable) {
-        this.dataTable.reset();
-      }
+      this.productosAgrupados = this.groupAndSelectLowestCode(data);
+      this.productosAgrupados.forEach(producto => {
+        producto.expand = false; 
+      });
+    });
+  }
+
+  cargarProductos2() {
+    this.productService.getProducts2().subscribe((data: any) => {
+      this.productosAgrupados2 = data;
+      console.log('productosAgrupados2 ', this.productosAgrupados2);
     });
   }
   
+  toggleExpand(producto: any) {
+    producto.expand = !producto.expand;
+  }
+
+  redirectToPrincipal() {
+    this.router.navigate(['/principal']);
+  }
+  
+
   eliminarProducto(id: number) {
-    // Llama al método del servicio para eliminar el usuario por su ID
+    // Llama al método del servicio para eliminar el producto por su ID
     this.productService.eliminarProducto(id).subscribe((data: any) => {
-      // Puedes realizar acciones adicionales después de eliminar el usuario, si es necesario.
-      this.reloadPage(); // Recarga la página después de eliminar el usuario
+      // Realiza acciones adicionales si es necesario
+      this.reloadPage();
     });
   }
-  
-  editarProducto(id: number, toUpdate:any) {
-    // Llama al método del servicio para eliminar el usuario por su ID
-    this.productService.editarProducto(id, toUpdate).subscribe((data: any) => {
-      // Puedes realizar acciones adicionales después de eliminar el usuario, si es necesario.
-    });
+
+  // Agrega la lógica para agrupar por 'codeForBatch' y seleccionar el de 'code' más bajo
+  groupAndSelectLowestCode(products: any[]): any[] {
+    const groupedProducts: any[] = [];
+    const codeForBatchSet = new Set();
+
+    for (const product of products) {
+      const codeForBatch = product.codeForBatch;
+
+      if (!codeForBatchSet.has(codeForBatch)) {
+        codeForBatchSet.add(codeForBatch);
+
+        // Encuentra el producto con el 'code' más bajo dentro del grupo
+        const lowestCodeProduct = products.reduce((lowest, p) => {
+          if (p.codeForBatch === codeForBatch) {
+            return p.code < lowest.code ? p : lowest;
+          }
+          return lowest;
+        }, { code: Number.MAX_VALUE });
+
+        groupedProducts.push(lowestCodeProduct);
+      }
+    }
+
+    return groupedProducts;
   }
-  
-  // abrirModalEdicion(producto: any) {
-  //   const dialogRef = this.dialog.open(EditarProductoModalComponent, {
-  //     width: '400px', // Puedes ajustar el ancho según tus necesidades
-  //     data: { producto } // Pasa los datos del usuario al modal
-  //   });
-  
-  //   dialogRef.afterClosed().subscribe((result) => {
-  //     if (result) {
-  //       // Aquí puedes actualizar los datos del usuario en tu tabla
-  //       const productoEditado = result;
-  //       // Realiza la lógica para actualizar los datos
-  //     }
-  //   });
-  // }
-  
+
+    
   clearGlobalFilter() {
     if (this.dataTable) {
       this.dataTable.filter('', 'globalFilter', 'contains');
@@ -98,12 +106,11 @@ export class ListarProductosComponent implements OnInit {
       this.dataTable.filter(filterValue, 'globalFilter', 'contains');
     }
   }
-  
-  
   // Método para recargar la página
   reloadPage() {
     location.reload();
   }
 }
+
 
 

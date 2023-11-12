@@ -68,6 +68,7 @@ import { EditarClienteModalComponent } from './cliente/editar-cliente-modal.comp
 import { ListarComprasComponent } from './purchase/listar-compras.component';
 import { NotificacionesComponent } from './notificaciones/notificaciones.component';
 import { CrearCompraComponent } from './purchase/crear-purchase/crear-compra.component';
+import { MultiSelectModule } from 'primeng/multiselect';
 
 @NgModule({
 
@@ -116,6 +117,7 @@ import { CrearCompraComponent } from './purchase/crear-purchase/crear-compra.com
     MatSnackBarModule,
     FormsModule,
     NgbModule, 
+    MultiSelectModule,
     MatCardModule,
     MatToolbarModule,
     MatTableModule,

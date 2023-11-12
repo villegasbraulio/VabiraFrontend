@@ -35,6 +35,12 @@ table {
 .bkcl{
   background-color: white;
 }
+.red-button {
+  background-color: red;
+  color: white; /* Cambia el color del texto a blanco o el que desees */
+  /* Otras propiedades CSS para el estilo de botón en estado "Reservado" */
+}
+
 
 /* Estilos específicos para la tabla de días y horarios */
 table p-table {
@@ -76,6 +82,16 @@ tr {
 .available-button {
   background-color: green;
   color: white;
+}
+
+.present-button {
+  background-color: blue;
+  color: white;
+}
+
+.ausent-button {
+  background-color: yellow;
+  color: black;
 }
 
 .reserved-button {

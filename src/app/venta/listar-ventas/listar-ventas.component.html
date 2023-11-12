@@ -31,13 +31,14 @@
         </ng-template>
         <ng-template pTemplate="body" let-saleRecord>
           <tr>
-            <td>{{ saleRecord.saleDateTime }}</td>
+            <td>{{ saleRecord.id }}</td>
+            <td>{{ saleRecord.saleDateTime | date: 'dd/MM/yyyy'}}</td>
             <td>{{ saleRecord.quantity }}</td>
             <td>{{ saleRecord.saleAmount | currency:'USD' }}</td>
-            <td>{{ saleRecord.supplier }}</td>
-            <td>{{ saleRecord.client }}</td>
+            <td>{{ saleRecord?.supplier?.user?.firstName }} {{ saleRecord?.supplier?.user?.lastName }}</td>
+            <td>{{ saleRecord?.client?.user?.firstName }} {{ saleRecord?.client?.user?.lastName }}</td>
             <td>
-              <span class="pi pi-trash trash-icon" (click)="eliminarVenta(saleRecord.id)"></span>
+              <span class="pi pi-calendar agenda-icon" (click)="downloadPDF(saleRecord.id)"></span>
             </td>
           </tr>
         </ng-template>

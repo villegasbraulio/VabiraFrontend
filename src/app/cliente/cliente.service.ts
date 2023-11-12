@@ -15,6 +15,9 @@ import { Observable } from 'rxjs';
     return this.http.get<any[]>(`${this.baseUrl}/all`);
   }
 
+  obtenerCliente(id: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/findOne?id=${id}`);
+  }
 
   obtenerClienteUserId(id: number): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}/findOneUserId?id=${id}`);

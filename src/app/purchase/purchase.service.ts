@@ -5,7 +5,7 @@ import { Observable } from "rxjs";
     providedIn: 'root'
 })
 export class PurchaseService {
-    private url = 'http://localhost:3000/api/purchase';
+    private url = 'http://localhost:3000/api/purchaseRecord';
     constructor(private http: HttpClient) {
 
     }
@@ -15,6 +15,11 @@ export class PurchaseService {
 
     obtenerCompras(): Observable<any[]> {
         return this.http.get<any[]>(`${this.url}/all`);
+    }
+
+    descargarPDF(id: number): Observable<Blob> {
+        const url = `${this.url}/downloadPDF?id=${id}`;
+        return this.http.get(url, { responseType: 'blob' });
     }
 
     //Para eliminar un producto
