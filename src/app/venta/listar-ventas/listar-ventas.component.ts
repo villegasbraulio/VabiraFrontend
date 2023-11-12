@@ -54,13 +54,13 @@ export class ListarVentasComponent implements OnInit {
     });
   }
   
-  // eliminarUsuario(id: number) {
-  //   // Llama al método del servicio para eliminar el usuario por su ID
-  //   this.userService.eliminarUsuario(id).subscribe((data: any) => {
-  //     // Puedes realizar acciones adicionales después de eliminar el usuario, si es necesario.
-  //     this.reloadPage(); // Recarga la página después de eliminar el usuario
-  //   });
-  // }
+  eliminarVenta(id: number) {
+    // Llama al método del servicio para eliminar el usuario por su ID
+    this.ventaService.eliminarVenta(id).subscribe((data: any) => {
+      // Puedes realizar acciones adicionales después de eliminar el usuario, si es necesario.
+      this.reloadPage(); // Recarga la página después de eliminar el usuario
+    });
+  }
   
   // editarUsuario(id: number, toUpdate:any) {
   //   // Llama al método del servicio para eliminar el usuario por su ID

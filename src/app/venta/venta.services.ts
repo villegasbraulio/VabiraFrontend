@@ -21,9 +21,12 @@ export class VentaService{
     }
 
     //Para eliminar una venta
-    eliminarVenta(id: string): Observable <any> {
-         return this.http.delete(this.url + id);
-    }
+    eliminarVenta(id: number): Observable<any> {
+        // Crea un objeto con el ID a eliminar
+        const body = { id: id };
+        // Realiza una solicitud PATCH con el cuerpo (body) que contiene el ID
+        return this.http.patch<any>(`${this.url}/delete`, body);
+      }
     // Para crear una venta
     guardarVenta(venta: Venta): Observable <any>{
         return this.http.post(this.url, venta);

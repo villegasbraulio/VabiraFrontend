@@ -15,7 +15,7 @@ export class LoginComponent {
   username: string = '';
   password: string = '';
   email: string = '';
-  errorMessage: string = ''; // Variable para almacenar el mensaje de error
+  errorMessage: string = '';
 
   constructor(
     private http: HttpClient,
@@ -31,10 +31,12 @@ export class LoginComponent {
     this.http.post('http://localhost:3000/api/auth/login', loginData).subscribe(
       (response: any) => {
         // ...
-  
+        console.log('response: ', response);
+        
         // Puedes hacer algo con el token devuelto, como guardar en localStorage
         const token = response.token;
-        const email = response.email;
+        const email = response.user.email;
+        const roles: any = response.user.roles
         this.userService.setToken(token);
         this.userService.setEmail(email);
         localStorage.setItem('token', token);
@@ -42,9 +44,13 @@ export class LoginComponent {
         // Verificar el token y redirigir al usuario si es válido
         this.userService.verificarToken().subscribe((isAuthenticated) => {
           if (isAuthenticated) {
+              if(roles.includes('admin')){
+                this.router.navigate(['/reportes']);
+              } else {
+                this.router.navigate(['/principal']);
+              }
             // Limpiar el mensaje de error en caso de éxito
             this.messageService.clear(); // Limpia los mensajes existentes
-            this.router.navigate(['principal']);
           } else {
             // Manejar la autenticación fallida (token inválido)
             this.messageService.add({ severity: 'error', summary: 'Error', detail: 'La autenticación falló debido a un token inválido.' });

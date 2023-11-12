@@ -48,7 +48,6 @@ import { CheckboxModule } from 'primeng/checkbox';
 
 import { CrearVentaComponent } from './venta/crear-venta/crear-venta.component';
 import { ListarVentasComponent } from './venta/listar-ventas/listar-ventas.component';
-import { VisualizarVentaComponent } from './venta/visualizar-venta/visualizar-venta.component';
 import { MatListModule } from '@angular/material/list'; // Importa MatListModule y otros módulos que puedas necesitar
 
 import { UserProfileComponent } from './user-profile/user-profile.component';
@@ -68,6 +67,7 @@ import { ClienteComponent } from './cliente/cliente.component';
 import { EditarClienteModalComponent } from './cliente/editar-cliente-modal.component';
 import { ListarComprasComponent } from './purchase/listar-compras.component';
 import { NotificacionesComponent } from './notificaciones/notificaciones.component';
+import { CrearCompraComponent } from './purchase/crear-purchase/crear-compra.component';
 
 @NgModule({
 
@@ -94,11 +94,11 @@ import { NotificacionesComponent } from './notificaciones/notificaciones.compone
     ListarTurneroComponent,
     ListarComprasComponent,
     CrearProductoComponent,
+    CrearCompraComponent,
     ListarProductosComponent,
     FaqComponent,
     CrearVentaComponent,
     ListarVentasComponent,
-    VisualizarVentaComponent,
     UserProfileComponent,
     SettingsComponent,
     SettingsModalComponent,
@@ -108,7 +108,7 @@ import { NotificacionesComponent } from './notificaciones/notificaciones.compone
   ],
   providers: [
     MessageService,
-    DatePipe // Agrega MessageService a la lista de proveedores
+    DatePipe
   ],
   imports: [
     BrowserModule,

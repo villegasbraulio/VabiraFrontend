@@ -8,6 +8,8 @@ import { Observable, of, tap } from 'rxjs';
 export class UserService {
   private baseUrl = 'http://localhost:3000/api/users'; // Reemplaza con la URL de tu backend
   private baseUrl2 = 'http://localhost:3000/api/auth'; // Reemplaza con la URL de tu backend
+  private baseUrl3 = 'http://localhost:3000/api/supplier'; // Reemplaza con la URL de tu backend
+  private baseUrl4 = 'http://localhost:3000/api/client'; // Reemplaza con la URL de tu backend
   private token = localStorage.getItem('token'); // Variable para almacenar el token
   private email = localStorage.getItem('email')
 
@@ -56,6 +58,20 @@ export class UserService {
     return this.http.get<any>(`${this.baseUrl}/findOneEmail?email=${this.email}`, httpOptions)
     .pipe(tap((clientFound)=> {return clientFound}))
     .pipe(tap((supplierFound)=> {return supplierFound}));
+  }
+  obtenerPerfilCliente(): Observable<any> {
+    const httpOptions = {
+      headers: this.getHeaders(), // Obtener las cabeceras con el token
+    };
+    
+    return this.http.get<any>(`${this.baseUrl4}/findOneClientByEmail?email=${this.email}`, httpOptions)
+  }
+  obtenerPerfilSupplier(): Observable<any> {
+    const httpOptions = {
+      headers: this.getHeaders(), // Obtener las cabeceras con el token
+    };
+    
+    return this.http.get<any>(`${this.baseUrl3}/findOneSupplierByEmail?email=${this.email}`, httpOptions);
   }
 
   eliminarUsuario(id: number): Observable<any> {

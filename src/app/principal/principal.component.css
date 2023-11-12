@@ -1,21 +1,35 @@
 /* dashboard.component.css */
 
 .layout {
-    display: flex;
-    height: 100%;
-  }
-  
-  
-  .content {
-    flex-grow: 1;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .agenda-container {
-    flex: 2; /* Ajusta este valor según tus necesidades */
-    background-color: #f0f0f0; /* Cambia el color de fondo de la agenda */
-    overflow-y: auto; /* Agrega desplazamiento vertical si la agenda es larga */
-  }
-  
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+  justify-content: center; /* Alinea el contenido horizontalmente en el centro */
+  align-items: center; /* Alinea el contenido verticalmente en el centro */
+}
+
+app-sidebar {
+  flex: 0 0 auto;
+  width: 250px;
+  background-color: #1e3a6f;
+  color: white;
+}
+ 
+/* Estilos para el contenido principal */
+.content {
+  flex: 1;
+  padding: 20px;
+  overflow: auto;
+}
+
+.image-container {
+  text-align: center; /* Centra horizontalmente el contenido de la imagen-container */
+}
+
+.image-container img {
+  max-width: 100%;
+  max-height: 90vh !important;
+  width: auto;
+  margin-bottom: 20px;
+}
+

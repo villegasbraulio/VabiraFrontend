@@ -4,8 +4,8 @@
     <div class="card">
       <h1> Gestion de Ventas</h1>
       <p-table #dt1 [value]="saleRecord" [rows]="10" [paginator]="true"
-        [globalFilterFields]="['saleRecord.name', 'saleRecord.branch']"
-        [resizableColumns]="true" [reorderableColumns]="true" [filterMode]="'lenient'">
+        [globalFilterFields]="['saleRecord.name', 'saleRecord.branch']" [resizableColumns]="true"
+        [reorderableColumns]="true" [filterMode]="'lenient'">
         <ng-template pTemplate="caption">
           <div class="flex">
             <button pButton label="Limpiar Filtro" class="p-button-outlined" icon="pi pi-filter-slash"
@@ -14,7 +14,7 @@
               <i class="pi pi-search"></i>
               <input pInputText type="text" (input)="filterGlobal($event)" placeholder="Buscar..." />
             </span>
-            <button class="btn btn-danger float-end" routerLink="/dashboard">VOLVER</button>
+            <button class="btn btn-danger float-end" routerLink="/principal">VOLVER</button>
             <button class="btn btn-success float-end" routerLink="/crear-venta">NUEVO</button>
           </div>
         </ng-template>
@@ -36,11 +36,9 @@
             <td>{{ saleRecord.saleAmount | currency:'USD' }}</td>
             <td>{{ saleRecord.supplier }}</td>
             <td>{{ saleRecord.client }}</td>
-            <!-- <td>
-              <i [routerLink]="['/visualizar-venta', venta._id]" class="fa-solid fa-eye text-primary"></i>
-              <i [routerLink]="['/editar-venta', venta._id]" class="fa-solid fa-pen-to-square text-primary"></i>
-              <i (click)="eliminarVenta(venta._id)" class="fa-solid fa-trash text-danger"></i>
-            </td> -->
+            <td>
+              <span class="pi pi-trash trash-icon" (click)="eliminarVenta(saleRecord.id)"></span>
+            </td>
           </tr>
         </ng-template>
         <ng-template pTemplate="emptymessage">

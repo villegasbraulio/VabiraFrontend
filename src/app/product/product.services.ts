@@ -6,7 +6,7 @@ import { Producto } from "./producto";
     providedIn: 'root'
 })
 export class ProductService {
-    private url = 'http://localhost:3000/api/product/';
+    private url = 'http://localhost:3000/api/product';
     constructor(private http: HttpClient) {
 
     }
@@ -14,14 +14,17 @@ export class ProductService {
         return this.http.get(this.url);
     }
 
-    obtenerProductos(): Observable<any[]> {
+    getProducts(): Observable<any[]> {
         return this.http.get<any[]>(`${this.url}/all`);
     }
 
     //Para eliminar un producto
-    eliminarProducto(id: string): Observable<any> {
-        return this.http.delete(this.url + id);
-    }
+    eliminarProducto(id: number): Observable<any> {
+        // Crea un objeto con el ID a eliminar
+        const body = { id: id };
+        // Realiza una solicitud PATCH con el cuerpo (body) que contiene el ID
+        return this.http.patch<any>(`${this.url}/delete`, body);
+      }
     // Para crear un producto
     guardarProducto(product: any): Observable<any> {
         return this.http.post(`${this.url}/create`, product);
@@ -31,7 +34,8 @@ export class ProductService {
         return this.http.get(this.url + id);
     }
     // editar
-    editarProducto(id: string, producto: Producto): Observable<any> {
-        return this.http.put(this.url + id, producto);
+    editarProducto(id: number, toUpdate: any): Observable<any> {
+        const body = {id: id, ...toUpdate}
+        return this.http.patch<any>(`${this.url}/update`, body);
     }
 }

@@ -1,14 +1,16 @@
 /* sidebar.component.css */
 
 .sidebar {
-  background-color: #2c3e50; /* Cambia el color de fondo a tu preferencia */
-  width: 250px; /* Ancho de la barra lateral */
-  height: 100%; /* Altura completa */
+  background-color: #2c3e50;
+  width: 15%;
+  height: 100vh;
   position: fixed;
   top: 0;
   left: 0;
-  overflow-y: auto; /* Agrega desplazamiento vertical si es necesario */
-  color: white
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  color: white;
 }
 
 .sidebar ul {
@@ -112,22 +114,22 @@
 }
 
 .dropdown-menu {
-  position: absolute;
-  background-color: #2c3e50; /* Cambia el color de fondo del menú */
-  box-shadow: none; /* Elimina la sombra del menú */
-  border: none; /* Elimina el borde del menú */
+  position: static; /* Cambiado de 'absolute' a 'static' */
+  background-color: #2c3e50;
+  box-shadow: none;
+  border: none;
   margin: 0;
   padding: 0;
   list-style: none;
-  border-radius: 0; /* Elimina el borde redondeado */
-  top: 100%; /* Coloca el menú debajo del botón */
+  border-radius: 0;
+  top: 100%;
   left: 0;
-  width: 100%; /* Ocupa todo el ancho del contenedor */
+  width: 100%;
 }
 
 .dropdown-item {
   text-decoration: none;
-  color: #ecf0f1; /* Color de texto para los elementos del menú */
+  color: #ecf0f1;
   font-size: 16px;
   display: flex;
   align-items: center;
@@ -136,8 +138,9 @@
 }
 
 .dropdown-item:hover {
-  background-color: #34495e; /* Cambia el color de fondo al pasar el mouse */
+  background-color: #34495e;
 }
+
 
 /* sidebar.component.css */
 /* Estilo para el botón "Usuarios" */
@@ -167,6 +170,19 @@
   font-weight: bold; /* Agregado para resaltar el enlace activo */
 }
 
+.custom-dropdown-toggle {
+  text-decoration: none;
+  color: #ecf0f1; /* Color de texto para los botones de dropdown */
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  transition: background-color 0.3s;
+}
+
+.custom-dropdown-toggle:hover {
+  background-color: #34495e; /* Cambia el color de fondo al pasar el mouse */
+}
 
 /* .layout {
   display: flex;

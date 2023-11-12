@@ -1,32 +1,86 @@
+<div class="card2">
+  <p-table [value]="turns2"  [rows]="1" [resizableColumns]="true" [reorderableColumns]="true"
+  [filterMode]="'lenient'">
+  <ng-template pTemplate="header" let-columns>
+    <tr>
+      <th *ngFor="let col of columnas2" [pSortableColumn]="col.field">
+        {{ col.header }}
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-turn2>
+    <tr>
+      <td>{{ currentDate.format('HH:mm:ss DD-MM-yyyy') }}</td>
+      <td>{{ turn2.totalTurns }}</td>
+      <td>{{ turn2.reservedTurns }}</td>
+      <td>{{ turn2.availableTurns }}</td>
+      <td>{{ turn2.proximoCliente }}</td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="emptymessage">
+    <tr>
+      <td [attr.colspan]="columnas.length + 1">No hay turnos a mostrar.</td>
+    </tr>
+  </ng-template>
+</p-table>
+</div>
 <div class="container">
-  <app-sidebar></app-sidebar> 
-  <p-table [value]="timeSlots">
-    <ng-template pTemplate="header">
+  <app-sidebar></app-sidebar>
+  <div class="card">
+    <p-table [value]="turns" [rows]="15" [paginator]="true" [resizableColumns]="true" [reorderableColumns]="true"
+      [filterMode]="'lenient'">
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th *ngFor="let col of columnas" [pSortableColumn]="col.field">
+            {{ col.header }}
+            <p-sortIcon [field]="col.field"></p-sortIcon>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-turn>
+        <tr>
+          <td>{{ turn.dateFormatted }}</td>
+          <td>{{ turn?.client?.user?.firstName }} {{ turn?.client?.user?.lastName }}</td>
+          <td>{{ turn.turnStatus[0].turnStatusType.name }}</td>
+          <td>
+            <span class="pi pi-thumbs-up like-icon"></span>
+            <span class="pi pi-thumbs-down like-icon" (click)="aprobarTurno(turn.id)"></span>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td [attr.colspan]="columnas.length + 1">No hay turnos a mostrar.</td>
+        </tr>
+      </ng-template>
+    </p-table>
+    <p-messages></p-messages>
+  </div>
+  <table class="bkcl">
+    <thead>
       <tr>
         <th></th>
         <th *ngFor="let day of days">{{ day }}</th>
       </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-timeSlot>
-      <tr>
-        <td>{{ timeSlot.start }} - {{ timeSlot.end }}</td>
-        <td *ngFor="let dayType of days2">
-          <div>
-            <button pButton [id]="getButtonId(dayType, timeSlot.start, timeSlot.end)"
-              (click)="handleTimeClick(dayType, timeSlot.start, timeSlot.end)"
-              class="p-button-outlined"
-              [ngClass]="{
-                'p-button-success': !isAppointmentScheduled(dayType, timeSlot.start, timeSlot.end),
-                'p-button-warning': isAppointmentScheduled(dayType, timeSlot.start, timeSlot.end)
-              }"
-              [disabled]="reservedTimeSlots.has(getButtonId(dayType, timeSlot.start, timeSlot.end))">
-              {{ isAppointmentScheduled(dayType, timeSlot.start, timeSlot.end) ? 'Reservado' : 'Reservar' }}
-            </button>
-          </div>
-        </td>
-      </tr>
-    </ng-template>
-    <p-messages></p-messages>
-  </p-table>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let timeSlot of timeSlots">
+        <tr>
+          <td>{{ timeSlot.start }} - {{ timeSlot.end }}</td>
+          <td *ngFor="let dayType of days2">
+            <div>
+              <button mat-button [id]="getButtonId(dayType, timeSlot.start, timeSlot.end)"
+                (click)="handleTimeClick(dayType, timeSlot.start, timeSlot.end)"
+                [class.available-button]="!isAppointmentScheduled(dayType, timeSlot.start, timeSlot.end)"
+                [class.reserved-button]="isAppointmentScheduled(dayType, timeSlot.start, timeSlot.end)">
+                {{ isAppointmentScheduled(dayType, timeSlot.start, timeSlot.end) ? 'Reservado' : 'Reservar' }}
+              </button>
+            </div>
+          </td>
+        </tr>
+      </ng-container>
+    </tbody>
+    <p-messages [(value)]="messages" class="toast-messages" [enableService]="false" [closable]="true"></p-messages>
+  </table>
   <p-messages></p-messages>
 </div>

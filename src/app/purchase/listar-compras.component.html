@@ -15,7 +15,7 @@
               <input pInputText type="text" (input)="filterGlobal($event)" placeholder="Buscar..." />
             </span>
             <button class="btn btn-danger float-end" routerLink="/dashboard">VOLVER</button>
-            <button class="btn btn-success float-end" routerLink="/crear-producto">NUEVO</button>
+            <button class="btn btn-success float-end" routerLink="/crear-compra">NUEVO</button>
           </div>
         </ng-template>
         <ng-template pTemplate="header" let-columns>
@@ -36,10 +36,6 @@
             <td>{{ purchaseRecord.supplier.user.firstName}}</td>
             <td>{{ purchaseRecord.product.name }}</td>
             <td>{{ purchaseRecord.product.code }}</td>
-            <td>
-              <!-- <i [routerLink]="['/editar-producto', producto._id]" class="fa-solid fa-pen-to-square text-primary"></i>
-              <i (click)="eliminarProducto(producto._id)" class="fa-solid fa-trash text-danger"></i> -->
-            </td>
           </tr>
         </ng-template>
         <ng-template pTemplate="emptymessage">
