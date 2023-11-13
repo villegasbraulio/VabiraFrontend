@@ -48,7 +48,6 @@ export class ReportesComponent implements OnInit {
       this.reportesService.getUsersCountByRole().subscribe(data => {
         this.rolesData = data;
         this.configureChartOptions();
-
       })}
         console.log(this.rolesData)
         this.reportesService.getSupplierSchedules(this.username).subscribe(schedules => {
