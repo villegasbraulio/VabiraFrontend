@@ -69,6 +69,7 @@ import { ListarComprasComponent } from './purchase/listar-compras.component';
 import { NotificacionesComponent } from './notificaciones/notificaciones.component';
 import { CrearCompraComponent } from './purchase/crear-purchase/crear-compra.component';
 import { MultiSelectModule } from 'primeng/multiselect';
+import { BackupComponent } from './backup/backup.component';
 
 @NgModule({
 
@@ -106,6 +107,7 @@ import { MultiSelectModule } from 'primeng/multiselect';
     ReportesComponent,
     ClienteComponent,
     NotificacionesComponent,
+    BackupComponent,
   ],
   providers: [
     MessageService,

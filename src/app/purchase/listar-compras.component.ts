@@ -24,7 +24,7 @@ export class ListarComprasComponent implements OnInit {
     this.purchaseRecord = [];
     this.columnas = [
       { field: 'id', header: 'ID' },
-      { field: 'purchaseRecord.product.name', header: 'Nombre de los productos' },
+      { field: 'purchaseRecord.product.description', header: 'Descripcion de los productos' },
       { field: 'purchaseRecord.purchaseDateTime', header: 'Fecha de compra' },
       { field: 'purchaseRecord.purchaseAmount', header: 'Monto total' },
       { field: 'purchaseRecord.supplier.user.firstName', header: 'Proveedor que realizo la venta' },
