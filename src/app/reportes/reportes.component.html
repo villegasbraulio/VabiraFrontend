@@ -15,7 +15,7 @@
   
     <div *ngIf="userRoles === 'user,supplier'" class="card">
       <div class="card-header">
-        Estadísticas de Turnos
+        Cantidad de turnos reservados por agenda
       </div>
   
       <div class="card-body">
@@ -25,7 +25,27 @@
       <button class="btn btn-primary" (click)="descargarExcel()">Descargar Datos</button>
     </div>
 
-    <button class="btn btn-primary" (click)="descargarExceladmin()">Descargar Datos</button>
+    <div *ngIf="userRoles === 'user,supplier'" class="card">
+      <div class="card-header">
+        Estadisticas de agendas
+      </div>
+    
+      <div class="card-body">
+        <p-dropdown
+          [options]="schedules"
+          [(ngModel)]="selectedSchedule"
+          optionLabel="name"
+          placeholder="Selecciona una agenda"
+          (onChange)="loadSupplierData()"
+        ></p-dropdown>
+
+        <p-chart [type]="'bar'" [data]="supplierChartData" [options]="supplierChartOptions"></p-chart>
+        
+      </div>
+      <button class="btn btn-primary" (click)="descargarExcelPorAgenda()">Descargar datos de Agenda</button>
+
+    </div>
+
     <p-messages></p-messages>
   </div>
   <p-messages></p-messages>

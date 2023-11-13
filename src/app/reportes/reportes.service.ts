@@ -11,7 +11,8 @@ export class ReportesService {
   private apiUrl = 'http://localhost:3000/api/turn/findAssignTurnsForSchedule?scheduleId=';
   private userUrl = 'http://localhost:3000/api/users/all'
   private token = localStorage.getItem('token'); // Variable para almacenar el token
-
+  private supplierSchedulesUrl = 'http://localhost:3000/api/schedule/findAllForSupplier?Id=';
+  private supplierTurnsUrl = 'http://localhost:3000/api/turn/fillTurns?idSchedule=';
 
   constructor(private http: HttpClient) { }
 
@@ -87,6 +88,19 @@ export class ReportesService {
     )
   }
     
+  // Nuevo método para obtener las agendas del proveedor
+  getSupplierSchedules(username: string): Observable<any[]> {
+    return this.http.get<any[]>(this.supplierSchedulesUrl + username);
+  }
 
+  // Nuevo método para obtener los datos de turnos del proveedor
+  getSupplierTurns(scheduleId: number): Observable<any> {
+    return this.http.get<any>(this.supplierTurnsUrl + scheduleId);
+  }
+
+  getExcelDataBySchedule(scheduleId: number): Observable<any> {
+    const url = `http://localhost:3000/api/turn/fillTurns?idSchedule=${scheduleId}`;
+    return this.http.get<any>(url);
+  }
 
 }

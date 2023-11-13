@@ -26,6 +26,10 @@ export class ReportesComponent implements OnInit {
     }
   };
   chartOptions2: any;
+  supplierChartData: any;
+  supplierChartOptions: any;
+  selectedSchedule: any;
+  schedules: any[] = [];
 
   constructor(private reportesService: ReportesService, private userService: UserService) { }
 
@@ -44,9 +48,18 @@ export class ReportesComponent implements OnInit {
         this.rolesData = data;
         this.configureChartOptions();
         console.log(this.rolesData)
+        this.reportesService.getSupplierSchedules(this.username).subscribe(schedules => {
+          this.schedules = schedules;
+          // Seleccionar la primera agenda por defecto
+          if (this.schedules.length > 0) {
+            this.selectedSchedule = this.schedules[0];
+            this.loadSupplierData();
+          }
+        });
       });
     });
   }
+  
 
   loadData(): void {
     this.reportesService.getReportes(this.username).subscribe(data => {
@@ -68,6 +81,7 @@ export class ReportesComponent implements OnInit {
       };
     });
   }
+  
 
 
   configureChartOptions(): void {
@@ -118,4 +132,53 @@ export class ReportesComponent implements OnInit {
     XLSX.utils.book_append_sheet(wb, ws, 'Usuarios');
     XLSX.writeFile(wb, 'usuarios.xlsx');
   }
-}
+  
+    loadSupplierData(): void {
+      if (this.selectedSchedule) {
+        this.reportesService.getSupplierTurns(this.selectedSchedule.id).subscribe(data => {
+          this.supplierChartData = {
+            labels: ['Reservados', 'Disponibles', 'Presentes', 'Ausentes'],
+            datasets: [
+              {
+                data: [data.reservedTurns, data.availableTurns, data.aproveTurns, data.desaproveTurns],
+                backgroundColor: ['#FF00FF', '#00FFFF', '#FFA500', '#008000']
+              }
+            ]
+          };
+        });
+      }
+    }
+  
+    descargarExcelPorAgenda(): void {
+      if (this.selectedSchedule) {
+        this.reportesService.getExcelDataBySchedule(this.selectedSchedule.id).subscribe(excelData => {
+          const formattedData = excelData.reservedTurns2.map((turn: any) => ({ // <-- Especifica el tipo 'any' aquí
+            'ID Turno': turn.id,
+            'Fecha inicio turno': turn.dateFrom,
+            'Fecha fin turno': turn.dateTo,
+            'Cliente': turn.client ? `${turn.client.user.firstName} ${turn.client.user.lastName}` : 'N/A',
+            'Dia': turn.classDayType.name,
+            'Estado del turno': turn.turnStatus[0].turnStatusType.name
+          }));
+  
+          const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(formattedData, {
+            header: ['ID Turno', 'Fecha inicio turno', 'Fecha fin turno', 'Cliente', 'Dia', 'Estado del turno'],
+            skipHeader: true
+          });
+  
+          // Agregar un logo
+          ws['A1'] = { t: 's', v: 'ID Turno', s: { fill: { fgColor: { rgb: 'FFFF00' } } } };
+          ws['B1'] = { t: 's', v: 'Fecha inicio turno', s: { fill: { fgColor: { rgb: 'FFFF00' } } } };
+          ws['C1'] = { t: 's', v: 'Fecha fin turno', s: { fill: { fgColor: { rgb: 'FFFF00' } } } };
+          ws['D1'] = { t: 's', v: 'Cliente', s: { fill: { fgColor: { rgb: 'FFFF00' } } } };
+          ws['E1'] = { t: 's', v: 'Dia', s: { fill: { fgColor: { rgb: 'FFFF00' } } } };
+          ws['G1'] = { t: 's', v: 'Estado del turno', s: { fill: { fgColor: { rgb: 'FFFF00' } } } };
+          // ... (continuar para otras columnas)
+  
+          const wb: XLSX.WorkBook = XLSX.utils.book_new();
+          XLSX.utils.book_append_sheet(wb, ws, 'Datos');
+          XLSX.writeFile(wb, `Datos de la Agenda_${this.selectedSchedule.id}.xlsx -- VABIRA`);
+        });
+      }
+    }
+  }
