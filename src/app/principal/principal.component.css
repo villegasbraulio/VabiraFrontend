@@ -23,8 +23,12 @@ app-sidebar {
 }
 
 .image-container {
-  text-align: center; /* Centra horizontalmente el contenido de la imagen-container */
+  display: flex;
+  align-items: center; /* Centra verticalmente */
+  justify-content: center; /* Centra horizontalmente */
+  height: 100vh; /* Ajusta la altura al 100% de la altura de la ventana */
 }
+
 
 .image-container img {
   max-width: 100%;

@@ -9,6 +9,7 @@ import { Observable } from 'rxjs';
   export class ProveedorService {
   private baseUrl = 'http://localhost:3000/api/supplier'; // Reemplaza con la URL de tu backend
   private baseUrl2 = 'http://localhost:3000/api/schedule'; // Reemplaza con la URL de tu backend
+  
 
   constructor(private http: HttpClient) { }
 
@@ -18,6 +19,10 @@ import { Observable } from 'rxjs';
 
   obtenerProveedores2(): Observable<any[]> {
     return this.http.get<any[]>(`${this.baseUrl2}/findAllForSupplier`);
+  }
+
+  obtenerSupplierUserId(id: number): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/findOneUserId?id=${id}`);
   }
 
   obtenerProveedor(id: number): Observable<any> {
