@@ -44,9 +44,12 @@ export class ReportesComponent implements OnInit {
       console.log(this.userRoles)
       // Cargar los datos después de obtener el nombre del usuario
       this.loadData();
+      if (this.userRoles.includes('admin')) {
       this.reportesService.getUsersCountByRole().subscribe(data => {
         this.rolesData = data;
         this.configureChartOptions();
+
+      })}
         console.log(this.rolesData)
         this.reportesService.getSupplierSchedules(this.username).subscribe(schedules => {
           this.schedules = schedules;
@@ -56,7 +59,7 @@ export class ReportesComponent implements OnInit {
             this.loadSupplierData();
           }
         });
-      });
+      // });
     });
   }
   
