@@ -3,7 +3,6 @@
   <div class="content">
     <h1>Gestion de Productos</h1>
     <div class="card">
-      <button class="btn btn-danger float-end" routerLink="/dashboard">VOLVER</button>
       <p-table [value]="productosAgrupados" dataKey="id" [tableStyle]="{ 'min-width': '60rem' }">
         <ng-template pTemplate="header">
           <tr>
@@ -22,9 +21,9 @@
           <tr>
             <td>
               <button type="button" pButton pRipple [pRowToggler]="product"
-                class="p-button-text p-button-rounded p-button-plain"
-                [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"
-                (click)="toggleExpand(product)"></button>
+              class="p-button-text p-button-rounded p-button-plain"
+              [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"
+              (click)="toggleExpand(product)"></button>
             </td>
             <td>{{ product.id }}</td>
             <td>{{ product.name }}</td>
@@ -35,7 +34,7 @@
             <td>{{ product.quantity }}</td>
             <td>
               <button pButton icon="pi pi-trash" (click)="eliminarProducto(product.id)"
-                class="p-button-rounded p-button-primary"></button>
+              class="p-button-rounded p-button-primary"></button>
             </td>
           </tr>
           <p-messages></p-messages>
@@ -67,7 +66,7 @@
                     <td>{{ relatedProduct.Product_Prize | currency: 'USD' }}</td>
                     <td>
                       <button pButton icon="pi pi-trash" (click)="eliminarProducto(relatedProduct.Product_Id)"
-                        class="p-button-rounded p-button-primary"></button>
+                      class="p-button-rounded p-button-primary"></button>
                     </td>
                   </tr>
                 </ng-template>
@@ -86,6 +85,7 @@
       <p-messages></p-messages>
     </div>
     <p-messages></p-messages>
+    <button class="btn btn-danger float-end" routerLink="/listar-compras">VOLVER</button>
   </div>
   <p-messages></p-messages>
 </div>

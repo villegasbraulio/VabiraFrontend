@@ -36,6 +36,27 @@ app-sidebar {
   flex: 1;
   padding: 20px;
   overflow: auto;
+  width: calc(100% - 250px); /* Adjust based on your sidebar width */
 }
+
+.p-multiselect-panel {
+  z-index: 1000; /* Adjust as needed */
+}
+
+.card {
+  width: 100%; /* Adjust as needed */
+  max-width: 600px; /* Set a maximum width for the card */
+  margin: 0 auto; /* Center the card */
+}
+
+.card-body {
+  padding: 30px; /* Adjust as needed to increase the padding */
+}
+
+.p-dropdown-panel {
+  z-index: 1000; /* Adjust as needed */
+}
+
+
 
 
