@@ -102,7 +102,10 @@ export class FaqComponent implements OnInit {
     this.faqEdit = null;
     this.mostrarFormEditar = false;
     this.mostrarForm = false;
+  }
 
+  MostrarMensaje() {
+    this.messageService.add({ severity: 'success', summary: 'Mensaje Enviado', detail: 'Tu pregunta ha sido enviada correctamente.' });
   }
 
   mostrarMensaje(severidad: string, resumen: string, detalle: string) {

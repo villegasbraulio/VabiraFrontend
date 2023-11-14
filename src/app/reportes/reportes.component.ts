@@ -127,7 +127,7 @@ export class ReportesComponent implements OnInit {
         labels: this.agendas.map(agenda => agenda.nombre ),
         datasets: [
           {
-            label: 'Cantidad de Turnos',
+            label: 'Cantidad de Turnos reservados',
             data: this.agendas.map(agenda => agenda.cantidadTurnos), // Cantidad de turnos reservados por agenda
             backgroundColor: ['#FF00FF', '#00FFFF']
           }
