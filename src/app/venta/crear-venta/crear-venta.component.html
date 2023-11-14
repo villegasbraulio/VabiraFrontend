@@ -9,14 +9,6 @@
                             <span class="titulo">{{titulo | uppercase }}</span>
                             <form class="mt-3" [formGroup]="ventaForm" (ngSubmit)="agregarVenta()">
                                 <div class="mb-3">
-                                    <input type="date" formControlName="saleDateTime" class="form-control form-control-lg"
-                                        placeholder="Fecha">
-                                    <div class="text-danger"
-                                        *ngIf="ventaForm.get('saleDateTime')?.hasError('required') && ventaForm.get('saleDateTime')?.touched">
-                                        <span>La fecha <strong>es obligatoria</strong></span>
-                                    </div>
-                                </div>
-                                <div class="mb-3">
                                     <p-multiSelect formControlName="producto" aria-placeholder="Productos"
                                         [options]="products" [style]="{'width': '100%'}"
                                         optionLabel="name">
@@ -24,6 +16,14 @@
                                             <div>{{ product.name }} - {{ product.code }}</div>
                                         </ng-template>
                                     </p-multiSelect>
+                                </div>
+                                <div class="mb-3">
+                                    <input type="date" formControlName="saleDateTime" class="form-control form-control-lg"
+                                        placeholder="Fecha">
+                                    <div class="text-danger"
+                                        *ngIf="ventaForm.get('saleDateTime')?.hasError('required') && ventaForm.get('saleDateTime')?.touched">
+                                        <span>La fecha <strong>es obligatoria</strong></span>
+                                    </div>
                                 </div>
                                 <div class="mb-3">
                                     <select formControlName="client" class="form-control form-control-lg" id="client" (change)="onClientChange()">
