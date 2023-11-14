@@ -194,6 +194,7 @@ export class ReportesComponent implements OnInit {
             labels: ['Reservados', 'Disponibles', 'Presentes', 'Ausentes'],
             datasets: [
               {
+                label: 'Turnos por agenda',
                 data: [data.reservedTurns, data.availableTurns, data.aproveTurns, data.desaproveTurns],
                 backgroundColor: ['#FF00FF', '#00FFFF', '#FFA500', '#008000']
               }
