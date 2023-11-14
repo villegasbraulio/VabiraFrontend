@@ -4,11 +4,11 @@
     <app-sidebar></app-sidebar>
   </div>
   <div id="bkcl" class="content">
-    <p-messages></p-messages>
 
-    <div class="search-container">
+
+    <!-- <div class="search-container">
       <input type="text" placeholder="Buscar...">
-    </div>
+    </div> -->
     <button *ngIf="profileTypes.includes('admin')"  class="alta-faq-button" (click)="mostrarFormulario()">Alta FAQ</button>
 
     <p-dialog  header="{{ mostrarFormEditar ? 'Editar FAQ' : 'Nueva FAQ' }}" [(visible)]="mostrarForm || mostrarFormEditar"
@@ -57,6 +57,7 @@
         <div class="form-actions">
           <button type="submit" (click)="MostrarMensaje()">Enviar</button>
         </div>
+        <p-messages></p-messages>
       </form>
     </div>
   </div>

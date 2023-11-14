@@ -9,7 +9,7 @@
   <p>Descripción: {{ companyDescription }}</p>
   <button (click)="openEditDialog()" *ngIf="profileTypes.includes('admin')">Editar datos</button>
 </div>
-  <button class="manage-profiles" *ngIf="profileTypes.includes('admin')">Administrar perfiles</button>
+  <!-- <button class="manage-profiles" *ngIf="profileTypes.includes('admin')">Administrar perfiles</button> -->
   <form *ngIf="editing" (submit)="saveChanges()">
     <h2>Editar datos de la compañía</h2>
     <label>

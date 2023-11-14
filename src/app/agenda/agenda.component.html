@@ -13,7 +13,7 @@
         <td>{{ turn2.totalTurns }}</td>
         <td>{{ turn2.reservedTurns }}</td>
         <td>{{ turn2.availableTurns }}</td>
-        <td>{{ turn2.proximoCliente }}</td>
+        <td *ngIf="profileTypes.includes('supplier')">{{ turn2.proximoCliente }}</td>
         <td *ngIf="profileTypes.includes('supplier')">{{ turn2.aproveTurns }}</td>
         <td *ngIf="profileTypes.includes('supplier')">{{ turn2.desaproveTurns }}</td>
       </tr>

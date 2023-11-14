@@ -142,7 +142,6 @@ export class AgendaComponent implements OnInit {
             { field: 'turn2.totalTurns', header: 'Turnos de la agenda' },
             { field: 'turn2.reservedTurns', header: 'Turnos Reservados' },
             { field: 'turn2.availableTurns', header: 'Turnos Disponibles' },
-            { field: 'proximoCliente', header: 'Proximo cliente' },
           ];
         }
         if (this.profileTypes.includes('client')) {
@@ -217,6 +216,9 @@ export class AgendaComponent implements OnInit {
             }
           }
           this.turns2[0].proximoCliente = proximoCliente;
+          console.log(this.turns2);
+          console.log(this.turns2[0].proximoCliente);
+          
         } else {
           console.error('Estructura de datos inesperada:', data);
         }

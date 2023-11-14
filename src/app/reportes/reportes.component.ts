@@ -41,9 +41,9 @@ export class ReportesComponent implements OnInit {
       this.username = profile.username;
       this.userid = profile.id
       this.userRoles = profile.roles
-      console.log(this.username)
-      console.log(this.userid)
-      console.log(this.userRoles)
+      // console.log(this.username)
+      // console.log(this.userid)
+      // console.log(this.userRoles)
       // Cargar los datos después de obtener el nombre del usuario
       this.loadData();
       if (this.userRoles.includes('admin')) {
