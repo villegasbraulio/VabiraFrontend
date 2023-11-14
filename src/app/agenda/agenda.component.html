@@ -13,9 +13,9 @@
         <td>{{ turn2.totalTurns }}</td>
         <td>{{ turn2.reservedTurns }}</td>
         <td>{{ turn2.availableTurns }}</td>
-        <td>{{ turn2.aproveTurns }}</td>
-        <td>{{ turn2.desaproveTurns }}</td>
         <td>{{ turn2.proximoCliente }}</td>
+        <td *ngIf="profileTypes.includes('supplier')">{{ turn2.aproveTurns }}</td>
+        <td *ngIf="profileTypes.includes('supplier')">{{ turn2.desaproveTurns }}</td>
       </tr>
     </ng-template>
     <ng-template pTemplate="emptymessage">
@@ -43,7 +43,7 @@
           <td>{{ turn.dateFormatted }}</td>
           <td>{{ turn?.client?.user?.firstName }} {{ turn?.client?.user?.lastName }}</td>
           <td>{{ turn.turnStatus[0].turnStatusType.name }}</td>
-          <td>
+          <td *ngIf="profileTypes.includes('supplier')">
             <span class="pi pi-thumbs-up like-icon"  (click)="aprobarTurno(turn.id)"></span>
             <span class="pi pi-thumbs-down like-icon" (click)="desaprobarTurno(turn.id)"></span>
           </td>
@@ -86,5 +86,4 @@
     </tbody>
     <p-messages [(value)]="messages" class="toast-messages" [enableService]="false" [closable]="true"></p-messages>
   </table>
-  <p-messages></p-messages>
 </div>

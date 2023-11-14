@@ -21,9 +21,11 @@ interface Column {
 export class AgendaComponent implements OnInit {
   @ViewChild('dt1') dataTable: Table | null = null;
   turns: any[];
-  columnas: any[];
+  columnas: any[] = [];
+  usuario: any;
+  profileTypes: any[] = [];
   turns2: any[];
-  columnas2: any[];
+  columnas2: any[] = [];
   days: { name: string; monthDay: string }[] = [];
   days2: string[] = [];
   currentDate = moment();
@@ -43,23 +45,28 @@ export class AgendaComponent implements OnInit {
     private activatedRoute: ActivatedRoute, private confirmationService: ConfirmationService) {
 
     this.turns = [];
-    this.columnas = [
-      { field: 'turn.dateFrom', header: 'Hora' },
-      { field: 'turn?.client.user.firstName', header: 'Nombre' },
-      { field: 'turn.turnStatus.turnStatusType.name', header: 'Estado' },
-      { field: 'acciones', header: 'Acciones' },
-    ];
 
     this.turns2 = [];
-    this.columnas2 = [
-      { field: 'currentDate', header: 'Fecha y Hora Actual' },
-      { field: 'turn2.totalTurns', header: 'Turnos de la agenda' },
-      { field: 'turn2.reservedTurns', header: 'Turnos Reservados' },
-      { field: 'turn2.availableTurns', header: 'Turnos Disponibles' },
-      { field: 'turn2.aproveTurns', header: 'Turnos Presentes' },
-      { field: 'turn2.desaproveTurns', header: 'Turnos Ausentes' },
-      { field: 'proximoCliente', header: 'Proximo cliente' },
-    ];
+
+    // if(this.profileTypes.includes('supplier')){
+    //   this.columnas2 = [
+    //     { field: 'currentDate', header: 'Fecha y Hora Actual' },
+    //     { field: 'turn2.totalTurns', header: 'Turnos de la agenda' },
+    //     { field: 'turn2.reservedTurns', header: 'Turnos Reservados' },
+    //     { field: 'turn2.availableTurns', header: 'Turnos Disponibles' },
+    //     { field: 'proximoCliente', header: 'Proximo cliente' },
+    //     { field: 'turn2.aproveTurns', header: 'Turnos Presentes' },
+    //     { field: 'turn2.desaproveTurns', header: 'Turnos Ausentes' },
+    //   ];
+    // } else {
+    //   this.columnas2 = [
+    //     { field: 'currentDate', header: 'Fecha y Hora Actual' },
+    //     { field: 'turn2.totalTurns', header: 'Turnos de la agenda' },
+    //     { field: 'turn2.reservedTurns', header: 'Turnos Reservados' },
+    //     { field: 'turn2.availableTurns', header: 'Turnos Disponibles' },
+    //     { field: 'proximoCliente', header: 'Proximo cliente' },
+    //   ];
+    // }
   }
 
   ngOnInit(): void {
@@ -106,6 +113,59 @@ export class AgendaComponent implements OnInit {
         this.cargarTurnos2();
       });
     });
+
+    this.userService.obtenerPerfil().subscribe(
+      (data: any) => {
+        this.usuario = data;
+        const p: string[] = [];
+        const roles = this.usuario.roles.split(',');
+        if (this.usuario?.roles) {
+          for (const role of roles) {
+            p.push(role);
+          }
+        }
+        this.profileTypes = p;
+
+        if (this.profileTypes.includes('supplier')) {
+          this.columnas2 = [
+            { field: 'currentDate', header: 'Fecha y Hora Actual' },
+            { field: 'turn2.totalTurns', header: 'Turnos de la agenda' },
+            { field: 'turn2.reservedTurns', header: 'Turnos Reservados' },
+            { field: 'turn2.availableTurns', header: 'Turnos Disponibles' },
+            { field: 'proximoCliente', header: 'Proximo cliente' },
+            { field: 'turn2.aproveTurns', header: 'Turnos Presentes' },
+            { field: 'turn2.desaproveTurns', header: 'Turnos Ausentes' },
+          ];
+        } else {
+          this.columnas2 = [
+            { field: 'currentDate', header: 'Fecha y Hora Actual' },
+            { field: 'turn2.totalTurns', header: 'Turnos de la agenda' },
+            { field: 'turn2.reservedTurns', header: 'Turnos Reservados' },
+            { field: 'turn2.availableTurns', header: 'Turnos Disponibles' },
+            { field: 'proximoCliente', header: 'Proximo cliente' },
+          ];
+        }
+        if (this.profileTypes.includes('client')) {
+          this.columnas = [
+            { field: 'turn.dateFrom', header: 'Hora' },
+            { field: 'turn?.client.user.firstName', header: 'Nombre' },
+            { field: 'turn.turnStatus.turnStatusType.name', header: 'Estado' },
+          ];
+        } else {
+          this.columnas = [
+            { field: 'turn.dateFrom', header: 'Hora' },
+            { field: 'turn?.client.user.firstName', header: 'Nombre' },
+            { field: 'turn.turnStatus.turnStatusType.name', header: 'Estado' },
+            { field: 'acciones', header: 'Acciones' },
+          ];
+        }
+      },
+      (error) => {
+        console.error('Error al obtener los datos del usuario:', error);
+      }
+    );
+
+
   }
 
   updateCurrentDate2() {
@@ -121,6 +181,7 @@ export class AgendaComponent implements OnInit {
         };
       });
 
+      this.turns.sort((a, b) => moment(a.dateFrom).diff(moment(b.dateFrom)));
       if (this.dataTable) {
         this.dataTable.reset();
       }
@@ -238,147 +299,142 @@ export class AgendaComponent implements OnInit {
     }
   }
 
-    loadReservedAndAvailableTurns() {
-      this.agendaService.obtenerTurnosReservadosPorAgenda(this.agendaId).subscribe((reservedTurns) => {
-        this.reservedTimeSlots = new Set<string>();
-        reservedTurns.forEach((reservedTurn) => {
-          if (reservedTurn.classDayType && reservedTurn.dateFrom && reservedTurn.dateTo) {
-            const buttonId = this.getButtonId(reservedTurn.classDayType.name, reservedTurn.dateFrom, reservedTurn.dateTo);
-            this.reservedTimeSlots.add(buttonId);
-          }
-        });
-        this.updateButtonStates();
+  loadReservedAndAvailableTurns() {
+    this.agendaService.obtenerTurnosReservadosPorAgenda(this.agendaId).subscribe((reservedTurns) => {
+      this.reservedTimeSlots = new Set<string>();
+      reservedTurns.forEach((reservedTurn) => {
+        if (reservedTurn.classDayType && reservedTurn.dateFrom && reservedTurn.dateTo) {
+          const buttonId = this.getButtonId(reservedTurn.classDayType.name, reservedTurn.dateFrom, reservedTurn.dateTo);
+          this.reservedTimeSlots.add(buttonId);
+        }
       });
+      this.updateButtonStates();
+    });
 
-      this.agendaService.obtenerTurnosDisponiblesPorAgenda(this.agendaId).subscribe((availableTurns) => {
-        this.availableTimeSlots = new Set<string>();
-        availableTurns.forEach((availableTurn) => {
-          if (availableTurn.classDayType && availableTurn.dateFrom && availableTurn.dateTo) {
-            const buttonId = this.getButtonId(availableTurn.classDayType.name, availableTurn.dateFrom, availableTurn.dateTo);
-            this.availableTimeSlots.add(buttonId);
-          }
-        });
-        this.updateButtonStates();
+    this.agendaService.obtenerTurnosDisponiblesPorAgenda(this.agendaId).subscribe((availableTurns) => {
+      this.availableTimeSlots = new Set<string>();
+      availableTurns.forEach((availableTurn) => {
+        if (availableTurn.classDayType && availableTurn.dateFrom && availableTurn.dateTo) {
+          const buttonId = this.getButtonId(availableTurn.classDayType.name, availableTurn.dateFrom, availableTurn.dateTo);
+          this.availableTimeSlots.add(buttonId);
+        }
       });
+      this.updateButtonStates();
+    });
 
-      this.agendaService.obtenerTurnosAprobadosPorAgenda(this.agendaId).subscribe((aproveTurns) => {
-        this.aproveTimeSlots = new Set<string>();
-        aproveTurns.forEach((aproveTurn) => {
-          console.log('aca', aproveTurns);
-          
-          if (aproveTurn.classDayType && aproveTurn.dateFrom && aproveTurn.dateTo) {
-            const buttonId = this.getButtonId(aproveTurn.classDayType.name, aproveTurn.dateFrom, aproveTurn.dateTo);
-            this.aproveTimeSlots.add(buttonId);
-          }
-        });
-        this.updateButtonStates();
+    this.agendaService.obtenerTurnosDesaprobadosPorAgenda(this.agendaId).subscribe((desaproveTurns) => {
+      this.desaproveTimeSlots = new Set<string>();
+      desaproveTurns.forEach((desaproveTurn) => {
+        if (desaproveTurn.classDayType && desaproveTurn.dateFrom && desaproveTurn.dateTo) {
+          const buttonId = this.getButtonId(desaproveTurn.classDayType.name, desaproveTurn.dateFrom, desaproveTurn.dateTo);
+          this.desaproveTimeSlots.add(buttonId);
+        }
       });
+      this.updateButtonStates();
+    });
 
-      this.agendaService.obtenerTurnosDesaprobadosPorAgenda(this.agendaId).subscribe((desaproveTurns) => {
-        this.desaproveTimeSlots = new Set<string>();
-        desaproveTurns.forEach((desaproveTurn) => {
-          if (desaproveTurn.classDayType && desaproveTurn.dateFrom && desaproveTurn.dateTo) {
-            const buttonId = this.getButtonId(desaproveTurn.classDayType.name, desaproveTurn.dateFrom, desaproveTurn.dateTo);
-            this.desaproveTimeSlots.add(buttonId);
-          }
-        });
-        this.updateButtonStates();
+    this.agendaService.obtenerTurnosAprobadosPorAgenda(this.agendaId).subscribe((aproveTurns) => {
+      this.aproveTimeSlots = new Set<string>();
+      aproveTurns.forEach((aproveTurn) => {
+
+        if (aproveTurn.classDayType && aproveTurn.dateFrom && aproveTurn.dateTo) {
+          const buttonId = this.getButtonId(aproveTurn.classDayType.name, aproveTurn.dateFrom, aproveTurn.dateTo);
+          this.aproveTimeSlots.add(buttonId);
+        }
       });
-    }
+      this.updateButtonStates();
+    });
+  }
 
-    updateButtonStates() {
-      for (const timeSlot of this.timeSlots) {
-        for (const dayType of this.days2) {
-          const buttonId = this.getButtonId(dayType, timeSlot.start, timeSlot.end);
-          console.log('this.reservedTimeSlots', this.reservedTimeSlots);
-          console.log('this.availableTimeSlots', this.availableTimeSlots);
-          console.log('this.desaproveTimeSlots', this.desaproveTimeSlots);
-          console.log('this.aproveTimeSlots', this.aproveTimeSlots);
-          
-          if (this.reservedTimeSlots.has(buttonId)) {
-            this.buttonStates[buttonId] = 'Reservado';
-          } else if (this.availableTimeSlots.has(buttonId)) {
-            this.buttonStates[buttonId] = 'Reservar';
-          } else if (this.desaproveTimeSlots.has(buttonId)){
-            this.buttonStates[buttonId] = 'Ausente'
-          } else {
-            this.buttonStates[buttonId] = 'Presente'
-          }
+  updateButtonStates() {
+    for (const timeSlot of this.timeSlots) {
+      for (const dayType of this.days2) {
+        const buttonId = this.getButtonId(dayType, timeSlot.start, timeSlot.end);
+
+        if (this.reservedTimeSlots.has(buttonId)) {
+          this.buttonStates[buttonId] = 'Reservado';
+        } else if (this.availableTimeSlots.has(buttonId)) {
+          this.buttonStates[buttonId] = 'Reservar';
+        } else if (this.desaproveTimeSlots.has(buttonId)) {
+          this.buttonStates[buttonId] = 'Ausente'
+        } else {
+          this.buttonStates[buttonId] = 'Presente'
         }
       }
-    }
-
-    getButtonId(classDayType: any, dateFrom: string, dateTo: string): string {
-      return `${classDayType}-${dateFrom}-${dateTo}`;
-    }
-
-    loadAllTurns() {
-      this.agendaService.obtenerTurnosPorAgenda(this.agendaId).subscribe((allTurns) => {
-        allTurns.forEach((turn) => {
-          const buttonId = this.getButtonId(turn.classDayType.name, turn.startTime, turn.endTime);
-          if (turn.client != this.clientId) {
-            this.buttonStates[buttonId] = 'Reservado';
-          } else if (turn.client === this.clientId) {
-            this.buttonStates[buttonId] = 'Reservado';
-          } else {
-            this.buttonStates[buttonId] = 'Reservar';
-          }
-        });
-      });
-    }
-
-    generateTimeSlots() {
-      if (this.scheduleData && this.scheduleData.turn) {
-        this.timeSlots = [];
-        for (const turn of this.scheduleData.turn) {
-          const startTime = moment(turn.dateFrom).format('hh:mm A');
-          const endTime = moment(turn.dateTo).format('hh:mm A');
-          const timeSlot = { start: startTime, end: endTime };
-          if (!this.timeSlots.some(ts => ts.start === timeSlot.start && ts.end === timeSlot.end)) {
-            this.timeSlots.push(timeSlot);
-          }
-        }
-      }
-    }
-
-    aprobarTurno(id: number) {
-      this.agendaService.aprobarTurno(id).subscribe((data: any) => {
-        this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'El turno se ha anotado como presente correctamente.' });
-        this.cargarTurnos(); // Agregar para actualizar las tablas
-        this.cargarTurnos2(); // Agregar para actualizar las tablas
-        this.loadReservedAndAvailableTurns();
-      });
-
-    }
-
-    desaprobarTurno(id: number) {
-      this.agendaService.desaprobarTurno(id).subscribe((data: any) => {
-        this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'El turno se ha anotado como ausente correctamente.' });
-        this.cargarTurnos(); // Agregar para actualizar las tablas
-        this.cargarTurnos2(); // Agregar para actualizar las tablas
-        this.loadReservedAndAvailableTurns();
-      });
-
-    }
-
-    isAppointmentScheduled(dayType: any, start: string, end: string): boolean {
-      if (!this.scheduleData || !this.scheduleData.turn) {
-        return false;
-      }
-      return this.scheduleData.turn.some((turn: any) => {
-        return turn.classDayType.name === dayType && this.isTimeWithinRange(start, end, turn.dateFrom, turn.dateTo);
-      });
-    }
-
-    isTimeWithinRange(checkStart: string, checkEnd: string, rangeStart: string, rangeEnd: string): boolean {
-      const momentCheckStart = moment(checkStart, 'hh:mm A');
-      const momentCheckEnd = moment(checkEnd, 'hh:mm A');
-      const momentRangeStart = moment(rangeStart);
-      const momentRangeEnd = moment(rangeEnd);
-      return momentCheckStart.isSameOrAfter(momentRangeStart) && momentCheckEnd.isBefore(momentRangeEnd);
-    }
-
-    updateCurrentDate() {
-      this.currentDate = moment();
     }
   }
+
+  getButtonId(classDayType: any, dateFrom: string, dateTo: string): string {
+    return `${classDayType}-${dateFrom}-${dateTo}`;
+  }
+
+  loadAllTurns() {
+    this.agendaService.obtenerTurnosPorAgenda(this.agendaId).subscribe((allTurns) => {
+      allTurns.forEach((turn) => {
+        const buttonId = this.getButtonId(turn.classDayType.name, turn.startTime, turn.endTime);
+        if (turn.client != this.clientId) {
+          this.buttonStates[buttonId] = 'Reservado';
+        } else if (turn.client === this.clientId) {
+          this.buttonStates[buttonId] = 'Reservado';
+        } else {
+          this.buttonStates[buttonId] = 'Reservar';
+        }
+      });
+    });
+  }
+
+  generateTimeSlots() {
+    if (this.scheduleData && this.scheduleData.turn) {
+      this.timeSlots = [];
+      for (const turn of this.scheduleData.turn) {
+        const startTime = moment(turn.dateFrom).format('hh:mm A');
+        const endTime = moment(turn.dateTo).format('hh:mm A');
+        const timeSlot = { start: startTime, end: endTime };
+        if (!this.timeSlots.some(ts => ts.start === timeSlot.start && ts.end === timeSlot.end)) {
+          this.timeSlots.push(timeSlot);
+        }
+      }
+    }
+  }
+
+  aprobarTurno(id: number) {
+    this.agendaService.aprobarTurno(id).subscribe((data: any) => {
+      this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'El turno se ha anotado como presente correctamente.' });
+      this.cargarTurnos(); // Agregar para actualizar las tablas
+      this.cargarTurnos2(); // Agregar para actualizar las tablas
+      this.loadReservedAndAvailableTurns();
+    });
+
+  }
+
+  desaprobarTurno(id: number) {
+    this.agendaService.desaprobarTurno(id).subscribe((data: any) => {
+      this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'El turno se ha anotado como ausente correctamente.' });
+      this.cargarTurnos(); // Agregar para actualizar las tablas
+      this.cargarTurnos2(); // Agregar para actualizar las tablas
+      this.loadReservedAndAvailableTurns();
+    });
+
+  }
+
+  isAppointmentScheduled(dayType: any, start: string, end: string): boolean {
+    if (!this.scheduleData || !this.scheduleData.turn) {
+      return false;
+    }
+    return this.scheduleData.turn.some((turn: any) => {
+      return turn.classDayType.name === dayType && this.isTimeWithinRange(start, end, turn.dateFrom, turn.dateTo);
+    });
+  }
+
+  isTimeWithinRange(checkStart: string, checkEnd: string, rangeStart: string, rangeEnd: string): boolean {
+    const momentCheckStart = moment(checkStart, 'hh:mm A');
+    const momentCheckEnd = moment(checkEnd, 'hh:mm A');
+    const momentRangeStart = moment(rangeStart);
+    const momentRangeEnd = moment(rangeEnd);
+    return momentCheckStart.isSameOrAfter(momentRangeStart) && momentCheckEnd.isBefore(momentRangeEnd);
+  }
+
+  updateCurrentDate() {
+    this.currentDate = moment();
+  }
+}
