@@ -45,7 +45,7 @@ export class LoginComponent {
         this.userService.verificarToken().subscribe((isAuthenticated) => {
           if (isAuthenticated) {
               if(roles.includes('admin')){
-                this.router.navigate(['/reportes']);
+                this.router.navigate(['/principal']);
               } else {
                 this.router.navigate(['/principal']);
               }
