@@ -70,6 +70,7 @@ import { NotificacionesComponent } from './notificaciones/notificaciones.compone
 import { CrearCompraComponent } from './purchase/crear-purchase/crear-compra.component';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { BackupComponent } from './backup/backup.component';
+import { TabViewModule } from 'primeng/tabview';
 
 @NgModule({
 
@@ -147,7 +148,8 @@ import { BackupComponent } from './backup/backup.component';
     AccordionModule,
     ChartModule,
     TabMenuModule,
-    CheckboxModule
+    CheckboxModule,
+    TabViewModule
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
