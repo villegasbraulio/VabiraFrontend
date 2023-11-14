@@ -232,7 +232,7 @@ export class ReportesComponent implements OnInit {
   
           const wb: XLSX.WorkBook = XLSX.utils.book_new();
           XLSX.utils.book_append_sheet(wb, ws, 'Datos');
-          XLSX.writeFile(wb, `Datos de la Agenda_${this.selectedSchedule.id}.xlsx -- VABIRA`);
+          XLSX.writeFile(wb, `Datos de la Agenda ${this.selectedSchedule.name}.xlsx -- VABIRA`);
         });
       }
     }
