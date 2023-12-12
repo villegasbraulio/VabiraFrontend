@@ -28,7 +28,7 @@
             <td>{{ product.id }}</td>
             <td>{{ product.name }}</td>
             <td>{{ product.brand }}</td>
-            <td>{{ product.code }}</td>
+            <td>{{ product.codeForBatch }}-{{ product.code }}</td>
             <td>{{ product.description }}</td>
             <td>{{ product.prize | currency: 'USD' }}</td>
             <td>{{ product.quantity }}</td>
@@ -61,7 +61,7 @@
                     <td>{{ relatedProduct.Product_Id }}</td>
                     <td>{{ relatedProduct.Product_Name }}</td>
                     <td>{{ relatedProduct.Product_Brand }}</td>
-                    <td>{{ relatedProduct.Product_Code }}</td>
+                    <td>{{ relatedProduct.Product_CodeForBatch }}-{{ relatedProduct.Product_Code }}</td>
                     <td>{{ relatedProduct.Product_Description }}</td>
                     <td>{{ relatedProduct.Product_Prize | currency: 'USD' }}</td>
                     <td>

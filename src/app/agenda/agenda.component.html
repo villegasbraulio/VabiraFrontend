@@ -43,7 +43,7 @@
           <td>{{ turn.dateFormatted }}</td>
           <td>{{ turn?.client?.user?.firstName }} {{ turn?.client?.user?.lastName }}</td>
           <td>{{ turn.turnStatus[0].turnStatusType.name }}</td>
-          <td *ngIf="profileTypes.includes('supplier')">
+          <td *ngIf="profileTypes.includes('supplier') || profileTypes.includes('admin')">
             <span class="pi pi-thumbs-up like-icon"  (click)="aprobarTurno(turn.id)"></span>
             <span class="pi pi-thumbs-down like-icon" (click)="desaprobarTurno(turn.id)"></span>
           </td>
