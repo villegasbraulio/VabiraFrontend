@@ -19,6 +19,7 @@ import { DatePipe } from '@angular/common';
 })
 export class TurneroComponent {
   @ViewChild(TimeRangeModalComponent) timeRangeModal?: TimeRangeModalComponent; // Agrega esta línea
+  isSign: boolean = false;
   scheduleData: any = {
     days: [], // Aquí almacenaremos los días seleccionados desde el frontend
     initialTurnDateTime: '', // Aquí almacenaremos la hora de inicio seleccionada desde el frontend
@@ -29,6 +30,7 @@ export class TurneroComponent {
     },
     dates: []
   };
+  sign: number = 0;
   supplierId: any;
   selectedDates: Date[] = [];
   selectedStartTime: NgbTimeStruct = { hour: 0, minute: 0, second: 0 };
