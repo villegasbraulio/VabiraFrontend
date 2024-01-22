@@ -7,11 +7,6 @@ import { ActivatedRoute } from '@angular/router';
 import { ConfirmationService, Message, MessageService } from 'primeng/api';
 import { Table } from 'primeng/table';
 
-interface Column {
-  field: string;
-  header: string;
-}
-
 @Component({
   selector: 'app-agenda',
   templateUrl: './agenda.component.html',
@@ -48,25 +43,6 @@ export class AgendaComponent implements OnInit {
 
     this.turns2 = [];
 
-    // if(this.profileTypes.includes('supplier')){
-    //   this.columnas2 = [
-    //     { field: 'currentDate', header: 'Fecha y Hora Actual' },
-    //     { field: 'turn2.totalTurns', header: 'Turnos de la agenda' },
-    //     { field: 'turn2.reservedTurns', header: 'Turnos Reservados' },
-    //     { field: 'turn2.availableTurns', header: 'Turnos Disponibles' },
-    //     { field: 'proximoCliente', header: 'Proximo cliente' },
-    //     { field: 'turn2.aproveTurns', header: 'Turnos Presentes' },
-    //     { field: 'turn2.desaproveTurns', header: 'Turnos Ausentes' },
-    //   ];
-    // } else {
-    //   this.columnas2 = [
-    //     { field: 'currentDate', header: 'Fecha y Hora Actual' },
-    //     { field: 'turn2.totalTurns', header: 'Turnos de la agenda' },
-    //     { field: 'turn2.reservedTurns', header: 'Turnos Reservados' },
-    //     { field: 'turn2.availableTurns', header: 'Turnos Disponibles' },
-    //     { field: 'proximoCliente', header: 'Proximo cliente' },
-    //   ];
-    // }
   }
 
   ngOnInit(): void {

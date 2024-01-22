@@ -26,6 +26,8 @@ export class TurneroComponent {
     finalTurnDateTime: '', // Aquí almacenaremos la hora de finalización seleccionada desde el frontend
     turnDuration: 30, // Aquí almacenaremos la duración del turno seleccionada desde el frontend
     name: '', // Aquí almacenaremos el nombre seleccionado desde el frontend
+    sign: 0,
+    hasSign: false,
     supplier: {
     },
     dates: []
@@ -63,10 +65,18 @@ export class TurneroComponent {
     try {
       // Luego, puedes continuar con la creación de la agenda y enviar los datos al servicio.
       if (this.scheduleData.initialTurnDateTime == '') {
-        console.error('Error el rango horario no fue seleccionado:');
         // Maneja el error de acuerdo a tus necesidades
-        this.showErrorMessage('Error: el rango horario no fue seleccionado');
+        this.showErrorMessage('El rango horario no fue seleccionado');
         return;
+      }
+      if(this.isSign === true){
+        this.scheduleData.hasSign = true
+        this.scheduleData.sign = this.sign
+        if (this.isSign && this.sign < 0) {
+          // Si la seña es negativa, muestra un mensaje de error y no continúa con la creación de la agenda
+          this.showErrorMessage('La seña no puede ser un número negativo.');
+          return;
+        }
       }
       this.scheduleData.supplier = this.supplierId
       console.log('scheduleData', this.scheduleData);

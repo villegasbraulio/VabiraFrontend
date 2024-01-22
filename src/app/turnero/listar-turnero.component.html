@@ -30,6 +30,7 @@
             <td>{{ schedule.supplier.user.firstName }}</td>
             <td>{{ schedule.supplier.user.lastName }}</td>
             <td>{{ schedule.name }}</td>
+            <td>{{ schedule.signStatusText }}</td>
             <td>
               <span class="pi pi-calendar agenda-icon" (click)="navigateToDashboard(schedule.id)"></span>
               <span class="pi pi-trash trash-icon" (click)="eliminarAgenda(schedule.id)"></span>
