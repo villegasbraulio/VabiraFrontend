@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, tap } from 'rxjs';
+import { Observable, catchError, tap } from 'rxjs';
 import { NotificacionesService } from '../notificaciones/notificaciones.service'; // Importa el servicio de notificaciones
 
 @Injectable({
@@ -55,10 +55,19 @@ export class AgendaService {
     return this.http.get<any>(`${this.baseUrl}/findOne?id=${id}`);
   }
 
+
   agendarTurno(id: number, toUpdate: any): Observable<any> {
     const body = { id, ...toUpdate };
-    return this.http.patch<any>(`${this.baseUrl2}/assignTurn`, body)
+    return this.http.patch<any>(`${this.baseUrl2}/assignTurn`, body).pipe(
+      catchError((error) => {
+        if (error.error.message === 'No se puede asignar el turno hasta que la seña esté pagada') {
+          // Aquí abres el modal con el enlace a MercadoPago
+        }
+        throw error;
+      })
+    );
   }
+  
 
   aprobarTurno(id: number): Observable<any> {
     const body = { id };

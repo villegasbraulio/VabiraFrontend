@@ -6,6 +6,9 @@ import { UserService } from '../users/users.service';
 import { ActivatedRoute } from '@angular/router';
 import { ConfirmationService, Message, MessageService } from 'primeng/api';
 import { Table } from 'primeng/table';
+import { MercadoPagoModalComponent } from './mercadopagomodal.component';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+
 
 @Component({
   selector: 'app-agenda',
@@ -15,6 +18,7 @@ import { Table } from 'primeng/table';
 })
 export class AgendaComponent implements OnInit {
   @ViewChild('dt1') dataTable: Table | null = null;
+  private mercadoPagoModalRef: NgbModalRef | undefined;
   turns: any[];
   columnas: any[] = [];
   usuario: any;
@@ -37,7 +41,8 @@ export class AgendaComponent implements OnInit {
 
   constructor(private dialog: MatDialog, private messageService: MessageService,
     private agendaService: AgendaService, private userService: UserService,
-    private activatedRoute: ActivatedRoute, private confirmationService: ConfirmationService) {
+    private activatedRoute: ActivatedRoute, private confirmationService: ConfirmationService,
+    private modalService: NgbModal) {
 
     this.turns = [];
 
@@ -194,7 +199,7 @@ export class AgendaComponent implements OnInit {
           this.turns2[0].proximoCliente = proximoCliente;
           console.log(this.turns2);
           console.log(this.turns2[0].proximoCliente);
-          
+
         } else {
           console.error('Estructura de datos inesperada:', data);
         }
@@ -255,7 +260,12 @@ export class AgendaComponent implements OnInit {
         this.cargarTurnos(); // Agregar para actualizar las tablas
         this.cargarTurnos2(); // Agregar para actualizar las tablas
         this.loadReservedAndAvailableTurns();
-      });
+        },
+        (error) => {
+          this.mercadoPagoModalRef = this.modalService.open(MercadoPagoModalComponent, { size: 'lg' });
+          this.mercadoPagoModalRef.componentInstance.mercadoPagoLink = 'https://www.mercadopago.com/';
+        }
+      );
     } else if (this.desaproveTimeSlots.has(`${dayType}-${start}-${end}`)) {
       this.agendaService.aprobarTurno(id).subscribe((data: any) => {
         this.aproveTimeSlots.add(`${dayType}-${start}-${end}`);

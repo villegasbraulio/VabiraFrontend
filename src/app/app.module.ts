@@ -71,6 +71,7 @@ import { CrearCompraComponent } from './purchase/crear-purchase/crear-compra.com
 import { MultiSelectModule } from 'primeng/multiselect';
 import { BackupComponent } from './backup/backup.component';
 import { TabViewModule } from 'primeng/tabview';
+import { MercadoPagoModalComponent } from './agenda/mercadopagomodal.component';
 
 @NgModule({
 
@@ -109,6 +110,7 @@ import { TabViewModule } from 'primeng/tabview';
     ClienteComponent,
     NotificacionesComponent,
     BackupComponent,
+    MercadoPagoModalComponent
   ],
   providers: [
     MessageService,
