@@ -148,6 +148,14 @@ export class AgendaComponent implements OnInit {
 
   }
 
+  handleTurnClick(turnoId: number): void {
+    console.log('turnoid: ', turnoId);
+    
+    turnoId = this.turns[0]?.id;
+    this.agendaService.guardarIdTurnoSeleccionado(turnoId);
+  }
+  
+
   updateCurrentDate2() {
     this.currentDate = moment();
   }
@@ -266,7 +274,14 @@ export class AgendaComponent implements OnInit {
           this.mercadoPagoModalRef.componentInstance.mercadoPagoLink = 'https://www.mercadopago.com/';
         }
       );
-    } else if (this.desaproveTimeSlots.has(`${dayType}-${start}-${end}`)) {
+    } else if(this.availableTimeSlots.has(`${dayType}-${start}-${end}`)){
+        this.reservedTimeSlots.add(`${dayType}-${start}-${end}`);
+        this.messages = [{ severity: 'success', summary: 'Éxito', detail: 'Turno reservado sin seña con éxito' }];
+        this.buttonStates[this.getButtonId(dayType, start, end)] = 'Reservado s/seña';
+        this.cargarTurnos(); // Agregar para actualizar las tablas
+        this.cargarTurnos2(); // Agregar para actualizar las tablas
+        this.loadReservedAndAvailableTurns();
+    }else if (this.desaproveTimeSlots.has(`${dayType}-${start}-${end}`)) {
       this.agendaService.aprobarTurno(id).subscribe((data: any) => {
         this.aproveTimeSlots.add(`${dayType}-${start}-${end}`);
         this.messages = [{ severity: 'success', summary: 'Éxito', detail: 'Turno registrado como presente con éxito' }];
@@ -284,7 +299,7 @@ export class AgendaComponent implements OnInit {
         this.cargarTurnos2(); // Agregar para actualizar las tablas
         this.loadReservedAndAvailableTurns();
       });
-    }
+    } 
   }
 
   loadReservedAndAvailableTurns() {

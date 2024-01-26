@@ -72,10 +72,12 @@
             <div>
               <button mat-button [id]="getButtonId(dayType, timeSlot.start, timeSlot.end)"
                 (click)="handleTimeClick(dayType, timeSlot.start, timeSlot.end)"
+                (click)="handleTurnClick(turns[0]?.id)"
                 [class.available-button]="buttonStates[getButtonId(dayType, timeSlot.start, timeSlot.end)] === 'Reservar'"
                 [class.reserved-button]="buttonStates[getButtonId(dayType, timeSlot.start, timeSlot.end)] === 'Reservado'"
                 [class.present-button]="buttonStates[getButtonId(dayType, timeSlot.start, timeSlot.end)] === 'Presente'"
                 [class.ausent-button]="buttonStates[getButtonId(dayType, timeSlot.start, timeSlot.end)] === 'Ausente'"
+                [class.await-button]="buttonStates[getButtonId(dayType, timeSlot.start, timeSlot.end)] === 'Reservado s/seña'"
                 [ngClass]="{'red-button': buttonStates[getButtonId(dayType, timeSlot.start, timeSlot.end)] === 'Reservado'}">
                 {{ buttonStates[getButtonId(dayType, timeSlot.start, timeSlot.end)] }}
               </button>
