@@ -1,6 +1,6 @@
-// second-modal.component.ts
 import { Component, Input } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-second-modal',
@@ -25,7 +25,10 @@ export class SecondModalComponent {
   closeModal(): void {
     // Puedes realizar acciones adicionales antes de cerrar el modal si es necesario
     this.modalService.dismissAll();
+    
+    // Recarga la página actual
+    window.location.reload();
   }
 
-  constructor(private modalService: NgbModal) {}
+  constructor(private modalService: NgbModal, private location: Location) {}
 }

@@ -2,6 +2,11 @@
   <p-table [value]="turns2" [rows]="1" [resizableColumns]="true" [reorderableColumns]="true" [filterMode]="'lenient'">
     <ng-template pTemplate="header" let-columns>
       <tr>
+        <th *ngIf="alias" [attr.colspan]="columnas2.length + 1" class="alias-header">
+          Datos de la cuenta de MercadoPago - Alias: {{ alias }}, Seña a abonar: ${{initialAmount}}
+        </th>
+      </tr>
+      <tr>
         <th *ngFor="let col of columnas2" [pSortableColumn]="col.field">
           {{ col.header }}
         </th>

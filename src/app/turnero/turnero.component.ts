@@ -28,11 +28,13 @@ export class TurneroComponent {
     name: '', // Aquí almacenaremos el nombre seleccionado desde el frontend
     sign: 0,
     hasSign: false,
+    alias: '',
     supplier: {
     },
     dates: []
   };
   sign: number = 0;
+  alias: string = '';
   supplierId: any;
   selectedDates: Date[] = [];
   selectedStartTime: NgbTimeStruct = { hour: 0, minute: 0, second: 0 };
@@ -72,9 +74,15 @@ export class TurneroComponent {
       if(this.isSign === true){
         this.scheduleData.hasSign = true
         this.scheduleData.sign = this.sign
-        if (this.isSign && this.sign < 0) {
+        this.scheduleData.alias = this.alias
+        if (this.isSign && (this.sign < 0 || this.sign === 0) ) {
           // Si la seña es negativa, muestra un mensaje de error y no continúa con la creación de la agenda
-          this.showErrorMessage('La seña no puede ser un número negativo.');
+          this.showErrorMessage('La seña no puede ser un número negativo o igual a cero.');
+          return;
+        }
+        if (this.isSign && this.alias === '') {
+          // Si la seña es negativa, muestra un mensaje de error y no continúa con la creación de la agenda
+          this.showErrorMessage('El alias es un campo requerido.');
           return;
         }
       }

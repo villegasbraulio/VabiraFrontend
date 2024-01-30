@@ -47,7 +47,7 @@
     <li class="sidebar-group">
       <div>
         <a *ngIf="profileTypes.includes('supplier') || profileTypes.includes('client')" routerLink="/notificaciones">
-          <i class="material-icons">notifications</i> Notificaciones
+          <i class="material-icons">notifications</i> Notificaciones <span *ngIf="profileTypes.includes('supplier')" class="badge bg-secondary">{{quantity}}</span>
         </a>
       </div>
       <div>

@@ -24,9 +24,7 @@ export class NotificacionesComponent implements OnInit {
   constructor(private notificacionesService: NotificacionesService,
     private datePipe: DatePipe,
     private messageService: MessageService,
-    private userService: UserService,
-    private clienteService: ClienteService,
-    private proveedorService: ProveedorService) { }
+    private userService: UserService,) { }
 
   ngOnInit(): void {
     this.userService.obtenerPerfil().subscribe(profile => {
@@ -62,28 +60,17 @@ export class NotificacionesComponent implements OnInit {
 
     this.notificacionesService.getAlertsClient(this.clienteIdFound).subscribe(alerts => {
       for (const alert of alerts) {
+
         // Verificar si el cliente de la alerta coincide con el cliente del usuario
         if (alert.turn.client.id === this.clienteIdFound) {
-          for (const alert of alerts) {
-            // Verificar si el cliente de la alerta coincide con el cliente del usuario
-            if (alert.turn.client.id === this.clienteIdFound) {
-              console.log('ID del cliente de la alerta:', alert.turn.client.id);
-              console.log('ID de la alerta:', alert.id);
-              console.log('Nombre de la alerta:', alert.name);
-              console.log('Descripción de la alerta:', alert.description);
-              console.log('Fecha de inicio del turno:', alert.turn.dateFrom);
-              console.log('Fecha de fin del turno:', alert.turn.dateTo);
+          const mensaje = `Tienes un turno próximo el ${this.datePipe.transform(alert.turn.dateFrom, 'dd/MM/yyyy HH:mm')}.`;
 
-              const mensaje = `Tienes un turno próximo el ${this.datePipe.transform(alert.turn.dateFrom, 'dd/MM/yyyy HH:mm')}.`;
-
-              // Agregar mensaje utilizando el servicio MessageService de PrimeNG
-              this.messageService.add({
-                severity: 'info',
-                summary: 'Turno Próximo',
-                detail: mensaje
-              });
-            }
-          }
+          // Agregar mensaje utilizando el servicio MessageService de PrimeNG
+          this.messageService.add({
+            severity: 'info',
+            summary: 'Turno Próximo',
+            detail: mensaje
+          });
         }
       }
     });
@@ -94,34 +81,31 @@ export class NotificacionesComponent implements OnInit {
 
     this.notificacionesService.getAlertsSupplier(this.supplierIdFound).subscribe(alerts => {
       for (const alert of alerts) {
-        console.log('alertas: ', alerts);
-        
         // Verificar si el cliente de la alerta coincide con el proveedor del usuario
+        // Verificar si el cliente de la alerta coincide con el cliente del usuario
         if (alert.turn.schedule.supplier.id === this.supplierIdFound) {
-          for (const alert of alerts) {
-            console.log('alertas2: ', alerts);
-            // Verificar si el cliente de la alerta coincide con el cliente del usuario
-            if (alert.turn.schedule.supplier.id === this.supplierIdFound) {
-              console.log('ID del cliente de la alerta:', alert.turn.client.id);
-              console.log('ID de la alerta:', alert.id);
-              console.log('Nombre de la alerta:', alert.name);
-              console.log('Descripción de la alerta:', alert.description);
-              console.log('Fecha de inicio del turno:', alert.turn.dateFrom);
-              console.log('Fecha de fin del turno:', alert.turn.dateTo);
-
-              // ... Mostrar otras propiedades según la estructura de tu objeto alerta ...
-              const nombreAgenda = alert.turn.schedule.name;
-
-              const mensaje = `Tienes un turno próximo el ${this.datePipe.transform(alert.turn.dateFrom, 'dd/MM/yyyy HH:mm')}, en la agenda ${nombreAgenda}`;
-
-              // Agregar mensaje utilizando el servicio MessageService de PrimeNG
-              this.messageService.add({
-                severity: 'info',
-                summary: 'Turno Próximo',
-                detail: mensaje
-              });
-            }
+          // ... Mostrar otras propiedades según la estructura de tu objeto alerta ...
+          const nombreAgenda = alert.turn.schedule.name;
+          if(!alert.turn.schedule.hasSign){
+            const mensaje = `Tienes un turno próximo el ${this.datePipe.transform(alert.turn.dateFrom, 'dd/MM/yyyy HH:mm')}, en la agenda ${nombreAgenda}.
+            Con el/la cliente ${alert.turn.client.user.lastName}, ${alert.turn.client.user.firstName}`;
+            this.messageService.add({
+              severity: 'info',
+              summary: 'Turno Próximo',
+              detail: mensaje
+            });
+          } else {
+            const mensaje = `Tienes un turno próximo el ${this.datePipe.transform(alert.turn.dateFrom, 'dd/MM/yyyy HH:mm')}
+            Con el/la cliente ${alert.turn.client.user.lastName}, ${alert.turn.client.user.firstName}`;
+            this.messageService.add({
+              severity: 'info',
+              summary: 'Turno Próximo',
+              detail: mensaje
+            });
           }
+
+          // Agregar mensaje utilizando el servicio MessageService de PrimeNG
+          
         }
       }
     });

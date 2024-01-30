@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { MercadoPagoService } from './mercadopagomodal.service';
 import { UserService } from '../users/users.service';
@@ -12,6 +12,8 @@ import { SecondModalComponent } from './secondmodal.component';
 })
 export class MercadoPagoModalComponent implements OnInit {
   clientId: any;
+  @Input() selectedTurnId: any; // Nueva propiedad para recibir el ID del turno seleccionado
+
   constructor(private modalService: NgbModal, private mercadoPagoService: MercadoPagoService, private userService: UserService,
     private agendaService: AgendaService) {}
 
@@ -31,11 +33,10 @@ export class MercadoPagoModalComponent implements OnInit {
   }
 
   closeModal2(): void {
-    // Obtiene el ID del turno seleccionado desde el servicio AgendaService
-    const idTurnoSeleccionado = this.agendaService.obtenerIdTurnoSeleccionado();
-    console.log('idTurnoSeleccionado: ',idTurnoSeleccionado);
+    // Obtiene el ID del turno seleccionado desde el componente padre
+    const idTurnoSeleccionado = this.selectedTurnId;
+    console.log('idTurnoSeleccionado: ', idTurnoSeleccionado);
     console.log('this.clientId: ', this.clientId.id);
-    
 
     // Lógica para manejar el cambio de estado del turno a "Espera de Seña"
     this.agendaService.agendarTurnoDeSeña(idTurnoSeleccionado, this.clientId.id).subscribe(
