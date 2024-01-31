@@ -1,7 +1,15 @@
-<app-sidebar></app-sidebar>
-
-<div class="container">
-
-<p-messages [closable]="true"></p-messages>
-
+<div class="layout">
+    <app-sidebar></app-sidebar>
+    <div class="content">
+        <p-messages [closable]="true" severity="info" *ngFor="let message of messageAlerts">
+            <ng-template pTemplate > 
+                <div class="ml-2">
+                    {{message.message}}
+                </div>
+                <div class="card flex justify-content-center gap-3" *ngIf="message.flag === true">
+                    <a href="http://localhost:4200/agenda/{{message.id}}" target="_blank" id="colorNavigate" rel="noopener noreferrer" class="p-button font-bold">Ir a revisar seña</a>
+                </div>
+            </ng-template>
+        </p-messages>
+    </div>
 </div>

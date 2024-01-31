@@ -1,5 +1,22 @@
-.container {
+.layout {
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+}
 
-  
-    margin-left: 240px;
-  }
+app-sidebar {
+  flex: 0 0 auto;
+  width: 250px;
+  color: white;
+}
+
+/* Estilos para el contenido principal */
+.content {
+  flex: 1;
+  padding: 20px;
+  overflow: auto;
+}
+
+#colorNavigate{
+  background-color: white;
+}

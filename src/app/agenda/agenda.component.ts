@@ -68,7 +68,7 @@ export class AgendaComponent implements OnInit {
       this.agendaService.obtenerAgenda(this.agendaId).subscribe((data) => {
         this.scheduleData = data;
         this.alias = this.scheduleData.alias
-        this.initialAmount = this.scheduleData.turn[0].sign.initialAmount
+        this.initialAmount = this.scheduleData.turn[0]?.sign.initialAmount
         if (this.scheduleData && this.scheduleData.turn) {
           this.days = this.scheduleData.turn
             .reduce((uniqueDays: string[], turn: any) => {
