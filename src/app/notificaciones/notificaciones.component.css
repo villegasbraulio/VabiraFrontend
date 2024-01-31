@@ -1,5 +1,89 @@
-.container {
+.layout {
+  display: flex;
+  flex-direction: row;
+  overflow: hidden;
+}
 
-  
-    margin-left: 240px;
-  }
+app-sidebar {
+  flex: 0 0 auto;
+  width: 250px;
+  color: white;
+}
+
+.content {
+  flex: 1;
+  padding: 20px;
+  overflow: auto;
+}
+
+.p-message {
+  margin: 0;
+  padding: 0.5em;
+  border-radius: 4px;
+  position: relative;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  /* Añade sombra para resaltar */
+}
+
+.p-message-info {
+  background-color: #90ade4;
+  /* Cambiado a un tono de azul más claro */
+  color: #ffffff;
+  /* Cambiado a un tono de azul más oscuro */
+  border: 1px solid #92c5de;
+  /* Ajustado el color del borde */
+  font-size: 18px;
+  /* Ajustado el tamaño del texto */
+  padding: 1em;
+  /* Aumentado el espacio interno del mensaje */
+}
+
+.p-message-close-icon {
+  cursor: pointer;
+  position: absolute;
+  top: 1em;
+  /* Ajustado la posición superior */
+  right: 1em;
+  /* Ajustado la posición derecha */
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  /* Ajustado el tamaño del ícono de cierre */
+  color: #ffffff;
+}
+
+button:not(:last-child) {
+  margin-right: 1em; /* Añadido espacio entre los botones, excepto para el último */
+}
+
+/**/
+
+.p-message-content {
+  display: flex;
+  align-items: center;
+}
+
+.p-message-icon {
+  margin-right: 1em; /* Ajustado el margen derecho para acercar al customMessage */
+}
+
+.custom-message {
+  flex-grow: 1; /* Hace que el customMessage ocupe el espacio restante */
+  margin-right: 1em; /* Ajustado el margen derecho para dejar espacio entre el customMessage y los botones */
+}
+
+button {
+  margin-left: 1em; /* Añadido espacio entre los botones y el customMessage */
+  margin-right: 1em; /* Añadido espacio entre los botones y el customMessage */
+  padding: 0.5em 1em; /* Aumentado el espacio interno de los botones */
+  font-size: 16px; /* Ajustado el tamaño de los botones */
+  background-color: #5bc0de; /* Ajustado el color de fondo de los botones */
+  color: #fff; /* Ajustado el color del texto de los botones */
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #31b0d5; /* Cambiado el color de fondo al pasar el ratón */
+}

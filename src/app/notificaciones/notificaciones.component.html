@@ -1,7 +1,19 @@
-<app-sidebar></app-sidebar>
-
-<div class="container">
-
-<p-messages [closable]="true"></p-messages>
-
-</div>
+<div class="layout">
+    <app-sidebar></app-sidebar>
+    <div class="content">
+        <div class="p-message p-message-info">
+            <div class="p-message-content">
+                <span class="p-message-icon pi pi-info-circle"></span>
+                <ng-container *ngIf="customMessage; else defaultContent" class="custom-message">
+                    {{ customMessage }}
+                </ng-container>
+                <ng-template #defaultContent class="custom-message">
+                    <ng-content></ng-content>
+                </ng-template>
+                <button class="p-message-close-icon pi pi-times" (click)="onButtonClickClose()"
+                    [closable]="true"></button>
+                <button (click)="onButtonClick()">Recibi mi Seña</button>
+                <button (click)="onButtonClick()">No recibi mi Seña</button>
+            </div>
+        </div>
+    </div>
