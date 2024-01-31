@@ -38,8 +38,8 @@
             <td>{{ clientAddress.address.address }}</td>
             <td>{{ client.user.dni }}</td>
             <td>
-              <img src="../../assets/lapiz.png" (click)="abrirModalEdicion(client)" class="icono-accion reducir-imagen" />
-              <img src="../../assets/tacho.jpg" (click)="eliminarUsuario(client.id)" class="icono-accion reducir-imagen" />
+              <button pButton icon="pi pi-pencil" (click)="abrirModalEdicion(client)" class="p-button-rounded p-button-warning"></button>
+              <button pButton icon="pi pi-trash" (click)="eliminarUsuario(client.id)" class="p-button-rounded p-button-danger"></button>
             </td>
           </tr>
         </ng-template>

@@ -16,9 +16,9 @@
       <p><strong>Fecha de Registro:</strong> {{ userProfileData.createdAt | date: 'dd/MM/yyyy' }}</p>
      </div>
 
-      <div class="avatar-container">
+      <!-- <div class="avatar-container">
         <img class="avatar" [src]="userProfileData.avatar" alt="Foto de perfil">
-      </div>
+      </div> -->
     </mat-card>
 
     <button pButton type="button" label="Actualizar Información Personal" class="edit-button" (click)="showEditDialog()"></button>

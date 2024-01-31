@@ -3,15 +3,15 @@
   <div class="sidebar">
     <app-sidebar></app-sidebar>
   </div>
-  <div class="content">
-    <p-messages></p-messages>
+  <div id="bkcl" class="content">
 
-    <div class="search-container">
+
+    <!-- <div class="search-container">
       <input type="text" placeholder="Buscar...">
-    </div>
-    <button class="alta-faq-button" (click)="mostrarFormulario()">Alta FAQ</button>
+    </div> -->
+    <button *ngIf="profileTypes.includes('admin')"  class="alta-faq-button" (click)="mostrarFormulario()">Alta FAQ</button>
 
-    <p-dialog header="{{ mostrarFormEditar ? 'Editar FAQ' : 'Nueva FAQ' }}" [(visible)]="mostrarForm || mostrarFormEditar"
+    <p-dialog  header="{{ mostrarFormEditar ? 'Editar FAQ' : 'Nueva FAQ' }}" [(visible)]="mostrarForm || mostrarFormEditar"
             [modal]="true" [responsive]="true" [style]="{width: '50vw'}">
       <form (submit)="guardarFaq($event)">
         <div class="form-group">
@@ -33,8 +33,8 @@
       <p-accordion>
         <p-accordionTab *ngFor="let faq of faqs" [header]="faq.name" [expanded]="faq.expanded">
           <p>{{ faq.description }}</p>
-          <button pButton icon="pi pi-pencil" (click)="editarFaq(faq)"></button>
-          <button pButton icon="pi pi-trash" (click)="eliminarFaq(faq.id)"></button>
+          <button *ngIf="profileTypes.includes('admin')" pButton icon="pi pi-pencil" (click)="editarFaq(faq)"></button>
+          <button *ngIf="profileTypes.includes('admin')" pButton icon="pi pi-trash" (click)="eliminarFaq(faq.id)"></button>
         </p-accordionTab>
       </p-accordion>
     </div>
@@ -55,8 +55,9 @@
           <textarea id="pregunta" name="pregunta" required></textarea>
         </div>
         <div class="form-actions">
-          <button type="submit">Enviar</button>
+          <button type="submit" (click)="MostrarMensaje()">Enviar</button>
         </div>
+        <p-messages></p-messages>
       </form>
     </div>
   </div>

@@ -15,7 +15,6 @@ import { AgendaComponent } from './agenda/agenda.component';
 //ventas
 import { ListarVentasComponent } from './venta/listar-ventas/listar-ventas.component';
 import { CrearVentaComponent } from './venta/crear-venta/crear-venta.component';
-import { VisualizarVentaComponent } from './venta/visualizar-venta/visualizar-venta.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { FaqComponent } from './faq/faq.component';
 import { SettingsComponent } from './settings/settings.component';
@@ -24,6 +23,7 @@ import { ClienteComponent } from './cliente/cliente.component';
 import { ListarComprasComponent } from './purchase/listar-compras.component';
 import { NotificacionesComponent } from './notificaciones/notificaciones.component';
 import { CrearCompraComponent } from './purchase/crear-purchase/crear-compra.component';
+import { BackupComponent } from './backup/backup.component';
 
 const routes: Routes = [
 
@@ -56,10 +56,10 @@ const routes: Routes = [
   {path: 'crear-venta', component: CrearVentaComponent},
   { path: 'crear-compra', component: CrearCompraComponent },
   {path: 'editar-venta', component: CrearVentaComponent},
-  {path: 'visualizar-venta', component: VisualizarVentaComponent},
 
   { path: 'reportes', component: ReportesComponent }, // Ruta para el componente de reportes
   { path: 'notificaciones', component: NotificacionesComponent},
+  { path: 'backup', component: BackupComponent},
 
   // esta linea va siempre al final, para q cualquier URL invalida siempre direcciona al ppio
   {path: '**', redirectTo: '', pathMatch:'full'},

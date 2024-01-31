@@ -24,11 +24,10 @@ export class ListarComprasComponent implements OnInit {
     this.purchaseRecord = [];
     this.columnas = [
       { field: 'id', header: 'ID' },
-      { field: 'purchaseRecord.product.name', header: 'Nombre' },
-      { field: 'purchaseRecord.product.code', header: 'Codigo' },
+      { field: 'purchaseRecord.product.description', header: 'Descripcion de los productos' },
       { field: 'purchaseRecord.purchaseDateTime', header: 'Fecha de compra' },
       { field: 'purchaseRecord.purchaseAmount', header: 'Monto total' },
-      { field: 'purchaseRecord.supplier.user.firstName', header: 'Proveedor que realizo la venta' },
+      { field: 'purchaseRecord.supplier.user.firstName', header: 'Proveedor que realizo la compra' },
       { field: 'acciones', header: 'Acciones' },
     ];
   }
@@ -48,12 +47,33 @@ export class ListarComprasComponent implements OnInit {
       }
       // Asignar datos a this.schedules después de las verificaciones
       this.purchaseRecord = data;
+      console.log(this.purchaseRecord );
+      
       if (this.dataTable) {
         this.dataTable.reset();
       }
     });
   }
   
+  downloadPDF(id: number) {
+    // Llamar al servicio para descargar el PDF
+    this.purchaseService.descargarPDF(id).subscribe(
+      (data: any) => {
+        const blob = new Blob([data], { type: 'application/pdf' });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        document.body.appendChild(a);
+        a.style.display = 'none';
+        a.href = url;
+        a.download = `orden_compra_${id}.pdf`;
+        a.click();
+        window.URL.revokeObjectURL(url);
+      },
+      (error) => {
+        console.error('Error al descargar el PDF:', error);
+      }
+    );
+  }
   // eliminarUsuario(id: number) {
   //   // Llama al método del servicio para eliminar el usuario por su ID
   //   this.userService.eliminarUsuario(id).subscribe((data: any) => {

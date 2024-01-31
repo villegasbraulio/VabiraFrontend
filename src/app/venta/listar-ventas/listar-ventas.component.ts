@@ -53,14 +53,34 @@ export class ListarVentasComponent implements OnInit {
       }
     });
   }
+
+  downloadPDF(id: number) {
+    // Llamar al servicio para descargar el PDF
+    this.ventaService.descargarPDF(id).subscribe(
+      (data: any) => {
+        const blob = new Blob([data], { type: 'application/pdf' });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        document.body.appendChild(a);
+        a.style.display = 'none';
+        a.href = url;
+        a.download = `orden_venta_${id}.pdf`;
+        a.click();
+        window.URL.revokeObjectURL(url);
+      },
+      (error) => {
+        console.error('Error al descargar el PDF:', error);
+      }
+    );
+  }
   
-  // eliminarUsuario(id: number) {
-  //   // Llama al método del servicio para eliminar el usuario por su ID
-  //   this.userService.eliminarUsuario(id).subscribe((data: any) => {
-  //     // Puedes realizar acciones adicionales después de eliminar el usuario, si es necesario.
-  //     this.reloadPage(); // Recarga la página después de eliminar el usuario
-  //   });
-  // }
+  eliminarVenta(id: number) {
+    // Llama al método del servicio para eliminar el usuario por su ID
+    this.ventaService.eliminarVenta(id).subscribe((data: any) => {
+      // Puedes realizar acciones adicionales después de eliminar el usuario, si es necesario.
+      this.reloadPage(); // Recarga la página después de eliminar el usuario
+    });
+  }
   
   // editarUsuario(id: number, toUpdate:any) {
   //   // Llama al método del servicio para eliminar el usuario por su ID

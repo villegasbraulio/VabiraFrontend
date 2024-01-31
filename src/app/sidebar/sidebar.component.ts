@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from '../users/users.service';
+import { NotificacionesService } from '../notificaciones/notificaciones.service';
 
 @Component({
   selector: 'app-sidebar',
@@ -9,12 +10,15 @@ import { UserService } from '../users/users.service';
 })
 export class SidebarComponent {
   usuario: any;
+  usuario2: any;
+  quantity: any = 0;
   userName: string = '';
   userRole: string = '';
   isCollapseOpenMap: { [key: string]: boolean } = {}; // Un objeto para rastrear el estado de los colapsos.
 
-  constructor(private router: Router, private userService: UserService) {
+  constructor(private router: Router, private userService: UserService, private notificacionesService: NotificacionesService) {
     this.usuario = null;
+    this.usuario2 = null;
   }
 
   profileTypes: string[] = []; // Almacena los datos del usuario en la variable 'usuario'
@@ -26,11 +30,24 @@ export class SidebarComponent {
         this.usuario = data;
         const p: string[] = [];
         const roles = this.usuario.roles.split(',');
+        if (this.usuario?.roles.includes('supplier')) {
+          this.userService.obtenerPerfil2().subscribe(
+            (data2: any) => {
+              this.usuario2 = data2;
+              this.notificacionesService.getAlertsSupplier(data2.supplier.id).subscribe(alerts => {
+                for (const alert of alerts) {
+                  if (alert.turn.schedule.supplier.id === data2.supplier.id) {
+                    this.quantity++ 
+                  }
+                }
+              })
+            });
+        }
         if (this.usuario?.roles) {
           for (const role of roles) {
             p.push(role);
           }
-        }       
+        }
         this.profileTypes = p;
         this.userName = data.username; // Asigna el nombre de usuario
         this.userRole = data.roles;
@@ -50,6 +67,8 @@ export class SidebarComponent {
         return 'Cliente';
       case 'user,admin':
         return 'Administrador';
+      case 'user,client,admin':
+        return 'Administrador, Cliente';
       default:
         return 'Desconocido';
     }

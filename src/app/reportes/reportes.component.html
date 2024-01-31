@@ -1,27 +1,80 @@
 <div class="layout">
   <app-sidebar></app-sidebar>
+  <div class="content">
 
-  <div *ngIf="userRoles === 'user,admin'" class="card">
-    <div class="card-header">
-      Estadísticas de Usuarios
-    </div>
+    <p-tabView>
+      <!-- Pestaña 1 -->
+      <p-tabPanel *ngIf="userRoles === 'user,admin'" header="Estadísticas de Usuarios">
+        <div class="card">
+          <div class="card-header">
+            Estadísticas de Usuarios
+          </div>
 
-    <div class="card-body">
-      <p-chart [type]="'pie'" [data]="chartData" [options]="chartOptions2"></p-chart>
-    </div>
+          <div class="card-body">
+            <p-chart [type]="'pie'" [data]="chartData" [options]="chartOptions2"></p-chart>
+          </div>
 
-    <button class="btn btn-primary" (click)="descargarExcel()">Descargar Datos</button>
+          <button class="btn btn-primary" (click)="descargarExcel()">Descargar Datos</button>
+        </div>
+      </p-tabPanel>
+
+      <p-tabPanel *ngIf="userRoles === 'user,admin'" header="Estadísticas de Ventas de productos">
+        <div class="card">
+          <div class="card-header">
+            Estadísticas de Ventas de productos
+          </div>
+
+ 
+            <div class="card-body">
+              <p-chart type="bar" [data]="basicDatahard" [options]="basicOptionshard"></p-chart>
+            </div>
+
+          <button class="btn btn-primary" (click)="descargarExcel()">Descargar Datos</button>
+        </div>
+      </p-tabPanel>
+
+      
+
+      <!-- Pestaña 2 -->
+      <p-tabPanel *ngIf="userRoles === 'user,supplier'" header="Cantidad de turnos reservados por agenda">
+        <div class="card">
+          <div class="card-header">
+            Cantidad de turnos reservados por agenda
+          </div>
+
+          <div class="card-body">
+            <p-chart [type]="'bar'" [data]="data" [options]="chartOptions"></p-chart>
+          </div>
+
+          <button class="btn btn-primary" (click)="descargarExcel()">Descargar Datos</button>
+        </div>
+      </p-tabPanel>
+
+      <!-- Pestaña 3 -->
+      <p-tabPanel *ngIf="userRoles === 'user,supplier'" header="Estadisticas de agendas">
+        <div class="card">
+          <div class="card-header">
+            Estadisticas de agendas
+          </div>
+
+          <div class="card-body">
+            <p-dropdown
+              [options]="schedules"
+              [(ngModel)]="selectedSchedule"
+              optionLabel="name"
+              placeholder="Selecciona una agenda"
+              (onChange)="loadSupplierData()"
+            ></p-dropdown>
+
+            <p-chart [type]="'bar'" [data]="supplierChartData" [options]="supplierChartOptions"></p-chart>
+          </div>
+
+          <button class="btn btn-primary" (click)="descargarExcelPorAgenda()">Descargar datos de Agenda</button>
+        </div>
+      </p-tabPanel>
+    </p-tabView>
+
+    <p-messages></p-messages>
   </div>
-
-  <div *ngIf="userRoles === 'user,supplier'" class="card">
-    <div class="card-header">
-      Estadísticas de Turnos
-    </div>
-
-    <div class="card-body">
-      <p-chart [type]="'bar'" [data]="data" [options]="chartOptions"></p-chart>
-    </div>
-
-    <button class="btn btn-primary" (click)="descargarExcel()">Descargar Datos</button>
-  </div>
+  <p-messages></p-messages>
 </div>

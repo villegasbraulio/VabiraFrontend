@@ -13,4 +13,12 @@ export class TurneroService {
   createSchedule(scheduleData: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/create`, scheduleData);
   }
+
+  eliminarAgenda(id: number): Observable<any> {
+    // Crea un objeto con el ID a eliminar
+    const body = { id: id };
+    // Realiza una solicitud PATCH con el cuerpo (body) que contiene el ID
+    return this.http.patch<any>(`${this.apiUrl}/delete`, body);
+  }
+
 }

@@ -59,6 +59,15 @@ export class UserService {
     .pipe(tap((clientFound)=> {return clientFound}))
     .pipe(tap((supplierFound)=> {return supplierFound}));
   }
+  obtenerPerfil2(): Observable<any> {
+    const httpOptions = {
+      headers: this.getHeaders(), // Obtener las cabeceras con el token
+    };
+    
+    return this.http.get<any>(`${this.baseUrl}/findOneEmailForNotifications?email=${this.email}`, httpOptions)
+    .pipe(tap((clientFound)=> {return clientFound}))
+    .pipe(tap((supplierFound)=> {return supplierFound}));
+  }
   obtenerPerfilCliente(): Observable<any> {
     const httpOptions = {
       headers: this.getHeaders(), // Obtener las cabeceras con el token

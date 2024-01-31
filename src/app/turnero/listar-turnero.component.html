@@ -2,7 +2,7 @@
   <app-sidebar></app-sidebar>
   <div class="content">
     <div class="card">
-      <p-table [value]="schedules" [rows]="10" [paginator]="true"
+      <p-table [value]="schedules" [rows]="13" [paginator]="true"
         [globalFilterFields]="['supplier.user.username', 'supplier.user.firstName', 'supplier.user.lastName', 'name']"
         [resizableColumns]="true" [reorderableColumns]="true" [filterMode]="'lenient'">
         <ng-template pTemplate="caption">
@@ -30,6 +30,7 @@
             <td>{{ schedule.supplier.user.firstName }}</td>
             <td>{{ schedule.supplier.user.lastName }}</td>
             <td>{{ schedule.name }}</td>
+            <td>{{ schedule.signStatusText }}</td>
             <td>
               <span class="pi pi-calendar agenda-icon" (click)="navigateToDashboard(schedule.id)"></span>
               <span class="pi pi-trash trash-icon" (click)="eliminarAgenda(schedule.id)"></span>

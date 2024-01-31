@@ -1,0 +1,66 @@
+/* Estilos para el modal */
+.modal-content {
+  background-color: #ffffff; /* Color de fondo del modal */
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2); /* Sombra del modal */
+}
+
+.modal-header {
+  background-color: #007bff; /* Color de fondo del encabezado */
+  color: #ffffff; /* Color del texto del encabezado */
+}
+
+.modal-body {
+  padding: 20px; /* Espaciado interno del cuerpo del modal */
+}
+
+/* Estilos para los elementos del contenido */
+h2 {
+  color: #007bff; /* Color del título */
+  margin-bottom: 10px; /* Margen inferior del título */
+}
+
+p {
+  font-size: 16px; /* Tamaño del texto del párrafo */
+  line-height: 1.5; /* Altura de línea del párrafo */
+}
+
+a.btn-primary {
+  background-color: #007bff; /* Color de fondo del botón */
+  color: #ffffff; /* Color del texto del botón */
+  font-weight: bold;
+  text-decoration: none; /* Quitar subrayado del botón */
+  padding: 10px 20px; /* Espaciado interno del botón */
+  border-radius: 5px; /* Bordes redondeados del botón */
+  display: inline-block;
+  transition: background-color 0.3s; /* Transición suave del color de fondo */
+}
+
+a.btn-primary:hover {
+  background-color: #0056b3; /* Cambiar color de fondo al pasar el mouse sobre el botón */
+  text-decoration: none; /* Quitar subrayado al pasar el mouse sobre el botón */
+}
+
+/* Estilos para el botón Ya realicé mi pago */
+.btn-success {
+  background-color: #28a745; /* Color de fondo del botón */
+  color: #ffffff; /* Color del texto del botón */
+  font-weight: bold;
+  text-decoration: none; /* Quitar subrayado del botón */
+  padding: 10px 20px; /* Espaciado interno del botón */
+  border-radius: 5px; /* Bordes redondeados del botón */
+  display: inline-block;
+  margin-top: 10px; /* Margen superior del botón */
+  transition: background-color 0.3s; /* Transición suave del color de fondo */
+}
+
+.btn-success:hover {
+  background-color: #218838; /* Cambiar color de fondo al pasar el mouse sobre el botón */
+  text-decoration: none; /* Quitar subrayado al pasar el mouse sobre el botón */
+}
+
+.btn-container {
+  display: flex;
+  justify-content: space-between; /* Espaciado entre los botones */
+  align-items: center; /* Alinear los botones verticalmente */
+  margin-top: 15px; /* Margen superior entre el texto y los botones */
+}

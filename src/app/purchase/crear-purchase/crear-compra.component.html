@@ -13,7 +13,7 @@
                                         placeholder="Nombre del producto">
                                     <div class="text-danger"
                                         *ngIf="productoForm.get('name')?.hasError('required') && productoForm.get('name')?.touched">
-        
+
                                         <span>El nombre del producto <strong>es obligatorio</strong></span>
                                     </div>
                                 </div>
@@ -22,16 +22,16 @@
                                         placeholder="Marca">
                                     <div class="text-danger"
                                         *ngIf="productoForm.get('brand')?.hasError('required') && productoForm.get('brand')?.touched">
-        
+
                                         <span>La marca <strong>es obligatoria</strong></span>
                                     </div>
                                 </div>
                                 <div class="mb-3">
-                                    <input type="text" formControlName="description" class="form-control form-control-lg"
-                                        placeholder="Descripcion">
+                                    <input type="text" formControlName="description"
+                                        class="form-control form-control-lg" placeholder="Descripcion">
                                     <div class="text-danger"
                                         *ngIf="productoForm.get('description')?.hasError('required') && productoForm.get('description')?.touched">
-        
+
                                         <span>La descripcion <strong>es obligatoria</strong></span>
                                     </div>
                                 </div>
@@ -40,7 +40,7 @@
                                         placeholder="Codigo">
                                     <div class="text-danger"
                                         *ngIf="productoForm.get('code')?.hasError('required') && productoForm.get('code')?.touched">
-        
+
                                         <span>El codigo <strong>es obligatorio</strong></span>
                                     </div>
                                 </div>
@@ -49,7 +49,7 @@
                                         placeholder="Precio">
                                     <div class="text-danger"
                                         *ngIf="productoForm.get('prize')?.hasError('required') && productoForm.get('prize')?.touched">
-        
+
                                         <span>El precio <strong>es obligatorio</strong></span>
                                     </div>
                                 </div>
@@ -58,24 +58,19 @@
                                         placeholder="Cantidad">
                                     <div class="text-danger"
                                         *ngIf="productoForm.get('quantity')?.hasError('required') && productoForm.get('quantity')?.touched">
-        
+
                                         <span>La cantidad <strong>es obligatoria</strong></span>
                                     </div>
                                 </div>
-                                <div class="mb-3">
-                                    <p-multiSelect [options]="products" formControlName="selectedProducts" optionLabel="name"></p-multiSelect>
-                                    <div class="text-danger"
-                                        *ngIf="productoForm.get('selectedProducts')?.hasError('required') && productoForm.get('selectedProducts')?.touched">
-                                        <span>El producto <strong>es obligatorio</strong></span>
-                                    </div>
-                                </div>                                
-                                <div class="mb-3">
-                                    <input type="date" formControlName="caducityDatetime" class="form-control form-control-lg"
-                                        placeholder="Fecha caducidad">
+                                <div class="mb-3" >
+                                    <input type="date" formControlName="caducityDatetime"
+                                        class="form-control form-control-lg" placeholder="Fecha caducidad" pattern="\d{4}-\d{2}-\d{2}">
                                     <div class="text-danger"
                                         *ngIf="productoForm.get('caducityDatetime')?.hasError('required') && productoForm.get('caducityDatetime')?.touched">
-        
                                         <span>La fecha de caducidad <strong>es obligatoria</strong></span>
+                                    </div>
+                                    <div class="text-info" style="color: black;">
+                                        El formato de fecha de la caducidad esperado es: DD-MM-AAAA
                                     </div>
                                 </div>
                                 <div class="mb-3">
@@ -89,6 +84,7 @@
                     </div>
                 </div>
             </div>
+            <p-messages [(value)]="messages" class="toast-messages" [enableService]="false" [closable]="true" (onClose)="redirectToProductList()"></p-messages>
         </div>
     </div>
 </div>

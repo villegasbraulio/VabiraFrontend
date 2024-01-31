@@ -19,16 +19,22 @@ import { DatePipe } from '@angular/common';
 })
 export class TurneroComponent {
   @ViewChild(TimeRangeModalComponent) timeRangeModal?: TimeRangeModalComponent; // Agrega esta línea
+  isSign: boolean = false;
   scheduleData: any = {
     days: [], // Aquí almacenaremos los días seleccionados desde el frontend
     initialTurnDateTime: '', // Aquí almacenaremos la hora de inicio seleccionada desde el frontend
     finalTurnDateTime: '', // Aquí almacenaremos la hora de finalización seleccionada desde el frontend
     turnDuration: 30, // Aquí almacenaremos la duración del turno seleccionada desde el frontend
     name: '', // Aquí almacenaremos el nombre seleccionado desde el frontend
+    sign: 0,
+    hasSign: false,
+    alias: '',
     supplier: {
     },
     dates: []
   };
+  sign: number = 0;
+  alias: string = '';
   supplierId: any;
   selectedDates: Date[] = [];
   selectedStartTime: NgbTimeStruct = { hour: 0, minute: 0, second: 0 };
@@ -61,10 +67,24 @@ export class TurneroComponent {
     try {
       // Luego, puedes continuar con la creación de la agenda y enviar los datos al servicio.
       if (this.scheduleData.initialTurnDateTime == '') {
-        console.error('Error el rango horario no fue seleccionado:');
         // Maneja el error de acuerdo a tus necesidades
-        this.showErrorMessage('Error: el rango horario no fue seleccionado');
+        this.showErrorMessage('El rango horario no fue seleccionado');
         return;
+      }
+      if(this.isSign === true){
+        this.scheduleData.hasSign = true
+        this.scheduleData.sign = this.sign
+        this.scheduleData.alias = this.alias
+        if (this.isSign && (this.sign < 0 || this.sign === 0) ) {
+          // Si la seña es negativa, muestra un mensaje de error y no continúa con la creación de la agenda
+          this.showErrorMessage('La seña no puede ser un número negativo o igual a cero.');
+          return;
+        }
+        if (this.isSign && this.alias === '') {
+          // Si la seña es negativa, muestra un mensaje de error y no continúa con la creación de la agenda
+          this.showErrorMessage('El alias es un campo requerido.');
+          return;
+        }
       }
       this.scheduleData.supplier = this.supplierId
       console.log('scheduleData', this.scheduleData);

@@ -84,7 +84,12 @@ select {
   cursor: pointer;
 }
 
-.submit-button {
+#submit-button {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.code-button {
   background-color: #007bff;
   color: #fff;
 }

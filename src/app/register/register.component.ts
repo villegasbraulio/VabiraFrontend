@@ -5,6 +5,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { ErrorDialogComponent } from '../error-dialog/error-dialog.component';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { Message, MessageService } from 'primeng/api';
+import { IRequestCode } from '../interfaces/requestCode.interface';
+import { AuthService } from './register.service';
 
 @Component({
   selector: 'app-register',
@@ -27,6 +30,9 @@ export class RegisterComponent {
   identificationNumber: string = '';
   address: string = '';
   postalCode: string = '';
+  isCodeValid: boolean = false;
+  requestCode = false;
+  code = '';
 
   // Define form groups and form controls for dropdowns
   form: FormGroup;
@@ -45,7 +51,9 @@ export class RegisterComponent {
     private http: HttpClient,
     private dialog: MatDialog,
     private router: Router,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private messageService: MessageService,
+    private registerService: AuthService
   ) {
     // Initialize form controls
     this.continentControl = new FormControl('');
@@ -70,7 +78,8 @@ export class RegisterComponent {
       country: '',
       politicalDivision: '',
       address: '',
-      postalCode: ''
+      postalCode: '',
+      code: ''
     });
 
     // Fetch initial data for dropdowns
@@ -114,8 +123,9 @@ export class RegisterComponent {
     const countryId = this.countryControl.value;
     this.loadPoliticalDivisions(countryId);
   }
+  
 
-  onSubmit() {
+  onSubmit() {   
     let userData:any = null;
 
     let apiUrl = 'http://localhost:3000/api/users/create';
@@ -219,6 +229,7 @@ export class RegisterComponent {
         this.openErrorDialog(this.errorMessage);
       }
     );
+    
   }
 
   // Función para manejar cambios en los interruptores
@@ -235,6 +246,41 @@ export class RegisterComponent {
       }
     }
   }
+
+  onCancel() {
+    this.form.reset();
+      this.router.navigate(['/register']);
+  }
+
+  onRequestCode() {
+    // if (this.form.invalid) return;
+    this.registerService.requestCode(this.email).subscribe({
+      next: (resData: IRequestCode) => {
+        localStorage.setItem('verificationCode', '' + resData.code);
+        this.requestCode = true;
+      },
+      error: (errorMessage: Message) => {
+        this.messageService.add(errorMessage);
+      },
+    });
+  }
+
+  onVerifyCode() {
+    const strToken = localStorage.getItem('verificationCode');
+    const registerFormValue: string = this.code; // Obtener el valor del código de verificación
+  
+    if (strToken == registerFormValue) {
+      this.isCodeValid = true;
+    } else {
+      let errorMessage: Message = {
+        severity: 'error',
+        summary: 'Error',
+        detail: 'El código de verificación no es válido.',
+      };
+      this.messageService.add(errorMessage);
+    }
+  }
+  
 
   // Función para abrir el cuadro de diálogo de error
   openErrorDialog(errorMessage: string): void {

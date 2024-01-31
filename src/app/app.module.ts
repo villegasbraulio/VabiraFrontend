@@ -48,7 +48,6 @@ import { CheckboxModule } from 'primeng/checkbox';
 
 import { CrearVentaComponent } from './venta/crear-venta/crear-venta.component';
 import { ListarVentasComponent } from './venta/listar-ventas/listar-ventas.component';
-import { VisualizarVentaComponent } from './venta/visualizar-venta/visualizar-venta.component';
 import { MatListModule } from '@angular/material/list'; // Importa MatListModule y otros módulos que puedas necesitar
 
 import { UserProfileComponent } from './user-profile/user-profile.component';
@@ -69,6 +68,10 @@ import { EditarClienteModalComponent } from './cliente/editar-cliente-modal.comp
 import { ListarComprasComponent } from './purchase/listar-compras.component';
 import { NotificacionesComponent } from './notificaciones/notificaciones.component';
 import { CrearCompraComponent } from './purchase/crear-purchase/crear-compra.component';
+import { MultiSelectModule } from 'primeng/multiselect';
+import { BackupComponent } from './backup/backup.component';
+import { TabViewModule } from 'primeng/tabview';
+import { MercadoPagoModalComponent } from './agenda/mercadopagomodal.component';
 
 @NgModule({
 
@@ -100,13 +103,14 @@ import { CrearCompraComponent } from './purchase/crear-purchase/crear-compra.com
     FaqComponent,
     CrearVentaComponent,
     ListarVentasComponent,
-    VisualizarVentaComponent,
     UserProfileComponent,
     SettingsComponent,
     SettingsModalComponent,
     ReportesComponent,
     ClienteComponent,
     NotificacionesComponent,
+    BackupComponent,
+    MercadoPagoModalComponent
   ],
   providers: [
     MessageService,
@@ -118,6 +122,7 @@ import { CrearCompraComponent } from './purchase/crear-purchase/crear-compra.com
     MatSnackBarModule,
     FormsModule,
     NgbModule, 
+    MultiSelectModule,
     MatCardModule,
     MatToolbarModule,
     MatTableModule,
@@ -145,7 +150,8 @@ import { CrearCompraComponent } from './purchase/crear-purchase/crear-compra.com
     AccordionModule,
     ChartModule,
     TabMenuModule,
-    CheckboxModule
+    CheckboxModule,
+    TabViewModule
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]

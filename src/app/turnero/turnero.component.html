@@ -1,4 +1,5 @@
 <app-sidebar></app-sidebar>
+
 <body id="colorFondo">
     <div class="content-container d-flex justify-content-center align-items-center">
         <div class="card custom-card">
@@ -7,8 +8,8 @@
                 <form (ngSubmit)="createSchedule()">
                     <div class="form-group">
                         <label for="name">Nombre de la Agenda:</label>
-                        <input placeholder="Nombre de la agenda..." type="text" id="name" name="name" [(ngModel)]="scheduleData.name" class="form-control"
-                            required>
+                        <input placeholder="Nombre de la agenda..." type="text" id="name" name="name"
+                            [(ngModel)]="scheduleData.name" class="form-control" required>
                     </div>
                     <div class="form-group">
                         <label for="turnDuration">Duración del Turno (minutos):</label>
@@ -18,14 +19,34 @@
                     <div class="form-group">
                         <label>Días de la Semana:</label>
                     </div>
-                    <div >
+                    <div>
                         <p-calendar [(ngModel)]="scheduleData.dates" name="dates" selectionMode="multiple"
-                            dateFormat="dd/mm/yy DD" [readonlyInput]="true" [showIcon]="true" (onSelect)="onSelectDate($event)"></p-calendar>
+                            dateFormat="dd/mm/yy DD" [readonlyInput]="true" [showIcon]="true"
+                            (onSelect)="onSelectDate($event)"></p-calendar>
                     </div>
                     <div class="form-group mt-3">
                         <button type="button" class="btn btn-primary" (click)="onOpenTimeRangeModal()">Seleccionar Rango
                             Horario</button>
                         <button type="submit" class="btn btn-success">Crear Agenda</button>
+                    </div>
+                    <br>
+                    <ng-container *ngIf="isSign">
+                        <div class="form-group">
+                            <label for="sign">Seña Inicial: </label>
+                            <input type="number" class="form-control" id="sign" name="sign" [(ngModel)]="sign" required>
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="isSign">
+                        <div class="form-group">
+                            <label for="alias">Alias de MercadoPago: </label>
+                            <input type="text" id="alias" class="form-control" name="alias" [(ngModel)]="alias" required>
+                        </div>
+                    </ng-container>
+                    <!-- Switch para Seña -->
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="signSwitch" [(ngModel)]="isSign"
+                            name="isSign">
+                        <label class="form-check-label" for="signSwitch">Incluye Seña</label>
                     </div>
                 </form>
                 <p-messages></p-messages>

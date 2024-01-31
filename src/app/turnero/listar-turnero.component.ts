@@ -4,6 +4,7 @@ import { Table } from 'primeng/table';
 import { MessageService } from 'primeng/api';
 import { ProveedorService } from '../proveedor/proveedor.service';
 import { Router } from '@angular/router';
+import { TurneroService } from './turnero.service';
 
 @Component({
   selector: 'app-listar-turnero',
@@ -19,7 +20,8 @@ export class ListarTurneroComponent implements OnInit {
   constructor(
     private proveedorService: ProveedorService,
     private router: Router,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private turneroService: TurneroService
   ) {
     this.schedules = [];
     this.columnas = [
@@ -28,6 +30,7 @@ export class ListarTurneroComponent implements OnInit {
       { field: 'supplier.user.firstName', header: 'Nombre' },
       { field: 'supplier.user.lastName', header: 'Apellido' },
       { field: 'name', header: 'Agenda' },
+      { field: 'hasSign', header: '¿ Incluye seña ?' },
       { field: 'acciones', header: 'Acciones' },
     ];
   }
@@ -42,14 +45,12 @@ export class ListarTurneroComponent implements OnInit {
 
   cargarUsuarios() {
     this.proveedorService.obtenerProveedores2().subscribe((data: any) => {
-      // Verificar que data sea una matriz de objetos
-      if (Array.isArray(data) && data.length > 0) {
-        const firstItem = data[0];
-        // Verificar que los nombres de las propiedades coincidan exactamente con los campos en globalFilterFields
-        const objectProperties = Object.keys(firstItem);
-      }
-      // Asignar datos a this.schedules después de las verificaciones
-      this.schedules = data;
+      this.schedules = data.map((schedule: { signStatusText: string; hasSign: any; }) => {
+        // Agregar una nueva propiedad 'signStatusText' que contendrá el texto a mostrar
+        schedule.signStatusText = schedule.hasSign ? 'Incluye seña' : 'No incluye seña';
+        return schedule;
+      });
+  
       if (this.dataTable) {
         this.dataTable.reset();
       }
@@ -57,10 +58,12 @@ export class ListarTurneroComponent implements OnInit {
   }
 
   eliminarAgenda(id: number) {
-  
-    this.messageService.add({severity:'success', summary:'Éxito', detail:'Agenda eliminada con éxito'});
+    this.turneroService.eliminarAgenda(id).subscribe((data: any) => {
+      // Puedes realizar acciones adicionales después de eliminar el usuario, si es necesario.
+      this.reloadPage();
+    });
   }
-  
+
 
   clearGlobalFilter() {
     if (this.dataTable) {
@@ -75,8 +78,8 @@ export class ListarTurneroComponent implements OnInit {
       this.dataTable.filter(filterValue, 'globalFilter', 'contains');
     }
   }
-  
-  
+
+
   // Método para recargar la página
   reloadPage() {
     location.reload();

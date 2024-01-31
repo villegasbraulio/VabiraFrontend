@@ -1,13 +1,16 @@
 <!-- sidebar.component.html -->
 <div class="sidebar">
   <div class="sidebar-header text-center">
+    <div class="logosidebar">
+    <img src="../../assets/vabiralogo.png" alt="Logo de VABIRA">
+  </div>
     <h1>VABIRA</h1>
   </div>
   <ul class="list-unstyled">
     <!-- Grupo 1 -->
     <li class="sidebar-group">
       <div>
-        <a routerLink="/reportes">
+        <a routerLink="/reportes" *ngIf="profileTypes.includes('supplier')">
           <i class="material-icons">dashboard</i> Dashboard
         </a>
       </div>
@@ -29,7 +32,7 @@
             <a class="dropdown-item" routerLink="/turneros">Turnero</a>
           </li>
         </ul>
-        <a *ngIf="profileTypes.includes('admin')" (click)="toggleCollapse('productosCollapse')" class="custom-dropdown-toggle">
+        <a *ngIf="profileTypes.includes('admin') || profileTypes.includes('supplier')" (click)="toggleCollapse('productosCollapse')" class="custom-dropdown-toggle">
           <i class="material-icons">shopping_cart</i> Productos
         </a>
         <!-- Agregar el ID al elemento que se colapsará -->
@@ -43,13 +46,18 @@
     <!-- Grupo 3 -->
     <li class="sidebar-group">
       <div>
-        <a routerLink="/notificaciones">
-          <i class="material-icons">notifications</i> Notificaciones
+        <a *ngIf="profileTypes.includes('supplier') || profileTypes.includes('client')" routerLink="/notificaciones">
+          <i class="material-icons">notifications</i> Notificaciones <span *ngIf="profileTypes.includes('supplier')" class="badge bg-secondary">{{quantity}}</span>
         </a>
       </div>
       <div>
         <a routerLink="/ajustes">
           <i class="material-icons">settings</i> Ajustes
+        </a>
+      </div>
+      <div *ngIf="profileTypes.includes('admin')">
+        <a routerLink="/backup">
+          <i class="material-icons">backup</i> Backup
         </a>
       </div>
       <div>

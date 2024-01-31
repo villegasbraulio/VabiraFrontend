@@ -1,28 +1,34 @@
 <div class="card2">
-  <p-table [value]="turns2"  [rows]="1" [resizableColumns]="true" [reorderableColumns]="true"
-  [filterMode]="'lenient'">
-  <ng-template pTemplate="header" let-columns>
-    <tr>
-      <th *ngFor="let col of columnas2" [pSortableColumn]="col.field">
-        {{ col.header }}
-      </th>
-    </tr>
-  </ng-template>
-  <ng-template pTemplate="body" let-turn2>
-    <tr>
-      <td>{{ currentDate.format('HH:mm:ss DD-MM-yyyy') }}</td>
-      <td>{{ turn2.totalTurns }}</td>
-      <td>{{ turn2.reservedTurns }}</td>
-      <td>{{ turn2.availableTurns }}</td>
-      <td>{{ turn2.proximoCliente }}</td>
-    </tr>
-  </ng-template>
-  <ng-template pTemplate="emptymessage">
-    <tr>
-      <td [attr.colspan]="columnas.length + 1">No hay turnos a mostrar.</td>
-    </tr>
-  </ng-template>
-</p-table>
+  <p-table [value]="turns2" [rows]="1" [resizableColumns]="true" [reorderableColumns]="true" [filterMode]="'lenient'">
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th *ngIf="alias" [attr.colspan]="columnas2.length + 1" class="alias-header">
+          Datos de la cuenta de MercadoPago - Alias: {{ alias }}, Seña a abonar: ${{initialAmount}}
+        </th>
+      </tr>
+      <tr>
+        <th *ngFor="let col of columnas2" [pSortableColumn]="col.field">
+          {{ col.header }}
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-turn2>
+      <tr>
+        <td>{{ currentDate.format('HH:mm:ss DD-MM-yyyy') }}</td>
+        <td>{{ turn2.totalTurns }}</td>
+        <td>{{ turn2.reservedTurns }}</td>
+        <td>{{ turn2.availableTurns }}</td>
+        <td *ngIf="profileTypes.includes('supplier')">{{ turn2.proximoCliente }}</td>
+        <td *ngIf="profileTypes.includes('supplier')">{{ turn2.aproveTurns }}</td>
+        <td *ngIf="profileTypes.includes('supplier')">{{ turn2.desaproveTurns }}</td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td [attr.colspan]="columnas.length + 1">No hay turnos a mostrar.</td>
+      </tr>
+    </ng-template>
+  </p-table>
 </div>
 <div class="container">
   <app-sidebar></app-sidebar>
@@ -42,9 +48,9 @@
           <td>{{ turn.dateFormatted }}</td>
           <td>{{ turn?.client?.user?.firstName }} {{ turn?.client?.user?.lastName }}</td>
           <td>{{ turn.turnStatus[0].turnStatusType.name }}</td>
-          <td>
-            <span class="pi pi-calendar agenda-icon"></span>
-            <span class="pi pi-trash trash-icon"></span>
+          <td *ngIf="profileTypes.includes('supplier') || profileTypes.includes('admin')">
+            <span class="pi pi-thumbs-up like-icon"  (click)="aprobarTurno(turn.id)"></span>
+            <span class="pi pi-thumbs-down like-icon" (click)="desaprobarTurno(turn.id)"></span>
           </td>
         </tr>
       </ng-template>
@@ -56,7 +62,7 @@
     </p-table>
     <p-messages></p-messages>
   </div>
-  <table>
+  <table class="bkcl">
     <thead>
       <tr>
         <th></th>
@@ -71,9 +77,14 @@
             <div>
               <button mat-button [id]="getButtonId(dayType, timeSlot.start, timeSlot.end)"
                 (click)="handleTimeClick(dayType, timeSlot.start, timeSlot.end)"
-                [class.available-button]="!isAppointmentScheduled(dayType, timeSlot.start, timeSlot.end)"
-                [class.reserved-button]="isAppointmentScheduled(dayType, timeSlot.start, timeSlot.end)">
-                {{ isAppointmentScheduled(dayType, timeSlot.start, timeSlot.end) ? 'Reservado' : 'Reservar' }}
+                (click)="handleTurnClick(turns[0]?.id)"
+                [class.available-button]="buttonStates[getButtonId(dayType, timeSlot.start, timeSlot.end)] === 'Reservar'"
+                [class.reserved-button]="buttonStates[getButtonId(dayType, timeSlot.start, timeSlot.end)] === 'Reservado'"
+                [class.present-button]="buttonStates[getButtonId(dayType, timeSlot.start, timeSlot.end)] === 'Presente'"
+                [class.ausent-button]="buttonStates[getButtonId(dayType, timeSlot.start, timeSlot.end)] === 'Ausente'"
+                [class.await-button]="buttonStates[getButtonId(dayType, timeSlot.start, timeSlot.end)] === 'Reservado s/seña'"
+                [ngClass]="{'red-button': buttonStates[getButtonId(dayType, timeSlot.start, timeSlot.end)] === 'Reservado'}">
+                {{ buttonStates[getButtonId(dayType, timeSlot.start, timeSlot.end)] }}
               </button>
             </div>
           </td>
@@ -82,5 +93,4 @@
     </tbody>
     <p-messages [(value)]="messages" class="toast-messages" [enableService]="false" [closable]="true"></p-messages>
   </table>
-  <p-messages></p-messages>
 </div>

@@ -10,6 +10,7 @@ import { MessageService } from 'primeng/api';
 })
 export class FaqComponent implements OnInit {
   faqs: any[] = [];
+  usuario: any;
   mostrarForm: boolean = false;
   mostrarFormEditar: boolean = false;
   faqEdit: any = null; 
@@ -18,10 +19,30 @@ export class FaqComponent implements OnInit {
     description: ''
   };
 
-  constructor(private faqService: FaqService, private userService: UserService, private messageService: MessageService) {}
+  constructor(private faqService: FaqService, private userService: UserService, private messageService: MessageService) {
+    this.usuario = null
+  }
+
+  profileTypes: string[] = [];
 
   ngOnInit() {
     this.cargarFaqs();
+    this.userService.obtenerPerfil().subscribe(
+      (data: any) => {
+        this.usuario = data;
+        const p: string[] = [];
+        const roles = this.usuario.roles.split(',');
+        if (this.usuario?.roles) {
+          for (const role of roles) {
+            p.push(role);
+          }
+        }       
+        this.profileTypes = p;
+      },
+      (error) => {
+        console.error('Error al obtener los datos del usuario:', error);
+      }
+    );
   }
 
   cargarFaqs() {
@@ -81,7 +102,10 @@ export class FaqComponent implements OnInit {
     this.faqEdit = null;
     this.mostrarFormEditar = false;
     this.mostrarForm = false;
+  }
 
+  MostrarMensaje() {
+    this.messageService.add({ severity: 'success', summary: 'Mensaje Enviado', detail: 'Tu pregunta ha sido enviada correctamente.' });
   }
 
   mostrarMensaje(severidad: string, resumen: string, detalle: string) {
