@@ -98,6 +98,16 @@ export class AgendaService {
     return this.http.patch<any>(`${this.baseUrl2}/aproveTurn`, body).pipe();
   }
 
+  aprobarSeñaTurno(id: number): Observable<any> {
+    const body = { id };
+    return this.http.patch<any>(`${this.baseUrl2}/aproveSignTurn`, body).pipe();
+  }
+
+  desaprobarSeñaTurno(id: number): Observable<any> {
+    const body = { id };
+    return this.http.patch<any>(`${this.baseUrl2}/desaproveSignTurn`, body).pipe();
+  }
+
   desaprobarTurno(id: number): Observable<any> {
     const body = { id };
     return this.http.patch<any>(`${this.baseUrl2}/desaproveTurn`, body).pipe();

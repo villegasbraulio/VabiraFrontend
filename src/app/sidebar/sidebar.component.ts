@@ -11,6 +11,7 @@ import { NotificacionesService } from '../notificaciones/notificaciones.service'
 export class SidebarComponent {
   usuario: any;
   usuario2: any;
+  usuario3: any;
   quantity: any = 0;
   userName: string = '';
   userRole: string = '';
@@ -37,6 +38,19 @@ export class SidebarComponent {
               this.notificacionesService.getAlertsSupplier(data2.supplier.id).subscribe(alerts => {
                 for (const alert of alerts) {
                   if (alert.turn.schedule.supplier.id === data2.supplier.id) {
+                    this.quantity++ 
+                  }
+                }
+              })
+            });
+        } else if(this.usuario?.roles.includes('client')){
+          this.userService.obtenerPerfilCliente().subscribe(
+            (data3: any) => {
+              this.usuario3 = data3;
+              console.log(this.usuario3);
+              this.notificacionesService.getAlertsClient(data3.id).subscribe(alerts => {
+                for (const alert of alerts) {
+                  if (alert.turn.client.id === data3.id) {
                     this.quantity++ 
                   }
                 }
