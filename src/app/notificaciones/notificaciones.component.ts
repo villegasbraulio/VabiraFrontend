@@ -5,6 +5,7 @@ import { MessageService } from 'primeng/api';
 import { UserService } from '../users/users.service';
 import { ClienteService } from '../cliente/cliente.service';
 import { ProveedorService } from '../proveedor/proveedor.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-notificaciones',
@@ -23,16 +24,15 @@ export class NotificacionesComponent implements OnInit {
   supplier: any;
   clienteIdFound: any;
   supplierIdFound: any;
-  showCustomButton: boolean = false;
-  customMessageContent: string = '';
-  currentTurno: any;
   fecha: any;
+  messageAlerts: any[] = [];
 
 
   constructor(private notificacionesService: NotificacionesService,
     private datePipe: DatePipe,
     private messageService: MessageService,
-    private userService: UserService,) { }
+    private userService: UserService,
+    private router: Router) { }
 
   ngOnInit(): void {
     this.userService.obtenerPerfil().subscribe(profile => {
@@ -68,6 +68,7 @@ export class NotificacionesComponent implements OnInit {
 
     this.notificacionesService.getAlertsClient(this.clienteIdFound).subscribe(alerts => {
       for (const alert of alerts) {
+
         // Verificar si el cliente de la alerta coincide con el cliente del usuario
         if (alert.turn.client.id === this.clienteIdFound) {
           this.messageAlerts.push({
@@ -81,9 +82,8 @@ export class NotificacionesComponent implements OnInit {
   realizarLlamadasAPISupplier() {
 
     this.notificacionesService.getAlertsSupplier(this.supplierIdFound).subscribe(alerts => {
-
+      this.alerts = alerts
       for (const alert of alerts) {
-        
         if(!alert.turn.schedule.hasSign){
           this.messageAlerts.push({
             message: `Tienes un turno próximo el ${this.datePipe.transform(alert.turn.dateFrom, 'dd/MM/yyyy HH:mm')}, en la agenda ${alert.turn.schedule.name}.
@@ -100,34 +100,13 @@ export class NotificacionesComponent implements OnInit {
           idTurn:alert.turn.turnStatus[0].turnStatusType.code
           })
         }
+        
       }
     });
   }
 
-  aprobarSena(turno: any) {
-    // Lógica para aprobar la seña
-    // ...
-    console.log('Seña aprobada para el turno:', turno.id);
-    this.hideCustomMessage();
-  }
-
-  onButtonClick() {
-    this.buttonClick.emit();
-  }
-
-  onButtonClickClose() {
-    this.visible = false;
-  }
-
-  private showCustomMessage(content: string, turno: any) {
-    this.customMessageContent = content;
-    this.showCustomButton = true;
-    this.currentTurno = turno;
-  }
-
-  private hideCustomMessage() {
-    this.showCustomButton = false;
-    this.customMessageContent = '';
+  navigateToDetalleTurno(scheduleId: number) {
+    this.router.navigate(['/agenda', scheduleId]); // Ajusta la ruta y parámetros según tu configuración
   }
 
 }
