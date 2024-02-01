@@ -70,15 +70,10 @@ export class NotificacionesComponent implements OnInit {
       for (const alert of alerts) {
         // Verificar si el cliente de la alerta coincide con el cliente del usuario
         if (alert.turn.client.id === this.clienteIdFound) {
-          const mensaje = `Tienes un turno próximo el ${this.datePipe.transform(alert.turn.dateFrom, 'dd/MM/yyyy HH:mm')}.
-          Con ${alert.turn.schedule.supplier.user.lastName}, ${alert.turn.schedule.supplier.user.firstName}`;
-
-          // Agregar mensaje utilizando el servicio MessageService de PrimeNG
-          this.messageService.add({
-            severity: 'info',
-            summary: 'Turno Próximo',
-            detail: mensaje
-          });
+          this.messageAlerts.push({
+            message: `Tienes un turno próximo el ${this.datePipe.transform(alert.turn.dateFrom, 'dd/MM/yyyy HH:mm')}.
+            Con ${alert.turn.schedule?.supplier?.user.lastName}, ${alert.turn.schedule?.supplier?.user.firstName}`
+          })
         }
       }
     });
@@ -88,21 +83,22 @@ export class NotificacionesComponent implements OnInit {
     this.notificacionesService.getAlertsSupplier(this.supplierIdFound).subscribe(alerts => {
 
       for (const alert of alerts) {
-        // Verificar si el cliente de la alerta coincide con el proveedor del usuario
-        // Verificar si el cliente de la alerta coincide con el cliente del usuario
-        if (alert.turn.schedule.supplier.id === this.supplierIdFound) {
-          // ... Mostrar otras propiedades según la estructura de tu objeto alerta ...
-          const nombreAgenda = alert.turn.schedule.name;
-          this.fecha = this.datePipe.transform(alert.turn.dateFrom, 'dd/MM/yyyy HH:mm')
-          if (!alert.turn.schedule.hasSign) {
-            const mensaje = `Tienes un turno próximo el ${this.fecha}, en la agenda ${nombreAgenda}.
-            Con el/la cliente ${alert.turn.client?.user?.lastName}, ${alert.turn.client?.user?.firstName}`;
-            this.customMessage = mensaje
-          } else {
-            const mensaje = `Tienes un turno próximo el ${this.fecha}
-            Con el/la cliente ${alert.turn.client?.user?.lastName}, ${alert.turn.client?.user?.firstName}`;
-            this.customMessage = mensaje
-          }
+        
+        if(!alert.turn.schedule.hasSign){
+          this.messageAlerts.push({
+            message: `Tienes un turno próximo el ${this.datePipe.transform(alert.turn.dateFrom, 'dd/MM/yyyy HH:mm')}, en la agenda ${alert.turn.schedule.name}.
+            Con el/la cliente ${alert.turn.client?.user.lastName}, ${alert.turn.client?.user.firstName}`,
+            flag:false
+          })
+        } else {
+          
+          this.messageAlerts.push({
+          message: `Tienes un turno próximo el ${this.datePipe.transform(alert.turn.dateFrom, 'dd/MM/yyyy HH:mm')}
+           Con el/la cliente ${alert.turn.client?.user.lastName}, ${alert.turn.client?.user.firstName}`,
+          flag:true,
+          id:alert.turn.schedule.id,
+          idTurn:alert.turn.turnStatus[0].turnStatusType.code
+          })
         }
       }
     });

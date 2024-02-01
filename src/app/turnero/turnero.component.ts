@@ -77,10 +77,21 @@ export class TurneroComponent {
           this.showErrorMessage('La seña no puede ser un número negativo.');
           return;
         }
+        if (this.isSign && this.alias === '') {
+          // Si la seña es negativa, muestra un mensaje de error y no continúa con la creación de la agenda
+          this.showErrorMessage('El alias es un campo requerido.');
+          return;
+        }
+      }
+
+      const [hora, minutos] = this.scheduleData.initialTurnDateTime.split(':')
+      const [hora2, minutos2] = this.scheduleData.finalTurnDateTime.split(':')
+      if ((parseInt(hora) > parseInt(hora2)) || (parseInt(hora) === parseInt(hora2) && parseInt(minutos) > parseInt(minutos2))) {
+        // Si la seña es negativa, muestra un mensaje de error y no continúa con la creación de la agenda
+        this.showErrorMessage('La hora de fin no puede ser menor que la hora de inicio ya que la hora de seleccion es por dia 00:00-23:59');
+        return;
       }
       this.scheduleData.supplier = this.supplierId
-      console.log('scheduleData', this.scheduleData);
-      console.log('scheduleData supplier', this.scheduleData.supplier);
       
       this.turneroService.createSchedule(this.scheduleData).subscribe(
         

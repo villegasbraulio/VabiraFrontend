@@ -1,12 +1,11 @@
 import { NgModule, NO_ERRORS_SCHEMA, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule, FormGroup, FormBuilder, ReactiveFormsModule } from '@angular/forms';  //modulo formularios
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';  //modulo formularios
 import { RouterModule } from '@angular/router';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
-import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { PrincipalComponent } from './principal/principal.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -72,6 +71,7 @@ import { MultiSelectModule } from 'primeng/multiselect';
 import { BackupComponent } from './backup/backup.component';
 import { TabViewModule } from 'primeng/tabview';
 import { MercadoPagoModalComponent } from './agenda/mercadopagomodal.component';
+import { PasswordRecoveryComponent } from './forgot-password/forgot-password.component';
 
 @NgModule({
 
@@ -80,7 +80,7 @@ import { MercadoPagoModalComponent } from './agenda/mercadopagomodal.component';
     AppComponent,
     LoginComponent,
     RegisterComponent,
-    ForgotPasswordComponent,
+    PasswordRecoveryComponent,
     EditarProveedorModalComponent,
     EditarClienteModalComponent,
     EditarUsuarioModalComponent,

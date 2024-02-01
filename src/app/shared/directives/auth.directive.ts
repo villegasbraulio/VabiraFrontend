@@ -1,20 +1,61 @@
-// export const adminGuard: CanActivateFn = (route, state) => {
-//     const authService = inject(AuthService);
-//     const user = authService.returnUser();
-//     console.log(user);
+// import {
+//     Directive,
+//     Input,
+//     OnInit,
+//     TemplateRef,
+//     ViewContainerRef,
+//   } from '@angular/core';
+// import { AuthService } from 'src/app/auth.service';
   
-//     if (user) {
-//       console.log(user);
+//   @Directive({
+//     selector: '[appAuth]',
+//   })
+//   export class AuthDirective implements OnInit {
+//     access: string[] = [];
   
-//       const isValid = user.userProfile.filter(
-//         (o) => o.profile.name === 'Administrador Activo'
-//       )[0];
-//       if (isValid) {
-//         return true;
-//       } else {
-//         return false;
-//       }
-//     } else {
-//       return false;
+//     constructor(
+//       private templateRef: TemplateRef<any>,
+//       private viewContainer: ViewContainerRef,
+//       private authService: AuthService
+//     ) {}
+  
+//     ngOnInit(): void {
+//       this.authService.user.subscribe({
+//         next: (res: any) => {
+//           this.currentUser = res;
+//           this.updateView();
+//         },
+//       });
 //     }
-//   };
+  
+//     @Input()
+//     set appAuth(val: Array<string>) {
+//       this.viewContainer.createEmbeddedView(this.templateRef);
+//       this.access = val;
+//       this.updateView();
+//     }
+  
+//     private updateView(): void {
+//       this.viewContainer.clear();
+//       if (this.checkAccess()) {
+//         this.viewContainer.createEmbeddedView(this.templateRef);
+//       }
+//     }
+  
+//     private checkAccess(): boolean {
+//       let hasAccess: boolean = false;
+//       if (this.currentUser && this.currentUser.userProfile) {
+//         for (const a of this.access) {
+//           const accessFound =
+//             this.currentUser.userProfile[0].profile.profileAccess.find((o) => {
+//               return o.access.name === a;
+//             });
+//           if (accessFound) {
+//             hasAccess = true;
+//             break;
+//           }
+//         }
+//       }
+//       return hasAccess;
+//     }
+//   }

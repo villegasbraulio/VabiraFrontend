@@ -2,7 +2,6 @@ import { Component, NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { LoginComponent } from './login/login.component';
-import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { PrincipalComponent } from './principal/principal.component';
 import { UsersComponent } from './users/users.component';
 import { RegisterComponent } from './register/register.component';
@@ -24,11 +23,12 @@ import { ListarComprasComponent } from './purchase/listar-compras.component';
 import { NotificacionesComponent } from './notificaciones/notificaciones.component';
 import { CrearCompraComponent } from './purchase/crear-purchase/crear-compra.component';
 import { BackupComponent } from './backup/backup.component';
+import { PasswordRecoveryComponent } from './forgot-password/forgot-password.component';
 
 const routes: Routes = [
 
   { path: 'login', component: LoginComponent },
-  { path: 'forgot-password', component: ForgotPasswordComponent },
+  { path: 'forgot-password', component: PasswordRecoveryComponent },
   { path: 'register', component: RegisterComponent },
 
   { path: '', component: LoginComponent }, // Ruta principal (página vacía)
