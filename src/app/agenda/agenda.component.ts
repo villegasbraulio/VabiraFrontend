@@ -282,7 +282,6 @@ export class AgendaComponent implements OnInit {
             this.mercadoPagoModalRef.componentInstance.selectedTurnId = selectedTurn.id;
             this.mercadoPagoModalRef.componentInstance.mercadoPagoLink = 'https://www.mercadopago.com/';
             this.reservedTimeSlots.add(`${dayType}-${start}-${end}`);
-            // this.messages = [{ severity: 'success', summary: 'Éxito', detail: 'Turno reservado sin seña con éxito' }];
             this.buttonStates[this.getButtonId(dayType, start, end)] = 'Reservado s/aprobar';
             this.cargarTurnos(); // Agregar para actualizar las tablas
             this.cargarTurnos2(); // Agregar para actualizar las tablas

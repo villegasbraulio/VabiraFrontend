@@ -75,6 +75,7 @@ export class TurneroComponent {
         this.scheduleData.hasSign = true
         this.scheduleData.sign = this.sign
         this.scheduleData.alias = this.alias
+        
         if (this.isSign && (this.sign < 0 || this.sign === 0) ) {
           // Si la seña es negativa, muestra un mensaje de error y no continúa con la creación de la agenda
           this.showErrorMessage('La seña no puede ser un número negativo o igual a cero.');
@@ -85,6 +86,13 @@ export class TurneroComponent {
           this.showErrorMessage('El alias es un campo requerido.');
           return;
         }
+      }
+
+      
+      if (this.scheduleData.finalTurnDateTime < this.scheduleData.initialTurnDateTime) {
+        // Si la seña es negativa, muestra un mensaje de error y no continúa con la creación de la agenda
+        this.showErrorMessage('La hora de fin no puede ser menor que la hora de inicio ya que la hora de seleccion es por dia 00:00-23:59');
+        return;
       }
       this.scheduleData.supplier = this.supplierId
       console.log('scheduleData', this.scheduleData);
