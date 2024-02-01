@@ -49,8 +49,10 @@
           <td>{{ turn?.client?.user?.firstName }} {{ turn?.client?.user?.lastName }}</td>
           <td>{{ turn.turnStatus[0].turnStatusType.name }}</td>
           <td *ngIf="profileTypes.includes('supplier') || profileTypes.includes('admin')">
-            <span class="pi pi-thumbs-up like-icon"  (click)="aprobarTurno(turn.id)"></span>
-            <span class="pi pi-thumbs-down like-icon" (click)="desaprobarTurno(turn.id)"></span>
+            Presente <span class="pi pi-thumbs-up like-icon"  (click)="aprobarTurno(turn.id)"></span> /
+            Ausente <span class="pi pi-thumbs-down like-icon" (click)="desaprobarTurno(turn.id)"></span> /
+            Aprobar Seña<span class="pi pi-check like-icon"  (click)="aprobarSenaTurno(turn.id)"></span> /
+            Desaprobar Seña<span class="pi pi-times like-icon" (click)="desaprobarSenaTurno(turn.id)"></span>
           </td>
         </tr>
       </ng-template>

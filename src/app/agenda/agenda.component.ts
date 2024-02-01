@@ -197,10 +197,14 @@ export class AgendaComponent implements OnInit {
           if (Array.isArray(data.reservedTurns2) && data.reservedTurns2.length > 0) {
             let minDiff = Number.MAX_VALUE;
             for (const reservedTurn of data.reservedTurns2) {
+              console.log(reservedTurn.client.user.firstName);
+              
               if (reservedTurn.dateFrom) {
                 const turnoMoment = moment(reservedTurn.dateFrom);
                 const diff = turnoMoment.diff(this.currentDate);
                 if (diff > 0 && diff < minDiff) {
+                  console.log('entra?');
+                  
                   minDiff = diff;
                   const nombre = reservedTurn.client?.user?.firstName || '';
                   const apellido = reservedTurn.client?.user?.lastName || '';
@@ -210,8 +214,6 @@ export class AgendaComponent implements OnInit {
             }
           }
           this.turns2[0].proximoCliente = proximoCliente;
-          console.log(this.turns2);
-          console.log(this.turns2[0].proximoCliente);
 
         } else {
           console.error('Estructura de datos inesperada:', data);
@@ -433,6 +435,25 @@ export class AgendaComponent implements OnInit {
   desaprobarTurno(id: number) {
     this.agendaService.desaprobarTurno(id).subscribe((data: any) => {
       this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'El turno se ha anotado como ausente correctamente.' });
+      this.cargarTurnos(); // Agregar para actualizar las tablas
+      this.cargarTurnos2(); // Agregar para actualizar las tablas
+      this.loadReservedAndAvailableTurns();
+    });
+
+  }
+
+  aprobarSenaTurno(id: number) {
+    this.agendaService.aprobarSeñaTurno(id).subscribe((data: any) => {
+      this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'El turno se ha anotado como reservado correctamente.' });
+      this.cargarTurnos(); // Agregar para actualizar las tablas
+      this.cargarTurnos2(); // Agregar para actualizar las tablas
+      this.loadReservedAndAvailableTurns();
+    });
+
+  }
+  desaprobarSenaTurno(id: number) {
+    this.agendaService.desaprobarSeñaTurno(id).subscribe((data: any) => {
+      this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'El turno volvera al estado disponible.' });
       this.cargarTurnos(); // Agregar para actualizar las tablas
       this.cargarTurnos2(); // Agregar para actualizar las tablas
       this.loadReservedAndAvailableTurns();
