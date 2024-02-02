@@ -5,6 +5,7 @@ import { MessageService } from 'primeng/api';
 import { ProveedorService } from '../proveedor/proveedor.service';
 import { Router } from '@angular/router';
 import { TurneroService } from './turnero.service';
+import { UserService } from '../users/users.service';
 
 @Component({
   selector: 'app-listar-turnero',
@@ -16,12 +17,15 @@ export class ListarTurneroComponent implements OnInit {
   @ViewChild('dt1') dataTable: Table | null = null;
   schedules: any[];
   columnas: any[];
+  id: any;
+  userType: any;
 
   constructor(
     private proveedorService: ProveedorService,
     private router: Router,
     private messageService: MessageService,
-    private turneroService: TurneroService
+    private turneroService: TurneroService,
+    private userService: UserService
   ) {
     this.schedules = [];
     this.columnas = [
@@ -36,15 +40,28 @@ export class ListarTurneroComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.cargarUsuarios();
+    this.userService.obtenerPerfil().subscribe(
+      (data: any) => {
+        this.id = data.id;
+        if(data.roles.includes('supplier')){
+          this.userType = 'supplier'
+        } else {
+          this.userType = 'client'
+        }
+        this.cargarUsuarios(this.id, this.userType);
+      },
+      (error) => {
+        console.error('Error al obtener los datos del proveedor:', error);
+      }
+    );
   }
 
   navigateToDashboard(scheduleId: number) {
     this.router.navigate(['/agenda', scheduleId]);
   }
 
-  cargarUsuarios() {
-    this.proveedorService.obtenerProveedores2().subscribe((data: any) => {
+  cargarUsuarios(id: number, userType: string) {
+    this.proveedorService.obtenerProveedores2(id, userType).subscribe((data: any) => {
       this.schedules = data.map((schedule: { signStatusText: string; hasSign: any; }) => {
         // Agregar una nueva propiedad 'signStatusText' que contendrá el texto a mostrar
         schedule.signStatusText = schedule.hasSign ? 'Incluye seña' : 'No incluye seña';

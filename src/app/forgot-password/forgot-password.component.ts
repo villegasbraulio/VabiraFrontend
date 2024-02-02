@@ -59,6 +59,7 @@ export class PasswordRecoveryComponent implements OnInit {
     );
 
     this.codeForm.disable();
+    this.changePasswordForm.enable()
   }
 
   onRequestCode() {
