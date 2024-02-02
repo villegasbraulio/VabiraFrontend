@@ -10,11 +10,11 @@
     <!-- Grupo 1 -->
     <li class="sidebar-group">
       <div>
-        <a routerLink="/reportes" *ngIf="profileTypes.includes('supplier')">
+        <a routerLink="/reportes" *appAuth="['Gestionar Reportes']">
           <i class="material-icons">dashboard</i> Dashboard
         </a>
       </div>
-        <a *ngIf="profileTypes.includes('admin')" (click)="toggleCollapse('usuariosCollapse')" class="custom-dropdown-toggle">
+        <a *appAuth="['Gestionar Usuarios']" (click)="toggleCollapse('usuariosCollapse')" class="custom-dropdown-toggle">
           <i class="material-icons">person</i> Usuarios
         </a>
         <!-- Agregar el ID al elemento que se colapsará -->
@@ -28,11 +28,11 @@
         </a>
         <ul id="scheduleCollapse" [ngClass]="{'collapse': !isCollapseOpen('scheduleCollapse')}">
           <li><a class="dropdown-item" routerLink="/lista-turnero">Agenda</a></li>
-          <li *ngIf="profileTypes.includes('supplier') || profileTypes.includes('admin')">
+          <li *appAuth="['Gestionar Turnero']">
             <a class="dropdown-item" routerLink="/turneros">Turnero</a>
           </li>
         </ul>
-        <a *ngIf="profileTypes.includes('admin') || profileTypes.includes('supplier')" (click)="toggleCollapse('productosCollapse')" class="custom-dropdown-toggle">
+        <a *appAuth="['Gestionar Productos']" (click)="toggleCollapse('productosCollapse')" class="custom-dropdown-toggle">
           <i class="material-icons">shopping_cart</i> Productos
         </a>
         <!-- Agregar el ID al elemento que se colapsará -->
@@ -46,8 +46,8 @@
     <!-- Grupo 3 -->
     <li class="sidebar-group">
       <div>
-        <a *ngIf="profileTypes.includes('supplier') || profileTypes.includes('client')" routerLink="/notificaciones">
-          <i class="material-icons">notifications</i> Notificaciones <span *ngIf="profileTypes.includes('supplier') || profileTypes.includes('client')" class="badge bg-secondary">{{quantity}}</span>
+        <a *appAuth="['Gestionar Notificaciones']" routerLink="/notificaciones">
+          <i class="material-icons">notifications</i> Notificaciones <span *appAuth="['Gestionar Notificaciones']" class="badge bg-secondary">{{quantity}}</span>
         </a>
       </div>
       <div>
@@ -55,7 +55,7 @@
           <i class="material-icons">settings</i> Ajustes
         </a>
       </div>
-      <div *ngIf="profileTypes.includes('admin')">
+      <div *appAuth="['Gestionar BackUp']">
         <a routerLink="/backup">
           <i class="material-icons">backup</i> Backup
         </a>

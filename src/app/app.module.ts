@@ -72,6 +72,7 @@ import { BackupComponent } from './backup/backup.component';
 import { TabViewModule } from 'primeng/tabview';
 import { MercadoPagoModalComponent } from './agenda/mercadopagomodal.component';
 import { PasswordRecoveryComponent } from './forgot-password/forgot-password.component';
+import { AuthDirective } from './shared/directives/auth.directive';
 
 @NgModule({
 
@@ -92,7 +93,7 @@ import { PasswordRecoveryComponent } from './forgot-password/forgot-password.com
     ReservarCitaComponent,
     DetallesCitaComponent,
     TurneroComponent,
-
+    AuthDirective,
     ProveedorComponent,
     TimeRangeModalComponent,
     ListarTurneroComponent,

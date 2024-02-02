@@ -9,7 +9,7 @@
     <!-- <div class="search-container">
       <input type="text" placeholder="Buscar...">
     </div> -->
-    <button *ngIf="profileTypes.includes('admin')"  class="alta-faq-button" (click)="mostrarFormulario()">Alta FAQ</button>
+    <button *appAuth="['Gestionar FAQ']"  class="alta-faq-button" (click)="mostrarFormulario()">Alta FAQ</button>
 
     <p-dialog  header="{{ mostrarFormEditar ? 'Editar FAQ' : 'Nueva FAQ' }}" [(visible)]="mostrarForm || mostrarFormEditar"
             [modal]="true" [responsive]="true" [style]="{width: '50vw'}">
@@ -33,8 +33,8 @@
       <p-accordion>
         <p-accordionTab *ngFor="let faq of faqs" [header]="faq.name" [expanded]="faq.expanded">
           <p>{{ faq.description }}</p>
-          <button *ngIf="profileTypes.includes('admin')" pButton icon="pi pi-pencil" (click)="editarFaq(faq)"></button>
-          <button *ngIf="profileTypes.includes('admin')" pButton icon="pi pi-trash" (click)="eliminarFaq(faq.id)"></button>
+          <button *appAuth="['Gestionar FAQ']" pButton icon="pi pi-pencil" (click)="editarFaq(faq)"></button>
+          <button *appAuth="['Gestionar FAQ']" pButton icon="pi pi-trash" (click)="eliminarFaq(faq.id)"></button>
         </p-accordionTab>
       </p-accordion>
     </div>

@@ -81,3 +81,8 @@ app-sidebar {
 .alta-usuario:hover {
   background-color: #0069d9;
 }
+/* users.component.css */
+
+.p-button-rounded.ml-auto {
+  margin-left: auto;
+}

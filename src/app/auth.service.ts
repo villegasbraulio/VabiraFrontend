@@ -5,6 +5,7 @@ import { Message } from 'primeng/api';
 import { BehaviorSubject, catchError, tap, throwError } from 'rxjs';
 // import jwt_decode from 'jwt-decode';
 import { IRequestCode } from './interfaces/requestCode.interface';
+import { ILoginResponseUser } from './shared/interfaces/user-response-login.interface';
 
 export interface LoginResponseData {
   token: string;
@@ -12,10 +13,8 @@ export interface LoginResponseData {
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  // private _user = new BehaviorSubject<User | null>(null);
+  user = new BehaviorSubject<ILoginResponseUser | null>(null);
 
-
-  // private _user$ = this._user.asObservable()
 
   private tokenExpirationTimer: any;
 

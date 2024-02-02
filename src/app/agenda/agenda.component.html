@@ -18,9 +18,9 @@
         <td>{{ turn2.totalTurns }}</td>
         <td>{{ turn2.reservedTurns }}</td>
         <td>{{ turn2.availableTurns }}</td>
-        <td *ngIf="profileTypes.includes('supplier')">{{ turn2.proximoCliente }}</td>
-        <td *ngIf="profileTypes.includes('supplier')">{{ turn2.aproveTurns }}</td>
-        <td *ngIf="profileTypes.includes('supplier')">{{ turn2.desaproveTurns }}</td>
+        <td *appAuth="['Ver DatosTurnos']" >{{ turn2.proximoCliente }}</td>
+        <td *appAuth="['Ver DatosTurnos']">{{ turn2.aproveTurns }}</td>
+        <td *appAuth="['Ver DatosTurnos']">{{ turn2.desaproveTurns }}</td>
       </tr>
     </ng-template>
     <ng-template pTemplate="emptymessage">
@@ -48,7 +48,7 @@
           <td>{{ turn.dateFormatted }}</td>
           <td>{{ turn?.client?.user?.firstName }} {{ turn?.client?.user?.lastName }}</td>
           <td>{{ turn.turnStatus[0].turnStatusType.name }}</td>
-          <td *ngIf="profileTypes.includes('supplier') || profileTypes.includes('admin')">
+          <td *appAuth="['Ver DatosTurnos']">
             Presente <span class="pi pi-thumbs-up like-icon"  (click)="aprobarTurno(turn.id)"></span> /
             Ausente <span class="pi pi-thumbs-down like-icon" (click)="desaprobarTurno(turn.id)"></span> /
             Aprobar Seña<span class="pi pi-check like-icon"  (click)="aprobarSenaTurno(turn.id)"></span> /
