@@ -95,4 +95,6 @@
     </tbody>
     <p-messages [(value)]="messages" class="toast-messages" [enableService]="false" [closable]="true"></p-messages>
   </table>
+  <button (click)="redirectToGoogleAuth()">Autenticar con Google</button>
+  <button (click)="syncWithGoogleCalendar()">Sincronizar calendarios</button>
 </div>

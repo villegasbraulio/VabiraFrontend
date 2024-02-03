@@ -480,4 +480,44 @@ export class AgendaComponent implements OnInit {
   updateCurrentDate() {
     this.currentDate = moment();
   }
+
+  async redirectToGoogleAuth() {
+    // Redirige al usuario a la página de autorización de Google
+    const authResponse = await this.agendaService.redirectToGoogleAuth().toPromise();
+    window.location.href = authResponse.authorizationUrl;
+  }
+
+  async syncWithGoogleCalendar() {
+    // Lógica para sincronizar con Google Calendar después de la autorización
+    const tokens = await this.handleGoogleCallback();
+    if (tokens) {
+      const syncData = { /* ... datos necesarios para la sincronización ... */ };
+      this.agendaService.syncWithGoogleCalendar(tokens, syncData).subscribe(
+        (response) => {
+          console.log('Sincronización exitosa:', response);
+        },
+        (error) => {
+          console.error('Error durante la sincronización:', error);
+        }
+      );
+    }
+  }
+
+  private async handleGoogleCallback(): Promise<any> {
+    // Lógica para manejar la respuesta de Google después de la autorización
+    // Extrae los tokens de la URL y devuelve la información necesaria al backend
+    const urlParams = new URLSearchParams(window.location.search);
+    const accessToken = urlParams.get('access_token');
+    const tokenType = urlParams.get('token_type');
+    const expiresIn = urlParams.get('expires_in');
+
+    if (accessToken && tokenType && expiresIn) {
+      return { accessToken, tokenType, expiresIn };
+    } else {
+      return null;
+    }
+  }
+
+
 }
+

@@ -89,8 +89,8 @@ export class ReportesService {
   }
     
   // Nuevo método para obtener las agendas del proveedor
-  getSupplierSchedules(username: string): Observable<any[]> {
-    return this.http.get<any[]>(this.supplierSchedulesUrl + username);
+  getSupplierSchedules(userid: string): Observable<any[]> {
+    return this.http.get<any[]>(this.supplierSchedulesUrl );
   }
 
   // Nuevo método para obtener los datos de turnos del proveedor
@@ -103,4 +103,10 @@ export class ReportesService {
     return this.http.get<any>(url);
   }
 
+  //Obtener todas las ventas
+
+  getVentas (){
+    const url = `http://localhost:3000/api/saleRecord/all`;
+    return this.http.get<any>(url);
+  }
 }

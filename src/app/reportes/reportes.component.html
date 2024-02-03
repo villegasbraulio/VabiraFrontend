@@ -72,6 +72,21 @@
           <button class="btn btn-primary" (click)="descargarExcelPorAgenda()">Descargar datos de Agenda</button>
         </div>
       </p-tabPanel>
+
+      <p-tabPanel *ngIf="userRoles === 'user,supplier'" header="Total Ventas por Producto">
+        <div class="card">
+          <div class="card-header">
+            Total Ventas por Producto
+          </div>
+      
+          <div class="card-body">
+            <p-chart [type]="'bar'" [data]="totalSalesByBrandChartData" [options]="chartOptions"></p-chart>
+          </div>
+      
+          <button class="btn btn-primary" (click)="descargarExcel()">Descargar Datos</button>
+        </div>
+      </p-tabPanel>
+      
     </p-tabView>
 
     <p-messages></p-messages>
