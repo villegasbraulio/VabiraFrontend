@@ -20,7 +20,6 @@
             <i class="pi pi-search"></i>
             <input pInputText [(ngModel)]="globalFilterText" (input)="filterGlobal($event)" placeholder="Buscar..." />
           </span>
-          <button pButton label="Editar Accesos" class="p-button-rounded ml-auto"></button>
         </div>
       </ng-template>
         <ng-template pTemplate="header" let-columns>
@@ -46,6 +45,7 @@
               <button pButton icon="pi pi-search" (click)="verUsuario(user.id)" class="p-button-rounded p-button-success"></button>
               <button pButton icon="pi pi-pencil" (click)="abrirModalEdicion(user)" class="p-button-rounded p-button-warning"></button>
               <button pButton icon="pi pi-trash" (click)="eliminarUsuario(user.id)" class="p-button-rounded p-button-danger"></button>
+              <button pButton icon="pi pi-pencil" class="p-button-rounded p-button-primary" (click)="abrirModalEdicionAccessos(user)"></button>
             </td>
           </tr>
         </ng-template>

@@ -1,0 +1,16 @@
+<!-- editar-accesos-modal.component.html -->
+<div class="modal-container">
+  <h2 class="modal-title">Editar Accesos</h2>
+  <form (ngSubmit)="editarAccesos()">
+    <div class="card flex justify-content-center">
+      <div class="flex flex-column gap-2">
+        <div *ngFor="let access of accesses" class="field-checkbox">
+          <p-checkbox [label]="access.name" name="group" [value]="access.key"
+            [(ngModel)]="selectAccess"></p-checkbox>
+        </div>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary" (click)="editarAccesos()">Guardar</button>
+    <button type="button" (click)="cerrarModal()" class="btn btn-secondary">Cancelar</button>
+  </form>
+</div>
