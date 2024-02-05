@@ -96,7 +96,8 @@ export class UserService {
 
   editarUsuario(id: number, toUpdate: any): Observable<any> {
     // Crea un objeto con el ID a eliminar
-    const body = { id: id, ...toUpdate };
+    const body = { id: id, accesses: toUpdate };
+    
     const httpOptions = {
       headers: this.getHeaders(), // Obtener las cabeceras con el token
     };

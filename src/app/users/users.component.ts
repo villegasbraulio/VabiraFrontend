@@ -130,7 +130,9 @@ export class UsersComponent implements OnInit {
 
   abrirModalEdicionAccessos(usuario: any) {
     const accesosSeleccionados = usuario.profileUser[0].profile.accessProfile ? [...usuario.profileUser[0].profile.accessProfile] : [];
-    const finalAccess = accesosSeleccionados.map(access => access.access.code.toLowerCase());
+    const finalAccess = [...new Set(accesosSeleccionados.map(access => access.access.code))];
+    console.log('finalAccess: ', finalAccess);
+    
     const dialogRef = this.dialog.open(EditarAccesosModalComponent, {
       width: '400px',
       data: { usuario, finalAccess },
