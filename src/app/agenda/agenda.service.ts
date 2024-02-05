@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, catchError, tap } from 'rxjs';
 import { NotificacionesService } from '../notificaciones/notificaciones.service'; // Importa el servicio de notificaciones
 
@@ -117,5 +117,12 @@ export class AgendaService {
     const body = { id, ...toUpdate };
     return this.http.patch<any>(`${this.baseUrl2}/unAssignTurn`, body);
   }
+
+  syncWithGoogleCalendar(reservedTurns: any, calendarId: any): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/syncWithGoogleCalendar`, {reservedTurns, calendarId});
+  }
+
+
+
 }
 

@@ -32,7 +32,10 @@ export class ReportesComponent implements OnInit {
   schedules: any[] = [];
   basicDatahard: any;
   basicOptionshard: any;
-
+  salesByBrandData: any[] = [];
+  totalSalesByBrand: any[] = [];
+  totalSalesByBrandChartData: any;
+  
   constructor(private reportesService: ReportesService, private userService: UserService) { }
 
   ngOnInit(): void {
@@ -41,9 +44,6 @@ export class ReportesComponent implements OnInit {
       this.username = profile.username;
       this.userid = profile.id
       this.userRoles = profile.roles
-      // console.log(this.username)
-      // console.log(this.userid)
-      // console.log(this.userRoles)
       // Cargar los datos después de obtener el nombre del usuario
       this.loadData();
       if (this.userRoles.includes('admin')) {
@@ -52,73 +52,33 @@ export class ReportesComponent implements OnInit {
         this.configureChartOptions();
       })}
         console.log(this.rolesData)
-        this.reportesService.getSupplierSchedules(this.username).subscribe(schedules => {
-          this.schedules = schedules;
-          // Seleccionar la primera agenda por defecto
+        this.reportesService.getSupplierSchedules(this.userid).subscribe(schedules => {
+          // Filtrar las agendas por supplier.id igual a this.userid
+          this.schedules = schedules.filter(schedule => schedule.supplier.user.username === this.username);
+          
+
+          // Seleccionar la primera agenda por defecto si hay alguna después del filtrado
           if (this.schedules.length > 0) {
             this.selectedSchedule = this.schedules[0];
             this.loadSupplierData();
           }
         });
       // });
+      this.reportesService.getVentas().subscribe((data) => {
+        this.salesByBrandData = data;
+        // Calcula el total de productos vendidos por marca y nombre
+        this.calculateTotalProductsSoldByBrand();
+        console.log(this.totalSalesByBrand)
+      });
+      
     });
-//////hardcodeado
-    const documentStyle = getComputedStyle(document.documentElement);
-        const textColor = documentStyle.getPropertyValue('--text-color');
-        const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
-        const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
-
-        this.basicDatahard = {
-            labels: ['Crema Depilatoria', 'Esmalte', 'Acondicionador', 'Mascarilla'],
-            datasets: [
-                {
-                    label: 'Ventas de productos',
-                    data: [5, 3, 8, 10],
-                    backgroundColor: ['rgba(255, 159, 64, 0.2)', 'rgba(75, 192, 192, 0.2)', 'rgba(54, 162, 235, 0.2)', 'rgba(153, 102, 255, 0.2)'],
-                    borderColor: ['rgb(255, 159, 64)', 'rgb(75, 192, 192)', 'rgb(54, 162, 235)', 'rgb(153, 102, 255)'],
-                    borderWidth: 1
-                }
-            ]
-        };
-
-        this.basicOptionshard = {
-            plugins: {
-                legend: {
-                    labels: {
-                        color: textColor
-                    }
-                }
-            },
-            scales: {
-                y: {
-                    beginAtZero: true,
-                    ticks: {
-                        color: textColorSecondary
-                    },
-                    grid: {
-                        color: surfaceBorder,
-                        drawBorder: false
-                    }
-                },
-                x: {
-                    ticks: {
-                        color: textColorSecondary
-                    },
-                    grid: {
-                        color: surfaceBorder,
-                        drawBorder: false
-                    }
-                }
-            }
-        };
-        ///////hard
-  }
+    }
   
 
   loadData(): void {
     this.reportesService.getReportes(this.username).subscribe(data => {
       console.log(data); // Verifica los datos en la consola
-     
+      
       
       this.agendas = data;
 
@@ -160,7 +120,6 @@ export class ReportesComponent implements OnInit {
       width: 800, // Establece el ancho del gráfico
       height: 800 // Establece el alto del gráfico
     };
-  
     // Preparar los datos para el gráfico de pie
     this.chartData = {
       labels: this.rolesData.map(item => item.role),
@@ -232,8 +191,59 @@ export class ReportesComponent implements OnInit {
   
           const wb: XLSX.WorkBook = XLSX.utils.book_new();
           XLSX.utils.book_append_sheet(wb, ws, 'Datos');
-          XLSX.writeFile(wb, `Datos de la Agenda ${this.selectedSchedule.name}.xlsx -- VABIRA`);
+          XLSX.writeFile(wb, `VABIRA -- Datos de la Agenda ${this.selectedSchedule.name}.xlsx`);
         });
       }
     }
+
+    calculateTotalProductsSoldByBrand(): void {
+      // Inicializa un objeto para almacenar la cantidad total de productos vendidos por cada marca y nombre
+      const totalSalesMap: Map<string, number> = new Map();
+  
+      // Recorre los datos de ventas por marca
+      this.salesByBrandData.forEach((sale) => {
+
+        console.log(sale.saleDateTime)
+
+        sale.product.forEach((product: { brand: any; name: any; prize: any  }) => {
+          // Genera una clave única para identificar cada producto por marca y nombre
+          const productKey = `${product.brand}-${product.name}`;
+
+          // Calcula el total de dinero vendido por cada producto
+          const total = parseFloat(product.prize) * 1;
+
+          console.log(product.prize)
+          console.log(productKey)
+
+          // Verifica si ya existe una entrada para ese producto en el mapa
+          if (totalSalesMap.has(productKey)) {
+            // Si existe, actualiza el total acumulado
+            totalSalesMap.set(productKey, totalSalesMap.get(productKey)! + total);
+          } else {
+            // Si no existe, crea una nueva entrada en el mapa
+            totalSalesMap.set(productKey, total);
+          }
+        });
+      });
+  
+      // Convierte el mapa a un array de objetos para mostrar en la interfaz de usuario
+      this.totalSalesByBrand = Array.from(totalSalesMap).map(([productKey, total]) => ({
+        productKey,
+        total,
+      }));
+      this.totalSalesByBrandChartData = {
+        labels: this.totalSalesByBrand.map(item => item.productKey),
+        datasets: [
+          {
+            label: 'Total Ventas por Producto',
+            data: this.totalSalesByBrand.map(item => item.total),
+            backgroundColor: ['#FF00FF', '#00FFFF', '#FFA500', '#008000']
+          }
+        ]
+    }
+
+  }
+
+
+    
   }
