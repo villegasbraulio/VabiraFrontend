@@ -27,7 +27,6 @@ import { UserService } from 'src/app/users/users.service';
       this.userService.obtenerPerfil().subscribe(
         (data: any) => {
           this.currentUser = data;
-          console.log(this.currentUser);
           this.updateView();
         },
         (error) => {

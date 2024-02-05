@@ -60,7 +60,6 @@ export class LoginComponent {
       (error) => {
         // Maneja los errores aquí
         console.error('Error:', error);
-  
         // Establecer el mensaje de error basado en la respuesta del servidor o personalizado
         this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Credenciales incorrectas. Por favor, verifica tu username, correo electrónico y/o contraseña.' });
       }

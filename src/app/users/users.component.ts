@@ -5,6 +5,8 @@ import { EditarUsuarioModalComponent } from './editar-usuario-modal.component';
 import { UserModalComponent } from './users-modal.component';
 import { UserService } from './users.service';
 import { MessageService } from 'primeng/api';
+import { EditarAccesosModalComponent } from './editar-accesos-modal.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-users',
@@ -22,7 +24,8 @@ export class UsersComponent implements OnInit {
   constructor(
     private userService: UserService,
     private dialog: MatDialog,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private router: Router
   ) {
     this.columnas = [
       { field: 'id', header: 'ID' },
@@ -126,10 +129,26 @@ export class UsersComponent implements OnInit {
       }
     });
   }
+
+  abrirModalEdicionAccessos(usuario: any) {
+    const accesosSeleccionados = usuario.profileUser[0].profile.accessProfile ? [...usuario.profileUser[0].profile.accessProfile] : [];
+    const finalAccess = [...new Set(accesosSeleccionados.map(access => access.access.code))];
+    console.log('finalAccess: ', finalAccess);
+    
+    const dialogRef = this.dialog.open(EditarAccesosModalComponent, {
+      width: '400px',
+      data: { usuario, finalAccess },
+    });
   
-  
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.usuarios = this.usuarios.map(u => (u.id === result.id ? result : u));
+        this.messageService.add({severity: 'success', summary: 'Éxito', detail: 'Accesos del usuario actualizados correctamente.'});
+        
+        // Navegar a la misma página después de cerrar el diálogo
+        window.location.reload()
+      }
+    });
+  }
 }
-
-
-
 

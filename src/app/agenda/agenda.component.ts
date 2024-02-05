@@ -385,7 +385,7 @@ export class AgendaComponent implements OnInit {
         } else if (this.aproveTimeSlots.has(buttonId)){
           this.buttonStates[buttonId] = 'Presente'
         } else if (this.reservedWtSignTimeSlots.has(buttonId)) {
-          this.buttonStates[buttonId] = 'Reservado sin aprobar seña'
+          this.buttonStates[buttonId] = 'Reservado a espera de aprobacion de seña'
         }
       }
     }
@@ -509,6 +509,7 @@ export class AgendaComponent implements OnInit {
       this.agendaService.syncWithGoogleCalendar(this.turnosReservados, calendarId).subscribe(
         (response) => {
           console.log('Sincronización exitosa:', response);
+          this.messages = [{ severity: 'success', summary: 'Éxito', detail: 'Sincronización exitosa con google calendar' }];
         },
         (error) => {
           console.error('Error durante la sincronización:', error);
