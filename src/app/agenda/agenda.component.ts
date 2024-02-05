@@ -509,7 +509,7 @@ export class AgendaComponent implements OnInit {
       this.agendaService.syncWithGoogleCalendar(this.turnosReservados, calendarId).subscribe(
         (response) => {
           console.log('Sincronización exitosa:', response);
-          this.messageService.add({severity: 'success', summary: 'Éxito', detail:'Sincronización exitosa con google calendar'})
+          this.messages = [{ severity: 'success', summary: 'Éxito', detail: 'Sincronización exitosa con google calendar' }];
         },
         (error) => {
           console.error('Error durante la sincronización:', error);

@@ -87,3 +87,8 @@ button {
 button:hover {
   background-color: #31b0d5; /* Cambiado el color de fondo al pasar el ratón */
 }
+
+.p-button {
+  background-color: #3183d5;
+  color: #ffffff;
+}
