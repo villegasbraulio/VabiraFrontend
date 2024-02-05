@@ -10,6 +10,7 @@ import { MercadoPagoModalComponent } from './mercadopagomodal.component';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
 
+
 @Component({
   selector: 'app-agenda',
   templateUrl: './agenda.component.html',
@@ -40,6 +41,8 @@ export class AgendaComponent implements OnInit {
   alias: string = '';
   initialAmount: number = 0;
   messages: Message[] = [];
+  turnosReservados: any[] = [];
+  calendarIdInput: string = '';
   buttonStates: { [buttonId: string]: string } = {}; // Nuevo objeto para rastrear el estado de los botones
 
   constructor(private dialog: MatDialog, private messageService: MessageService,
@@ -481,18 +484,29 @@ export class AgendaComponent implements OnInit {
     this.currentDate = moment();
   }
 
-  async redirectToGoogleAuth() {
-    // Redirige al usuario a la página de autorización de Google
-    const authResponse = await this.agendaService.redirectToGoogleAuth().toPromise();
-    window.location.href = authResponse.authorizationUrl;
-  }
+
 
   async syncWithGoogleCalendar() {
     // Lógica para sincronizar con Google Calendar después de la autorización
-    const tokens = await this.handleGoogleCallback();
-    if (tokens) {
-      const syncData = { /* ... datos necesarios para la sincronización ... */ };
-      this.agendaService.syncWithGoogleCalendar(tokens, syncData).subscribe(
+    const calendarId = this.calendarIdInput;
+    if (!calendarId) {
+      // Puedes mostrar un mensaje de error o realizar la lógica adecuada si no se proporciona una dirección de calendario.
+      console.error('La dirección del calendario no puede estar vacía.');
+      return;
+    }      this.agendaService.obtenerTurnosReservadosPorAgenda(this.agendaId)
+      .subscribe(
+        (turnos: any[]) => {
+          this.turnosReservados = turnos;
+          console.log('Turnos reservados:', this.turnosReservados);
+          // Puedes realizar operaciones adicionales aquí si es necesario
+        },
+        error => {
+          console.error('Error al obtener turnos reservados:', error);
+        }
+      );      
+      console.log(this.agendaId)
+      console.log(this.turnosReservados)
+      this.agendaService.syncWithGoogleCalendar(this.turnosReservados, calendarId).subscribe(
         (response) => {
           console.log('Sincronización exitosa:', response);
         },
@@ -500,7 +514,22 @@ export class AgendaComponent implements OnInit {
           console.error('Error durante la sincronización:', error);
         }
       );
-    }
+    
+  }
+
+  obtenerTurnosReservadosPorAgenda(): void {
+    const agendaId = 1; // Reemplaza con el ID de la agenda deseada
+    this.agendaService.obtenerTurnosReservadosPorAgenda(this.agendaId)
+      .subscribe(
+        (turnos: any[]) => {
+          this.turnosReservados = turnos;
+          console.log('Turnos reservados:', this.turnosReservados);
+          // Puedes realizar operaciones adicionales aquí si es necesario
+        },
+        error => {
+          console.error('Error al obtener turnos reservados:', error);
+        }
+      );
   }
 
   private async handleGoogleCallback(): Promise<any> {
@@ -517,6 +546,10 @@ export class AgendaComponent implements OnInit {
       return null;
     }
   }
+
+
+
+
 
 
 }

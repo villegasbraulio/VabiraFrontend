@@ -10,7 +10,6 @@ export class AgendaService {
   private baseUrl = 'http://localhost:3000/api/schedule';
   private baseUrl2 = 'http://localhost:3000/api/turn';
   private idTurnoSeleccionado: number = 0;
-  private googleurl = 'http://localhost:3000/api/google-auth'
 
   constructor(private http: HttpClient, private notificacionesService: NotificacionesService) { } // Inyecta NotificacionesService
 
@@ -119,17 +118,11 @@ export class AgendaService {
     return this.http.patch<any>(`${this.baseUrl2}/unAssignTurn`, body);
   }
 
-  syncWithGoogleCalendar(tokens: any, reservedTurns: any): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}/syncWithGoogleCalendar`, {tokens, reservedTurns});
+  syncWithGoogleCalendar(reservedTurns: any, calendarId: any): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/syncWithGoogleCalendar`, {reservedTurns, calendarId});
   }
 
-  redirectToGoogleAuth(): Observable<any> {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': 'http://localhost:4200',  // Reemplaza con la URL de tu aplicación Angular
-    });
-    return this.http.get<any>(`${this.googleurl}`);
-  }
+
 
 }
 
