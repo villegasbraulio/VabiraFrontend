@@ -244,6 +244,24 @@ export class ReportesComponent implements OnInit {
 
   }
 
-
+  descargarExcelVentasPorProducto(): void {
+    const formattedData = this.totalSalesByBrand.map(item => ({
+      'Producto': item.productKey,
+      'Total Ventas': item.total.toFixed(2)  // Ajusta la cantidad de decimales según tus necesidades
+    }));
+  
+    const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(formattedData, {
+      header: ['Producto', 'Total Ventas'],
+      skipHeader: true
+    });
+  
+    // Agregar un estilo al encabezado
+    ws['A1'].s = { t: 's', v: 'Producto-Marca', s: {fill: { fgColor: { rgb: 'FFFF00' } } }};
+    ws['B1'].s = { t: 's', v: 'Precio', s: {fill: { fgColor: { rgb: 'FFFF00' } } }};
+  
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Ventas por Producto');
+    XLSX.writeFile(wb, 'VABIRA -- ventas_por_producto.xlsx');
+  }
     
   }
