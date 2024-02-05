@@ -34,7 +34,7 @@
   <app-sidebar></app-sidebar>
   <div class="card">
     <input type="text" [(ngModel)]="calendarIdInput" placeholder="Ingrese la dirección del calendario">
-  <button (click)="syncWithGoogleCalendar()">Autenticar con Google</button>
+  <button (click)="syncWithGoogleCalendar()">Enviar a Google Calendar</button>
     <p-table [value]="turns" [rows]="15" [paginator]="true" [resizableColumns]="true" [reorderableColumns]="true"
       [filterMode]="'lenient'">
       <ng-template pTemplate="header" let-columns>
