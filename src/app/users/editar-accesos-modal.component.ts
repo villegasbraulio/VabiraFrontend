@@ -33,7 +33,7 @@ export class EditarAccesosModalComponent {
   }
 
   editarAccesos() {
-    this.userService.editarUsuario(this.usuario.id, this.selectAccess).subscribe((data: any) => {
+    this.userService.editarUsuario2(this.usuario.id, this.selectAccess).subscribe((data: any) => {
       this.dialogRef.close(this.usuario);
     });
   }

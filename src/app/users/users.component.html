@@ -2,7 +2,7 @@
   <app-sidebar></app-sidebar>
   <div class="content">
     <div class="card">
-      <h2>Gestión de Usuarios</h2>
+      <h2>Gestión de Usuarios</h2><h4>Fecha Actual: {{ currentDate.format('HH:mm:ss DD-MM-yyyy') }}</h4>
       <p-table
         #dt1
         [value]="usuarios"
@@ -41,6 +41,8 @@
             <td>{{ user.dni }}</td>
             <td>{{ user.dateOfBirth | date: 'dd/MM/yyyy' }}</td>
             <td>{{ user.roles }}</td>
+            <td>{{ user.userStatus[0].userStatusType.name }}</td>
+            <td>{{user.userStatus[0]?.dateTo | date: 'dd/MM/yyyy HH:mm' }}</td>
             <td>
               <button pButton icon="pi pi-search" (click)="verUsuario(user.id)" class="p-button-rounded p-button-success"></button>
               <button pButton icon="pi pi-pencil" (click)="abrirModalEdicion(user)" class="p-button-rounded p-button-warning"></button>

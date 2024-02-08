@@ -7,6 +7,7 @@ import { UserService } from './users.service';
 import { MessageService } from 'primeng/api';
 import { EditarAccesosModalComponent } from './editar-accesos-modal.component';
 import { Router } from '@angular/router';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-users',
@@ -20,6 +21,7 @@ export class UsersComponent implements OnInit {
   columnas: any[];
   usuarioSeleccionado: any;
   globalFilterText: string = ''; // Variable para almacenar el texto de búsqueda global
+  currentDate = moment();
 
   constructor(
     private userService: UserService,
@@ -35,19 +37,44 @@ export class UsersComponent implements OnInit {
       { field: 'user.dni', header: 'DNI' },
       { field: 'user.dateOfBirth', header: 'Fecha de Nacimiento' },
       { field: 'user.roles', header: 'Roles' },
+      { field: 'user.userStatus[0].userStatusType.name', header: 'Estado' },
+      { field: 'user.userStatus[0]?.dateTo', header: 'Fecha fin licencia' },
       { field: 'acciones', header: 'Acciones' },
     ];
   }
 
   ngOnInit() {
     this.cargarUsuarios();
+    setInterval(() => {
+      this.updateCurrentDate2();
+    }, 1000);
   }
+
+  // checkearEstadoInactivo() {
+
+  // }
 
   cargarUsuarios() {
     this.userService.obtenerUsuarios().subscribe((data: any) => {
       this.usuarios = data;
+      setInterval(() => {
+        const currentUtcDate = moment.utc();
+        for (const user of this.usuarios) {
+          if (user.userStatus[0]?.dateTo) {
+            const finalDate = moment.utc(user.userStatus[0].dateTo);
+            const sameDateTime = finalDate.isSame(currentUtcDate, 'minute');
+            if (sameDateTime) {
+              this.userService.editarUsuarioEstado(user.id).subscribe(() => {
+                window.location.reload();
+              });
+            }
+          }
+        }
+      }, 60000); // Actualizar cada minuto
     });
   }
+  
+  
 
   clearGlobalFilter() {
     if (this.dataTable) {
@@ -62,23 +89,26 @@ export class UsersComponent implements OnInit {
       this.dataTable.filter(this.globalFilterText, 'global', 'contains');
     }
   }
-  
+
+  updateCurrentDate2() {
+    this.currentDate = moment();
+  }
 
   altaUsuario() {
     const dialogRef = this.dialog.open(EditarUsuarioModalComponent, {
       width: '400px',
       data: { usuario: null },
     });
-  
+
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         const usuarioNuevo = result;
         this.usuarios.push(usuarioNuevo);
-        this.messageService.add({severity: 'success', summary: 'Éxito', detail: 'Usuario agregado correctamente.'});
+        this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'Usuario agregado correctamente.' });
       }
     });
   }
-  
+
   verUsuario(id: number) {
     // Llama al método del servicio para obtener los datos del usuario por su ID
     this.userService.obtenerUsuario(id).subscribe((data: any) => {
@@ -90,42 +120,43 @@ export class UsersComponent implements OnInit {
       });
     });
   }
-  
+
   eliminarUsuario(id: number) {
     this.userService.eliminarUsuario(id).subscribe((data: any) => {
       this.usuarios = this.usuarios.filter(usuario => usuario.id !== id);
-      this.messageService.add({severity: 'success', summary: 'Éxito', detail: 'Usuario eliminado correctamente.'});
+      this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'Usuario eliminado correctamente.' });
     });
   }
-  
-  
-  editarUsuario(id: number, toUpdate:any) {
+
+
+  editarUsuario(id: number, toUpdate: any) {
     // Llama al método del servicio para eliminar el usuario por su ID
     this.userService.editarUsuario(id, toUpdate).subscribe((data: any) => {
       // Puedes realizar acciones adicionales después de eliminar el usuario, si es necesario.
     });
   }
-  
+
   clear(table: Table) {
     table.clear();
   }
-  
+
   // Método para recargar la página
   // reloadPage() {
   //   // Utiliza la función de JavaScript para recargar la página actual
   //   location.reload();
   // }
-  
+
   abrirModalEdicion(usuario: any) {
     const dialogRef = this.dialog.open(EditarUsuarioModalComponent, {
       width: '400px',
       data: { usuario },
     });
-  
+
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.usuarios = this.usuarios.map(u => (u.id === result.id ? result : u));
-        this.messageService.add({severity: 'success', summary: 'Éxito', detail: 'Usuario actualizado correctamente.'});
+        this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'Usuario actualizado correctamente.' });
+        window.location.reload()
       }
     });
   }
@@ -134,17 +165,17 @@ export class UsersComponent implements OnInit {
     const accesosSeleccionados = usuario.profileUser[0].profile.accessProfile ? [...usuario.profileUser[0].profile.accessProfile] : [];
     const finalAccess = [...new Set(accesosSeleccionados.map(access => access.access.code))];
     console.log('finalAccess: ', finalAccess);
-    
+
     const dialogRef = this.dialog.open(EditarAccesosModalComponent, {
       width: '400px',
       data: { usuario, finalAccess },
     });
-  
+
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.usuarios = this.usuarios.map(u => (u.id === result.id ? result : u));
-        this.messageService.add({severity: 'success', summary: 'Éxito', detail: 'Accesos del usuario actualizados correctamente.'});
-        
+        this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'Accesos del usuario actualizados correctamente.' });
+
         // Navegar a la misma página después de cerrar el diálogo
         window.location.reload()
       }

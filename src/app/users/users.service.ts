@@ -96,6 +96,31 @@ export class UserService {
 
   editarUsuario(id: number, toUpdate: any): Observable<any> {
     // Crea un objeto con el ID a eliminar
+    const body = { id: id, ...toUpdate };
+    
+    const httpOptions = {
+      headers: this.getHeaders(), // Obtener las cabeceras con el token
+    };
+    
+    
+    // Realiza una solicitud PATCH con el cuerpo (body) que contiene el ID
+    return this.http.patch<any>(`${this.baseUrl}/update`, body, httpOptions);
+  }
+
+  editarUsuarioEstado(id: number): Observable<any> {
+    // Crea un objeto con el ID a eliminar
+    
+    const httpOptions = {
+      headers: this.getHeaders(), // Obtener las cabeceras con el token
+    };
+    
+    
+    // Realiza una solicitud PATCH con el cuerpo (body) que contiene el ID
+    return this.http.patch<any>(`${this.baseUrl}/updateStatus?id=${id}`, httpOptions);
+  }
+
+  editarUsuario2(id: number, toUpdate: any): Observable<any> {
+    // Crea un objeto con el ID a eliminar
     const body = { id: id, accesses: toUpdate };
     
     const httpOptions = {

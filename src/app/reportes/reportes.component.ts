@@ -251,8 +251,8 @@ export class ReportesComponent implements OnInit {
     }));
   
     const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(formattedData, {
-      header: ['Producto', 'Total Ventas'],
-      skipHeader: true
+      header: ['Producto', 'Precio de la venta'],
+      // skipHeader: true
     });
   
     // Agregar un estilo al encabezado

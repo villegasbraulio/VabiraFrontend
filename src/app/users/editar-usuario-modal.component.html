@@ -1,30 +1,41 @@
 <div class="modal-container">
-    <h2 class="modal-title">Editar Usuario</h2>
-    <form (ngSubmit)="editarUsuario()">
-      <!-- Agrega campos de formulario para editar los datos del usuario -->
-      <div class="form-group">
-        <label for="username">Username:</label>
-        <input type="text" id="username" [(ngModel)]="usuario.username" name="username">
-        <br>
-        <label for="firstName">First name:</label>
-        <input type="text" id="firstName" [(ngModel)]="usuario.firstName" name="firstName">
-        <br>
-        <label for="lastName">Last name:</label>
-        <input type="text" id="lastName" [(ngModel)]="usuario.lastName" name="lastName">
-        <br>
-        <label for="dni">DNI:</label>
-        <input type="text" id="dni" [(ngModel)]="usuario.dni" name="dni">
-        <br>
-        <label for="email">Email:</label>
-        <input type="text" id="email" [(ngModel)]="usuario.email" name="email">
-        <br>
-        <label for="email">Contraseña:</label>
-        <input type="text" placeholder="********" id="password" [(ngModel)]="usuario.password" name="password">
-        <br>
+  <h2 class="modal-title">Editar Usuario</h2>
+  <form (ngSubmit)="editarUsuario()">
+    <!-- Agrega campos de formulario para editar los datos del usuario -->
+    <div class="form-group">
+      <label for="username">Username:</label>
+      <input type="text" id="username" [(ngModel)]="usuario.username" name="username">
+      <br>
+      <label for="firstName">First name:</label>
+      <input type="text" id="firstName" [(ngModel)]="usuario.firstName" name="firstName">
+      <br>
+      <label for="lastName">Last name:</label>
+      <input type="text" id="lastName" [(ngModel)]="usuario.lastName" name="lastName">
+      <br>
+      <label for="dni">DNI:</label>
+      <input type="text" id="dni" [(ngModel)]="usuario.dni" name="dni">
+      <br>
+      <label for="email">Email:</label>
+      <input type="text" id="email" [(ngModel)]="usuario.email" name="email">
+      <br>
+      <label for="email">Contraseña:</label>
+      <input type="text" placeholder="********" id="password" [(ngModel)]="usuario.password" name="password">
+      <br>
+      <label for="roles">Roles:</label>
+      <input type="text" id="roles" [(ngModel)]="usuario.roles" name="roles">
+      <br>
+      <ng-container *ngIf="isOnVacation">
+        <div class="form-group">
+          <label for="dateTo">Fecha de finalizacion de la licencia:</label>
+          <input type="datetime-local" id="dateTo" name="dateTo" [(ngModel)]="usuario.dateTo" required>
+        </div>
+      </ng-container>
+      <div class="form-check form-switch">
+        <input class="form-check-input" type="checkbox" id="onVacationSwitch" [(ngModel)]="isOnVacation"
+          name="isOnVacation" (change)="onSwitchChange('isOnVacation')">
+        <label class="form-check-label" for="onVacationSwitch">Ausencia por Licencia</label>
       </div>
       <!-- Agrega más campos según tus necesidades -->
       <button type="submit" class="btn btn-primary">Guardar</button>
       <button type="button" (click)="cerrarModal()" class="btn btn-secondary">Cancelar</button>
-    </form>
-  </div>
-  
+</div>
