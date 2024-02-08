@@ -162,24 +162,25 @@ export class UsersComponent implements OnInit {
   }
 
   abrirModalEdicionAccessos(usuario: any) {
-    const accesosSeleccionados = usuario.profileUser[0].profile.accessProfile ? [...usuario.profileUser[0].profile.accessProfile] : [];
-    const finalAccess = [...new Set(accesosSeleccionados.map(access => access.access.code))];
+    const accesosSeleccionados = usuario.profileUser.flatMap((profileUser: { profile: { accessProfile: any; }; }) => profileUser.profile.accessProfile);
+    const finalAccess = [...new Set(accesosSeleccionados.map((access: { access: { code: any; }; }) => access.access.code))];
     console.log('finalAccess: ', finalAccess);
 
     const dialogRef = this.dialog.open(EditarAccesosModalComponent, {
-      width: '400px',
-      data: { usuario, finalAccess },
+        width: '400px',
+        data: { usuario, finalAccess },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        this.usuarios = this.usuarios.map(u => (u.id === result.id ? result : u));
-        this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'Accesos del usuario actualizados correctamente.' });
+        if (result) {
+            this.usuarios = this.usuarios.map(u => (u.id === result.id ? result : u));
+            this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'Accesos del usuario actualizados correctamente.' });
 
-        // Navegar a la misma página después de cerrar el diálogo
-        window.location.reload()
-      }
+            // Navegar a la misma página después de cerrar el diálogo
+            window.location.reload()
+        }
     });
-  }
+}
+
 }
 
