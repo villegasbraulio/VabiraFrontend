@@ -13,29 +13,40 @@ export class ReportesService {
   private token = localStorage.getItem('token'); // Variable para almacenar el token
   private supplierSchedulesUrl = 'http://localhost:3000/api/schedule/findAllForSupplier?Id=';
   private supplierTurnsUrl = 'http://localhost:3000/api/turn/fillTurns?idSchedule=';
+  private supplierTurnsUrl2 = 'http://localhost:3000/api/turn/findAllForSchedule?idSchedule='
+  private purchaseurl = 'http://localhost:3000/api/purchaseRecord/all'
 
   constructor(private http: HttpClient) { }
 
-  getReportes(username:string): Observable<any[]> {
+  getReportes(username: string, minDate?: Date, maxDate?: Date): Observable<any[]> {
     // Hacer el request para obtener la lista de agendas
     return this.http.get<any[]>(this.agendasUrl).pipe(
       map(agendas => agendas.filter(agenda => agenda.supplier !== null)), // Filtrar agendas con supplier no nulo
       mergeMap(agendas => {
-
+  
         agendas = agendas.filter(agenda => agenda.supplier.user.username === username);
-
+  
         // Utilizar 'forkJoin' para combinar múltiples solicitudes en un solo observable
         const requests: Observable<any>[] = agendas.map(agenda => {
           const agendaId = agenda.id;
           const url = this.apiUrl + agendaId;
-          // Hacer el request para obtener la cantidad de turnos reservados para esta agenda
+          // Hacer el request para obtener los turnos para esta agenda
           return this.http.get<any[]>(url).pipe(
-            map(turnos => ({
-              agendaId: agendaId,
-              nombre: agenda.name,
-              cantidadTurnos: turnos.length,
-              username: agenda.supplier.user.username
-            }))
+            map(turnos => {
+              // Filtrar los turnos dentro del rango de fechas especificado
+              if (minDate && maxDate) {
+                turnos = turnos.filter(turno => {
+                  const turnoDate = new Date(turno.dateFrom);
+                  return turnoDate >= minDate && turnoDate <= maxDate;
+                });
+              }
+              return {
+                agendaId: agendaId,
+                nombre: agenda.name,
+                cantidadTurnos: turnos.length,
+                username: agenda.supplier.user.username
+              };
+            })
           );
         });
         // Combinar todas las solicitudes en un solo observable usando forkJoin
@@ -98,6 +109,11 @@ export class ReportesService {
     return this.http.get<any>(this.supplierTurnsUrl + scheduleId);
   }
 
+  getSupplierTurns2(scheduleId: number): Observable<any> {
+    return this.http.get<any>(this.supplierTurnsUrl2 + scheduleId);
+  }
+
+
   getExcelDataBySchedule(scheduleId: number): Observable<any> {
     const url = `http://localhost:3000/api/turn/fillTurns?idSchedule=${scheduleId}`;
     return this.http.get<any>(url);
@@ -109,4 +125,10 @@ export class ReportesService {
     const url = `http://localhost:3000/api/saleRecord/all`;
     return this.http.get<any>(url);
   }
+
+  getCompras () {
+    return this.http.get<any>(this.purchaseurl);
+  }
+
+
 }
