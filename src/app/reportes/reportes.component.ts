@@ -231,7 +231,7 @@ export class ReportesComponent implements OnInit {
           ctx.drawImage(logo, 0, 0); // Coordenadas para la imagen
           const imageData = canvas.toDataURL('image/jpeg');
 
-          doc.addImage(imageData, 'JPEG', 140, 10, 30, 30); // Coordenadas y dimensiones de la imagen
+          doc.addImage(imageData, 'JPEG', 170, 10, 30, 30); // Coordenadas y dimensiones de la imagen
 
           // Ajustar tamaño de letra y espacio entre líneas para los datos
           doc.setFontSize(8);
@@ -264,7 +264,7 @@ export class ReportesComponent implements OnInit {
                 const scheduleId = turn.schedule.id;
                 const clientName = turn.client ? `${turn.client.user.firstName} ${turn.client.user.lastName}` : 'Sin cliente';
                 const dayName = turn.classDayType.name;
-                doc.text(`ID de Agenda: ${scheduleId}, Cliente: ${clientName}, Estado: ${statusName}, Fecha: ${dateFrom.toLocaleDateString('es-ES')}, Día: ${dayName}`, 10, y);
+                doc.text(`ID de Agenda: ${scheduleId}, Cliente: ${clientName}, Estado: ${statusName}, Fecha: ${dateFrom.toLocaleDateString('es-ES')} a las ${dateFrom.toLocaleString('es-ES', { hour: '2-digit', minute: '2-digit' })}, Día: ${dayName}`, 10, y);
                 y += interlineado;
 
                 // Contar el estado del turno
@@ -382,7 +382,7 @@ export class ReportesComponent implements OnInit {
            ctx.drawImage(logo, 0, 0); // Coordenadas para la imagen
            const imageData = canvas.toDataURL('image/jpeg');
  
-           doc.addImage(imageData, 'JPEG', 140, 10, 30, 30); // Coordenadas y dimensiones de la imagen
+           doc.addImage(imageData, 'JPEG', 170, 10, 30, 30); // Coordenadas y dimensiones de la imagen
           
       // Título del documento
       doc.setFontSize(16);
@@ -554,7 +554,7 @@ export class ReportesComponent implements OnInit {
           ctx.drawImage(logo, 0, 0); // Coordenadas para la imagen
           const imageData = canvas.toDataURL('image/jpeg');
 
-          doc.addImage(imageData, 'JPEG', 140, 10, 30, 30); // Coordenadas y dimensiones de la imagen
+          doc.addImage(imageData, 'JPEG', 170, 10, 30, 30); // Coordenadas y dimensiones de la imagen
 
           // Ajustar tamaño de letra y espacio entre líneas para los datos
           doc.setFontSize(8);
@@ -638,7 +638,7 @@ export class ReportesComponent implements OnInit {
           ctx.drawImage(logo, 0, 0); // Coordenadas para la imagen
           const imageData = canvas.toDataURL('image/jpeg');
 
-          doc.addImage(imageData, 'JPEG', 140, 10, 30, 30); // Coordenadas y dimensiones de la imagen
+          doc.addImage(imageData, 'JPEG', 170, 10, 30, 30); // Coordenadas y dimensiones de la imagen
 
           // Ajustar tamaño de letra y espacio entre líneas para los datos
           doc.setFontSize(8);
