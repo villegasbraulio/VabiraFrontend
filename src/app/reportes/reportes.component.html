@@ -3,54 +3,24 @@
   <div class="content">
 
     <p-tabView>
-      <!-- Pestaña 1 -->
-      <p-tabPanel *ngIf="userRoles === 'user,admin'" header="Estadísticas de Usuarios">
-        <div class="card">
-          <div class="card-header">
-            Estadísticas de Usuarios
-          </div>
 
-          <div class="card-body">
-            <p-chart [type]="'pie'" [data]="chartData" [options]="chartOptions2"></p-chart>
-          </div>
+      <!-- Agrega los calendarios para seleccionar el rango de fechas -->
+<p-calendar [(ngModel)]="minDate" [showIcon]="true" placeholder="Fecha mínima"></p-calendar>
+<p-calendar [(ngModel)]="maxDate" [showIcon]="true" placeholder="Fecha máxima"></p-calendar>
 
-          <button class="btn btn-primary" (click)="descargarExcel()">Descargar Datos</button>
-        </div>
-      </p-tabPanel>
+<!-- Botón para activar el filtro -->
+<p-button (click)="filtrar()">Filtrar Reportes</p-button>
+            <p-dropdown
+              [options]="schedules"
+              [(ngModel)]="selectedSchedule"
+              optionLabel="name"
+              placeholder="Selecciona una agenda"
+              (onChange)="loadSupplierData(); loadpresents(); loadabsents()"
+            ></p-dropdown>
 
-      <p-tabPanel *ngIf="userRoles === 'user,admin'" header="Estadísticas de Ventas de productos">
-        <div class="card">
-          <div class="card-header">
-            Estadísticas de Ventas de productos
-          </div>
 
- 
-            <div class="card-body">
-              <p-chart type="bar" [data]="basicDatahard" [options]="basicOptionshard"></p-chart>
-            </div>
-
-          <button class="btn btn-primary" (click)="descargarExcel()">Descargar Datos</button>
-        </div>
-      </p-tabPanel>
-
-      
 
       <!-- Pestaña 2 -->
-      <p-tabPanel *ngIf="userRoles === 'user,supplier'" header="Cantidad de turnos reservados por agenda">
-        <div class="card">
-          <div class="card-header">
-            Cantidad de turnos reservados por agenda
-          </div>
-
-          <div class="card-body">
-            <p-chart [type]="'bar'" [data]="data" [options]="chartOptions"></p-chart>
-          </div>
-
-          <button class="btn btn-primary" (click)="descargarExcel()">Descargar Datos</button>
-        </div>
-      </p-tabPanel>
-
-      <!-- Pestaña 3 -->
       <p-tabPanel *ngIf="userRoles === 'user,supplier'" header="Estadisticas de agendas">
         <div class="card">
           <div class="card-header">
@@ -58,20 +28,49 @@
           </div>
 
           <div class="card-body">
-            <p-dropdown
-              [options]="schedules"
-              [(ngModel)]="selectedSchedule"
-              optionLabel="name"
-              placeholder="Selecciona una agenda"
-              (onChange)="loadSupplierData()"
-            ></p-dropdown>
+
 
             <p-chart [type]="'bar'" [data]="supplierChartData" [options]="supplierChartOptions"></p-chart>
           </div>
 
-          <button class="btn btn-primary" (click)="descargarExcelPorAgenda()">Descargar datos de Agenda</button>
+          <button class="btn btn-primary" (click)="generarYDescargarPDFestadisticasagenda()">Descargar datos de Agenda</button>
         </div>
       </p-tabPanel>
+
+      <!-- Pestaña 4 -->
+
+      <p-tabPanel *ngIf="userRoles === 'user,supplier'" header="Total presentes segun dia">
+        <div class="card">
+          <div class="card-header">
+            Total presentes segun dia
+          </div>
+      
+          <div class="card-body">
+            <p-chart [type]="'bar'" [data]="presentsChartData" [options]="chartOptions"></p-chart>
+          </div>
+      
+          <button class="btn btn-primary" (click)="generarYDescargarPDFpresentes()">Descargar Datos</button>
+        </div>
+      </p-tabPanel>  
+      
+
+      <!-- Pestaña 5 -->
+
+      <p-tabPanel *ngIf="userRoles === 'user,supplier'" header="Total ausentes segun dia">
+        <div class="card">
+          <div class="card-header">
+            Total ausentes segun dia
+          </div>
+      
+          <div class="card-body">
+            <p-chart [type]="'bar'" [data]="absentsChartData" [options]="chartOptions"></p-chart>
+          </div>
+      
+          <button class="btn btn-primary" (click)="generarYDescargarPDFausentes()">Descargar Datos</button>
+        </div>
+      </p-tabPanel>  
+
+
 
       <p-tabPanel *ngIf="userRoles === 'user,supplier'" header="Total Ventas por Producto">
         <div class="card">
@@ -83,7 +82,7 @@
             <p-chart [type]="'bar'" [data]="totalSalesByBrandChartData" [options]="chartOptions"></p-chart>
           </div>
       
-          <button class="btn btn-primary" (click)="descargarExcelVentasPorProducto()">Descargar Datos</button>
+          <button class="btn btn-primary" (click)="generateAndDownloadPDFsales()">Descargar Datos</button>
         </div>
       </p-tabPanel>
       
