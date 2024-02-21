@@ -19,13 +19,49 @@ export class ReportesComponent implements OnInit {
   userRoles: string = ''
   chartData: any; // Declaración de la propiedad chartData
   chartOptions: any = {
-    responsive: true,
-    scales: {
-      y: {
-        beginAtZero: true
+      legend: {
+        position: 'bottom'
+      },
+      plugins: {
+        datalabels: {
+          formatter: (value: string, ctx: any) => {
+            const label = ctx.chart.data.labels[ctx.dataIndex];
+            return label + ': ' + value;
+          },
+          color: '#000000',
+          anchor: 'end',
+          align: 'end'
+        }
+      },
+      maintainAspectRatio: false, // Desactiva el mantenimiento del aspect ratio
+      aspectRatio: 0.6, // Ajusta el aspect ratio según tus necesidades (ancho / alto)
+      width: 400, // Establece el ancho del gráfico
+      height: 300, // Establece el alto del gráfico
+      layout: {
+        padding: {
+          top: 10,
+          right: 10,
+          bottom: 10,
+          left: 10
+        }
+      },
+      scales: {
+        y: {
+        }
+      },
+      tooltips: {
+        callbacks: {
+          label: function (tooltipItem: any, data: any) {
+            let label = data.datasets[tooltipItem.datasetIndex].label || '';
+            if (label) {
+              label += ': ';
+            }
+            label += tooltipItem.yLabel;
+            return label;
+          }
+        }
       }
-    }
-  };
+    };
   chartOptions2: any;
   supplierChartData: any;
   presentsChartData: any;
@@ -41,9 +77,55 @@ export class ReportesComponent implements OnInit {
   minDate: any; // Propiedad para almacenar la fecha mínima seleccionada
   maxDate: any; // Propiedad para almacenar la fecha máxima seleccionada
   
+  
   constructor(private reportesService: ReportesService, private userService: UserService) { }
 
   ngOnInit(): void {
+    
+    const documentStyle = getComputedStyle(document.documentElement);
+    const textColor = documentStyle.getPropertyValue('--text-color');
+    const textColorSecondary = documentStyle.getPropertyValue('--text-color-secondary');
+    const surfaceBorder = documentStyle.getPropertyValue('--surface-border');
+    this.chartOptions2 = {
+        plugins: {
+            legend: {
+                labels: {
+                    color: textColor
+                }
+            }
+        },
+        scales: {
+            y: {
+                beginAtZero: true,
+                ticks: {
+                    color: textColorSecondary
+                },
+                grid: {
+                    color: surfaceBorder,
+                    drawBorder: false
+                }
+            },
+            x: {
+                ticks: {
+                    color: textColorSecondary
+                },
+                grid: {
+                    color: surfaceBorder,
+                    drawBorder: false
+                }
+            }
+        },
+        layout: {
+            padding: {
+                left: 10,   // ajuste el valor según sea necesario
+                right: 10,  // ajuste el valor según sea necesario
+                top: 10,    // ajuste el valor según sea necesario
+                bottom: 10  // ajuste el valor según sea necesario
+            }
+        },
+        maintainAspectRatio: false
+    };    
+
     // Obtener el nombre del usuario actual
     this.userService.obtenerPerfil().subscribe(profile => {
       this.username = profile.username;
@@ -54,7 +136,6 @@ export class ReportesComponent implements OnInit {
       if (this.userRoles.includes('admin')) {
       this.reportesService.getUsersCountByRole().subscribe(data => {
         this.rolesData = data;
-        this.configureChartOptions();
       })}
         console.log(this.rolesData)
         this.reportesService.getSupplierSchedules(this.userid).subscribe(schedules => {
@@ -68,6 +149,8 @@ export class ReportesComponent implements OnInit {
             this.loadSupplierData();
             this.loadpresents();
             this.loadabsents();
+            this.configureChartOptions();
+
 
           }
         });
@@ -113,38 +196,9 @@ export class ReportesComponent implements OnInit {
   }
   
   configureChartOptions(): void {
-    this.chartOptions2 = {
-      responsive: true,
-      legend: {
-        position: 'bottom'
-      },
-      plugins: {
-        datalabels: {
-          formatter: (value: string, ctx: any) => {
-            const label = ctx.chart.data.labels[ctx.dataIndex];
-            return label + ': ' + value;
-          },
-          color: '#000000',
-          anchor: 'end',
-          align: 'end'
-        }
-      },
-      maintainAspectRatio: false, // Desactiva el mantenimiento del aspect ratio
-      aspectRatio: 0.6, // Ajusta el aspect ratio según tus necesidades (ancho / alto)
-      width: 800, // Establece el ancho del gráfico
-      height: 800 // Establece el alto del gráfico
-    };
-    // Preparar los datos para el gráfico de pie
-    this.chartData = {
-      labels: this.rolesData.map(item => item.role),
-      datasets: [
-        {
-          data: this.rolesData.map(item => item.count),
-          backgroundColor: ['#FF00FF', '#00FFFF', '#FFA500', '#008000'] // Colores para cada segmento del gráfico
-        }
-      ]
-    };
-  }
+   
+    
+}
 
   loadSupplierData(): void {
     if (this.selectedSchedule) {
@@ -435,6 +489,8 @@ export class ReportesComponent implements OnInit {
         let miercolescount = 0;
         let juevescount = 0;
         let viernescount = 0;
+        let sabadocount = 0;
+        let domingocount = 0;
   
         // Recorremos los datos para contar los turnos presentes por día de la semana
         data.forEach((turn: { turnStatus: any[]; classDayType: any; dateFrom: string; }) => {
@@ -452,6 +508,10 @@ export class ReportesComponent implements OnInit {
                 juevescount++;
             } else if (turn.classDayType.name === 'Viernes') {
                 viernescount++;
+            } else if (turn.classDayType.name === 'Sabado') {
+                sabadocount++;
+            } else if (turn.classDayType.name === 'Domingo') {
+                domingocount++;
             }
             
             }
@@ -464,11 +524,11 @@ export class ReportesComponent implements OnInit {
   
         // Actualizamos el gráfico de datos
         this.presentsChartData = {
-          labels: ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes'],
+          labels: ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sabado', 'Domingo'],
           datasets: [
             {
               label: 'Turnos presentes segun día',
-              data: [lunescount, martescount, miercolescount, juevescount, viernescount],
+              data: [lunescount, martescount, miercolescount, juevescount, viernescount, sabadocount, domingocount],
               backgroundColor: ['#FF00FF', '#00FFFF', '#FFA500', '#008000', '#FF0000']
             }
           ]
@@ -486,6 +546,8 @@ export class ReportesComponent implements OnInit {
         let miercolescount = 0;
         let juevescount = 0;
         let viernescount = 0;
+        let sabadocount = 0;
+        let domingocount = 0;
   
         // Recorremos los datos para contar los turnos presentes por día de la semana
         data.forEach((turn: { turnStatus: any[]; classDayType: any; dateFrom: string; }) => {
@@ -503,7 +565,12 @@ export class ReportesComponent implements OnInit {
                 juevescount++;
             } else if (turn.classDayType.name === 'Viernes') {
                 viernescount++;
+            } else if (turn.classDayType.name === 'Sabado') {
+                sabadocount++;
+            } else if (turn.classDayType.name === 'Domingo') {
+                domingocount++;
             }
+            
             
             }
           }
@@ -513,11 +580,11 @@ export class ReportesComponent implements OnInit {
   
         // Actualizamos el gráfico de datos
         this.absentsChartData = {
-          labels: ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes'],
+          labels: ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sabado', 'Domingo'],
           datasets: [
             {
               label: 'Turnos ausentes segun día',
-              data: [lunescount, martescount, miercolescount, juevescount, viernescount],
+              data: [lunescount, martescount, miercolescount, juevescount, viernescount, sabadocount, domingocount],
               backgroundColor: ['#FF00FF', '#00FFFF', '#FFA500', '#008000', '#FF0000']
             }
           ]
@@ -581,7 +648,7 @@ export class ReportesComponent implements OnInit {
                 const scheduleId = turn.schedule.id;
                 const clientName = turn.client ? `${turn.client.user.firstName} ${turn.client.user.lastName}` : 'Sin cliente';
                 const dayName = turn.classDayType.name;
-                doc.text(`ID de Agenda: ${scheduleId}, Cliente: ${clientName}, Estado: ${statusName}, Fecha: ${dateFrom.toLocaleDateString('es-ES')}, Día: ${dayName}`, 10, y);
+                doc.text(`ID de Agenda: ${scheduleId}, Cliente: ${clientName}, Estado: ${statusName}, Fecha: ${dateFrom.toLocaleDateString('es-ES')} a las ${dateFrom.toLocaleString('es-ES', { hour: '2-digit', minute: '2-digit' })}, Día: ${dayName}`, 10, y);
                 y += interlineado;
 
                 // Contar el estado del turno
@@ -665,12 +732,12 @@ export class ReportesComponent implements OnInit {
                 const scheduleId = turn.schedule.id;
                 const clientName = turn.client ? `${turn.client.user.firstName} ${turn.client.user.lastName}` : 'Sin cliente';
                 const dayName = turn.classDayType.name;
-                doc.text(`ID de Agenda: ${scheduleId}, Cliente: ${clientName}, Estado: ${statusName}, Fecha: ${dateFrom.toLocaleDateString('es-ES')}, Día: ${dayName}`, 10, y);
+                doc.text(`ID de Agenda: ${scheduleId}, Cliente: ${clientName}, Estado: ${statusName}, FFecha: ${dateFrom.toLocaleDateString('es-ES')} a las ${dateFrom.toLocaleString('es-ES', { hour: '2-digit', minute: '2-digit' })}, Día: ${dayName}`, 10, y);
                 y += interlineado;
 
                 // Contar el estado del turno
                 switch (status.turnStatusType.name) {
-                  case 'Presente':
+                  case 'Ausente':
                     ausentes++;
                     break;
                   default:

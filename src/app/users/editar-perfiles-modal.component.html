@@ -1,0 +1,12 @@
+<div class="modal-container">
+    <h2 class="modal-title">Editar Perfil</h2>
+    <h3 class="subtitulo">Ingresar nombre para el perfil</h3>
+    <div class="p-field">
+        <input id="nombrePerfil" type="text" pInputText placeholder="Nombre del perfil">
+    </div>
+    <h3 class="subtitulo">Seleccionar accesos</h3>
+    <p-multiSelect [options]="opciones" [(ngModel)]="selectedOpciones" optionLabel="label" appendTo="body" [filter]="true" [placeholder]="'Selecciona opciones'">
+    </p-multiSelect>
+    <button pButton type="button" label="Guardar" (click)="guardarCambios()" class="p-button-primary"></button>
+  </div>
+  

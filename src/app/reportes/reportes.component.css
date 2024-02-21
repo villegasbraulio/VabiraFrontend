@@ -1,7 +1,6 @@
   .layout {
     display: flex;
     flex-direction: row;
-    overflow: hidden;
   }
   
   app-sidebar {
@@ -14,7 +13,6 @@
   .content {
     flex: 1;
     padding: 20px;
-    overflow: auto;
   }
   
   
