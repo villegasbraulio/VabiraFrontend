@@ -24,6 +24,7 @@ import { NotificacionesComponent } from './notificaciones/notificaciones.compone
 import { CrearCompraComponent } from './purchase/crear-purchase/crear-compra.component';
 import { BackupComponent } from './backup/backup.component';
 import { PasswordRecoveryComponent } from './forgot-password/forgot-password.component';
+import { MarketingComponent } from './marketing/marketing.component';
 
 const routes: Routes = [
 
@@ -59,6 +60,7 @@ const routes: Routes = [
 
   { path: 'reportes', component: ReportesComponent }, // Ruta para el componente de reportes
   { path: 'notificaciones', component: NotificacionesComponent},
+  { path: 'marketing', component: MarketingComponent},
   { path: 'backup', component: BackupComponent},
 
   // esta linea va siempre al final, para q cualquier URL invalida siempre direcciona al ppio

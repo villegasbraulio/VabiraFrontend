@@ -111,7 +111,7 @@
         <div class="flex flex-row justify-content-center align-items-end mt-3 mb-2 gap-3">
           <div class="flex flex-column mt-3 mb-2">
             <label class="font-bold mt-3 mb-2" for="code">Codigo de verificacion</label>
-            <input class="w-full" name="code" pInputText type="text" id="code" placeholder="Codigo de verificacion"
+            <input class="w-full" name="code" pInputText type="text" inputmode="numeric" maxlength="6" id="code" placeholder="Codigo de verificacion"
               [(ngModel)]="code" [ngModelOptions]="{standalone: true}" />
           </div>
           <div *ngIf="!requestCode" class="flex flex-column mt-2 mb-2">

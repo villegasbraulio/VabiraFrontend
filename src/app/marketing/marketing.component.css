@@ -1,0 +1,96 @@
+.marketing-shell {
+  display: grid;
+  align-content: start;
+  gap: 18px;
+}
+
+.icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid #d0d5dd;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #344054;
+  cursor: pointer;
+}
+
+.table-wrap {
+  overflow-x: auto;
+  background: #ffffff;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  box-shadow: var(--shadow-soft);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 14px 16px;
+  border-bottom: 1px solid #eaecf0;
+  color: #344054;
+  font-size: 14px;
+  text-align: left;
+  vertical-align: top;
+}
+
+th {
+  color: #667085;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  padding: 2px 8px;
+  border-radius: 8px;
+  background: #e8f6f3;
+  color: var(--color-primary-strong);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.template-list {
+  display: grid;
+  gap: 12px;
+}
+
+.template-row {
+  padding: 16px;
+  background: #ffffff;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  box-shadow: var(--shadow-soft);
+}
+
+.template-row div {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  color: #182230;
+}
+
+.template-row span {
+  color: #667085;
+  font-size: 13px;
+}
+
+.template-row p {
+  margin: 10px 0 0;
+  color: #475467;
+}
+
+.empty {
+  padding: 18px;
+  color: #667085;
+  text-align: center;
+}

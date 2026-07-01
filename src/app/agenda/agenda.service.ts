@@ -9,6 +9,7 @@ import { NotificacionesService } from '../notificaciones/notificaciones.service'
 export class AgendaService {
   private baseUrl = 'http://localhost:3000/api/schedule';
   private baseUrl2 = 'http://localhost:3000/api/turn';
+  private googleAuthUrl = 'http://localhost:3000/api/google-auth';
   private idTurnoSeleccionado: number = 0;
 
   constructor(private http: HttpClient, private notificacionesService: NotificacionesService) { } // Inyecta NotificacionesService
@@ -122,7 +123,12 @@ export class AgendaService {
     return this.http.post<any>(`${this.baseUrl}/syncWithGoogleCalendar`, {reservedTurns, calendarId});
   }
 
+  obtenerUrlGoogleCalendar(supplierId: number, calendarName: string): Observable<{ authorizationUrl: string }> {
+    return this.http.get<{ authorizationUrl: string }>(
+      `${this.googleAuthUrl}/url?supplierId=${supplierId}&calendarName=${encodeURIComponent(calendarName)}`
+    );
+  }
+
 
 
 }
-

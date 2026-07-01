@@ -1,85 +1,91 @@
-<!-- sidebar.component.html -->
 <div class="sidebar">
-  <div class="sidebar-header text-center">
-    <div class="logosidebar">
-    <img src="../../assets/vabiralogo.png" alt="Logo de VABIRA">
-  </div>
-    <h1>VABIRA</h1>
-  </div>
-  <ul class="list-unstyled">
-    <!-- Grupo 1 -->
+  <header class="sidebar-header">
+    <img src="../../assets/vabiralogo.png" alt="VABIRA">
+    <div>
+      <h1>VABIRA</h1>
+      <span>Gestión</span>
+    </div>
+  </header>
+
+  <ul>
     <li class="sidebar-group">
       <div>
-        <a routerLink="/reportes" *appAuth="['Gestionar Reportes']">
+        <a routerLink="/reportes" routerLinkActive="active-link" *appAuth="['Gestionar Reportes']">
           <i class="material-icons">dashboard</i> Dashboard
         </a>
       </div>
-        <a *appAuth="['Gestionar Usuarios']" (click)="toggleCollapse('usuariosCollapse')" class="custom-dropdown-toggle">
-          <i class="material-icons">person</i> Usuarios
-        </a>
-        <!-- Agregar el ID al elemento que se colapsará -->
-        <ul id="usuariosCollapse" [ngClass]="{'collapse': !isCollapseOpen('usuariosCollapse')}">
-          <li><a class="dropdown-item" routerLink="/proveedor">Proveedor</a></li>
-          <li><a class="dropdown-item" routerLink="/cliente">Cliente</a></li>
-          <li><a class="dropdown-item" routerLink="/usuarios">Usuario</a></li>
-        </ul>
-        <a (click)="toggleCollapse('scheduleCollapse')" class="custom-dropdown-toggle">
-          <i class="material-icons">schedule</i> Turneros
-        </a>
-        <ul id="scheduleCollapse" [ngClass]="{'collapse': !isCollapseOpen('scheduleCollapse')}">
-          <li><a class="dropdown-item" routerLink="/lista-turnero">Agenda</a></li>
-          <li *appAuth="['Gestionar Turnero']">
-            <a class="dropdown-item" routerLink="/turneros">Turnero</a>
-          </li>
-        </ul>
-        <a *appAuth="['Gestionar Productos']" (click)="toggleCollapse('productosCollapse')" class="custom-dropdown-toggle">
-          <i class="material-icons">shopping_cart</i> Productos
-        </a>
-        <!-- Agregar el ID al elemento que se colapsará -->
-        <ul id="productosCollapse" class="collapse vertical-collapse" [ngClass]="{'collapse': !isCollapseOpen('productosCollapse')}">
-          <li><a class="dropdown-item" routerLink="/listar-venta">Ventas</a></li>
-          <li><a class="dropdown-item" routerLink="/listar-compras">Compras</a></li>
-          <li><a class="dropdown-item" routerLink="/listar-producto">Productos</a></li>
-        </ul>
+      <a *appAuth="['Gestionar Usuarios']" (click)="toggleCollapse('usuariosCollapse')" class="custom-dropdown-toggle">
+        <i class="material-icons">person</i>
+        <span>Usuarios</span>
+        <i class="material-icons chevron">expand_more</i>
+      </a>
+      <ul id="usuariosCollapse" [ngClass]="{'collapse': !isCollapseOpen('usuariosCollapse')}">
+        <li><a class="dropdown-item" routerLink="/proveedor" routerLinkActive="active-link">Proveedor</a></li>
+        <li><a class="dropdown-item" routerLink="/cliente" routerLinkActive="active-link">Cliente</a></li>
+        <li><a class="dropdown-item" routerLink="/usuarios" routerLinkActive="active-link">Usuario</a></li>
+      </ul>
+      <a (click)="toggleCollapse('scheduleCollapse')" class="custom-dropdown-toggle">
+        <i class="material-icons">schedule</i>
+        <span>Turneros</span>
+        <i class="material-icons chevron">expand_more</i>
+      </a>
+      <ul id="scheduleCollapse" [ngClass]="{'collapse': !isCollapseOpen('scheduleCollapse')}">
+        <li><a class="dropdown-item" routerLink="/lista-turnero" routerLinkActive="active-link">Agenda</a></li>
+        <li *appAuth="['Gestionar Turnero']">
+          <a class="dropdown-item" routerLink="/turneros" routerLinkActive="active-link">Turnero</a>
+        </li>
+      </ul>
+      <a *appAuth="['Gestionar Productos']" (click)="toggleCollapse('productosCollapse')" class="custom-dropdown-toggle">
+        <i class="material-icons">shopping_cart</i>
+        <span>Productos</span>
+        <i class="material-icons chevron">expand_more</i>
+      </a>
+      <ul id="productosCollapse" [ngClass]="{'collapse': !isCollapseOpen('productosCollapse')}">
+        <li><a class="dropdown-item" routerLink="/listar-venta" routerLinkActive="active-link">Ventas</a></li>
+        <li><a class="dropdown-item" routerLink="/listar-compras" routerLinkActive="active-link">Compras</a></li>
+        <li><a class="dropdown-item" routerLink="/listar-producto" routerLinkActive="active-link">Productos</a></li>
+      </ul>
     </li>
 
-    <!-- Grupo 3 -->
     <li class="sidebar-group">
       <div>
-        <a *appAuth="['Gestionar Notificaciones']" routerLink="/notificaciones">
+        <a *appAuth="['Gestionar Notificaciones']" routerLink="/notificaciones" routerLinkActive="active-link">
           <i class="material-icons">notifications</i> Notificaciones <span *appAuth="['Gestionar Notificaciones']" class="badge bg-secondary">{{quantity}}</span>
         </a>
       </div>
       <div>
-        <a routerLink="/ajustes">
+        <a routerLink="/marketing" routerLinkActive="active-link">
+          <i class="material-icons">campaign</i> Marketing
+        </a>
+      </div>
+      <div>
+        <a routerLink="/ajustes" routerLinkActive="active-link">
           <i class="material-icons">settings</i> Ajustes
         </a>
       </div>
       <div *appAuth="['Gestionar BackUp']">
-        <a routerLink="/backup">
+        <a routerLink="/backup" routerLinkActive="active-link">
           <i class="material-icons">backup</i> Backup
         </a>
       </div>
       <div>
-        <a routerLink="/ayuda">
+        <a routerLink="/ayuda" routerLinkActive="active-link">
           <i class="material-icons">help</i> Ayuda
         </a>
       </div>
     </li>
 
-    <!-- Grupo 4 -->
-    <li class="sidebar-group">
+    <li class="sidebar-group sidebar-profile">
       <div class="profile-container">
         <a routerLink="/perfil" class="profile-link">
           <div class="profile-box">
             <i class="material-icons">account_circle</i>
             <span>{{ userName }} ({{ userRole }})</span>
-            <!-- Muestra el nombre y el rol del usuario -->
           </div>
         </a>
-        <div class="logout-box" (click)="logout()">
+        <button class="logout-box" type="button" (click)="logout()" title="Cerrar sesión">
           <i class="material-icons">exit_to_app</i>
-        </div>
+        </button>
       </div>
     </li>
   </ul>

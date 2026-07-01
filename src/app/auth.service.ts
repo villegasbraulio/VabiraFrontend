@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { Message } from 'primeng/api';
 import { BehaviorSubject, catchError, tap, throwError } from 'rxjs';
 // import jwt_decode from 'jwt-decode';
-import { IRequestCode } from './interfaces/requestCode.interface';
 import { ILoginResponseUser } from './shared/interfaces/user-response-login.interface';
 
 export interface LoginResponseData {
@@ -25,23 +24,29 @@ export class AuthService {
 
   requestCode(email: string) {
     return this.http
-      .post<IRequestCode>(this.localhost + 'auth/sendEmail', {
+      .post<{ message: string }>(this.localhost + 'auth/sendPasswordResetCode', {
         email: email,
       })
       .pipe(
         catchError(this.handleError),
-        tap((resData: IRequestCode) => {
+        tap((resData: { message: string }) => {
           return resData;
         })
       );
   }
 
-  restorePassword(email: string, password: string) {
+  validatePasswordResetCode(email: string, code: string) {
     return this.http
-      .post<void>(
-        `${this.localhost}auth/restorePassword?email=${email}&password=${password}&validationCode=true`,
-        {}
-      )
+      .post<{ valid: boolean }>(`${this.localhost}auth/validatePasswordResetCode`, {
+        email,
+        code,
+      })
+      .pipe(catchError(this.handleError));
+  }
+
+  restorePassword(email: string, password: string, code: string) {
+    return this.http
+      .post<void>(`${this.localhost}auth/restorePassword`, { email, password, code })
       .pipe(catchError(this.handleError));
   }
 
@@ -60,6 +65,9 @@ export class AuthService {
         break;
       case 403:
         detail = 'La contraseña es incorrecta';
+        break;
+      case 400:
+        detail = 'El código de verificación es inválido o venció';
         break;
     }
     console.log(errorRes);

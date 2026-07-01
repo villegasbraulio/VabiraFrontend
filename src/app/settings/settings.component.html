@@ -1,40 +1,79 @@
-<app-sidebar></app-sidebar>
+<div class="app-shell">
+  <app-sidebar></app-sidebar>
+  <main class="app-main settings-main">
+    <header class="page-header">
+      <div>
+        <p class="eyebrow">Configuración</p>
+        <h1 class="page-title">Ajustes de compañía</h1>
+      </div>
+      <button class="button-secondary manage-profiles" type="button">Administrar Perfiles</button>
+    </header>
 
-<div class="company-details">
-  <h1> {{ companyName }}</h1>
-  <p>Email: {{ companyEmail }}</p>
-  <p>Teléfono: {{ companyPhone }}</p>
-  <p>Sitio web: {{ companyWebsite }}</p>
-  <p>Dirección: {{ companyAddress }}</p>
-  <p>Descripción: {{ companyDescription }}</p>
-  <button (click)="openEditDialog()" *appAuth="['Gestionar DatosCompany']">Editar datos</button>
+    <section class="company-details surface">
+      <div>
+        <p class="eyebrow">Empresa</p>
+        <h2>{{ companyName }}</h2>
+      </div>
+
+      <dl class="detail-grid">
+        <div>
+          <dt>Email</dt>
+          <dd>{{ companyEmail }}</dd>
+        </div>
+        <div>
+          <dt>Teléfono</dt>
+          <dd>{{ companyPhone }}</dd>
+        </div>
+        <div>
+          <dt>Sitio web</dt>
+          <dd>{{ companyWebsite }}</dd>
+        </div>
+        <div>
+          <dt>Dirección</dt>
+          <dd>{{ companyAddress }}</dd>
+        </div>
+        <div class="wide">
+          <dt>Descripción</dt>
+          <dd>{{ companyDescription }}</dd>
+        </div>
+      </dl>
+
+      <button class="button-primary" type="button" (click)="openEditDialog()" *appAuth="['Gestionar DatosCompany']">
+        <i class="material-icons">edit</i>
+        Editar datos
+      </button>
+    </section>
+
+    <form *ngIf="editing" class="edit-form surface" (submit)="saveChanges()">
+      <h2>Editar datos de la compañía</h2>
+      <label class="field">
+        Nombre de la compañía
+        <input type="text" name="companyName" [(ngModel)]="companyName">
+      </label>
+      <label class="field">
+        Email
+        <input type="email" name="companyEmail" [(ngModel)]="companyEmail">
+      </label>
+      <label class="field">
+        Teléfono
+        <input type="tel" name="companyPhone" [(ngModel)]="companyPhone">
+      </label>
+      <label class="field">
+        Sitio web
+        <input type="url" name="companyWebsite" [(ngModel)]="companyWebsite">
+      </label>
+      <label class="field">
+        Dirección
+        <input type="text" name="companyAddress" [(ngModel)]="companyAddress">
+      </label>
+      <label class="field wide">
+        Descripción
+        <textarea name="companyDescription" [(ngModel)]="companyDescription"></textarea>
+      </label>
+      <div class="form-actions">
+        <button class="button-primary" type="submit">Guardar cambios</button>
+        <button class="button-secondary" type="button" (click)="editing = false">Cancelar</button>
+      </div>
+    </form>
+  </main>
 </div>
-  <form *ngIf="editing" (submit)="saveChanges()">
-    <h2>Editar datos de la compañía</h2>
-    <label>
-      Nombre de la compañía:
-      <input type="text" [(ngModel)]="companyName">
-    </label>
-    <label>
-      Email:
-      <input type="email" [(ngModel)]="companyEmail">
-    </label>
-    <label>
-      Teléfono:
-      <input type="tel" [(ngModel)]="companyPhone">
-    </label>
-    <label>
-      Sitio web:
-      <input type="url" [(ngModel)]="companyWebsite">
-    </label>
-    <label>
-      Dirección:
-      <input type="text" [(ngModel)]="companyAddress">
-    </label>
-    <label>
-      Descripción:
-      <textarea [(ngModel)]="companyDescription"></textarea>
-    </label>
-    <button type="submit">Guardar cambios</button>
-    <button type="button" (click)="editing = false">Cancelar</button>
-  </form>

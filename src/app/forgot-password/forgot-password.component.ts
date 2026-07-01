@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../auth.service';
-import { IRequestCode } from '../interfaces/requestCode.interface';
 import { Message, MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
 import { matchpassword } from './match-password-validator';
@@ -38,7 +37,7 @@ export class PasswordRecoveryComponent implements OnInit {
     });
 
     this.codeForm = this.fb.group({
-      code: [''],
+      code: ['', [Validators.required, Validators.pattern(/^[0-9]{6}$/)]],
     });
 
     this.changePasswordForm = this.fb.group(
@@ -66,10 +65,9 @@ export class PasswordRecoveryComponent implements OnInit {
     if (this.emailForm.invalid) return;
     this.userEmail = this.emailForm.value.email;
     this.authService.requestCode(this.userEmail).subscribe({
-      next: (resData: IRequestCode) => {
-        localStorage.setItem('verificationCode', '' + resData.code);
+      next: (_) => {
         this.requestCode = true;
-        this.verifyButtonEnabled = !this.verifyButtonEnabled;
+        this.verifyButtonEnabled = true;
         this.codeForm.enable();
       },
       error: (errorMessage: Message) => {
@@ -80,27 +78,37 @@ export class PasswordRecoveryComponent implements OnInit {
 
   onVerifyCode() {
     if (this.codeForm.invalid) return;
-    const strToken = localStorage.getItem('verificationCode');
-    const registerFormValue: any = this.codeForm.get('code')?.value;
-    if (strToken == registerFormValue) {
-      this.isCodeValid = true;
-      this.changePasswordFormVisible = true;
-    } else {
-      let errorMessage: Message = {
-        severity: 'error',
-        summary: 'Error',
-        detail: 'El codigo de verificacion es invalido.',
-      };
-      this.messageService.add(errorMessage);
-    }
+    const code = this.codeForm.get('code')?.value;
+
+    this.authService.validatePasswordResetCode(this.userEmail, code).subscribe({
+      next: ({ valid }) => {
+        if (valid) {
+          this.isCodeValid = true;
+          this.changePasswordFormVisible = true;
+          return;
+        }
+
+        let errorMessage: Message = {
+          severity: 'error',
+          summary: 'Error',
+          detail: 'El código de verificación es inválido o venció.',
+        };
+        this.messageService.add(errorMessage);
+      },
+      error: (errorMessage: Message) => {
+        this.messageService.add(errorMessage);
+      },
+    });
   }
+
   onSubmit() {
     if (this.changePasswordForm.invalid) return;
 
     this.authService
       .restorePassword(
         this.userEmail,
-        this.changePasswordForm.get('password')?.value
+        this.changePasswordForm.get('password')?.value,
+        this.codeForm.get('code')?.value
       )
       .subscribe({
         next: (_) => {

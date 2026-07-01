@@ -1,100 +1,133 @@
-<div class="card2">
-  <p-table [value]="turns2" [rows]="1" [resizableColumns]="true" [reorderableColumns]="true" [filterMode]="'lenient'">
-    <ng-template pTemplate="header" let-columns>
-      <tr>
-        <th *ngIf="alias" [attr.colspan]="columnas2.length + 1" class="alias-header">
-          Datos de la cuenta de MercadoPago - Alias: {{ alias }}, Seña a abonar: ${{initialAmount}}
-        </th>
-      </tr>
-      <tr>
-        <th *ngFor="let col of columnas2" [pSortableColumn]="col.field">
-          {{ col.header }}
-        </th>
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-turn2>
-      <tr>
-        <td>{{ currentDate.format('HH:mm:ss DD-MM-yyyy') }}</td>
-        <td>{{ turn2.totalTurns }}</td>
-        <td>{{ turn2.reservedTurns }}</td>
-        <td>{{ turn2.availableTurns }}</td>
-        <td *appAuth="['Ver DatosTurnos']" >{{ turn2.proximoCliente }}</td>
-        <td *appAuth="['Ver DatosTurnos']">{{ turn2.aproveTurns }}</td>
-        <td *appAuth="['Ver DatosTurnos']">{{ turn2.desaproveTurns }}</td>
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="emptymessage">
-      <tr>
-        <td [attr.colspan]="columnas.length + 1">No hay turnos a mostrar.</td>
-      </tr>
-    </ng-template>
-  </p-table>
-</div>
-<div class="container">
+<div class="app-shell">
   <app-sidebar></app-sidebar>
-  <div class="card">
-    <input *ngIf="(this.profileTypes.includes('supplier'))" type="text" [(ngModel)]="calendarIdInput" placeholder="Ingrese la dirección del calendario">
-  <button *ngIf="(this.profileTypes.includes('supplier'))" (click)="syncWithGoogleCalendar()">Enviar a Google Calendar</button>
-    <p-table [value]="turns" [rows]="15" [paginator]="true" [resizableColumns]="true" [reorderableColumns]="true"
-      [filterMode]="'lenient'">
-      <ng-template pTemplate="header" let-columns>
-        <tr>
-          <th *ngFor="let col of columnas" [pSortableColumn]="col.field">
-            {{ col.header }}
-            <p-sortIcon [field]="col.field"></p-sortIcon>
-          </th>
-        </tr>
-      </ng-template>
-      <ng-template pTemplate="body" let-turn>
-        <tr>
-          <td>{{ turn.dateFormatted }}</td>
-          <td>{{ turn?.client?.user?.firstName }} {{ turn?.client?.user?.lastName }}</td>
-          <td>{{ turn.turnStatus[0].turnStatusType.name }}</td>
-          <td *appAuth="['Ver DatosTurnos']">
-            Presente <span class="pi pi-thumbs-up like-icon"  (click)="aprobarTurno(turn.id)"></span> /
-            Ausente <span class="pi pi-thumbs-down like-icon" (click)="desaprobarTurno(turn.id)"></span> /
-            Aprobar Seña<span class="pi pi-check like-icon"  (click)="aprobarSenaTurno(turn.id)"></span> /
-            Desaprobar Seña<span class="pi pi-times like-icon" (click)="desaprobarSenaTurno(turn.id)"></span>
-          </td>
-        </tr>
-      </ng-template>
-      <ng-template pTemplate="emptymessage">
-        <tr>
-          <td [attr.colspan]="columnas.length + 1">No hay turnos a mostrar.</td>
-        </tr>
-      </ng-template>
-    </p-table>
-    <p-messages></p-messages>
-  </div>
-  <table class="bkcl">
-    <thead>
-      <tr>
-        <th></th>
-        <th *ngFor="let day of days">{{ day }}</th>
-      </tr>
-    </thead>
-    <tbody>
-      <ng-container *ngFor="let timeSlot of timeSlots">
-        <tr>
-          <td>{{ timeSlot.start }} - {{ timeSlot.end }}</td>
-          <td *ngFor="let dayType of days2">
-            <div>
-              <button mat-button [id]="getButtonId(dayType, timeSlot.start, timeSlot.end)"
-                (click)="handleTimeClick(dayType, timeSlot.start, timeSlot.end)"
-                (click)="handleTurnClick(turns[0]?.id)"
-                [class.available-button]="buttonStates[getButtonId(dayType, timeSlot.start, timeSlot.end)] === 'Reservar'"
-                [class.reserved-button]="buttonStates[getButtonId(dayType, timeSlot.start, timeSlot.end)] === 'Reservado'"
-                [class.present-button]="buttonStates[getButtonId(dayType, timeSlot.start, timeSlot.end)] === 'Presente'"
-                [class.ausent-button]="buttonStates[getButtonId(dayType, timeSlot.start, timeSlot.end)] === 'Ausente'"
-                [class.await-button]="buttonStates[getButtonId(dayType, timeSlot.start, timeSlot.end)] === 'Reservado s/seña'"
-                [ngClass]="{'red-button': buttonStates[getButtonId(dayType, timeSlot.start, timeSlot.end)] === 'Reservado'}">
-                {{ buttonStates[getButtonId(dayType, timeSlot.start, timeSlot.end)] }}
-              </button>
-            </div>
-          </td>
-        </tr>
-      </ng-container>
-    </tbody>
+
+  <main class="app-main agenda-main">
+    <header class="page-header">
+      <div>
+        <p class="eyebrow">Turnos</p>
+        <h1 class="page-title">Agenda</h1>
+      </div>
+      <div class="date-pill">
+        <i class="material-icons">schedule</i>
+        {{ currentDate.format('HH:mm DD-MM-yyyy') }}
+      </div>
+    </header>
+
+    <section class="summary-card surface">
+      <p-table [value]="turns2" [rows]="1" [resizableColumns]="true" [reorderableColumns]="true" [filterMode]="'lenient'">
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th *ngIf="alias" [attr.colspan]="columnas2.length + 1" class="alias-header">
+              Datos de la cuenta de MercadoPago - Alias: {{ alias }}, Seña a abonar: ${{initialAmount}}
+            </th>
+          </tr>
+          <tr>
+            <th *ngFor="let col of columnas2" [pSortableColumn]="col.field">
+              {{ col.header }}
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-turn2>
+          <tr>
+            <td>{{ currentDate.format('HH:mm:ss DD-MM-yyyy') }}</td>
+            <td>{{ turn2.totalTurns }}</td>
+            <td>{{ turn2.reservedTurns }}</td>
+            <td>{{ turn2.availableTurns }}</td>
+            <td *appAuth="['Ver DatosTurnos']">{{ turn2.proximoCliente }}</td>
+            <td *appAuth="['Ver DatosTurnos']">{{ turn2.aproveTurns }}</td>
+            <td *appAuth="['Ver DatosTurnos']">{{ turn2.desaproveTurns }}</td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td [attr.colspan]="columnas2.length + 1">No hay turnos a mostrar.</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </section>
+
+    <section class="agenda-grid">
+      <section class="turns-panel surface">
+        <div class="calendar-sync" *ngIf="(this.profileTypes.includes('supplier'))">
+          <input type="text" [(ngModel)]="googleCalendarName" placeholder="Nombre de agenda Google">
+          <button class="button-primary" type="button" (click)="conectarGoogleCalendar()">Conectar Google Calendar</button>
+        </div>
+
+        <p-table [value]="turns" [rows]="15" [paginator]="true" [resizableColumns]="true" [reorderableColumns]="true"
+          [filterMode]="'lenient'">
+          <ng-template pTemplate="header" let-columns>
+            <tr>
+              <th *ngFor="let col of columnas" [pSortableColumn]="col.field">
+                {{ col.header }}
+                <p-sortIcon [field]="col.field"></p-sortIcon>
+              </th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-turn>
+            <tr>
+              <td>{{ turn.dateFormatted }}</td>
+              <td>{{ turn?.client?.user?.firstName }} {{ turn?.client?.user?.lastName }}</td>
+              <td>{{ turn.turnStatus[0].turnStatusType.name }}</td>
+              <td *appAuth="['Ver DatosTurnos']" class="turn-actions">
+                <button type="button" (click)="aprobarTurno(turn.id)">
+                  <i class="pi pi-thumbs-up"></i>
+                  Presente
+                </button>
+                <button type="button" (click)="desaprobarTurno(turn.id)">
+                  <i class="pi pi-thumbs-down"></i>
+                  Ausente
+                </button>
+                <button type="button" (click)="aprobarSenaTurno(turn.id)">
+                  <i class="pi pi-check"></i>
+                  Aprobar seña
+                </button>
+                <button type="button" (click)="desaprobarSenaTurno(turn.id)">
+                  <i class="pi pi-times"></i>
+                  Desaprobar seña
+                </button>
+              </td>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="emptymessage">
+            <tr>
+              <td [attr.colspan]="columnas.length + 1">No hay turnos a mostrar.</td>
+            </tr>
+          </ng-template>
+        </p-table>
+        <p-messages></p-messages>
+      </section>
+
+      <section class="schedule-panel surface">
+        <table class="bkcl">
+          <thead>
+            <tr>
+              <th></th>
+              <th *ngFor="let day of days">{{ day }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <ng-container *ngFor="let timeSlot of timeSlots">
+              <tr>
+                <td>{{ timeSlot.start }} - {{ timeSlot.end }}</td>
+                <td *ngFor="let dayType of days2">
+                  <button mat-button [id]="getButtonId(dayType, timeSlot.start, timeSlot.end)"
+                    (click)="handleTimeClick(dayType, timeSlot.start, timeSlot.end); handleTurnClick(turns[0]?.id)"
+                    [class.available-button]="buttonStates[getButtonId(dayType, timeSlot.start, timeSlot.end)] === 'Reservar'"
+                    [class.reserved-button]="buttonStates[getButtonId(dayType, timeSlot.start, timeSlot.end)] === 'Reservado'"
+                    [class.present-button]="buttonStates[getButtonId(dayType, timeSlot.start, timeSlot.end)] === 'Presente'"
+                    [class.ausent-button]="buttonStates[getButtonId(dayType, timeSlot.start, timeSlot.end)] === 'Ausente'"
+                    [class.await-button]="buttonStates[getButtonId(dayType, timeSlot.start, timeSlot.end)] === 'Reservado s/seña'"
+                    [ngClass]="{'red-button': buttonStates[getButtonId(dayType, timeSlot.start, timeSlot.end)] === 'Reservado'}">
+                    {{ buttonStates[getButtonId(dayType, timeSlot.start, timeSlot.end)] }}
+                  </button>
+                </td>
+              </tr>
+            </ng-container>
+          </tbody>
+        </table>
+      </section>
+    </section>
+
     <p-messages [(value)]="messages" class="toast-messages" [enableService]="false" [closable]="true"></p-messages>
-  </table>
+  </main>
 </div>

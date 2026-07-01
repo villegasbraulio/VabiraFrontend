@@ -138,7 +138,8 @@ export class RegisterComponent {
         lastName: this.lastName,
         dni: this.dni,
         dateOfBirth: this.dateOfBirth,
-        roles: ['user']
+        roles: ['user'],
+        verificationCode: this.code,
       };
     }
 
@@ -155,6 +156,7 @@ export class RegisterComponent {
         dateOfBirth: this.dateOfBirth,
         cuit: this.cuit,
         identificationNumber: this.identificationNumber,
+        verificationCode: this.code,
       };
     } else if (this.isClient) {
       apiUrl = 'http://localhost:3000/api/client/create';
@@ -185,7 +187,8 @@ export class RegisterComponent {
             },
           }
         }
-        ]
+        ],
+        verificationCode: this.code,
         
       };
     }
@@ -255,8 +258,7 @@ export class RegisterComponent {
   onRequestCode() {
     // if (this.form.invalid) return;
     this.registerService.requestCode(this.email).subscribe({
-      next: (resData: IRequestCode) => {
-        localStorage.setItem('verificationCode', '' + resData.code);
+      next: (_: IRequestCode) => {
         this.requestCode = true;
       },
       error: (errorMessage: Message) => {
@@ -266,10 +268,9 @@ export class RegisterComponent {
   }
 
   onVerifyCode() {
-    const strToken = localStorage.getItem('verificationCode');
     const registerFormValue: string = this.code; // Obtener el valor del código de verificación
   
-    if (strToken == registerFormValue) {
+    if (/^[0-9]{6}$/.test(registerFormValue)) {
       this.isCodeValid = true;
     } else {
       let errorMessage: Message = {

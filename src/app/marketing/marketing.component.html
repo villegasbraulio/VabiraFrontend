@@ -1,0 +1,113 @@
+<div class="app-shell">
+  <app-sidebar></app-sidebar>
+  <main class="app-main marketing-shell">
+    <header class="page-header">
+      <div>
+        <p class="eyebrow">CRM</p>
+        <h1 class="page-title">Marketing</h1>
+      </div>
+      <button class="icon-button" type="button" (click)="loadData()" title="Actualizar">
+        <i class="material-icons">refresh</i>
+      </button>
+    </header>
+
+    <p-tabView>
+      <p-tabPanel header="Clientes">
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Cliente</th>
+                <th>Email</th>
+                <th>Estado</th>
+                <th>Segmento</th>
+                <th>Turnos</th>
+                <th>Último turno</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let customer of customers">
+                <td>{{ customer.user?.firstName }} {{ customer.user?.lastName }}</td>
+                <td>{{ customer.user?.email }}</td>
+                <td><span class="status">{{ formatStatus(customer.status) }}</span></td>
+                <td>{{ customer.segment || '-' }}</td>
+                <td>{{ customer.totalAppointments || 0 }}</td>
+                <td>{{ customer.lastVisitAt ? (customer.lastVisitAt | date:'dd/MM/yyyy HH:mm') : '-' }}</td>
+              </tr>
+              <tr *ngIf="!customers.length && !loading">
+                <td colspan="6" class="empty">Sin clientes CRM todavía</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </p-tabPanel>
+
+      <p-tabPanel header="Plantillas">
+        <div class="template-list">
+          <article class="template-row" *ngFor="let template of templates">
+            <div>
+              <strong>{{ template.name }}</strong>
+              <span>{{ template.channel }}</span>
+            </div>
+            <p>{{ template.body }}</p>
+          </article>
+          <p class="empty" *ngIf="!templates.length">Sin plantillas creadas</p>
+        </div>
+      </p-tabPanel>
+
+      <p-tabPanel header="Mensajes">
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Cliente</th>
+                <th>Canal</th>
+                <th>Estado</th>
+                <th>Fecha</th>
+                <th>Mensaje</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let message of messages">
+                <td>{{ message.customer?.user?.firstName }} {{ message.customer?.user?.lastName }}</td>
+                <td>{{ message.channel }}</td>
+                <td><span class="status">{{ message.status }}</span></td>
+                <td>{{ message.createdAt ? (message.createdAt | date:'dd/MM/yyyy HH:mm') : '-' }}</td>
+                <td>{{ message.body }}</td>
+              </tr>
+              <tr *ngIf="!messages.length">
+                <td colspan="5" class="empty">Sin mensajes enviados todavía</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </p-tabPanel>
+
+      <p-tabPanel header="Pendientes">
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Cliente</th>
+                <th>Evento</th>
+                <th>Estado</th>
+                <th>Programado</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of scheduled">
+                <td>{{ item.customer?.user?.firstName }} {{ item.customer?.user?.lastName }}</td>
+                <td>{{ item.triggerEvent }}</td>
+                <td><span class="status">{{ item.status }}</span></td>
+                <td>{{ item.scheduledFor | date:'dd/MM/yyyy HH:mm' }}</td>
+              </tr>
+              <tr *ngIf="!scheduled.length">
+                <td colspan="4" class="empty">Sin automatizaciones pendientes</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </p-tabPanel>
+    </p-tabView>
+  </main>
+</div>

@@ -1,8 +1,46 @@
-<div class="layout">
+<div class="app-shell dashboard-shell">
   <app-sidebar></app-sidebar> 
-  <div class="content">
-    <div class="image-container">
-      <img src="../../assets/logo-t-1.png" alt="Imagen de fondo">
-    </div>
-  </div>
+  <main class="app-main dashboard-main">
+    <header class="page-header">
+      <div>
+        <p class="eyebrow">Inicio</p>
+        <h1 class="page-title">Panel de control</h1>
+      </div>
+      <img class="brand-mark" src="../../assets/logo-t-1.png" alt="VABIRA">
+    </header>
+
+    <section class="hero surface">
+      <div>
+        <p class="eyebrow">Operación diaria</p>
+        <h2>Gestioná agenda, clientes, ventas y comunicación con una vista limpia.</h2>
+      </div>
+      <a class="button-primary" routerLink="/lista-turnero">
+        <i class="material-icons">event_available</i>
+        Ir a agenda
+      </a>
+    </section>
+
+    <section class="dashboard-grid">
+      <a class="metric surface" routerLink="/lista-turnero">
+        <i class="material-icons">calendar_month</i>
+        <span>Agenda</span>
+        <strong>Turnos</strong>
+      </a>
+      <a class="metric surface" routerLink="/cliente">
+        <i class="material-icons">groups</i>
+        <span>Clientes</span>
+        <strong>Base activa</strong>
+      </a>
+      <a class="metric surface" routerLink="/listar-venta">
+        <i class="material-icons">point_of_sale</i>
+        <span>Ventas</span>
+        <strong>Movimientos</strong>
+      </a>
+      <a class="metric surface" routerLink="/marketing">
+        <i class="material-icons">campaign</i>
+        <span>Marketing</span>
+        <strong>Mensajes</strong>
+      </a>
+    </section>
+  </main>
 </div>

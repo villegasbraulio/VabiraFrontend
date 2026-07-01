@@ -1,3 +1,3 @@
 export interface IRequestCode {
-    code: number
+    message: string
 }

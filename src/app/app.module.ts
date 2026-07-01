@@ -74,6 +74,7 @@ import { MercadoPagoModalComponent } from './agenda/mercadopagomodal.component';
 import { PasswordRecoveryComponent } from './forgot-password/forgot-password.component';
 import { AuthDirective } from './shared/directives/auth.directive';
 import { EditarAccesosModalComponent } from './users/editar-accesos-modal.component';
+import { MarketingComponent } from './marketing/marketing.component';
 
 @NgModule({
 
@@ -113,7 +114,8 @@ import { EditarAccesosModalComponent } from './users/editar-accesos-modal.compon
     ClienteComponent,
     NotificacionesComponent,
     BackupComponent,
-    MercadoPagoModalComponent
+    MercadoPagoModalComponent,
+    MarketingComponent
   ],
   providers: [
     MessageService,
@@ -160,4 +162,3 @@ import { EditarAccesosModalComponent } from './users/editar-accesos-modal.compon
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
 })
 export class AppModule { }
-
